@@ -1,0 +1,38 @@
+.trans-button .icon-name {
+	display: block;
+	width: 100%;
+	height: 12px;
+	font-size: 10px;
+	text-align: center;
+	text-decoration: none;
+	color: #A4A4A4;
+}
+
+.product-list > div {
+	overflow: auto;
+	padding: 5px 5px;
+	background: #fff;
+	border: none;
+	width: 99%;
+}
+
+.product-list > div.no-borders {
+	overflow: auto;
+	padding: 0;
+	background: #fff;
+	border: none;
+	border-radius: none;
+}
+.product-list .left {
+	float: left;
+	margin-left: 15px;
+}
+.product-list .right {
+	float: left;
+	margin-left: 15px;
+}
+.product-list > div + div {
+	border: none;
+	border-top: 1px solid #EEEEEE;
+	padding-top: 10px;
+}
