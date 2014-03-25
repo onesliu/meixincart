@@ -76,24 +76,6 @@ DD_belatedPNG.fix('#logo img');
 <body>
 <div id="container">
 
-<div id="header">
-  <?php if ($logo) { ?>	
-	<a id="home-up" class="no-bg" href="<?php echo $home; ?>" style="background: url('<?php echo $logo;?>') center center no-repeat;"></a>
-  <?php } else { ?>
-	<a id="home-up" href="<?php echo $home; ?>"></a>
-  <?php } ?>
-    <a id="store-name" href="<?php echo $home; ?>"><?php echo $name; ?></a>
-    <a id="search" style="display:none;">
-		<?php if ($filter_name) { ?>
-		<input class="search" type="text" name="filter_name" value="<?php echo $filter_name; ?>" onkeyup="autocompleteSearch(this.value);" />
-		<?php } else { ?>
-		<input class="search" type="text" name="filter_name" value="" onclick="this.value = '';" onkeydown="this.style.color = '#000000';" onkeyup="autocompleteSearch(this.value);" />
-		<?php } ?>
-	</a>	
-	<div id="search-up"></div> 	
-</div>
-
-
 <div id="floating-bar">
 	<?php if (!$logged) { ?>
 		<a id="login-button"  class="trans-button" href="<?php echo $login;?>">
