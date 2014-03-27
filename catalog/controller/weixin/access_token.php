@@ -1,23 +1,15 @@
 <?php
 
-define("APPID", '');
-define("APPSECRET", '');
-
-$AccessToken = new ControllerAccessToken();
-if ($AccessToken->index() == false) {
-	echo $AccessToken->errmsg;
-	exit;
-}
-
-class ControllerAccessToken {
+class AccessToken {
 	protected $access_token;
 	protected $expires_in;
 	protected $errcode;
 	protected $errmsg;
 	
-	public function index() {
-		$appid = APPID;
-		$secret = APPSECRET;
+	public function get($appid, $secret) {
+		if ($appid == null || $secret == null)
+			return false;
+			
 		$token = file_get_contents("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=$appid&secret=$secret");
 		$result = json_decode($token);
 		
