@@ -1,30 +1,39 @@
-<?php
+ï»¿<?php
 
 class ControllerWeixinWeixin extends Controller { 
 	public function index() {
 		
-		// ¶ÁÈ¡Î¢ÐÅÅäÖÃÐÅÏ¢
+		// è¯»å–å¾®ä¿¡é…ç½®ä¿¡æ¯
 		$token = $this->config->get('weixin_token');
 		
-		// ÑéÖ¤Î¢ÐÅ·þÎñÆ÷
+		// éªŒè¯å¾®ä¿¡æœåŠ¡å™¨
 		$valid_result = $this->valid();
 		if ($token == null || $valid_result == false) {
-			// ·µ»Ø´íÎó
+			// è¿”å›žé”™è¯¯
 		}
 		else if (is_string($valid_result)) {
-			// Ê×´ÎÑéÖ¤£¬·µ»Øechostr
+			// é¦–æ¬¡éªŒè¯ï¼Œè¿”å›žechostr
 			
 		}
 		
-		// ÑéÖ¤Í¨¹ýÇÒ²»ÊÇÊ×´ÎÑéÖ¤
-		// ¶ÁÈ¡±¾µØ±£´æµÄaccess_token£¬Ã»¶Áµ½¾ÍÈ¥Î¢ÐÅ·þÎñÆ÷È¡
+		// éªŒè¯é€šè¿‡ä¸”ä¸æ˜¯é¦–æ¬¡éªŒè¯
+		// è¯»å–æœ¬åœ°ä¿å­˜çš„access_tokenï¼Œæ²¡è¯»åˆ°å°±åŽ»å¾®ä¿¡æœåŠ¡å™¨å–
 		$access_token = $this->config->get('weixin_access_token');
-		if (null == $access_token) {
+		$token_expire = $this->config->get('weixin_token_expire');
+		$token_starttime = $this->config->get('weixin_token_starttime');
+		
+		$this->load->model('setting/setting');
+		
+		if (null == $access_token || null == $token_starttime || null == $token_expire ||
+			(time() - $token_starttime >= $token_expire)) {
 			require('access_token.php');
+			
+			$this->model_setting_setting->editSetting('ms_latest', $this->request->post);
+			
 			$AccessToken = new AccessToken();
 			if ($AccessToken->get($this->config->get('weixin_appid'),
 				$this->config->get('weixin_appsecret')) == false) {
-				// ¶ÁÈ¡access_tokenÊ§°Ü
+				// è¯»å–access_tokenå¤±è´¥
 			}
 			else {
 				$access_token = $AccessToken->access_token;
