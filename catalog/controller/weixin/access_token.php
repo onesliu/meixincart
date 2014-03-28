@@ -12,11 +12,11 @@ class AccessToken {
 	}
 	
 	public function get($appid, $secret) {
+		$this->save('', 0, 0);
+		
 		if ($appid == null || $secret == null)
 			return false;
 
-		$this->save('', 0, 0);
-		
 		$token = file_get_contents("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=$appid&secret=$secret");
 		$result = json_decode($token);
 		
