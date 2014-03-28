@@ -28,15 +28,14 @@ class ControllerWeixinWeixin extends Controller {
 			(time() - $token_starttime >= $token_expire)) {
 			require('access_token.php');
 			
-			$this->model_setting_setting->editSetting('ms_latest', $this->request->post);
-			
-			$AccessToken = new AccessToken();
+			$AccessToken = new AccessToken($this->registry);
 			if ($AccessToken->get($this->config->get('weixin_appid'),
 				$this->config->get('weixin_appsecret')) == false) {
 				// 读取access_token失败
 			}
 			else {
 				$access_token = $AccessToken->access_token;
+				$token_expire = $AccessToken->expires_in;
 			}
 		}
 		
