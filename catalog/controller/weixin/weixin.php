@@ -1,19 +1,26 @@
-﻿<?php
+<?php
 
 class ControllerWeixinWeixin extends Controller { 
 	public function index() {
 		
 		// 读取微信配置信息
 		$token = $this->config->get('weixin_token');
-		
+
 		// 验证微信服务器
-		$valid_result = $this->valid();
-		if ($token == null || $valid_result == false) {
-			// 返回错误
+		if ($token == null) {
+			$this->response->setOutput("");
+			return;
 		}
-		else if (is_string($valid_result)) {
+		
+		$valid_result = $this->valid($token);
+		if ($valid_result == false) {
+			$this->response->setOutput("");
+			return;
+		}
+		else if (is_string($valid_result)){
 			// 首次验证，返回echostr
-			
+			$this->response->setOutput($valid_result);
+			return;
 		}
 		
 		// 验证通过且不是首次验证
@@ -23,40 +30,51 @@ class ControllerWeixinWeixin extends Controller {
 		$token_starttime = $this->config->get('weixin_token_starttime');
 		
 		$this->load->model('setting/setting');
-		
+		$this->load->model('weixin/access_token');
+		//$this->log->write($access_token." ".$token_starttime." ".$token_expire." ".(time() - $token_starttime));
 		if (null == $access_token || null == $token_starttime || null == $token_expire ||
 			(time() - $token_starttime >= $token_expire)) {
-			require('access_token.php');
-			
-			$AccessToken = new AccessToken($this->registry);
-			if ($AccessToken->get($this->config->get('weixin_appid'),
-				$this->config->get('weixin_appsecret')) == false) {
+
+			$access_token = $this->model_weixin_access_token->get($this->config->get('weixin_appid'),
+				$this->config->get('weixin_appsecret'));
+			if ($access_token == false) {
 				// 读取access_token失败
-			}
-			else {
-				$access_token = $AccessToken->access_token;
-				$token_expire = $AccessToken->expires_in;
+				$this->response->setOutput("");
+				return;
 			}
 		}
 		
+		// 接收到消息或事件
 		if (($this->request->server['REQUEST_METHOD'] == 'POST')) {
+			//保存到数据库
+			$this->load->model('weixin/message');
+			$xmlstr = file_get_contents("php://input");
+			$this->model_weixin_message->addAll($xmlstr);
 			
+			//自动回应消息
+			
+			//触发其它动作
+			if ($this->WeixinMsgType == 'event' && $this->WeixinEvent == 'subscribe') {
+				//关注事件发生时取用户信息
+				//自动注册到商城
+			}
 		}
+		$this->response->setOutput("");
 	}
 	
 	private function valid($token)
     {
-    	if (isset($this->request->get['signature'])) {
+    	if ($this->request->server['REQUEST_METHOD'] == 'GET') {
 	        $signature = $this->request->get["signature"];
 	        $timestamp = $this->request->get["timestamp"];
-	        $nonce = $this->request->get["nonce"];	
-    		$echoStr = $this->request->get["echostr"];
+	        $nonce = $this->request->get["nonce"];
+	        $echostr = $this->request->get['echostr'];
 
     		if($this->checkSignature($signature, $timestamp, $nonce, $token)){
-	        	return $echoStr;
+	        	return $echostr;
 	        }
     	}
-    	else if (isset($this->request->post['signature'])) {
+    	else {
 	        $signature = $this->request->get["signature"];
 	        $timestamp = $this->request->get["timestamp"];
 	        $nonce = $this->request->get["nonce"];	

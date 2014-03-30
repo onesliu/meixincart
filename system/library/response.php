@@ -51,7 +51,7 @@ class Response {
 		return gzencode($data, (int)$level);
 	}
 
-	public function output() {
+	public function output($charset = null) {
 		if ($this->output) {
 			if ($this->level) {
 				$ouput = $this->compress($this->output, $this->level);
