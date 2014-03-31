@@ -5,7 +5,6 @@ class ModelWeixinGetUserinfo extends Model {
 	protected $errmsg;
 	
 	public function getUserInfo($access_token, $openid) {
-		$this->save('', 0, 0);
 		
 		if ($access_token == null || $openid == null)
 			return false;
@@ -25,8 +24,8 @@ class ModelWeixinGetUserinfo extends Model {
 		
 		if (isset($result->subscribe)) {
 			if ($result->subscribe == 1) {
-				$this->save($result);
-				return true;
+				$this->save($openid, $result);
+				return $result;
 			}
 			else {
 				$this->log->write("tried to get unsubscribe user infomation, openid = $openid");
@@ -39,23 +38,32 @@ class ModelWeixinGetUserinfo extends Model {
 		return false;
 	}
 	
+	public function unSubscribeUser($openid) {
+		$this->db->query(sprintf("update %scustomer set subscribe=0, status=0, approved=0 where openid='%s'", DB_PREFIX, $openid));
+	}
+	
 	private function save($openid, $info) {
 		$q = $this->db->query(sprintf("select count(*) as cnt from %scustomer where openid='%s'", DB_PREFIX, $openid));
 		if ($q->row["cnt"] <= 0) {
-			$this->db->query(sprintf("insert into %scustomer"));
+			$this->db->query(sprintf("insert into %scustomer
+			(subscribe,openid,nickname,sex,city,country,province,language,headimgurl,subscribe_time,
+			email,firstname,password,customer_group_id,date_added,status,lastname,approved) values (%d, '%s', '%s', %d, '%s',
+			'%s', '%s', '%s', '%s', %d, '%s', '%s', SHA1(CONCAT(salt, SHA1(CONCAT(salt, SHA1('%s'))))),
+			1, now(), 1, '%s', 1)", DB_PREFIX,
+			$info->subscribe, $info->openid, $info->nickname, $info->sex, $info->city,
+			$info->country, $info->province, $info->language, $info->headimgurl,
+			$info->subscribe_time, $info->openid, $info->nickname, WEIXIN_USERPWD, $info->nickname));
 		}
 		else {
-			
+			$this->db->query(sprintf("update %scustomer set nickname='%s', sex=%d, city='%s', country='%s',
+			province='%s', language='%s', headimgurl='%s', subscribe_time=%d, firstname='%s', email='%s',
+			subscribe=%d, lastname='%s', approved=1,
+			status=1, date_added=now(), password=SHA1(CONCAT(salt, SHA1(CONCAT(salt, SHA1('%s')))))
+			where openid='%s'",
+			DB_PREFIX, $info->nickname, $info->sex, $info->city, $info->country, $info->province,
+			$info->language, $info->headimgurl, $info->subscribe_time, $info->nickname, $info->openid,
+			$info->subscribe, $info->nickname, WEIXIN_USERPWD, $openid));
 		}
-		$this->config->set('weixin_access_token', $access_token);
-		$this->config->set('weixin_token_expire', $expire_time);
-		$this->config->set('weixin_token_starttime', $startime);
-		$data = array('weixin_access_token' => $access_token,
-						'weixin_token_expire' => $expire_time,
-						'weixin_token_starttime' => $startime);
-		$this->model_setting_setting->editSetting(1, $data);
-		
-		$this->log->write("Get weixin access_token: $access_token, $expire_time");
 	}
 }
 ?>

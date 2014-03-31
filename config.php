@@ -24,4 +24,7 @@ define('DB_USERNAME', 'root');
 define('DB_PASSWORD', '123456');
 define('DB_DATABASE', 'opencart');
 define('DB_PREFIX', 'oc_');
+
+//Weixin
+define('WEIXIN_USERPWD', '123456');
 ?>
