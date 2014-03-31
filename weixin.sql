@@ -43,3 +43,14 @@ create table if not exists oc_event(
 	`Precision` double default 0.0,
 	Others text default null
 )ENGINE=MyISAM;
+
+alter table oc_customer add `subscribe` integer default 0;
+alter table oc_customer add `openid` varchar(255) default null;
+alter table oc_customer add `nickname` varchar(255) default null;
+alter table oc_customer add `sex` integer default 0;
+alter table oc_customer add `city` varchar(64) default null;
+alter table oc_customer add `country` varchar(255) default null;
+alter table oc_customer add `province` varchar(64) default null;
+alter table oc_customer add `language` varchar(64) default null;
+alter table oc_customer add `headimgurl` varchar(1024) default null;
+alter table oc_customer add `subscribe_time` integer default 0;
