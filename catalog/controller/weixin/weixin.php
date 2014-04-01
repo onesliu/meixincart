@@ -51,12 +51,10 @@ class ControllerWeixinWeixin extends Controller {
 			$xmlstr = file_get_contents("php://input");
 			$this->model_weixin_message->addAll($xmlstr);
 			
-			//自动回应消息
-			
-			//触发其它动作
+			//关注事件与取消关注事件
 			$this->load->model('weixin/get_userinfo');
 			if ($this->WeixinMsgType == 'event' && $this->WeixinEvent == 'subscribe') {
-				//关注事件发生时取用户信息，并自动注册到商城
+				//取用户信息，并自动注册到商城
 				$userinfo = $this->model_weixin_get_userinfo->getUserInfo($access_token, $this->WeixinFromUserName);
 			}
 			else if ($this->WeixinMsgType == 'event' && $this->WeixinEvent == 'unsubscribe') {
