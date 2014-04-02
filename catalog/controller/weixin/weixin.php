@@ -61,6 +61,18 @@ class ControllerWeixinWeixin extends Controller {
 				//注销用户
 				$this->model_weixin_get_userinfo->unSubscribeUser($this->WeixinFromUserName);
 			}
+			else if ($this->WeixinMsgType == 'text') {
+				//测试自动回复
+				$test = sprintf("<xml>
+<ToUserName><![CDATA[%s]]></ToUserName>
+<FromUserName><![CDATA[%s]]></FromUserName>
+<CreateTime>%d</CreateTime>
+<MsgType><![CDATA[text]]></MsgType>
+<Content><![CDATA[你好]]></Content>
+</xml>", $this->WeixinFromUserName, $this->WeixinToUserName, time());
+				$this->response->setOutput($test);
+				return;
+			}
 		}
 		$this->response->setOutput("");
 	}

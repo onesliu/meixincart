@@ -54,3 +54,9 @@ alter table oc_customer add `province` varchar(64) default null;
 alter table oc_customer add `language` varchar(64) default null;
 alter table oc_customer add `headimgurl` varchar(1024) default null;
 alter table oc_customer add `subscribe_time` integer default 0;
+
+create table if not exists oc_(
+	id integer not null auto_increment primary key,
+	storeid integer default 0,
+	
+)ENGINE=MyISAM;
