@@ -28,6 +28,14 @@ create table if not exists oc_message_reply(
 	content text default null
 )ENGINE=MyISAM;
 
+create table if not exists oc_auto_message(
+	id integer not null auto_increment primary key,
+	pattern varchar(255) not null,
+	MsgType varchar(32) not null,
+	ItemCount integer default 0,
+	Items text default null
+)ENGINE=MyISAM;
+
 create table if not exists oc_event(
 	id integer not null auto_increment primary key,
 	customerid integer not null,
@@ -55,8 +63,10 @@ alter table oc_customer add `language` varchar(64) default null;
 alter table oc_customer add `headimgurl` varchar(1024) default null;
 alter table oc_customer add `subscribe_time` integer default 0;
 
-create table if not exists oc_(
-	id integer not null auto_increment primary key,
-	storeid integer default 0,
-	
-)ENGINE=MyISAM;
+//init
+insert into oc_setting (`key`,`value`) values('weixin_token', 'wxc0a931d70de89f4c');
+insert into oc_setting (`key`,`value`) values('weixin_appid', 'wxc0a931d70de89f4c');
+insert into oc_setting (`key`,`value`) values('weixin_appsecret', 'c7153a6b0dba17395e66c7f4d25e35a1');
+
+insert into oc_auto_message(pattern,MsgType,ItemCount,Items) values('order', 'news', 1, '{"touser":"%s","msgtype":"news","news":{"articles": [{"title":"点击开始买菜","description":"传承老一代，用心卖好菜。青悠悠菜园传统良心蔬菜。","url":"http://oc.ngrok.com/opencart/index.php","picurl":"http://oc.ngrok.com/opencart/image/data/weixin/logo.jpg"}]}}');
+
