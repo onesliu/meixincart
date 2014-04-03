@@ -103,6 +103,10 @@ class ControllerCommonHeader extends Controller {
 		$this->data['text_length_class'] = $this->language->get('text_length_class');
 		$this->data['text_zone'] = $this->language->get('text_zone');
 		
+		$this->data['text_weixin'] = $this->language->get('text_weixin');
+		$this->data['text_weixin_setting'] = $this->language->get('text_weixin_setting');
+		$this->data['text_weixin_resource'] = $this->language->get('text_weixin_resource');
+		
 		if (!$this->user->isLogged() || !isset($this->request->get['token']) || !isset($this->session->data['token']) || ($this->request->get['token'] != $this->session->data['token'])) {
 			$this->data['logged'] = '';
 			
@@ -174,6 +178,9 @@ class ControllerCommonHeader extends Controller {
 			$this->data['weight_class'] = $this->url->link('localisation/weight_class', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['length_class'] = $this->url->link('localisation/length_class', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['zone'] = $this->url->link('localisation/zone', 'token=' . $this->session->data['token'], 'SSL');
+
+			$this->data['weixin_setting'] = $this->url->link('weixin/setting', 'token=' . $this->session->data['token'], 'SSL');
+			$this->data['weixin_resource'] = $this->url->link('weixin/resource', 'token=' . $this->session->data['token'], 'SSL');
 			
 			$this->data['stores'] = array();
 			

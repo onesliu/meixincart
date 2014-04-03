@@ -80,4 +80,7 @@ $_['text_voucher_theme']               = '礼品券主题';
 $_['text_weight_class']                = '重量单位';
 $_['text_length_class']                = '长度单位';
 $_['text_zone']                        = '国家地区';
+$_['text_weixin']                = '微信功能';
+$_['text_weixin_setting']                = '微信设置';
+$_['text_weixin_resource']                        = '消息资源';
 ?>

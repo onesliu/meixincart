@@ -81,4 +81,7 @@ $_['text_voucher_theme']               = 'Voucher Themes';
 $_['text_weight_class']                = 'Weight Classes';
 $_['text_length_class']                = 'Length Classes';
 $_['text_zone']                        = 'Zones';
+$_['text_weixin']                = 'WeiXin';
+$_['text_weixin_setting']                = 'Settings';
+$_['text_weixin_resource']                        = 'Message Resources';
 ?>

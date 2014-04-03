@@ -190,6 +190,12 @@ $(document).ready(function(){
           </li>
         </ul>
       </li>
+      <li id="weixin"><a class="top"><?php echo $text_weixin; ?></a>
+        <ul>
+          <li><a href="<?php echo $weixin_setting; ?>"><?php echo $text_weixin_setting; ?></a></li>
+          <li><a href="<?php echo $weixin_resource; ?>"><?php echo $text_weixin_resource; ?></a></li>
+        </ul>
+      </li>
       <li id="help"><a class="top"><?php echo $text_help; ?></a>
         <ul>
           <li><a href="http://www.opencartchina.com" target="_blank"><?php echo $text_opencart; ?></a></li>
