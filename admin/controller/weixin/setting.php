@@ -69,9 +69,9 @@ class ControllerWeixinSetting extends Controller {
 			$this->data['success'] = '';
 		}
 
-		$this->data['action'] = $this->url->link('setting/setting', 'token=' . $this->session->data['token'], 'SSL');
+		$this->data['action'] = $this->url->link('weixin/setting', 'token=' . $this->session->data['token'], 'SSL');
 		
-		$this->data['cancel'] = $this->url->link('setting/store', 'token=' . $this->session->data['token'], 'SSL');
+		$this->data['cancel'] = $this->url->link('weixin/setting', 'token=' . $this->session->data['token'], 'SSL');
 		
 		$this->data['token'] = $this->session->data['token'];
 		
