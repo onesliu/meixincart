@@ -61,13 +61,33 @@ class ControllerWeixinWeixin extends Controller {
 				//注销用户
 				$this->model_weixin_get_userinfo->unSubscribeUser($this->WeixinFromUserName);
 			}
+			else if ($this->WeixinMsgType == 'event' && $this->WeixinEvent == 'click') {
+				//菜单消息事件
+				if ($this->WeixinEventKey == 'V1001_BUY_NOW') {
+					$this->load->model("weixin/auto_reply");
+					$reply = $this->model_weixin_auto_reply->getReply($this->WeixinFromUserName,
+						$this->WeixinToUserName, 'order');
+					if ($reply != false) {
+						$this->response->setOutput($reply);
+						return;
+					}
+				}
+				else if ($this->WeixinEventKey == 'V1001_SELF_INFO') {
+					$this->load->model("weixin/auto_reply");
+					$reply = $this->model_weixin_auto_reply->getReply($this->WeixinFromUserName,
+						$this->WeixinToUserName, 'order');
+					if ($reply != false) {
+						$this->response->setOutput($reply);
+						return;
+					}
+				}
+			}
 			else if ($this->WeixinMsgType == 'text') {
 				//测试自动回复
 				$this->load->model("weixin/auto_reply");
 				$reply = $this->model_weixin_auto_reply->getReply($this->WeixinFromUserName,
 					$this->WeixinToUserName, $this->WeixinContent);
 				if ($reply != false) {
-					//$this->log->write($reply);
 					$this->response->setOutput($reply);
 					return;
 				}
