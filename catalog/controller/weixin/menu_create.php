@@ -1,5 +1,8 @@
 <?php
-$menu_def = '{
+
+class ControllerWeixinMenuCreate extends Controller {
+
+	private $menu_def = '{
      "button":[
      {	
           "type":"click",
@@ -18,10 +21,9 @@ $menu_def = '{
                "name":"关于我们",
                "url":"http://oc.ngrok.com/opencart/"
            }]
-       }]
-}';
+       }]}';
 
-class ControllerWeixinMenuCreate extends Controller {
+	
 	public function index() {
 		
 		// 读取微信配置信息
@@ -47,10 +49,11 @@ class ControllerWeixinMenuCreate extends Controller {
 		}
 		
 		//创建菜单
-		$url = "https://api.weixin.qq.com/cgi-bin/menu_create/create?access_token=$access_token";
+		$url = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=$access_token";
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $url);
 		curl_setopt($ch, CURLOPT_POST, true);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $this->menu_def);
 		curl_setopt($ch, CURLOPT_HEADER, false);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
@@ -58,7 +61,7 @@ class ControllerWeixinMenuCreate extends Controller {
 		$res = curl_exec($ch);
 		$rescode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 		curl_close($ch);
-		
+
 		$this->response->setOutput($res);
 		/*
 		$result = json_decode($res);
