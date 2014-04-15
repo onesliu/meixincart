@@ -9,12 +9,14 @@ class ControllerWeixinWeixin extends Controller {
 		// 验证微信服务器
 		if ($token == null) {
 			$this->response->setOutput("");
+			$this->log->write("微信token未配置");
 			return;
 		}
 		
 		$valid_result = $this->valid($token);
 		if ($valid_result == false) {
 			$this->response->setOutput("");
+			$this->log->write("微信接入验证失败");
 			return;
 		}
 		else if (is_string($valid_result)){
@@ -31,7 +33,7 @@ class ControllerWeixinWeixin extends Controller {
 		
 		$this->load->model('setting/setting');
 		$this->load->model('weixin/access_token');
-		//$this->log->write($access_token." ".$token_starttime." ".$token_expire." ".(time() - $token_starttime));
+
 		if (null == $access_token || null == $token_starttime || null == $token_expire ||
 			(time() - $token_starttime >= $token_expire)) {
 
@@ -40,6 +42,7 @@ class ControllerWeixinWeixin extends Controller {
 			if ($access_token == false) {
 				// 读取access_token失败
 				$this->response->setOutput("");
+				$this->log->write("从微信服务器取access_token失败");
 				return;
 			}
 		}
@@ -61,7 +64,7 @@ class ControllerWeixinWeixin extends Controller {
 				//注销用户
 				$this->model_weixin_get_userinfo->unSubscribeUser($this->WeixinFromUserName);
 			}
-			else if ($this->WeixinMsgType == 'event' && $this->WeixinEvent == 'click') {
+			else if ($this->WeixinMsgType == 'event' && $this->WeixinEvent == 'CLICK') {
 				//菜单消息事件
 				if ($this->WeixinEventKey == 'V1001_BUY_NOW') {
 					$this->load->model("weixin/auto_reply");
