@@ -19,14 +19,14 @@ create table if not exists oc_message(
 	Description varchar(512) default null,
 	Url varchar(1024) default null,
 	Others text default null
-)ENGINE=MyISAM;
+)ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 create table if not exists oc_message_reply(
 	id integer not null auto_increment primary key,
 	customerid integer not null,
 	userid integer not null,
 	content text default null
-)ENGINE=MyISAM;
+)ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 create table if not exists oc_auto_message(
 	id integer not null auto_increment primary key,
@@ -34,7 +34,7 @@ create table if not exists oc_auto_message(
 	MsgType varchar(32) not null,
 	ItemCount integer default 0,
 	Items text default null
-)ENGINE=MyISAM;
+)ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 create table if not exists oc_event(
 	id integer not null auto_increment primary key,
@@ -50,7 +50,7 @@ create table if not exists oc_event(
 	Longitude double default 0.0,
 	`Precision` double default 0.0,
 	Others text default null
-)ENGINE=MyISAM;
+)ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 alter table oc_customer add `subscribe` integer default 0;
 alter table oc_customer add `openid` varchar(255) default null;

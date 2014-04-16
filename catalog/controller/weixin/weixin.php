@@ -65,6 +65,10 @@ class ControllerWeixinWeixin extends Controller {
 				$this->model_weixin_get_userinfo->unSubscribeUser($this->WeixinFromUserName);
 			}
 			else if ($this->WeixinMsgType == 'event' && $this->WeixinEvent == 'CLICK') {
+				//自动登录到商城
+				if (!$this->customer->login($this->WeixinFromUserName, WEIXIN_USERPWD)) {
+					$this->log->write("微信用户自动登录到商城失败：".$this->WeixinFromUserName);
+				}
 				//菜单消息事件
 				if ($this->WeixinEventKey == 'V1001_BUY_NOW') {
 					$this->load->model("weixin/auto_reply");
