@@ -1,6 +1,6 @@
 <?php
 // Text
-$_['text_home']        = '家';
+$_['text_home']        = '首页';
 $_['text_login']       = '登录';
 $_['text_logout']      = '退出';
 $_['text_account']     = '帐号';

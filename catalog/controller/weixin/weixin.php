@@ -65,17 +65,20 @@ class ControllerWeixinWeixin extends Controller {
 				$this->model_weixin_get_userinfo->unSubscribeUser($this->WeixinFromUserName);
 			}
 			else if ($this->WeixinMsgType == 'event' && $this->WeixinEvent == 'CLICK') {
-				//自动登录到商城
+				/*自动登录到商城
 				if (!$this->customer->login($this->WeixinFromUserName, WEIXIN_USERPWD)) {
 					unset($this->session->data['guest']);
 					$this->log->write("微信用户自动登录到商城失败：".$this->WeixinFromUserName);
 				}
+				*/
+				$param = "index.php?route=weixin/login&email=$this->WeixinFromUserName&password=".WEIXIN_USERPWD;
 				//菜单消息事件
 				if ($this->WeixinEventKey == 'V1001_BUY_NOW') {
 					$this->load->model("weixin/auto_reply");
 					$reply = $this->model_weixin_auto_reply->getReply($this->WeixinFromUserName,
 						$this->WeixinToUserName, 'order');
 					if ($reply != false) {
+						$reply = str_replace('index.php', $param, $reply);
 						$this->response->setOutput($reply);
 						return;
 					}
@@ -85,6 +88,7 @@ class ControllerWeixinWeixin extends Controller {
 					$reply = $this->model_weixin_auto_reply->getReply($this->WeixinFromUserName,
 						$this->WeixinToUserName, 'order');
 					if ($reply != false) {
+						$reply = str_replace('index.php', $param, $reply);
 						$this->response->setOutput($reply);
 						return;
 					}
@@ -107,23 +111,27 @@ class ControllerWeixinWeixin extends Controller {
 	private function valid($token)
     {
     	if ($this->request->server['REQUEST_METHOD'] == 'GET') {
-	        $signature = $this->request->get["signature"];
-	        $timestamp = $this->request->get["timestamp"];
-	        $nonce = $this->request->get["nonce"];
-	        $echostr = $this->request->get['echostr'];
-
-    		if($this->checkSignature($signature, $timestamp, $nonce, $token)){
-	        	return $echostr;
-	        }
+    		if (isset($this->request->get["signature"])) {
+		        $signature = $this->request->get["signature"];
+		        $timestamp = $this->request->get["timestamp"];
+		        $nonce = $this->request->get["nonce"];
+		        $echostr = $this->request->get['echostr'];
+	
+	    		if($this->checkSignature($signature, $timestamp, $nonce, $token)){
+		        	return $echostr;
+		        }
+    		}
     	}
     	else {
-	        $signature = $this->request->get["signature"];
-	        $timestamp = $this->request->get["timestamp"];
-	        $nonce = $this->request->get["nonce"];	
-
-	        if($this->checkSignature($signature, $timestamp, $nonce, $token)){
-	        	return true;
-	        }
+    		if (isset($this->request->get["signature"])) {
+		        $signature = $this->request->get["signature"];
+		        $timestamp = $this->request->get["timestamp"];
+		        $nonce = $this->request->get["nonce"];	
+	
+		        if($this->checkSignature($signature, $timestamp, $nonce, $token)){
+		        	return true;
+		        }
+    		}
     	}
 
         return false;

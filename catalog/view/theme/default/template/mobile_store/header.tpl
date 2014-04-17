@@ -77,15 +77,10 @@ DD_belatedPNG.fix('#logo img');
 <div id="container">
 
 <div id="floating-bar">
-	<?php if (!$logged) { ?>
-		<a id="login-button"  class="trans-button" href="<?php echo $login;?>">
-			<div class="icon login"></div>
-			<div class="icon-name"><?php echo $text_login; ?></div>
-		</a>
-	<?php } else { ?>
-			<a id="account-button" class="trans-button" href="<?php echo $account;?>">
+	<?php if ($logged) { ?>
+			<a id="account-button" class="trans-button" href="<?php echo $home;?>">
 				<div class="icon account"></div>
-				<div class="icon-name"><?php echo $text_account; ?></div>
+				<div class="icon-name"><?php echo $text_home; ?></div>
 			</a>
 	<?php } ?>
 	
@@ -96,14 +91,14 @@ DD_belatedPNG.fix('#logo img');
   
 	<a id="cart" class="trans-button" href="<?php echo $cart;?>">
 	    <div class="icon cart"></div>
-	    <div id="cart_total" class="icon-name"><?php echo $text_items; ?></div>
+	    <div id="cart_total" class="icon-name"><?php echo $text_items.' '.$text_checkout; ?></div>
 	</a>
-	
+	<!-- 
 	<a id="pay-button" class="trans-button" href="<?php echo $checkout;?>">
 		<div class="icon pay"></div>
 		<div class="icon-name"><?php echo $text_checkout; ?></div>
 	</a>
-	
+	 -->
 </div>
 
 <div id="notification"></div>

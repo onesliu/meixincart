@@ -20,7 +20,7 @@ class ControllerWeixinLogin extends Controller {
       		$this->redirect($this->url->link('mobile_store/home', '', 'SSL'));
     	}
 	
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
+		if ($this->validate()) {
 			unset($this->session->data['guest']);
 			
 			// Added strpos check to pass McAfee PCI compliance test (http://forum.opencart.com/viewtopic.php?f=10&t=12043&p=151494#p151295)
@@ -41,7 +41,15 @@ class ControllerWeixinLogin extends Controller {
   	}
   
   	private function validate() {
-    	if (!$this->customer->login($this->request->post['email'], $this->request->post['password'])) {
+  		if ($this->request->server['REQUEST_METHOD'] == 'POST') {
+  			$email = $this->request->post['email'];
+  			$passwd = $this->request->post['password'];
+  		}
+  		else {
+  			$email = $this->request->get['email'];
+  			$passwd = $this->request->get['password'];
+  		}
+    	if (!$this->customer->login($email, $passwd)) {
       		$this->error['warning'] = $this->language->get('error_login');
     	}
 	

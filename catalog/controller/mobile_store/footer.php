@@ -1,4 +1,4 @@
-<?php  
+<?php
 class ControllerMobileStoreFooter extends Controller {
 	protected function index() {
 		/*
