@@ -109,17 +109,21 @@ function error_handler($errno, $errstr, $errfile, $errline) {
 // Error Handler
 set_error_handler('error_handler');
 
-// Customer
-$registry->set('customer', new Customer($registry));
-
 // Request
 $request = new Request();
 $registry->set('request', $request);
- 
+
 // Response
 $response = new Response();
 $response->addHeader('Content-Type: text/html; charset=utf-8');
 $registry->set('response', $response); 
+
+// Session
+$session = new Session();
+$registry->set('session', $session);
+
+// Customer
+$registry->set('customer', new Customer($registry));
 
 // Front Controller 
 $controller = new Front($registry);

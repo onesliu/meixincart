@@ -26,7 +26,7 @@
 <link rel="stylesheet" type="text/css" media="only screen and (min-device-width: 961px) and (max-device-width: 1280px)" href="catalog/view/theme/<?php echo $theme_name; ?>/stylesheet/ms_3_column.css" />
 <link rel="stylesheet" type="text/css" media="only screen and (min-device-width: 1281px) and (max-device-width: 1600px)" href="catalog/view/theme/<?php echo $theme_name; ?>/stylesheet/ms_4_column.css" />
 <link rel="stylesheet" type="text/css" media="only screen and (min-device-width: 1601px) and (max-device-width: 1940px)" href="catalog/view/theme/<?php echo $theme_name; ?>/stylesheet/ms_5_column.css" />
-<link rel="stylesheet" type="text/css" media="only screen and (min-device-width: 1941px)" href="catalog/view/theme/<?php echo $theme_name; ?>/stylesheet/ms_6_column.css" />
+<!-- <link rel="stylesheet" type="text/css" media="only screen and (min-device-width: 1941px)" href="catalog/view/theme/<?php echo $theme_name; ?>/stylesheet/ms_6_column.css" />  -->
 
 
 <!-- adapt script -->
