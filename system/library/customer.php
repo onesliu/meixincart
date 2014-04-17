@@ -97,7 +97,7 @@ class Customer {
 			$this->newsletter = $customer_query->row['newsletter'];
 			$this->customer_group_id = $customer_query->row['customer_group_id'];
 			$this->address_id = $customer_query->row['address_id'];
-          	
+          	//$registry->get('log')($this->request);
 			$this->db->query("UPDATE " . DB_PREFIX . "customer SET ip = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "' WHERE customer_id = '" . (int)$this->customer_id . "'");
 			
 	  		return true;
