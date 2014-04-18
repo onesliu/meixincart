@@ -1,11 +1,11 @@
 <?php
 // HTTP
-define('HTTP_SERVER', 'http://oc.ngrok.com/opencart/admin/');
-define('HTTP_CATALOG', 'http://oc.ngrok.com/opencart/');
+define('HTTP_SERVER', 'http://localhost/opencart/admin/');
+define('HTTP_CATALOG', 'http://localhost/opencart/');
 
 // HTTPS
-define('HTTPS_SERVER', 'http://oc.ngrok.com/opencart/admin/');
-define('HTTPS_CATALOG', 'http://oc.ngrok.com/opencart/');
+define('HTTPS_SERVER', 'http://localhost/opencart/admin/');
+define('HTTPS_CATALOG', 'http://localhost/opencart/');
 
 // DIR
 define('DIR_APPLICATION', 'D:\PHPnow\htdocs\opencart\/admin/');

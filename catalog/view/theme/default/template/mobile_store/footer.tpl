@@ -1,3 +1,4 @@
+<!-- 
 <div id="footer">
   <div class="column">
     <h3><?php echo $text_information; ?></h3>
@@ -18,7 +19,7 @@
 </div>
 
 <div id="switch-version"><a href="<?php echo $desktop_version; ?>"><?php echo $text_desktop_version; ?></a></div>
-
+ -->
 </div>
 
 <script type="text/javascript"><!--

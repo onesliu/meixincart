@@ -1,7 +1,7 @@
 <?php
 class ControllerMobileStoreFooter extends Controller {
 	protected function index() {
-		/*
+		
 		$this->language->load('mobile_store/footer');
 		
 		$this->data['product_general_href']  = $this->url->link('mobile_store/product', 'product_id=');
@@ -53,7 +53,7 @@ class ControllerMobileStoreFooter extends Controller {
 		}
 		
 		$this->render();
-		*/
+		
 	}
 }
 ?>

@@ -1,9 +1,11 @@
 <?php
 // HTTP
 define('HTTP_SERVER', 'http://oc.ngrok.com/opencart/');
+//define('HTTP_SERVER', 'http://192.168.1.32/opencart/');
 
 // HTTPS
 define('HTTPS_SERVER', 'http://oc.ngrok.com/opencart/');
+//define('HTTPS_SERVER', 'http://192.168.1.32/opencart/');
 
 // DIR
 define('DIR_APPLICATION', 'D:\PHPnow\htdocs\opencart\/catalog/');
