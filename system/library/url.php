@@ -32,5 +32,25 @@ class Url {
 				
 		return $url;
 	}
+	
+	public function link2($route, $args = '', $connection = 'NONSSL') {
+		if ($connection ==  'NONSSL') {
+			$url = $this->url;
+		} else {
+			$url = $this->ssl;	
+		}
+		
+		$url .= 'index.php?route=' . $route;
+		
+		if ($args) {
+			$url .= '&' . ltrim($args, '&'); 
+		}
+
+		foreach ($this->rewrite as $rewrite) {
+			$url = $rewrite->rewrite($url);
+		}
+				
+		return $url;
+	}
 }
 ?>

@@ -2,29 +2,6 @@
 <div id="content" class="round"><?php echo $content_top; ?>
   <h1><?php echo $heading_title; ?></h1>
   
-  <?php if ($categories) { ?>
-  <div class="refine-list">
-    <?php if (count($categories) <= 5) { ?>
-    <ul>
-      <?php foreach ($categories as $category) { ?>
-      <li><a href="<?php echo $category['href']; ?>"><?php echo $category['name']; ?></a></li>
-      <?php } ?>
-    </ul>
-    <?php } else { ?>
-    <ul>
-	<?php for ($i = 0; $i < count($categories);) { ?>
-    
-      <?php $j = $i + ceil(count($categories) / 4); ?>
-      <?php for (; $i < $j; $i++) { ?>
-      <?php if (isset($categories[$i])) { ?>
-      <li><a href="<?php echo $categories[$i]['href']; ?>"><?php echo $categories[$i]['name']; ?></a></li>
-      <?php } ?>
-      <?php } ?>
-    <?php } ?>
-	</ul>
-    <?php } ?>
-  </div>
-  <?php } ?>
   <?php if ($products) { ?>
   <div class="product-filter">
     <div class="limit"><?php echo $text_limit; ?>
@@ -51,7 +28,7 @@
     </div>
   </div>
   <div class="product-compare"></div>
-  <div class="product-list">
+  <div id="plist" class="product-list">
     <?php foreach ($products as $product) { ?>
     <div>
       <?php if ($product['thumb']) { ?>
@@ -73,7 +50,7 @@
     </div>
     <?php } ?>
   </div>
-  <div class="pagination"><?php echo $pagination; ?></div>
+  <div class="pagination"><?php if (isset($pagination['a'])) echo $pagination['a']; ?></div>
   <?php } ?>
   <?php if (!$categories && !$products) { ?>
   <div class="content"><?php echo $text_empty; ?></div>
@@ -83,6 +60,22 @@
   <?php } ?>
   <?php echo $content_bottom; ?></div>
 <script type="text/javascript"><!--
+var url_more="<?php echo $pagination['url']; ?>";
+var um_fspath=<?php echo $pagination['fspath']; ?>;
+var um_page=<?php echo $pagination['page']; ?>;
+var um_pages=<?php echo $pagination['num_pages']; ?>;
+var um_limit=<?php echo $limit; ?>;
+$("#bmore").click(function(){
+	url = url_more + "&fspath=" + um_fspath + "&page=" + um_page + "&limit=" + um_limit;
+	um_page++;
+	$.get(url, function(data,status) {
+		$("#plist").append(data);
+		if (um_page > um_pages) {
+			$("#bmore").hide();
+		}
+	});
+});
+
 function display(view) {
 	if (view == 'list') {
 		$('.product-grid').attr('class', 'product-list');

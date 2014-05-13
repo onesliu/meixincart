@@ -17,12 +17,27 @@ class ControllerMobileStoreCategoryList extends Controller {
 				'filter_category_id'  => $result['category_id'],
 				'filter_sub_category' => true	
 			);
-						
+			
 			$product_total = $this->model_catalog_product->getTotalProducts($data);
+			
+			$childs = array();
+			$subcats = $this->model_catalog_category->getCategories($result['category_id']);
+			foreach($subcats as $sub) {
+				$data2 = array(
+					'filter_category_id'  => $sub['category_id'],
+					'filter_sub_category' => true	
+				);
+				$product_total2 = $this->model_catalog_product->getTotalProducts($data2);
+				$childs[] = array(
+					'name'  => $sub['name'] . ' (' . $product_total2 . ')',
+					'href'  => $this->url->link('mobile_store/category', 'fspath=' . $sub['category_id'])
+				);
+			}
 			
 			$this->data['categories'][] = array(
 				'name'  => $result['name'] . ' (' . $product_total . ')',
-				'href'  => $this->url->link('mobile_store/category', 'fspath=' . $result['category_id'])
+				'href'  => $this->url->link('mobile_store/category', 'fspath=' . $result['category_id']),
+				'childs' => $childs
 			);
 		}
 

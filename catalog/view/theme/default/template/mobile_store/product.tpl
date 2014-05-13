@@ -1,5 +1,5 @@
 <?php echo $header; ?>
-<div id="content" class="round"><?php echo $content_top; ?>
+<div id="content" class="square"><?php echo $content_top; ?>
   <h1><?php echo $heading_title; ?></h1>
   
   <?php if ($images) { ?>
@@ -35,7 +35,7 @@
         <span><?php echo $text_stock; ?></span> <?php echo $stock; ?>
 		
 		<?php if ($review_status) { ?>
-			<div><img src="catalog/view/theme/default/image/stars-<?php echo $rating; ?>.png" alt="<?php echo $reviews; ?>" /></div>
+			<div style="margin-top: 3px;"><img src="catalog/view/theme/default/image/stars-<?php echo $rating; ?>.png" alt="<?php echo $reviews; ?>" /></div>
 		<?php } ?>
 	  
 	  </div>
@@ -212,9 +212,10 @@
       <?php } ?>
       <div class="cart">
         <div><?php echo $text_qty; ?>
-          <input type="text" name="quantity" size="2" value="<?php echo $minimum; ?>" />
+          <input type="text" name="quantity" size="5" value="<?php echo $minimum; ?>" />
           <input type="hidden" name="product_id" size="2" value="<?php echo $product_id; ?>" />
-          &nbsp;<a id="button-cart" class="button"><span><?php echo $button_cart; ?></span></a></div>
+          &nbsp;</div>
+          <a id="button-cart" class="button_12 green green_borderbottom radius4"><span><?php echo $button_cart; ?></span></a>
        
         <?php if ($minimum > 1) { ?>
         <div class="minimum"><?php echo $text_minimum; ?></div>
@@ -224,8 +225,8 @@
   </div>
   
   <div>
-	  <div class="row-title"><?php echo $tab_description; ?></div>
-	  <div id="tab-description" class="row-content active"><?php echo $description; ?></div>
+	  <div class="row-title no-mb active round"><?php echo $tab_description; ?></div>
+	  <div id="tab-description" class="row-content no-bt active"><?php echo $description; ?></div>
   </div>
   
   <?php if ($attribute_groups) { ?>
@@ -252,9 +253,9 @@
 	  </div>
   </div>  
   <?php } ?>
-  <?php if ($review_status) { ?>
+  <?php if ($review_status && false) { ?>
   <div>		
-	  <div class="row-title"><?php echo $tab_review; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<?php echo $text_write; ?></div>
+	  <div class="row-title no-mb round"><?php echo $tab_review; ?></div>
 	  <div id="tab-review" class="row-content">
 		<div id="review"></div>
 		<h2 id="review-title"><?php echo $text_write; ?></h2>
@@ -318,7 +319,7 @@
 	  </div>
   </div>	  
   <?php } ?>
-  <?php if ($tags) { ?>
+  <?php if ($tags && false) { ?>
   <div class="tags"><b><?php echo $text_tags; ?></b>
     <?php for ($i = 0; $i < count($tags); $i++) { ?>
     <?php if ($i < (count($tags) - 1)) { ?>

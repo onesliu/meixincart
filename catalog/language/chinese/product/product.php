@@ -3,8 +3,8 @@
 $_['text_search']         = '搜索';
 $_['text_brand']          = '品牌';
 $_['text_manufacturer']   = '品  牌：';
-$_['text_model']          = '型  号：';
-$_['text_reward']         = '积  分：'; 
+$_['text_model']          = '商品类型：';
+$_['text_reward']         = '积分购买：'; 
 $_['text_points']         = '可使用积分：';
 $_['text_stock']          = '库存状态：';
 $_['text_instock']        = '有库存';

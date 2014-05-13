@@ -9,7 +9,7 @@
 <div class="warning"><?php echo $error_warning; ?><img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>
 <?php } ?>
 
-<div id="content"><?php echo $content_top; ?>
+<div id="content" class="square"><?php echo $content_top; ?>
   
   <h1><?php echo $heading_title; ?>
     <?php if ($weight) { ?>
@@ -17,22 +17,18 @@
     <?php } ?>
   </h1>
   <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
-    <div class="cart-info">
-      <table>
-        <thead>
-          <tr>
-            <td class="image">X</td>
-            <td class="name"><?php echo $column_name; ?></td>
-            <td class="quantity"><?php echo $column_quantity; ?></td>
-            <td class="price"><?php echo $column_price; ?></td>
-            <td class="total"><?php echo $column_total; ?></td>
-          </tr>
-        </thead>
-        <tbody>
+    <ul class="responsive_table">
+          <li class="table_row lgreen radius4">
+            <div class="table_section_small"><?php echo $column_remove; ?></div>
+            <div class="table_section"><?php echo $column_name; ?></div>
+            <div class="table_section"><?php echo $column_quantity; ?></div>
+            <div class="table_section_small"><?php echo $column_price; ?></div>
+            <div class="table_section_small"><?php echo $column_total; ?></div>
+          </li>
           <?php foreach ($products as $product) { ?>
-          <tr>
-            <td class="image"><a href="<?php echo $product['remove']; ?>"><img src="catalog/view/theme/default/image/remove.png" alt="<?php echo $button_remove; ?>" title="<?php echo $button_remove; ?>" /></a></td>
-            <td class="name"><?php echo $product['name']; ?>
+          <li class="table_row lgray radius4">
+            <div class="table_section_small"><a href="<?php echo $product['remove']; ?>"><img style="vertical-align:middle;" src="catalog/view/theme/default/image/remove.png" alt="<?php echo $button_remove; ?>" title="<?php echo $button_remove; ?>" /></a></div>
+            <div class="table_section"><?php echo $product['name']; ?>
               <?php if (!$product['stock']) { ?>
               <span class="stock">***</span>
               <?php } ?>
@@ -43,31 +39,29 @@
               </div>
               <?php if ($product['reward']) { ?>
               <small><?php echo $product['reward']; ?></small>
-              <?php } ?></td>
-            <td class="quantity">
-			  <input type="text" name="quantity[<?php echo $product['key']; ?>]" value="<?php echo $product['quantity']; ?>" size="1" />
-			  &nbsp;&nbsp;
+              <?php } ?></div>
+            <div class="table_section">
+			  <input type="text" onchange="" name="quantity[<?php echo $product['key']; ?>]" value="<?php echo $product['quantity']; ?>" size="3" />
 			  <input type="image" src="catalog/view/theme/default/image/update.png" alt="<?php echo $button_update; ?>" title="<?php echo $button_update; ?>" /> 
-            </td>
-            <td class="price"><?php echo $product['price']; ?></td>
-            <td class="total"><?php echo $product['total']; ?></td>
-          </tr>
+            </div>
+            <div class="table_section_small"><?php echo $product['price']; ?></div>
+            <div class="table_section_small"><?php echo $product['total']; ?></div>
+          </li>
           <?php } ?>
           <?php foreach ($vouchers as $vouchers) { ?>
-          <tr>
-            <td class="image"></td>
-            <td class="name"><?php echo $vouchers['description']; ?></td>
-            <td class="model"></td>
-            <td class="quantity"><input type="text" name="" value="1" size="1" disabled="disabled" />
-              &nbsp;<a href="<?php echo $vouchers['remove']; ?>"><img src="catalog/view/theme/default/image/remove.png" alt="<?php echo $text_remove; ?>" title="<?php echo $button_remove; ?>" /></a></td>
-            <td class="price"><?php echo $vouchers['amount']; ?></td>
-            <td class="total"><?php echo $vouchers['amount']; ?></td>
-          </tr>
+          <li class="table_row lgray radius4">
+            <div class="table_section_small"></div>
+            <div class="table_section"><?php echo $vouchers['description']; ?></div>
+            <div class="table_section"></div>
+            <div class="table_section"><input type="text" name="" value="1" size="4" disabled="disabled" />
+              &nbsp;<a href="<?php echo $vouchers['remove']; ?>"><img src="catalog/view/theme/default/image/remove.png" alt="<?php echo $text_remove; ?>" title="<?php echo $button_remove; ?>" /></a></div>
+            <div class="table_section_small"><?php echo $vouchers['amount']; ?></div>
+            <div class="table_section_small"><?php echo $vouchers['amount']; ?></div>
+          </li>
           <?php } ?>
-        </tbody>
-      </table>
-    </div>
+    </ul>
   </form>
+  <div class="clearfix"></div>
   <div class="cart-total">
     <table id="total">
       <?php foreach ($totals as $total) { ?>
@@ -79,7 +73,7 @@
     </table>
   </div>
   <div class="buttons">
-    <div class="center"><a href="<?php echo $checkout; ?>" class="button"><?php echo $button_checkout; ?></a></div>
+    <div class="center"><a href="<?php echo $checkout; ?>" class="button_11 orange orange_borderbottom radius4"><?php echo $button_checkout; ?></a></div>
   </div>
   <?php echo $content_bottom; ?></div>
 <script type="text/javascript"><!--

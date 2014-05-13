@@ -237,6 +237,8 @@ class ControllerMobileStoreHeader extends Controller {
 			$this->template = 'default/template/mobile_store/header.tpl';
 		}
 		
+		$this->data['theme_img_dir'] = $server . 'catalog/view/theme/' . $this->config->get('config_template') . '/image/';
+		
     	$this->render();
 	} 	
 }

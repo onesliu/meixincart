@@ -118,6 +118,7 @@ class ControllerMobileStoreCart extends Controller {
 			$this->data['text_shipping_method'] = $this->language->get('text_shipping_method');
 			$this->data['text_select'] = $this->language->get('text_select');
 						
+			$this->data['column_remove'] = $this->language->get('column_remove');
 			$this->data['column_image'] = $this->language->get('column_image');
       		$this->data['column_name'] = $this->language->get('column_name');
       		$this->data['column_model'] = $this->language->get('column_model');

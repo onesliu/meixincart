@@ -93,5 +93,35 @@ class Pagination {
 		
 		return ($output ? '<div class="' . $this->style_links . '">' . $output . '</div>' : '') . '<div class="' . $this->style_results . '">' . str_replace($find, $replace, $this->text) . '</div>';
 	}
+	
+	public function render_more() {
+		$total = $this->total;
+		
+		if ($this->page < 1) {
+			$page = 1;
+		} else {
+			$page = $this->page;
+		}
+		
+		if (!(int)$this->limit) {
+			$limit = 10;
+		} else {
+			$limit = $this->limit;
+		}
+		
+		$num_pages = ceil($total / $limit);
+		
+		$output = array();
+		
+		if ($page < $num_pages) {
+			$output['a'] = ' <a id="bmore" class="button_11 green green_borderbottom radius4">加载更多...</a> ';
+			$output['url'] = $this->url;
+			$output['page'] = $page + 1;
+			$output['num_pages'] = $num_pages;
+			//href="' . str_replace('{page}', $page + 1, $this->url) . '"
+		}
+		
+		return $output;
+	}
 }
 ?>

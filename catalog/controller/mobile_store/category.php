@@ -52,13 +52,13 @@ class ControllerMobileStoreCategory extends Controller {
 		} else { 
 			$page = 1;
 		}	
-							
+
 		if (isset($this->request->get['limit'])) {
 			$limit = $this->request->get['limit'];
 		} else {
 			$limit = 6;
 		}
-					
+		
 		$this->data['breadcrumbs'] = array();
 
    		$this->data['breadcrumbs'][] = array(
@@ -124,13 +124,13 @@ class ControllerMobileStoreCategory extends Controller {
 			$this->data['button_wishlist'] = $this->language->get('button_wishlist');
 			$this->data['button_compare'] = $this->language->get('button_compare');
 			$this->data['button_continue'] = $this->language->get('button_continue');
-					
+			
 			if ($category_info['image']) {
 				$this->data['thumb'] = $this->model_tool_image->resize($category_info['image'], $this->config->get('config_image_category_width'), $this->config->get('config_image_category_height'));
 			} else {
 				$this->data['thumb'] = '';
 			}
-									
+			
 			$this->data['description'] = html_entity_decode($category_info['description'], ENT_QUOTES, 'UTF-8');
 			$this->data['compare'] = $this->url->link('mobile_store/compare');
 			
@@ -147,7 +147,7 @@ class ControllerMobileStoreCategory extends Controller {
 			if (isset($this->request->get['limit'])) {
 				$url .= '&limit=' . $this->request->get['limit'];
 			}
-								
+			
 			$this->data['categories'] = array();
 			
 			$results = $this->model_catalog_category->getCategories($category_id);
@@ -157,7 +157,7 @@ class ControllerMobileStoreCategory extends Controller {
 					'filter_category_id'  => $result['category_id'],
 					'filter_sub_category' => true	
 				);
-							
+				
 				$product_total = $this->model_catalog_product->getTotalProducts($data);
 				
 				$this->data['categories'][] = array(
@@ -183,7 +183,7 @@ class ControllerMobileStoreCategory extends Controller {
 				'start'              => ($page - 1) * $limit,
 				'limit'              => $limit
 			);
-					
+			
 			$product_total = $this->model_mobile_store_product->getTotalProducts($data); 
 			
 			$results = $this->model_mobile_store_product->getProducts($data);
@@ -308,6 +308,12 @@ class ControllerMobileStoreCategory extends Controller {
 			$this->data['limits'] = array();
 						
 			$this->data['limits'][] = array(
+				'text'  => 3,
+				'value' => 3,
+				'href'  => $this->url->link('mobile_store/category', 'fspath=' . $this->request->get['fspath'] . $url . '&limit=3')
+			);
+			
+			$this->data['limits'][] = array(
 				'text'  => 6,
 				'value' => 6,
 				'href'  => $this->url->link('mobile_store/category', 'fspath=' . $this->request->get['fspath'] . $url . '&limit=6')
@@ -350,10 +356,11 @@ class ControllerMobileStoreCategory extends Controller {
 			$pagination->page = $page;
 			$pagination->limit = $limit;
 			$pagination->text = $this->language->get('text_pagination');
-			$pagination->url = $this->url->link('mobile_store/category', 'fspath=' . $this->request->get['fspath'] . $url . '&page={page}');
+			$pagination->url = $this->url->link2('mobile_store/category_more');
 		
-			$this->data['pagination'] = $pagination->render();
-		
+			$this->data['pagination'] = $pagination->render_more();
+			$this->data['pagination']['fspath'] = $this->request->get['fspath'];
+			
 			$this->data['sort'] = $sort;
 			$this->data['order'] = $order;
 			$this->data['limit'] = $limit;
