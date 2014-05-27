@@ -1,5 +1,5 @@
 <?php echo $header; ?>
-<div id="content" class="round"><?php echo $content_top; ?>
+<div id="content" class="square"><?php echo $content_top; ?>
   
 <?php if ($categories) { ?>
 <div class="category-list">

@@ -75,7 +75,8 @@
   <div class="buttons">
     <div class="center"><a href="<?php echo $checkout; ?>" class="button_11 orange orange_borderbottom radius4"><?php echo $button_checkout; ?></a></div>
   </div>
-  <?php echo $content_bottom; ?></div>
+  <?php echo $content_bottom; ?>
+</div>
 <script type="text/javascript"><!--
 
 $('input[name=\'next\']').bind('change', function() {

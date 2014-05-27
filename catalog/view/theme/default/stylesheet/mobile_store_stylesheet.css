@@ -98,9 +98,9 @@ label {
 #content {
 	background: #fff;
 	min-height: 200px;
-	margin-bottom: 25px;
-	margin-left: 5px;
-	margin-right: 5px;
+	margin-bottom: 0px;
+	margin-left: 0px;
+	margin-right: 0px;
 }
 
 #content.square {
@@ -124,6 +124,11 @@ label {
 	width: 100%;
 	height: 36px;
 	background: url('../image/mobile_store/mobile-store-bar-bg.png') repeat-x;
+	overflow: hidden;
+}
+
+#detail_img {
+	width: 100%;
 	overflow: hidden;
 }
 
@@ -770,7 +775,7 @@ a.button:hover span {
 }
 .row-content {
 	border: 1px solid #DBDEE1;
-	padding: 5px 10px 5px 10px;
+	padding: 5px 0px 5px 0px;
 	margin-bottom: 5px;
 	display: none;
 	overflow: auto;
