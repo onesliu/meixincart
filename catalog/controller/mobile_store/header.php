@@ -80,6 +80,7 @@ class ControllerMobileStoreHeader extends Controller {
 		$this->data['text_categories'] = $this->language->get('text_categories');
 		$this->data['text_items'] = $this->currency->format($total);
     	$this->data['text_search'] = $this->language->get('text_search');
+    	$this->data['text_order'] = $this->language->get('text_order');
 		
     	$this->data['text_checkout'] = $this->language->get('text_checkout');
 		$this->data['text_all_products'] = $this->language->get('text_all_products');
@@ -92,6 +93,7 @@ class ControllerMobileStoreHeader extends Controller {
 		$this->data['category_list'] = $this->url->link('mobile_store/category_list', '', 'SSL');
 		$this->data['cart'] = $this->url->link('mobile_store/cart');
 		$this->data['checkout'] = $this->url->link('mobile_store/checkout', '', 'SSL');
+		$this->data['order'] = $this->url->link('mobile_store/order', '', 'SSL');
 		
 		if (isset($this->request->get['filter_name'])) {
 			$this->data['filter_name'] = $this->request->get['filter_name'];

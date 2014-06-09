@@ -135,7 +135,7 @@ class ModelMobileStoreProduct extends Model {
 					$sql .= " AND p2c.category_id = '" . (int)$data['filter_category_id'] . "'";
 				}
 			}		
-					
+			
 			if (!empty($data['filter_manufacturer_id'])) {
 				$sql .= " AND p.manufacturer_id = '" . (int)$data['filter_manufacturer_id'] . "'";
 			}
@@ -200,7 +200,7 @@ class ModelMobileStoreProduct extends Model {
 			} else {
 				$sql .= " ASC";
 			}
-		
+			
 			if (isset($data['start']) || isset($data['limit'])) {
 				if ($data['start'] < 0) {
 					$data['start'] = 0;

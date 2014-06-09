@@ -81,20 +81,6 @@ class ControllerMobileStoreCart extends Controller {
 		
 		$this->document->setTitle($this->language->get('heading_title'));
 
-      	$this->data['breadcrumbs'] = array();
-
-      	$this->data['breadcrumbs'][] = array(
-        	'href'      => $this->url->link('common/home'),
-        	'text'      => $this->language->get('text_home'),
-        	'separator' => false
-      	); 
-
-      	$this->data['breadcrumbs'][] = array(
-        	'href'      => $this->url->link('mobile_store/cart'),
-        	'text'      => $this->language->get('heading_title'),
-        	'separator' => $this->language->get('text_separator')
-      	);
-			
     	if ($this->cart->hasProducts() || !empty($this->session->data['vouchers'])) {
 			$points = $this->customer->getRewardPoints();
 			
@@ -363,12 +349,18 @@ class ControllerMobileStoreCart extends Controller {
 	
 				array_multisort($sort_order, SORT_ASC, $total_data);			
 			}
-							
-			$this->data['totals'] = $total_data;
+
+    	    foreach($total_data as $total) {
+      			if ($total['code'] == 'total') {
+      				$this->data['totals'][] = $total;
+      			}
+      		}
+			//$this->data['totals'] = $total_data;
 						
 			$this->data['continue'] = $this->url->link('mobile_store/home');
 						
-			$this->data['checkout'] = $this->url->link('mobile_store/checkout', '', 'SSL');
+			$this->data['checkout'] = $this->url->link('mobile_store/checkout_onestep', '', 'SSL');
+			//$this->data['checkout'] = $this->url->link('checkout/checkout', '', 'SSL');
 
 			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/mobile_store/cart.tpl')) {
 				$this->template = $this->config->get('config_template') . '/template/mobile_store/cart.tpl';

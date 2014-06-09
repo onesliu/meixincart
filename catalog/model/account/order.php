@@ -40,6 +40,16 @@ class ModelAccountOrder extends Model {
 				$shipping_zone_code = '';
 			}
 			
+			$district_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "district` WHERE id = '" . (int)$order_query->row['shipping_districtid'] . "'");
+			if ($district_query->num_rows) {
+				$shipping_district = $district_query->row['name'];
+				$shipping_district_addr = $district_query->row['address'];
+			}
+			else {
+				$shipping_district = '';
+				$shipping_district_addr = '';
+			}
+			
 			return array(
 				'order_id'                => $order_query->row['order_id'],
 				'invoice_no'              => $order_query->row['invoice_no'],
@@ -85,6 +95,10 @@ class ModelAccountOrder extends Model {
 				'shipping_iso_code_3'     => $shipping_iso_code_3,
 				'shipping_address_format' => $order_query->row['shipping_address_format'],
 				'shipping_method'         => $order_query->row['shipping_method'],
+				'shipping_districtid'     => $order_query->row['shipping_districtid'],
+				'shipping_time'           => $order_query->row['shipping_time'],
+				'shipping_district'       => $shipping_district,
+				'shipping_district_addr'  => $shipping_district_addr,
 				'comment'                 => $order_query->row['comment'],
 				'total'                   => $order_query->row['total'],
 				'order_status_id'         => $order_query->row['order_status_id'],

@@ -30,6 +30,8 @@ $_['text_address_existing']          = '使用现存地址';
 $_['text_shipping_method']           = '请选择一个货运方式。';
 $_['text_payment_method']            = '请选择一个支付方式。';
 $_['text_comments']                  = '添加订单备注';
+$_['text_shipping_time']			 = '收货时间';
+$_['text_shipping_district']		 = '配送区域';
 
 // Column
 $_['column_name']                    = '品名';

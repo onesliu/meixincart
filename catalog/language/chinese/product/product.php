@@ -3,12 +3,12 @@
 $_['text_search']         = '搜索';
 $_['text_brand']          = '品牌';
 $_['text_manufacturer']   = '品  牌：';
-$_['text_model']          = '商品类型：';
-$_['text_reward']         = '积分购买：'; 
+$_['text_model']          = '商品品类：';
+$_['text_reward']         = '积分换购：'; 
 $_['text_points']         = '可使用积分：';
-$_['text_stock']          = '库存状态：';
+$_['text_stock']          = '库存数量：';
 $_['text_instock']        = '有库存';
-$_['text_price']          = '销售价：';
+$_['text_price']          = '销售价格：';
 $_['text_tax']            = '税前：'; 
 $_['text_discount']       = '数量折扣：';
 $_['text_option']         = '选项及配件：';

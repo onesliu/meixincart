@@ -52,6 +52,38 @@ create table if not exists oc_event(
 	Others text default null
 )ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+//配送区域
+CREATE TABLE `oc_district` (
+  `id` int(11) NOT NULL auto_increment,
+  `city` varchar(128) NOT NULL,
+  `name` varchar(128) NOT NULL,
+  `address` varchar(512) NOT NULL,
+  `map` varchar(1024) NOT NULL,
+  `desp` text default null,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+//地址信息微信使用说明
+/*oc_address
+CREATE TABLE `oc_address` (
+  `address_id` int(11) NOT NULL auto_increment,
+  `customer_id` int(11) NOT NULL,
+  `firstname` varchar(32) NOT NULL, 姓名
+  `lastname` varchar(32) NOT NULL,  电话
+  `company` varchar(32) NOT NULL,   
+  `company_id` varchar(32) NOT NULL,
+  `tax_id` varchar(32) NOT NULL,
+  `address_1` varchar(128) NOT NULL, 省市区（从微信合并）
+  `address_2` varchar(128) NOT NULL, 详细地址
+  `city` varchar(128) NOT NULL,     
+  `postcode` varchar(10) NOT NULL,  邮编
+  `country_id` int(11) NOT NULL default '0', 国家码看情况转换成本系统ID
+  `zone_id` int(11) NOT NULL default '0', 
+  `district_id` int(11) not null default '0',
+  PRIMARY KEY  (`address_id`),
+  KEY `customer_id` (`customer_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8
+*/
 alter table oc_customer add `subscribe` integer default 0;
 alter table oc_customer add `openid` varchar(255) default null;
 alter table oc_customer add `nickname` varchar(255) default null;
@@ -62,6 +94,15 @@ alter table oc_customer add `province` varchar(64) default null;
 alter table oc_customer add `language` varchar(64) default null;
 alter table oc_customer add `headimgurl` varchar(1024) default null;
 alter table oc_customer add `subscribe_time` integer default 0;
+
+alter table oc_order modify order_id bigint NOT NULL auto_increment;
+alter table oc_order add shipping_time datetime default null;
+alter table oc_order add shipping_districtid integer default 0;
+alter table oc_order add `shipping_pay` double default 0.0;
+
+alter table oc_address add `district_id` int(11) not null default '0';
+
+
 
 //init
 insert into oc_setting (`key`,`value`) values('weixin_token', 'wxc0a931d70de89f4c');

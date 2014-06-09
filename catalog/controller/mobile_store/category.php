@@ -10,63 +10,13 @@ class ControllerMobileStoreCategory extends Controller {
 		
 		$this->load->model('tool/image'); 
 		
-		// -- FILTER ATTRIBUTES MODULE --
-		$this->load->model('tool/image');
-		
-		if (isset($this->request->get['filter_price'])){
-			$filter_price = $this->request->get['filter_price'];
-			list($filter_price_from, $filter_price_to) = preg_split('/\|/', $filter_price);
-		} else {
-			$filter_price = '';
-			$filter_price_from = '';
-			$filter_price_to = '';
-		}
-		
-		if (isset($this->request->get['filter_manufacturer'])){
-			$filter_manufacturer = implode("," , preg_split('/\-/', $this->request->get['filter_manufacturer']));
-		} else {
-			$filter_manufacturer = array();
-		}
-		
-		if (isset($this->request->get['filter_attributes'])){
-			$filter_attributes = implode("," , preg_split('/\-/', html_entity_decode($this->request->get['filter_attributes'])));
-		} else {
-			$filter_attributes = array();
-		}
-		// -- STOP FILTER ATTRIBUTES MODULE --
-		
-		if (isset($this->request->get['sort'])) {
-			$sort = $this->request->get['sort'];
-		} else {
-			$sort = 'p.sort_order';
-		}
-
-		if (isset($this->request->get['order'])) {
-			$order = $this->request->get['order'];
-		} else {
-			$order = 'ASC';
-		}
-		
 		if (isset($this->request->get['page'])) {
 			$page = $this->request->get['page'];
-		} else { 
-			$page = 1;
-		}	
-
-		if (isset($this->request->get['limit'])) {
-			$limit = $this->request->get['limit'];
 		} else {
-			$limit = 6;
+			$page = 1;
 		}
-		
-		$this->data['breadcrumbs'] = array();
+		$limit = 10;
 
-   		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home'),
-       		'separator' => false
-   		);	
-			
 		if (isset($this->request->get['fspath'])) {
 			$path = '';
 		
@@ -78,7 +28,7 @@ class ControllerMobileStoreCategory extends Controller {
 				} else {
 					$path .= '_' . $path_id;
 				}
-									
+
 				$category_info = $this->model_catalog_category->getCategory($path_id);
 				
 				if ($category_info) {
@@ -88,7 +38,7 @@ class ControllerMobileStoreCategory extends Controller {
         				'separator' => $this->language->get('text_separator')
         			);
 				}
-			}		
+			}
 		
 			$category_id = array_pop($parts);
 		} else {
@@ -134,20 +84,6 @@ class ControllerMobileStoreCategory extends Controller {
 			$this->data['description'] = html_entity_decode($category_info['description'], ENT_QUOTES, 'UTF-8');
 			$this->data['compare'] = $this->url->link('mobile_store/compare');
 			
-			$url = '';
-			
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}	
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}	
-			
-			if (isset($this->request->get['limit'])) {
-				$url .= '&limit=' . $this->request->get['limit'];
-			}
-			
 			$this->data['categories'] = array();
 			
 			$results = $this->model_catalog_category->getCategories($category_id);
@@ -162,7 +98,7 @@ class ControllerMobileStoreCategory extends Controller {
 				
 				$this->data['categories'][] = array(
 					'name'  => $result['name'] . ' (' . $product_total . ')',
-					'href'  => $this->url->link('mobile_store/category', 'fspath=' . $this->request->get['fspath'] . '_' . $result['category_id'] . $url)
+					'href'  => $this->url->link('mobile_store/category', 'fspath=' . $this->request->get['fspath'] . '_' . $result['category_id'])
 				);
 			}
 			
@@ -171,17 +107,8 @@ class ControllerMobileStoreCategory extends Controller {
 			$data = array(
 				'filter_category_id' => $category_id, 
 				'filter_sub_category'=> true, 
-				// -- STOP FILTER ATTRIBUTES MODULE --
-				'filter_price'       => $filter_price,
-				'filter_price_from'  => $filter_price_from,
-				'filter_price_to'    => $filter_price_to,
-				'filter_manufacturer'=> $filter_manufacturer,
-				'filter_attributes'  => $filter_attributes,
-				// -- STOP FILTER ATTRIBUTES MODULE -
-				'sort'               => $sort,
-				'order'              => $order,
 				'start'              => ($page - 1) * $limit,
-				'limit'              => $limit
+				'limit'              => $limit,
 			);
 			
 			$product_total = $this->model_mobile_store_product->getTotalProducts($data); 
@@ -233,193 +160,45 @@ class ControllerMobileStoreCategory extends Controller {
 				);
 			}
 			
-			$url = '';
-	
-			if (isset($this->request->get['limit'])) {
-				$url .= '&limit=' . $this->request->get['limit'];
-			}
-							
-			$this->data['sorts'] = array();
-			
-			$this->data['sorts'][] = array(
-				'text'  => $this->language->get('text_default'),
-				'value' => 'p.sort_order-ASC',
-				'href'  => $this->url->link('mobile_store/category', 'fspath=' . $this->request->get['fspath'] . '&sort=p.sort_order&order=ASC' . $url)
-			);
-			
-			$this->data['sorts'][] = array(
-				'text'  => $this->language->get('text_name_asc'),
-				'value' => 'pd.name-ASC',
-				'href'  => $this->url->link('mobile_store/category', 'fspath=' . $this->request->get['fspath'] . '&sort=pd.name&order=ASC' . $url)
-			);
-
-			$this->data['sorts'][] = array(
-				'text'  => $this->language->get('text_name_desc'),
-				'value' => 'pd.name-DESC',
-				'href'  => $this->url->link('mobile_store/category', 'fspath=' . $this->request->get['fspath'] . '&sort=pd.name&order=DESC' . $url)
-			);
-
-			$this->data['sorts'][] = array(
-				'text'  => $this->language->get('text_price_asc'),
-				'value' => 'p.price-ASC',
-				'href'  => $this->url->link('mobile_store/category', 'fspath=' . $this->request->get['fspath'] . '&sort=p.price&order=ASC' . $url)
-			); 
-
-			$this->data['sorts'][] = array(
-				'text'  => $this->language->get('text_price_desc'),
-				'value' => 'p.price-DESC',
-				'href'  => $this->url->link('mobile_store/category', 'fspath=' . $this->request->get['fspath'] . '&sort=p.price&order=DESC' . $url)
-			); 
-			
-			$this->data['sorts'][] = array(
-				'text'  => $this->language->get('text_rating_desc'),
-				'value' => 'rating-DESC',
-				'href'  => $this->url->link('mobile_store/category', 'fspath=' . $this->request->get['fspath'] . '&sort=rating&order=DESC' . $url)
-			); 
-			
-			$this->data['sorts'][] = array(
-				'text'  => $this->language->get('text_rating_asc'),
-				'value' => 'rating-ASC',
-				'href'  => $this->url->link('mobile_store/category', 'fspath=' . $this->request->get['fspath'] . '&sort=rating&order=ASC' . $url)
-			);
-			
-			$this->data['sorts'][] = array(
-				'text'  => $this->language->get('text_model_asc'),
-				'value' => 'p.model-ASC',
-				'href'  => $this->url->link('mobile_store/category', 'fspath=' . $this->request->get['fspath'] . '&sort=p.model&order=ASC' . $url)
-			);
-
-			$this->data['sorts'][] = array(
-				'text'  => $this->language->get('text_model_desc'),
-				'value' => 'p.model-DESC',
-				'href'  => $this->url->link('mobile_store/category', 'fspath=' . $this->request->get['fspath'] . '&sort=p.model&order=DESC' . $url)
-			);
-			
-			$url = '';
-	
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}	
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-			
-			$this->data['limits'] = array();
-						
-			$this->data['limits'][] = array(
-				'text'  => 3,
-				'value' => 3,
-				'href'  => $this->url->link('mobile_store/category', 'fspath=' . $this->request->get['fspath'] . $url . '&limit=3')
-			);
-			
-			$this->data['limits'][] = array(
-				'text'  => 6,
-				'value' => 6,
-				'href'  => $this->url->link('mobile_store/category', 'fspath=' . $this->request->get['fspath'] . $url . '&limit=6')
-			);
-			
-			$this->data['limits'][] = array(
-				'text'  => 9,
-				'value' => 9,
-				'href'  => $this->url->link('mobile_store/category', 'fspath=' . $this->request->get['fspath'] . $url . '&limit=9')
-			);
-
-			$this->data['limits'][] = array(
-				'text'  => 12,
-				'value' => 12,
-				'href'  => $this->url->link('mobile_store/category', 'fspath=' . $this->request->get['fspath'] . $url . '&limit=12')
-			);
-			
-			$this->data['limits'][] = array(
-				'text'  => 15,
-				'value' => 15,
-				'href'  => $this->url->link('mobile_store/category', 'fspath=' . $this->request->get['fspath'] . $url . '&limit=15')
-			);
-						
-			$url = '';
-	
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}	
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-	
-			if (isset($this->request->get['limit'])) {
-				$url .= '&limit=' . $this->request->get['limit'];
-			}
-					
 			$pagination = new Pagination();
 			$pagination->total = $product_total;
 			$pagination->page = $page;
 			$pagination->limit = $limit;
+			$pagination->num_pages = ceil($pagination->total / $pagination->limit);
 			$pagination->text = $this->language->get('text_pagination');
-			$pagination->url = $this->url->link2('mobile_store/category_more');
-		
-			$this->data['pagination'] = $pagination->render_more();
-			$this->data['pagination']['fspath'] = $this->request->get['fspath'];
+			$pagination->url = $this->url->link2('mobile_store/category', 'fspath=' . $this->request->get['fspath'], 'SSL');
+			$this->data['pagination'] = $pagination;
 			
-			$this->data['sort'] = $sort;
-			$this->data['order'] = $order;
-			$this->data['limit'] = $limit;
-		
-			$this->data['continue'] = $this->url->link('mobile_store/home');
-
-			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/mobile_store/category.tpl')) {
-				$this->template = $this->config->get('config_template') . '/template/mobile_store/category.tpl';
+			if ($page <= 1) {
+				$cfile = 'category.tpl';
+			}
+			else {
+				$cfile = 'category_more.tpl';
+			}
+				
+			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . "/template/mobile_store/$cfile")) {
+				$this->template = $this->config->get('config_template') . "/template/mobile_store/$cfile";
 			} else {
-				$this->template = 'default/template/mobile_store/category.tpl';
+				$this->template = "default/template/mobile_store/$cfile";
 			}
 			
-			$this->children = array(
-				'mobile_store/column_left',
-				'mobile_store/content_top',
-				'mobile_store/content_bottom',
-				'mobile_store/footer',
-				'mobile_store/header'
-			);
+			if ($page <= 1) {
+				$this->children = array(
+					'mobile_store/column_left',
+					'mobile_store/content_top',
+					'mobile_store/content_bottom',
+					'mobile_store/footer',
+					'mobile_store/header'
+				);
+			}
 				
 			$this->response->setOutput($this->render());										
     	} else {
-			$url = '';
-			
-			if (isset($this->request->get['fspath'])) {
-				$url .= '&fspath=' . $this->request->get['fspath'];
-			}
-									
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}	
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-				
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-						
-			if (isset($this->request->get['limit'])) {
-				$url .= '&limit=' . $this->request->get['limit'];
-			}
-						
-			$this->data['breadcrumbs'][] = array(
-				'text'      => $this->language->get('text_error'),
-				'href'      => $this->url->link('mobile_store/category', $url),
-				'separator' => $this->language->get('text_separator')
-			);
-				
 			$this->document->setTitle($this->language->get('text_error'));
 
       		$this->data['heading_title'] = $this->language->get('text_error');
 
       		$this->data['text_error'] = $this->language->get('text_error');
-
-      		$this->data['button_continue'] = $this->language->get('button_continue');
-
-      		$this->data['continue'] = $this->url->link('mobile_store/home');
 
 			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/mobile_store/not_found.tpl')) {
 				$this->template = $this->config->get('config_template') . '/template/mobile_store/not_found.tpl';
@@ -437,6 +216,6 @@ class ControllerMobileStoreCategory extends Controller {
 					
 			$this->response->setOutput($this->render());
 		}
-  	}
+	}
 }
 ?>
