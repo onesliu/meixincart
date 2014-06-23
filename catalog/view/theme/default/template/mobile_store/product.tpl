@@ -30,8 +30,33 @@
         <?php if ($manufacturer) { ?>
         <span><?php echo $text_manufacturer; ?></span><?php echo $manufacturer; ?><br />
         <?php } ?>
+        
+        <?php if ($price) { ?>
+	      <span><?php echo $text_price; ?></span>
+	      <span class="price" style="color:#f17225;">
+	        <?php if (!$special) { ?>
+	        <?php echo $price; ?>
+	        <?php } else { ?>
+	        <span class="price-old"><?php echo $price; ?></span> <span class="price-new"><?php echo $special; ?></span>
+	        <?php } ?>
+	        <?php if ($tax) { ?>
+	        <span class="price-tax"><?php echo $text_tax; ?> <?php echo $tax; ?></span>
+	        <?php } ?>
+	        <?php if ($points) { ?>
+	        <span class="reward"><small><?php echo $text_points; ?> <?php echo $points; ?></small></span>
+	        <?php } ?>
+	        <?php if ($discounts) { ?>
+	        <div class="discount">
+	          <?php foreach ($discounts as $discount) { ?>
+	          <?php echo sprintf($text_discount, $discount['quantity'], $discount['price']); ?>
+	          <?php } ?>
+	        </div>
+	        <?php } ?>
+	      </span>
+	      <?php } ?>
+		<br/>
         <span><?php echo $text_model; ?></span> <?php echo $model; ?><br />
-        <span><?php echo $text_reward; ?></span> <?php echo $reward; ?><br />
+        <!-- <span><?php echo $text_reward; ?></span> <?php echo $reward; ?><br />  -->
         <span><?php echo $text_stock; ?></span> <?php echo $stock; ?>
 		
 		<?php if ($review_status) { ?>
@@ -40,30 +65,6 @@
 	  
 	  </div>
 		
-      <?php if ($price) { ?>
-      <div class="price"><?php echo $text_price; ?>
-        <?php if (!$special) { ?>
-        <?php echo $price; ?>
-        <?php } else { ?>
-        <span class="price-old"><?php echo $price; ?></span> <span class="price-new"><?php echo $special; ?></span>
-        <?php } ?>
-        <br />
-        <?php if ($tax) { ?>
-        <span class="price-tax"><?php echo $text_tax; ?> <?php echo $tax; ?></span><br />
-        <?php } ?>
-        <?php if ($points) { ?>
-        <span class="reward"><small><?php echo $text_points; ?> <?php echo $points; ?></small></span> <br />
-        <?php } ?>
-        <?php if ($discounts) { ?>
-        <br />
-        <div class="discount">
-          <?php foreach ($discounts as $discount) { ?>
-          <?php echo sprintf($text_discount, $discount['quantity'], $discount['price']); ?><br />
-          <?php } ?>
-        </div>
-        <?php } ?>
-      </div>
-      <?php } ?>
       <?php if ($options) { ?>
       <div class="options">
         <h2><?php echo $text_option; ?></h2>
@@ -224,15 +225,10 @@
     </div>
   </div>
   
-  <div>
-	  <div class="row-title no-mb active round"><?php echo $tab_description; ?></div>
-	  <div id="tab-description" class="row-content no-bt active"><?php echo $description; ?></div>
-  </div>
-  
   <?php if ($attribute_groups) { ?>
-  <div>	
-	<div class="row-title"><?php echo $tab_attribute; ?></div>
-	  <div id="tab-attribute" class="row-content">
+   <div>	
+<!--	<div class="row-title no-mb active round"><?php echo $tab_attribute; ?></div> 
+	  <div id="tab-attribute" class="row-content no-bt active"> -->
 		<table class="attribute">
 		  <?php foreach ($attribute_groups as $attribute_group) { ?>
 		  <thead>
@@ -243,16 +239,22 @@
 		  <tbody>
 			<?php foreach ($attribute_group['attribute'] as $attribute) { ?>
 			<tr>
-			  <td><?php echo $attribute['name']; ?></td>
-			  <td><?php echo $attribute['text']; ?></td>
+			  <td width="40%"><?php echo $attribute['name']; ?></td>
+			  <td width="60%"><?php echo $attribute['text']; ?></td>
 			</tr>
 			<?php } ?>
 		  </tbody>
 		  <?php } ?>
 		</table>
-	  </div>
-  </div>  
+<!-- 	  </div> -->
+  </div>
   <?php } ?>
+
+  <div>
+	  <div class="row-title no-mb active round"><?php echo $tab_description; ?></div>
+	  <div id="tab-description" class="row-content no-bt active"><?php echo $description; ?></div>
+  </div>
+  
   <?php if ($review_status && false) { ?>
   <div>		
 	  <div class="row-title no-mb round"><?php echo $tab_review; ?></div>

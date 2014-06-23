@@ -11,7 +11,7 @@ class ControllerMobileStoreContentTop extends Controller {
 		} else {
 			$route = 'mobile_store/home';
 		}
-		
+
 		$layout_id = 0;
 		
 		if (substr($route, 0, 16) == 'product/category' && isset($this->request->get['path'])) {
@@ -41,7 +41,7 @@ class ControllerMobileStoreContentTop extends Controller {
 		$this->load->model('setting/extension');
 		
 		$extensions = $this->model_setting_extension->getExtensions('module');		
-		
+
 		foreach ($extensions as $extension) {
 			$modules = $this->config->get($extension['code'] . '_module');
 			
@@ -81,7 +81,7 @@ class ControllerMobileStoreContentTop extends Controller {
 		} else {
 			$this->template = 'default/template/mobile_store/content_top.tpl';
 		}
-								
+
 		$this->render();
 	}
 }

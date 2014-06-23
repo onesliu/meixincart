@@ -488,7 +488,7 @@ table.list td {
 	border-bottom: 1px solid #DDDDDD;
 }
 table.list thead td {
-	background-color: #EFEFEF;
+	background-color: #F8F8F8;
 	padding: 0px 5px;
 }
 table.list thead td a, .list thead td {
@@ -502,6 +502,7 @@ table.list tbody td a {
 table.list tbody td {
 	vertical-align: top;
 	padding: 0px 5px;
+	color: #4D4D4D;
 }
 table.list .left {
 	text-align: left;
@@ -514,6 +515,9 @@ table.list .right {
 table.list .center {
 	text-align: center;
 	padding: 7px;
+}
+table.list .title {
+	font-size: 14px;
 }
 table.radio {
 	width: 100%;
@@ -1501,10 +1505,10 @@ a.button:hover span {
 }
 .product-info .price {
 	overflow: auto;
-	border-bottom: 1px solid #E7E7E7;
+	/*border-bottom: 1px solid #E7E7E7;
 	padding: 0px 5px 10px 5px;
-	margin-bottom: 10px;
-	font-size: 15px;
+	margin-bottom: 10px;*/
+	font-size: 18px;
 	font-weight: bold;
 	color: #333333;
 }
@@ -1725,8 +1729,43 @@ a.button:hover span {
 }
 /* orders */
 .order-list {
-	margin-bottom: 10px;
+	margin-bottom: 0px;
 }
+
+.order-list table {
+	width: 100%;
+	border-collapse: collapse;
+}
+.order-list thead tbody tfoot {
+	display: block;
+}
+.order-list td {
+	padding-bottom: 4px;
+	font-size: 14px;
+}
+
+.order-list .price {
+	color: #f17225;
+}
+.order-list .order-info {
+	text-align: right;
+}
+
+.order-detail {
+	margin-top: 2px;
+	padding: 10px 0px 10px 2px;
+	font-weight: bold;
+	font-size: 14px;
+	border-top: 1px solid #EEEEEE;
+}
+.order-detail span{
+	float: left;
+	margin-right: 2px;
+	color: black;
+	border: 1px solid #EEEEEE;
+	padding: 6px 8px 8px 6px;
+}
+
 .order-list .order-id {
 	width: 49%;
 	float: left;
@@ -1735,6 +1774,7 @@ a.button:hover span {
 .order-list .order-status {
 	width: 49%;
 	float: right;
+	color: black;
 	text-align: right;
 	margin-bottom: 2px;
 }
@@ -1742,21 +1782,16 @@ a.button:hover span {
 	padding: 10px 0px;
 	display: inline-block;
 	width: 100%;
-	margin-bottom: 20px;
-	border-top: 1px solid #EEEEEE;
-	border-bottom: 1px solid #EEEEEE;
+	margin-bottom: 0px;
+	/*border-top: 1px solid #EEEEEE;
+	border-bottom: 1px solid #EEEEEE;*/
 }
 .order-list .order-content div {
 	float: left;
-	width: 33.3%;
+	width: 100%;
 }
-.order-list .order-info {
-	text-align: right;
-}
-.order-detail {
-	background: #EFEFEF;
-	font-weight: bold;
-}
+
+
 /* returns */
 .return-list {
 	margin-bottom: 10px;
@@ -1948,13 +1983,13 @@ a.button:hover span {
 }
 /* checkout */
 .checkout-heading {
-	background: #F8F8F8;
-	border: 1px solid #DBDEE1;
-	padding: 8px;
+	/*background: #F8F8F8;
+	border: 1px solid #DBDEE1;*/
+	padding: 2px 0px 0px 0px;
 	font-weight: bold;
-	font-size: 13px;
+	font-size: 14px;
 	color: #555555;
-	margin-bottom: 15px;
+	margin-bottom: 8px;
 }
 .checkout-heading a {
 	float: right;
@@ -1963,19 +1998,20 @@ a.button:hover span {
 	text-decoration: none;
 }
 .checkout-content {
-	padding: 10px 7px 7px 7px;
-	margin-bottom: 10px;
+	background:#fff;
+	font-size: 14px;
+	padding: 10px 10px 15px 10px;
+	margin-bottom: 15px;
 	display: none;
 	overflow: auto;
 	border: 1px solid #CBCBCB;
-	-webkit-border-radius: 0px 0px 7px 7px;
-	-moz-border-radius: 0px 0px 7px 7px;
-	-khtml-border-radius: 0px 0px 7px 7px;
-	border-radius: 0px 0px 7px 7px;
-	-webkit-box-shadow: 0 8px 6px -6px #C0BCBC;
+	-webkit-border-radius: 4px 4px 4px 4px;
+	-moz-border-radius: 4px 4px 4px 4px;
+	-khtml-border-radius: 4px 4px 4px 4px;
+	border-radius: 4px 4px 4px 4px;
+	/*-webkit-box-shadow: 0 8px 6px -6px #C0BCBC;
     -moz-box-shadow: 0 8px 6px -6px #C0BCBC;
-    box-shadow: 0 8px 6px -6px #C0BCBC;
-	
+    box-shadow: 0 8px 6px -6px #C0BCBC;*/
 }
 .checkout-content .left {
 	float: left;

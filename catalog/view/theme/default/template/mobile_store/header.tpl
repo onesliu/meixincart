@@ -78,7 +78,7 @@ DD_belatedPNG.fix('#logo img');
 
 <div id="floating-bar">
 	
-	<?php if ($logged) { ?>
+	<?php //if ($logged) { ?>
 		<div class="trans-button"><div id="account-button" class="gohome radius20"><a href="<?php echo $home;?>">
 		<img src="<?php echo $theme_img_dir?>mobile_store/icons/home2.png">
 		</a></div><div class="icon-name"><?php echo $text_home; ?></div></div>
@@ -89,7 +89,7 @@ DD_belatedPNG.fix('#logo img');
 				<div class="icon-name"><?php echo $text_home; ?></div>
 			</a>
 	-->
-	<?php } ?>
+	<?php //} ?>
 
 	<div class="trans-button"><div id="categories-button" class="gohome radius20"><a href="<?php echo $category_list;?>">
 	<img src="<?php echo $theme_img_dir?>mobile_store/icons/eggplant2.png">
@@ -98,6 +98,10 @@ DD_belatedPNG.fix('#logo img');
 	<div class="trans-button"><div id="cart" class="gohome radius20"><a href="<?php echo $cart;?>">
 	<img src="<?php echo $theme_img_dir?>mobile_store/icons/cart.png">
 	</a></div><div id="cart_total" class="icon-name"><?php echo $text_checkout.' '.$text_items; ?></div></div>
+
+	<div class="trans-button"><div id="cart" class="gohome radius20"><a href="<?php echo $order;?>">
+	<img src="<?php echo $theme_img_dir?>mobile_store/icons/docs.png">
+	</a></div><div class="icon-name"><?php echo $text_order; ?></div></div>
 
 	<!-- 
 	<a id="categories-button" class="trans-button" href="<?php echo $category_list;?>">

@@ -4,6 +4,7 @@ class Pagination {
 	public $page = 1;
 	public $limit = 20;
 	public $num_links = 10;
+	public $num_pages;
 	public $url = '';
 	public $text = 'Showing {start} to {end} of {total} ({pages} Pages)';
 	public $text_first = '|&lt;';
@@ -30,6 +31,7 @@ class Pagination {
 		
 		$num_links = $this->num_links;
 		$num_pages = ceil($total / $limit);
+		$this->num_pages = $num_pages;
 		
 		$output = '';
 		
