@@ -14,7 +14,7 @@
   <div class="box">
     <div class="heading">
       <h1><img src="view/image/product.png" alt="" /> <?php echo $heading_title; ?></h1>
-      <div class="buttons"><a href="<?php echo $insert; ?>" class="button"><?php echo $button_insert; ?></a><a onclick="$('#form').attr('action', '<?php echo $copy; ?>'); $('#form').submit();" class="button"><?php echo $button_copy; ?></a><a onclick="$('form').submit();" class="button"><?php echo $button_delete; ?></a></div>
+      <div class="buttons"><a onclick="save_price();" class="button"><?php echo $button_save; ?></a><a href="<?php echo $insert; ?>" class="button"><?php echo $button_insert; ?></a><a onclick="$('#form').attr('action', '<?php echo $copy; ?>'); $('#form').submit();" class="button"><?php echo $button_copy; ?></a><a onclick="$('form').submit();" class="button"><?php echo $button_delete; ?></a></div>
     </div>
     <div class="content">
       <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form">
@@ -86,10 +86,11 @@
               <td class="left"><?php echo $product['name']; ?></td>
               <td class="left"><?php echo $product['model']; ?></td>
               <td class="left"><?php if ($product['special']) { ?>
-                <span style="text-decoration: line-through;"><?php echo $product['price']; ?></span><br/>
-                <span style="color: #b00;"><?php echo $product['special']; ?></span>
+                <!-- <span style="text-decoration: line-through;"><?php echo $product['price']; ?></span><br/> -->
+               	原价：<input type="text" name="price[<?php echo $product['product_id']; ?>]" value="<?php echo sprintf("%0.2f", $product['price']); ?>" /><br/>
+              	特价：<span style="color: #b00;"><?php echo $product['special']; ?></span>
                 <?php } else { ?>
-                <?php echo $product['price']; ?>
+                <input type="text" name="price[<?php echo $product['product_id']; ?>]" value="<?php echo sprintf("%0.2f", $product['price']); ?>" />
                 <?php } ?></td>
               <td class="right"><?php if ($product['quantity'] <= 0) { ?>
                 <span style="color: #FF0000;"><?php echo $product['quantity']; ?></span>
@@ -154,6 +155,12 @@ function filter() {
 }
 //--></script> 
 <script type="text/javascript"><!--
+function save_price() {
+	if (confirm("保存所有价格更改吗？")) {
+		$('form').attr("action", "<?php echo $saveprice; ?>");
+		$('form').submit();
+	}
+}
 $('#form input').keydown(function(e) {
 	if (e.keyCode == 13) {
 		filter();

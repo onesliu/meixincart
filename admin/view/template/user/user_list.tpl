@@ -37,6 +37,16 @@
                 <?php } else { ?>
                 <a href="<?php echo $sort_date_added; ?>"><?php echo $column_date_added; ?></a>
                 <?php } ?></td>
+              <td class="left"><?php if ($sort == 'user_group') { ?>
+                <a href="<?php echo $sort_user_group; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_user_group; ?></a>
+                <?php } else { ?>
+                <a href="<?php echo $sort_user_group; ?>"><?php echo $column_user_group; ?></a>
+                <?php } ?></td>
+              <td class="left"><?php if ($sort == 'district') { ?>
+                <a href="<?php echo $sort_district; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_district; ?></a>
+                <?php } else { ?>
+                <a href="<?php echo $sort_district; ?>"><?php echo $column_district; ?></a>
+                <?php } ?></td>
               <td class="right"><?php echo $column_action; ?></td>
             </tr>
           </thead>
@@ -52,6 +62,8 @@
               <td class="left"><?php echo $user['username']; ?></td>
               <td class="left"><?php echo $user['status']; ?></td>
               <td class="left"><?php echo $user['date_added']; ?></td>
+              <td class="left"><?php echo $user['user_group']; ?></td>
+              <td class="left"><?php echo $user['district']; ?></td>
               <td class="right"><?php foreach ($user['action'] as $action) { ?>
                 [ <a href="<?php echo $action['href']; ?>"><?php echo $action['text']; ?></a> ]
                 <?php } ?></td>

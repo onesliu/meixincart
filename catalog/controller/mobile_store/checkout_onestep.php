@@ -218,6 +218,7 @@ class ControllerMobileStoreCheckoutOnestep extends Controller {
 		$data['payment_country'] = $payment_address['country'];
 		$data['payment_country_id'] = $payment_address['country_id'];
 		$data['payment_address_format'] = $payment_address['address_format'];
+		$data['payment_telephone'] = $payment_address['telephone'];
 	
 		if (isset($this->session->data['payment_method']['title'])) {
 			$data['payment_method'] = $this->session->data['payment_method']['title'];
@@ -244,6 +245,7 @@ class ControllerMobileStoreCheckoutOnestep extends Controller {
 		$data['shipping_country_id'] = $payment_address['country_id'];
 		$data['shipping_address_format'] = $payment_address['address_format'];
 		$data['shipping_district_id'] = $payment_address['district_id'];
+		$data['shipping_telephone'] = $payment_address['telephone'];
 	
 		if (isset($this->session->data['shipping_method']['title'])) {
 			$data['shipping_method'] = $this->session->data['shipping_method']['title'];

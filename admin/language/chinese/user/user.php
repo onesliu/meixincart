@@ -9,6 +9,8 @@ $_['text_success']      = '成功： 您已成功更新管理员设置！';
 $_['column_username']   = '管理员名';
 $_['column_status']     = '状态';
 $_['column_date_added'] = '生成日期';
+$_['column_user_group'] = '所属群组';
+$_['column_district'] = '所属店面';
 $_['column_action']     = '管理';
 
 // Entry

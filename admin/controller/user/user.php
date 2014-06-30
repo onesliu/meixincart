@@ -186,6 +186,8 @@ class ControllerUserUser extends Controller {
 				'username'   => $result['username'],
 				'status'     => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
+      			'user_group' => $result['user_group'],
+      			'district'	 => $result['district'],
 				'selected'   => isset($this->request->post['selected']) && in_array($result['user_id'], $this->request->post['selected']),
 				'action'     => $action
 			);
@@ -198,6 +200,8 @@ class ControllerUserUser extends Controller {
 		$this->data['column_username'] = $this->language->get('column_username');
 		$this->data['column_status'] = $this->language->get('column_status');
 		$this->data['column_date_added'] = $this->language->get('column_date_added');
+		$this->data['column_user_group'] = $this->language->get('column_user_group');
+		$this->data['column_district'] = $this->language->get('column_district');
 		$this->data['column_action'] = $this->language->get('column_action');
 		
 		$this->data['button_insert'] = $this->language->get('button_insert');
@@ -232,6 +236,8 @@ class ControllerUserUser extends Controller {
 		$this->data['sort_username'] = $this->url->link('user/user', 'token=' . $this->session->data['token'] . '&sort=username' . $url, 'SSL');
 		$this->data['sort_status'] = $this->url->link('user/user', 'token=' . $this->session->data['token'] . '&sort=status' . $url, 'SSL');
 		$this->data['sort_date_added'] = $this->url->link('user/user', 'token=' . $this->session->data['token'] . '&sort=date_added' . $url, 'SSL');
+		$this->data['sort_user_group'] = $this->url->link('user/user', 'token=' . $this->session->data['token'] . '&sort=user_group' . $url, 'SSL');
+		$this->data['sort_district'] = $this->url->link('user/user', 'token=' . $this->session->data['token'] . '&sort=district' . $url, 'SSL');
 		
 		$url = '';
 
@@ -277,6 +283,7 @@ class ControllerUserUser extends Controller {
     	$this->data['entry_lastname'] = $this->language->get('entry_lastname');
     	$this->data['entry_email'] = $this->language->get('entry_email');
     	$this->data['entry_user_group'] = $this->language->get('entry_user_group');
+    	$this->data['entry_district'] = $this->language->get('column_district');
 		$this->data['entry_status'] = $this->language->get('entry_status');
 		$this->data['entry_captcha'] = $this->language->get('entry_captcha');
 
@@ -411,9 +418,21 @@ class ControllerUserUser extends Controller {
       		$this->data['user_group_id'] = '';
     	}
 		
-		$this->load->model('user/user_group');
+    	if (isset($this->request->post['district_id'])) {
+      		$this->data['district_id'] = $this->request->post['district_id'];
+    	} elseif (!empty($user_info)) {
+			$this->data['district_id'] = $user_info['district_id'];
+		} else {
+      		$this->data['district_id'] = '';
+    	}
+    	
+    	$this->load->model('user/user_group');
 		
     	$this->data['user_groups'] = $this->model_user_user_group->getUserGroups();
+    	
+    	$this->load->model('user/district');
+    	
+    	$this->data['districts'] = $this->model_user_district->getAddresses();
  
      	if (isset($this->request->post['status'])) {
       		$this->data['status'] = $this->request->post['status'];
@@ -437,7 +456,7 @@ class ControllerUserUser extends Controller {
       		$this->error['warning'] = $this->language->get('error_permission');
     	}
     
-    	if ((utf8_strlen($this->request->post['username']) < 3) || (utf8_strlen($this->request->post['username']) > 20)) {
+    	if ((utf8_strlen($this->request->post['username']) < 1) || (utf8_strlen($this->request->post['username']) > 20)) {
       		$this->error['username'] = $this->language->get('error_username');
     	}
 		

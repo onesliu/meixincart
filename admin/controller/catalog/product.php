@@ -170,6 +170,22 @@ class ControllerCatalogProduct extends Controller {
     	$this->getList();
   	}
 
+  	public function saveprice() {
+    	$this->language->load('catalog/product');
+
+    	$this->document->setTitle($this->language->get('heading_title'));
+		
+		$this->load->model('catalog/product');
+
+		if (isset($this->request->post['price']) && $this->validateCopy()) {
+			foreach ($this->request->post['price'] as $product_id => $price) {
+				$this->model_catalog_product->setPriceOnly($product_id, $price);
+	  		}
+		}
+		
+		$this->getList();
+  	}
+  	
   	public function copy() {
     	$this->language->load('catalog/product');
 
@@ -324,6 +340,7 @@ class ControllerCatalogProduct extends Controller {
 		$this->data['insert'] = $this->url->link('catalog/product/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		$this->data['copy'] = $this->url->link('catalog/product/copy', 'token=' . $this->session->data['token'] . $url, 'SSL');	
 		$this->data['delete'] = $this->url->link('catalog/product/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$this->data['saveprice'] = $this->url->link2('catalog/product/saveprice', 'token=' . $this->session->data['token'] . $url, 'SSL');
     	
 		$this->data['products'] = array();
 
@@ -404,6 +421,7 @@ class ControllerCatalogProduct extends Controller {
 		$this->data['button_insert'] = $this->language->get('button_insert');		
 		$this->data['button_delete'] = $this->language->get('button_delete');		
 		$this->data['button_filter'] = $this->language->get('button_filter');
+		$this->data['button_save'] = $this->language->get('button_save');
 		 
  		$this->data['token'] = $this->session->data['token'];
 		

@@ -13,6 +13,7 @@ class ControllerCommonLogin extends Controller {
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) { 
 			$this->session->data['token'] = md5(mt_rand());
+			//$this->log->write(print_r($this->session, true));
 		
 			if (isset($this->request->post['redirect'])) {
 				$this->redirect($this->request->post['redirect'] . '&token=' . $this->session->data['token']);

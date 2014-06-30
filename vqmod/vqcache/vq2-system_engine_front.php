@@ -24,7 +24,7 @@ final class Front {
 				break;
 			}
 		}
-			
+			//$this->registry->get('log')->write(print_r($action,true));
 		while ($action) {
 			$action = $this->execute($action);
 		}

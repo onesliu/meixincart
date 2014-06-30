@@ -318,6 +318,10 @@ class ModelCatalogProduct extends Model {
 		$this->cache->delete('product');
 	}
 	
+	public function setPriceOnly($product_id, $price) {
+		$this->db->query("UPDATE " . DB_PREFIX . "product SET price = '" . (float)$price . "', date_modified = NOW() WHERE product_id = '" . (int)$product_id . "'");
+	}
+	
 	public function getProduct($product_id) {
 		$query = $this->db->query("SELECT DISTINCT *, (SELECT keyword FROM " . DB_PREFIX . "url_alias WHERE query = 'product_id=" . (int)$product_id . "') AS keyword FROM " . DB_PREFIX . "product p LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) WHERE p.product_id = '" . (int)$product_id . "' AND pd.language_id = '" . (int)$this->config->get('config_language_id') . "'");
 				

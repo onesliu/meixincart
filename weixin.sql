@@ -99,10 +99,24 @@ alter table oc_order modify order_id bigint NOT NULL auto_increment;
 alter table oc_order add shipping_time datetime default null;
 alter table oc_order add shipping_districtid integer default 0;
 alter table oc_order add `shipping_pay` double default 0.0;
+alter table oc_order add other_order_id bigint default 0;
+alter table oc_order add shipping_telephone varchar(32);
+
+alter table oc_order_product add `realweight` double default 0.0;
+alter table oc_order_product add `realtotal` double default 0.0;
+alter table oc_order_product add `other_product_id` bigint default 0;
+
+alter table oc_product add `other_product_id` bigint default 0;
 
 alter table oc_address add `district_id` int(11) not null default '0';
+alter table oc_address add telephone varchar(32);
 
+alter table oc_customer add customer_type int(11) default 0; //0 opencart, 1 微信, 2 淘宝
 
+alter table oc_user add district_id int(11) default 0;
+
+insert into oc_setting (`key`,`value`) values('first_shipping_time', '9');
+insert into oc_setting (`key`,`value`) values('last_shipping_time', '19');
 
 //init
 insert into oc_setting (`key`,`value`) values('weixin_token', 'wxc0a931d70de89f4c');

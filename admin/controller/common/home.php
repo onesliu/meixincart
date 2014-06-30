@@ -2,7 +2,7 @@
 class ControllerCommonHome extends Controller {   
 	public function index() {
     	$this->language->load('common/home');
-	 
+	
 		$this->document->setTitle($this->language->get('heading_title'));
 		
     	$this->data['heading_title'] = $this->language->get('heading_title');
@@ -340,6 +340,7 @@ class ControllerCommonHome extends Controller {
 		);	
 					
 		if (!$this->user->isLogged() && !in_array($route, $ignore)) {
+			//$this->log->write(print_r($this->user,true));
 			return $this->forward('common/login');
 		}
 		

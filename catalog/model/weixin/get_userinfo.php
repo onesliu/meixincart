@@ -47,22 +47,22 @@ class ModelWeixinGetUserinfo extends Model {
 		if ($q->row["cnt"] <= 0) {
 			$this->db->query(sprintf("insert into %scustomer
 			(subscribe,openid,nickname,sex,city,country,province,language,headimgurl,subscribe_time,
-			email,firstname,password,customer_group_id,date_added,status,lastname,approved) values (%d, '%s', '%s', %d, '%s',
+			email,firstname,password,customer_group_id,date_added,status,approved) values (%d, '%s', '%s', %d, '%s',
 			'%s', '%s', '%s', '%s', %d, '%s', '%s', SHA1(CONCAT(salt, SHA1(CONCAT(salt, SHA1('%s'))))),
-			1, now(), 1, '%s', 1)", DB_PREFIX,
+			1, now(), 1, 1)", DB_PREFIX,
 			$info->subscribe, $info->openid, $info->nickname, $info->sex, $info->city,
 			$info->country, $info->province, $info->language, $info->headimgurl,
-			$info->subscribe_time, $info->openid, $info->nickname, WEIXIN_USERPWD, $info->nickname));
+			$info->subscribe_time, $info->openid, $info->nickname, WEIXIN_USERPWD));
 		}
 		else {
 			$this->db->query(sprintf("update %scustomer set nickname='%s', sex=%d, city='%s', country='%s',
 			province='%s', language='%s', headimgurl='%s', subscribe_time=%d, firstname='%s', email='%s',
-			subscribe=%d, lastname='%s', approved=1,
+			subscribe=%d, approved=1,
 			status=1, date_added=now(), password=SHA1(CONCAT(salt, SHA1(CONCAT(salt, SHA1('%s')))))
 			where openid='%s'",
 			DB_PREFIX, $info->nickname, $info->sex, $info->city, $info->country, $info->province,
 			$info->language, $info->headimgurl, $info->subscribe_time, $info->nickname, $info->openid,
-			$info->subscribe, $info->nickname, WEIXIN_USERPWD, $openid));
+			$info->subscribe, WEIXIN_USERPWD, $openid));
 		}
 	}
 }

@@ -54,6 +54,19 @@
               </select></td>
           </tr>
           <tr>
+            <td><?php echo $entry_district; ?></td>
+            <td><select name="district_id">
+            	<option value="0">无</option>
+                <?php foreach ($districts as $district) { ?>
+                <?php if ($district['id'] == $district_id) { ?>
+                <option value="<?php echo $district['id']; ?>" selected="selected"><?php echo $district['name']; ?></option>
+                <?php } else { ?>
+                <option value="<?php echo $district['id']; ?>"><?php echo $district['name']; ?></option>
+                <?php } ?>
+                <?php } ?>
+              </select></td>
+          </tr>
+          <tr>
             <td><?php echo $entry_password; ?></td>
             <td><input type="password" name="password" value="<?php echo $password; ?>"  />
               <?php if ($error_password) { ?>

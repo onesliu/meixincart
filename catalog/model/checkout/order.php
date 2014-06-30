@@ -44,7 +44,8 @@ class ModelCheckoutOrder extends Model {
 		"', shipping_method = '" . $this->db->escape($data['shipping_method']) . 
 		"', shipping_code = '" . $this->db->escape($data['shipping_code']) . 
 		"', shipping_districtid = '" . (int)$data['shipping_district_id'] . 
-		"', shipping_time = '" . $this->db->escape($data['shipping_time']) . 
+		"', shipping_time = '" . $this->db->escape($data['shipping_time']) .
+		"', shipping_telephone = '" . $this->db->escape($data['shipping_telephone']) .  
 		"', comment = '" . $this->db->escape($data['comment']) . 
 		"', total = '" . (float)$data['total'] . 
 		"', affiliate_id = '" . (int)$data['affiliate_id'] . 
@@ -201,6 +202,7 @@ class ModelCheckoutOrder extends Model {
 				'shipping_code'           => $order_query->row['shipping_code'],
 				'shipping_district_id'    => $order_query->row['shipping_districtid'],
 				'shipping_time'           => $order_query->row['shipping_time'],
+				'shipping_telephone'      => $order_query->row['shipping_telephone'],
 				'shipping_district'       => $shipping_district,
 				'shipping_district_addr'  => $shipping_district_addr,
 				'comment'                 => $order_query->row['comment'],
