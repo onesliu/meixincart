@@ -1,29 +1,28 @@
 <?php
 // HTTP
-//define('HTTP_SERVER', 'http://oc.ngrok.com/opencart/');
-define('HTTP_SERVER', 'http://192.168.1.108/opencart/');
+define('HTTP_SERVER', 'http://qy.gz.1251102575.clb.myqcloud.com/');
 
 // HTTPS
-define('HTTPS_SERVER', 'http://oc.ngrok.com/opencart/');
-//define('HTTPS_SERVER', 'http://192.168.1.32/opencart/');
+define('HTTPS_SERVER', 'http://qy.gz.1251102575.clb.myqcloud.com/');
 
 // DIR
-define('DIR_APPLICATION', 'D:\PHPnow\htdocs\opencart\/catalog/');
-define('DIR_SYSTEM', 'D:\PHPnow\htdocs\opencart\/system/');
-define('DIR_DATABASE', 'D:\PHPnow\htdocs\opencart\/system/database/');
-define('DIR_LANGUAGE', 'D:\PHPnow\htdocs\opencart\/catalog/language/');
-define('DIR_TEMPLATE', 'D:\PHPnow\htdocs\opencart\/catalog/view/theme/');
-define('DIR_CONFIG', 'D:\PHPnow\htdocs\opencart\/system/config/');
-define('DIR_IMAGE', 'D:\PHPnow\htdocs\opencart\/image/');
-define('DIR_CACHE', 'D:\PHPnow\htdocs\opencart\/system/cache/');
-define('DIR_DOWNLOAD', 'D:\PHPnow\htdocs\opencart\/download/');
-define('DIR_LOGS', 'D:\PHPnow\htdocs\opencart\/system/logs/');
+define('DIR_PREFIX', '/var/www/html');
+define('DIR_APPLICATION', DIR_PREFIX.'/catalog/');
+define('DIR_SYSTEM', DIR_PREFIX.'/system/');
+define('DIR_DATABASE', DIR_PREFIX.'/system/database/');
+define('DIR_LANGUAGE', DIR_PREFIX.'/catalog/language/');
+define('DIR_TEMPLATE', DIR_PREFIX.'/catalog/view/theme/');
+define('DIR_CONFIG', DIR_PREFIX.'/system/config/');
+define('DIR_IMAGE', DIR_PREFIX.'/image/');
+define('DIR_CACHE', DIR_PREFIX.'/system/cache/');
+define('DIR_DOWNLOAD', DIR_PREFIX.'/download/');
+define('DIR_LOGS', DIR_PREFIX.'/system/logs/');
 
 // DB
 define('DB_DRIVER', 'mysql');
 define('DB_HOSTNAME', 'localhost');
-define('DB_USERNAME', 'root');
-define('DB_PASSWORD', '123456');
+define('DB_USERNAME', 'qingyou');
+define('DB_PASSWORD', '!@#qwe');
 define('DB_DATABASE', 'opencart');
 define('DB_PREFIX', 'oc_');
 
