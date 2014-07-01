@@ -10,9 +10,10 @@ $_['column_name']      = '管理员群组名称';
 $_['column_action']    = '管理';
 
 // Entry
-$_['entry_name']       = '管理员群组名称：';
-$_['entry_access']     = '查看权限：';
-$_['entry_modify']     = '修改权限：';
+$_['weixin_token']       = '接入token：';
+$_['weixin_appid']     = 'appid：';
+$_['weixin_appsecret']     = 'appsecret：';
+$_['weixin_menu']     = '菜单配置：';
 
 // Error
 $_['error_permission'] = '警告： 您没有权限更改管理员群组！';

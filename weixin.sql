@@ -119,9 +119,9 @@ insert into oc_setting (`key`,`value`) values('first_shipping_time', '9');
 insert into oc_setting (`key`,`value`) values('last_shipping_time', '19');
 
 //init
-insert into oc_setting (`key`,`value`) values('weixin_token', 'wxc0a931d70de89f4c');
-insert into oc_setting (`key`,`value`) values('weixin_appid', 'wxc0a931d70de89f4c');
-insert into oc_setting (`key`,`value`) values('weixin_appsecret', 'c7153a6b0dba17395e66c7f4d25e35a1');
+insert into oc_setting (`group`, `key`,`value`) values('weixin', 'weixin_token', 'wxc0a931d70de89f4c');
+insert into oc_setting (`group`, `key`,`value`) values('weixin', 'weixin_appid', 'wxc0a931d70de89f4c');
+insert into oc_setting (`group`, `key`,`value`) values('weixin', 'weixin_appsecret', 'c7153a6b0dba17395e66c7f4d25e35a1');
 
 insert into oc_auto_message(pattern,MsgType,ItemCount,Items) values('order|订|买', 'news', 1, '[{"title":"点击开始买菜","description":"传承老一代，用心卖好菜。青悠悠菜园传统良心蔬菜。","url":"http://oc.ngrok.com/opencart/index.php","picurl":"http://oc.ngrok.com/opencart/image/data/weixin/logo.jpg"}]');
 
