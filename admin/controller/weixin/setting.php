@@ -10,7 +10,8 @@ class ControllerWeixinSetting extends Controller {
 		$this->load->model('setting/setting');
 		
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			
+			if (isset($this->request->post['weixin_menu']))
+				$this->request->post['weixin_menu'] = htmlspecialchars_decode($this->request->post['weixin_menu']);
 			$this->model_setting_setting->editSetting('weixin', $this->request->post);
 			
 			$this->session->data['success'] = $this->language->get('text_success');
