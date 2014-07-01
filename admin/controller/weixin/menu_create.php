@@ -2,7 +2,7 @@
 
 class ControllerWeixinMenuCreate extends Controller {
 
-	private $menu_def = '{
+/*	private $menu_def = '{
      "button":[
      {	
           "type":"click",
@@ -21,7 +21,7 @@ class ControllerWeixinMenuCreate extends Controller {
                "name":"关于我们",
                "url":"http://oc.ngrok.com/opencart/"
            }]
-       }]}';
+       }]}';*/
 
 	
 	public function index() {
@@ -33,6 +33,9 @@ class ControllerWeixinMenuCreate extends Controller {
 		$access_token = $this->config->get('weixin_access_token');
 		$token_expire = $this->config->get('weixin_token_expire');
 		$token_starttime = $this->config->get('weixin_token_starttime');
+		$menu_def = $this->config->get('weixin_menu');
+		
+		$ret = new stdClass();
 		
 		$this->load->model('setting/setting');
 		$this->load->model('weixin/access_token');
@@ -43,7 +46,9 @@ class ControllerWeixinMenuCreate extends Controller {
 				$this->config->get('weixin_appsecret'));
 			if ($access_token == false) {
 				// 读取access_token失败
-				$this->response->setOutput("got weixin access_token failed.");
+				$ret->errcode = -1;
+				$ret->errmsg = 'got weixin access_token failed.';
+				$this->response->setOutput(json_encode($ret));
 				return;
 			}
 		}
@@ -53,7 +58,7 @@ class ControllerWeixinMenuCreate extends Controller {
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $url);
 		curl_setopt($ch, CURLOPT_POST, true);
-		curl_setopt($ch, CURLOPT_POSTFIELDS, $this->menu_def);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $menu_def);
 		curl_setopt($ch, CURLOPT_HEADER, false);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);

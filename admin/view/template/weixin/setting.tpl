@@ -20,24 +20,32 @@
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
           <table class="form">
             <tr>
-              <td><span class="required">*</span> <?php echo $weixin_token; ?></td>
-              <td><input type="text" name="config_token" value="<?php echo $config_token; ?>" size="40" />
+              <td><span class="required">*</span> <?php echo $config_token; ?></td>
+              <td><input type="text" name="weixin_token" value="<?php echo $weixin_token; ?>" size="40" />
                 <?php if ($error_token) { ?>
                 <span class="error"><?php echo $error_token; ?></span>
                 <?php } ?></td>
             </tr>
             <tr>
-              <td><span class="required">*</span> <?php echo $weixin_appid; ?></td>
-              <td><input type="text" name="config_appid" value="<?php echo $config_appid; ?>" size="40" />
+              <td><span class="required">*</span> <?php echo $config_appid; ?></td>
+              <td><input type="text" name="weixin_appid" value="<?php echo $weixin_appid; ?>" size="40" />
                 <?php if ($error_appid) { ?>
                 <span class="error"><?php echo $error_appid; ?></span>
                 <?php } ?></td>
             </tr>
             <tr>
-              <td><span class="required">*</span> <?php echo $weixin_appsecret; ?></td>
-              <td><input type="text" name="config_appsecret" value="<?php echo $config_appsecret; ?>" size="40" />
+              <td><span class="required">*</span> <?php echo $config_appsecret; ?></td>
+              <td><input type="text" name="weixin_appsecret" value="<?php echo $weixin_appsecret; ?>" size="40" />
                 <?php if ($error_appsecret) { ?>
                 <span class="error"><?php echo $error_appsecret; ?></span>
+                <?php } ?></td>
+            </tr>
+            <tr>
+              <td><?php echo $config_menu; ?></td>
+              <td><textarea id="menudata" name="weixin_menu" row="40" cols="100" style="margin: 2px; width: 550px; height: 350px;"><?php echo $weixin_menu; ?></textarea><br/>
+              <span class="buttons"><a onclick="create_menu();" class="button">创建菜单</a></span>
+                <?php if ($error_appsecret) { ?>
+                <span class="error"><?php echo $error_menu; ?></span>
                 <?php } ?></td>
             </tr>
           </table>
@@ -45,4 +53,18 @@
     </div>
   </div>
 </div>
+<script>
+function create_menu() {
+	$.ajax({
+		url: 'index.php?route=weixin/menu_create&token=<?php echo $token; ?>',
+		dataType: 'json',
+		success: function(json) {
+			alert(json.errmsg);
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+}
+</script>
 <?php echo $footer; ?> 
