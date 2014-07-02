@@ -2221,7 +2221,7 @@ h2.login-header {
 .UIBeeper{
 	width: 100%;
 	left: 0px;
-	top: 40px;
+	top: 0px;
 	position: fixed;
 	z-index: 99;
 	display: none;
