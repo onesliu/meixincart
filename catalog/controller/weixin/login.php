@@ -14,50 +14,57 @@ class ControllerWeixinLogin extends Controller {
 		 	if ($customer_info && $this->customer->login($customer_info['email'], '', true)) {
 				$this->redirect($this->url->link('mobile_store/home', '', 'SSL')); 
 			}
-		}		
+		}
+		
+		if (isset($this->request->get['code'])) {
+			$this->load->model('weixin/access_token');
+			$this->load->model('setting/setting');
+			
+			$wx = $this->model_setting_setting->getSetting('weixin');
+			if ($this->model_weixin_access_token->getTempAccessToken($wx['weixin_appid'],
+					$wx['weixin_appsecret'], $this->request->get['code']) == true) {
+				$openid = $this->model_weixin_access_token->auth2_access_token->openid;
+			}
+			else {
+				$this->response->setOutput("微信认证错误，请重试");
+				return;
+			}
+		}
 		
 		if ($this->customer->isLogged()) {  
       		$this->redirect($this->url->link('mobile_store/home', '', 'SSL'));
     	}
-	
-		if ($this->validate()) {
+    	
+    	if (isset($this->request->post['email']) && isset($this->request->post['password'])) {
+  			$email = $this->request->post['email'];
+  			$passwd = $this->request->post['password'];
+  		}
+  		else if (isset($this->request->get['email']) && isset($this->request->get['password'])) {
+  			$email = $this->request->get['email'];
+  			$passwd = $this->request->get['password'];
+  		}
+  		else if (isset($openid)) {
+  			$email = $openid;
+  			$passwd = WEIXIN_USERPWD;
+  		}
+  		else {
+  			$this->response->setOutput("没有登录用户名和密码，请重试");
+  			return;
+  		}
+    	
+  		if ($this->customer->login($email, $passwd)) {
 			unset($this->session->data['guest']);
 			
-			// Added strpos check to pass McAfee PCI compliance test (http://forum.opencart.com/viewtopic.php?f=10&t=12043&p=151494#p151295)
 			if (isset($this->request->post['redirect']) && (strpos($this->request->post['redirect'], HTTP_SERVER) !== false || strpos($this->request->post['redirect'], HTTPS_SERVER) !== false)) {
 				$this->redirect(str_replace('&amp;', '&', $this->request->post['redirect']));
 			} else {
 				$this->redirect($this->url->link('mobile_store/home', '', 'SSL')); 
 			}
-    	}  
-
-		if (isset($this->session->data['success'])) {
-    		$this->data['success'] = $this->session->data['success'];
-    
-			unset($this->session->data['success']);
-		} else {
-			$this->data['success'] = '';
-		}
+    	}
+    	else {
+    		$this->response->setOutput("自动登录失败");
+    	}
   	}
   
-  	private function validate() {
-  		if ($this->request->server['REQUEST_METHOD'] == 'POST') {
-  			$email = $this->request->post['email'];
-  			$passwd = $this->request->post['password'];
-  		}
-  		else {
-  			$email = $this->request->get['email'];
-  			$passwd = $this->request->get['password'];
-  		}
-    	if (!$this->customer->login($email, $passwd)) {
-      		$this->error['warning'] = $this->language->get('error_login');
-    	}
-	
-    	if (!$this->error) {
-      		return true;
-    	} else {
-      		return false;
-    	}  	
-  	}
 }
 ?>

@@ -1,12 +1,15 @@
 <?php
 // HTTP
-define('HTTP_SERVER', 'http://qy.gz.1251102575.clb.myqcloud.com/');
+define('MY_DOMAIN', 'qy.gz.1251102575.clb.myqcloud.com');
+//define('HTTP_SERVER', 'http://qy.gz.1251102575.clb.myqcloud.com/');
+define('HTTP_SERVER', 'http://192.168.1.108/opencart/');
 
 // HTTPS
-define('HTTPS_SERVER', 'http://qy.gz.1251102575.clb.myqcloud.com/');
+//define('HTTPS_SERVER', 'http://qy.gz.1251102575.clb.myqcloud.com/');
+define('HTTPS_SERVER', 'http://oc.ngrok.com/opencart/');
 
 // DIR
-define('DIR_PREFIX', '/var/www/html');
+define('DIR_PREFIX', 'D:\\PHPnow\\htdocs\\opencart\\');
 define('DIR_APPLICATION', DIR_PREFIX.'/catalog/');
 define('DIR_SYSTEM', DIR_PREFIX.'/system/');
 define('DIR_DATABASE', DIR_PREFIX.'/system/database/');
@@ -21,8 +24,8 @@ define('DIR_LOGS', DIR_PREFIX.'/system/logs/');
 // DB
 define('DB_DRIVER', 'mysql');
 define('DB_HOSTNAME', 'localhost');
-define('DB_USERNAME', 'qingyou');
-define('DB_PASSWORD', '!@#qwe');
+define('DB_USERNAME', 'root');
+define('DB_PASSWORD', '123456');
 define('DB_DATABASE', 'opencart');
 define('DB_PREFIX', 'oc_');
 
