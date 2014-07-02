@@ -366,11 +366,11 @@ $('#button-cart').bind('click', function() {
 				$('#notify_text').html(json['success']);
 				//$('.success').fadeIn('slow');
 				$('#cart_total').html(json['total']);
-				$('html, body').animate({ scrollTop: 0 }, 'slow'); 
-				$('#BeeperBox').slideDown();
+				//$('html, body').animate({ scrollTop: 0 }, 'slow'); 
+				$('#BeeperBox').slideDown('fast');
 				setTimeout(function() {
-					$("#BeeperBox").hide('blind', {}, 500)
-				}, 5000);
+					$("#BeeperBox").hide()
+				}, 2000);
 			}	
 		}
 	});
