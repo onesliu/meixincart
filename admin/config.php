@@ -1,15 +1,13 @@
 <?php
 // HTTP
-define('MY_DOMAIN', 'qy.gz.1251102575.clb.myqcloud.com');
-//define('HTTP_SERVER', 'http://qy.gz.1251102575.clb.myqcloud.com/admin/');
-//define('HTTP_CATALOG', 'http://qy.gz.1251102575.clb.myqcloud.com/');
-define('HTTP_SERVER', 'http://localhost/opencart/admin/');
-define('HTTP_CATALOG', 'http://localhost/opencart/');
+define('MY_DOMAIN', 'localhost/opencart');
+
+define('HTTP_SERVER', 'http://'.MY_DOMAIN.'/admin/');
+define('HTTP_CATALOG', 'http://'.MY_DOMAIN.'/');
+
 // HTTPS
-//define('HTTPS_SERVER', 'http://qy.gz.1251102575.clb.myqcloud.com/admin/');
-//define('HTTPS_CATALOG', 'http://qy.gz.1251102575.clb.myqcloud.com/');
-define('HTTPS_SERVER', 'http://localhost/opencart/admin/');
-define('HTTPS_CATALOG', 'http://localhost/opencart/');
+define('HTTPS_SERVER', 'http://'.MY_DOMAIN.'/admin/');
+define('HTTPS_CATALOG', 'http://'.MY_DOMAIN.'/');
 
 // DIR
 define('DIR_PREFIX', 'D:\\PHPnow\\htdocs\\opencart\\');

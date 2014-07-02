@@ -1,12 +1,10 @@
 <?php
 // HTTP
-define('MY_DOMAIN', 'qy.gz.1251102575.clb.myqcloud.com');
-//define('HTTP_SERVER', 'http://qy.gz.1251102575.clb.myqcloud.com/');
-define('HTTP_SERVER', 'http://192.168.1.108/opencart/');
+define('MY_DOMAIN', '192.168.1.108/opencart');
+define('HTTP_SERVER', 'http://'.MY_DOMAIN.'/');
 
 // HTTPS
-//define('HTTPS_SERVER', 'http://qy.gz.1251102575.clb.myqcloud.com/');
-define('HTTPS_SERVER', 'http://oc.ngrok.com/opencart/');
+define('HTTPS_SERVER', 'http://'.MY_DOMAIN.'/');
 
 // DIR
 define('DIR_PREFIX', 'D:\\PHPnow\\htdocs\\opencart\\');
