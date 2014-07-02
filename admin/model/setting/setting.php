@@ -17,7 +17,9 @@ class ModelSettingSetting extends Model {
 	}
 	
 	public function editSetting($group, $data, $store_id = 0) {
-		$this->db->query("DELETE FROM " . DB_PREFIX . "setting WHERE store_id = '" . (int)$store_id . "' AND `group` = '" . $this->db->escape($group) . "'");
+		$keys = array_keys($data);
+		$keystr = implode("','", $keys);
+		$this->db->query("DELETE FROM " . DB_PREFIX . "setting WHERE store_id = '" . (int)$store_id . "' AND `group` = '" . $this->db->escape($group) . "' AND `key` IN ('".$keystr."')");
 
 		foreach ($data as $key => $value) {
 			if (!is_array($value)) {

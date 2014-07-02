@@ -33,7 +33,7 @@ class ControllerWeixinMenuCreate extends Controller {
 		$access_token = $this->config->get('weixin_access_token');
 		$token_expire = $this->config->get('weixin_token_expire');
 		$token_starttime = $this->config->get('weixin_token_starttime');
-		$menu_def = prepare_menu_def($this->config->get('weixin_menu'));
+		$menu_def = $this->prepare_menu_def($this->config->get('weixin_menu'));
 		
 		$ret = new stdClass();
 		
