@@ -61,7 +61,7 @@ class ModelWeixinAccessToken extends Model {
 		
 		if (isset($result->access_token)) {
 			$this->auth2_access_token = $result;
-			return true;
+			return $result;
 		}
 		else {
 			$this->errcode = $result->errcode;
