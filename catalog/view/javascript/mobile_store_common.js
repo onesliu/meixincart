@@ -59,7 +59,7 @@ $(document).ready(function() {
 	});
 
 	$('.beeper_x').bind('click', function(){
-		$('#BeeperBox').slideUp();
+		$('#BeeperBox').slideUp('fast');
 	});	
 	
 	$('.category-arrow').bind('click', function(){
@@ -105,13 +105,13 @@ function addToCart(product_id, quantity) {
 			if (json['success']) {
 				$('#notify_text').html(json['success']);
 				
-				//$('.success').fadeIn('slow');
+				//$('.success').fadeIn('fast');
 				$('#cart_total').html(json['total']);
-				$('html, body').animate({ scrollTop: 0 }, 'slow'); 
-				$('#BeeperBox').slideDown();
+				//$('html, body').animate({ scrollTop: 0 }, 'fast'); 
+				$('#BeeperBox').slideDown('fast');
 				setTimeout(function() {
-					$("#BeeperBox").hide('blind', {}, 500)
-				}, 3000);
+					$("#BeeperBox").hide()
+				}, 1000);
 			}	
 		}
 	});

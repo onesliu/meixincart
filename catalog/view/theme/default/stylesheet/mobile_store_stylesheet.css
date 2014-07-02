@@ -2227,23 +2227,26 @@ h2.login-header {
 	display: none;
 }
 .UIBeeper .UIBeeper_Full{
-	background-color:rgb(233, 250, 215);;
+	background-color:#000000;
 	border:1px solid #99A8C7;
 	-webkit-border-radius:3px;
 	-moz-border-radius:3px;
 	border-radius:3px;
+	filter:alpha(Opacity=80);
+	-moz-opacity:0.6;
+	opacity: 0.6;
 	margin:0;
 	padding:3px;
 }
 .UIBeeper .UIBeeper_Full:hover{
 	/* change background color on mouseover */
-	background-color:rgb(233, 250, 215);;
+	background-color:#000000;
 }
 .UIBeeper .UIBeep_Bottom{
 	border-bottom:none;
 }
 .UIBeeper .UIBeep_Selected{
-	background:rgb(233, 250, 215);;
+	background:#000000;
 }
 .UIBeeper .UIBeep_Top{
 	padding-top:0;
@@ -2252,7 +2255,7 @@ h2.login-header {
 	padding-bottom:0;
 }
 .UIBeep{
-	background:rgb(233, 250, 215);
+	background:#000000;
 	border-bottom:1px solid #BFCADE;
 	overflow:hidden;
 	padding:3px 0;
@@ -2297,8 +2300,10 @@ h2.login-header {
 
 #notify_text {
     margin: 3px;
-	color:#3B5998;
+	color:#FFFFFF;
 	font-size: 14px;
+	text-align:center;
+	/*font-weight: bold;*/
 }
 
 #notify_text a{

@@ -4,7 +4,7 @@
 $_['heading_title']          = '购物车内的商品';
 
 // Text
-$_['text_success']           = '成功添加商品<a href="%s">%s</a> 到您的 <a href="%s">购物车</a>！';
+$_['text_success']           = '%s 已加入购物车';
 $_['text_remove']            = '您已成功更新了购物车！';
 $_['text_coupon']            = '您已经成功使用折扣券！';
 $_['text_voucher']           = '您已经成功使用礼品券！';

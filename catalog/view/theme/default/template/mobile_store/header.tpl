@@ -126,13 +126,9 @@ DD_belatedPNG.fix('#logo img');
 <div id="BeeperBox" class="UIBeeper">
  <div class="UIBeeper_Full">
 	<div class="Beeps">
-	   <div class="UIBeep UIBeep_Top UIBeep_Bottom UIBeep_Selected" style="opacity: 1; ">
-		 <div class="UIBeep_Icon">
-			<i class="beeper_icon image2"></i>
-		 </div>
+	   <div class="UIBeep UIBeep_Top UIBeep_Bottom UIBeep_Selected">
 		 <span class="beeper_x">&nbsp;</span>
 		 <div id="notify_text"></div>
-		
 	   </div>
 	</div>
  </div>

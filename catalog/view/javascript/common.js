@@ -132,7 +132,7 @@ function addToCart(product_id, quantity) {
 				
 				$('#cart-total').html(json['total']);
 				
-				$('html, body').animate({ scrollTop: 0 }, 'slow'); 
+				$('html, body').animate({ scrollTop: 0 }, 'fast'); 
 			}	
 		}
 	});
