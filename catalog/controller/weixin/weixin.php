@@ -66,7 +66,7 @@ class ControllerWeixinWeixin extends Controller {
 			}
 			else if ($this->WeixinMsgType == 'event' && $this->WeixinEvent == 'CLICK') {
 				//发送自动应答消息，当用户点击该图文消息时，自动登录到商城并跳转到首页
-				$param = "index.php?route=weixin/login&email=$this->WeixinFromUserName&password=".WEIXIN_USERPWD;
+				$param = "index.php?route=weixin/login&email=$this->WeixinFromUserName";
 				//菜单消息事件
 				if ($this->WeixinEventKey == 'V1001_BUY_NOW') {
 					$this->load->model("weixin/auto_reply");

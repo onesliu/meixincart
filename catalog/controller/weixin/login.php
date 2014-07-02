@@ -36,24 +36,21 @@ class ControllerWeixinLogin extends Controller {
       		$this->redirect($this->url->link('mobile_store/home', '', 'SSL'));
     	}
     	
-    	if (isset($this->request->post['email']) && isset($this->request->post['password'])) {
+    	if (isset($this->request->post['email'])) {
   			$email = $this->request->post['email'];
-  			$passwd = $this->request->post['password'];
   		}
-  		else if (isset($this->request->get['email']) && isset($this->request->get['password'])) {
+  		else if (isset($this->request->get['email'])) {
   			$email = $this->request->get['email'];
-  			$passwd = $this->request->get['password'];
   		}
   		else if (isset($openid)) {
   			$email = $openid;
-  			$passwd = WEIXIN_USERPWD;
   		}
   		else {
   			$this->response->setOutput("没有登录用户名和密码，请重试");
   			return;
   		}
     	
-  		if ($this->customer->login($email, $passwd)) {
+  		if ($this->customer->login($email, WEIXIN_USERPWD)) {
 			unset($this->session->data['guest']);
 			
 			if (isset($this->request->post['redirect']) && (strpos($this->request->post['redirect'], HTTP_SERVER) !== false || strpos($this->request->post['redirect'], HTTPS_SERVER) !== false)) {
