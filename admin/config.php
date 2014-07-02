@@ -1,11 +1,12 @@
 <?php
 // HTTP
-define('HTTP_SERVER', 'http://qy.gz.1251102575.clb.myqcloud.com/admin/');
-define('HTTP_CATALOG', 'http://qy.gz.1251102575.clb.myqcloud.com/');
+define('MY_DOMAIN', 'qy.gz.1251102575.clb.myqcloud.com');
+define('HTTP_SERVER', 'http://'.MY_DOMAIN.'/admin/');
+define('HTTP_CATALOG', 'http://'.MY_DOMAIN.'/');
 
 // HTTPS
-define('HTTPS_SERVER', 'http://qy.gz.1251102575.clb.myqcloud.com/admin/');
-define('HTTPS_CATALOG', 'http://qy.gz.1251102575.clb.myqcloud.com/');
+define('HTTPS_SERVER', 'http://'.MY_DOMAIN.'/admin/');
+define('HTTPS_CATALOG', 'http://'.MY_DOMAIN.'/');
 
 // DIR
 define('DIR_PREFIX', '/var/www/html');
