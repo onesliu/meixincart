@@ -33,7 +33,7 @@ class ControllerWeixinMenuCreate extends Controller {
 		$access_token = $this->config->get('weixin_access_token');
 		$token_expire = $this->config->get('weixin_token_expire');
 		$token_starttime = $this->config->get('weixin_token_starttime');
-		$menu_def = $this->config->get('weixin_menu');
+		$menu_def = prepare_menu_def($this->config->get('weixin_menu'));
 		
 		$ret = new stdClass();
 		
@@ -75,6 +75,13 @@ class ControllerWeixinMenuCreate extends Controller {
 			$this->errmsg = $result->errmsg;
 		}
 		*/
+	}
+	
+	private function prepare_menu_def($menu_def) {
+		$url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=snsapi_base&state=1#wechat_redirect";
+		$url = str_replace('APPID', $this->config->get('weixin_appid'), $url);
+		$url = str_replace('REDIRECT_URI', urlencode("http://".MY_DOMAIN."/index.php?route=weixin/login"), $url);
+		return str_replace('AUTO_LOGIN', $url, $menu_def);
 	}
 }
 ?>

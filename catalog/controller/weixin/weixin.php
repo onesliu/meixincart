@@ -65,12 +65,7 @@ class ControllerWeixinWeixin extends Controller {
 				$this->model_weixin_get_userinfo->unSubscribeUser($this->WeixinFromUserName);
 			}
 			else if ($this->WeixinMsgType == 'event' && $this->WeixinEvent == 'CLICK') {
-				/*自动登录到商城
-				if (!$this->customer->login($this->WeixinFromUserName, WEIXIN_USERPWD)) {
-					unset($this->session->data['guest']);
-					$this->log->write("微信用户自动登录到商城失败：".$this->WeixinFromUserName);
-				}
-				*/
+				//发送自动应答消息，当用户点击该图文消息时，自动登录到商城并跳转到首页
 				$param = "index.php?route=weixin/login&email=$this->WeixinFromUserName&password=".WEIXIN_USERPWD;
 				//菜单消息事件
 				if ($this->WeixinEventKey == 'V1001_BUY_NOW') {
@@ -93,6 +88,9 @@ class ControllerWeixinWeixin extends Controller {
 						return;
 					}
 				}
+			}
+			else if ($this->WeixinMsgType == 'event' && $this->WeixinEvent == 'VIEW') {
+				//直接自动登录到商城并跳转到首页
 			}
 			else if ($this->WeixinMsgType == 'text') {
 				//测试自动回复
