@@ -38,6 +38,10 @@ class ControllerWeixinSetting extends Controller {
 		$this->data['weixin_appsecret'] = (isset($data['weixin_appsecret']))?$data['weixin_appsecret']:'';
 		$this->data['weixin_menu'] = (isset($data['weixin_menu']))?$data['weixin_menu']:'';
 		
+		$this->data['weixin_paysignkey'] = (isset($data['weixin_paysignkey']))?$data['weixin_paysignkey']:'';
+		$this->data['weixin_partnerid'] = (isset($data['weixin_partnerid']))?$data['weixin_partnerid']:'';
+		$this->data['weixin_partnerkey'] = (isset($data['weixin_partnerkey']))?$data['weixin_partnerkey']:'';
+		
  		if (isset($this->error['warning'])) {
 			$this->data['error_warning'] = $this->error['warning'];
 		} else {
@@ -61,13 +65,11 @@ class ControllerWeixinSetting extends Controller {
 		} else {
 			$this->data['error_appsecret'] = '';
 		}
-
- 		if (isset($this->error['appsecret'])) {
-			$this->data['error_appsecret'] = $this->error['appsecret'];
-		} else {
-			$this->data['error_appsecret'] = '';
-		}
 		
+		$this->data['error_paysignkey'] = '';
+		$this->data['error_partnerid'] = '';
+		$this->data['error_partnerkey'] = '';
+
 		$this->data['breadcrumbs'] = array();
 
    		$this->data['breadcrumbs'][] = array(

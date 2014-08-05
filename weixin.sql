@@ -53,7 +53,7 @@ create table if not exists oc_event(
 )ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 //配送区域
-CREATE TABLE `oc_district` (
+CREATE TABLE if not exists `oc_district` (
   `id` int(11) NOT NULL auto_increment,
   `city` varchar(128) NOT NULL,
   `name` varchar(128) NOT NULL,
@@ -61,6 +61,22 @@ CREATE TABLE `oc_district` (
   `map` varchar(1024) NOT NULL,
   `desp` text default null,
   PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE if not exists pos_exchange_data (
+	`id` int(11) NOT NULL auto_increment,
+	`datatype` int(11) not null,
+	`dataval` text,
+	`uploadtime` timestamp default now(),
+	PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE if not exists pos_exchange_store (
+	`id` int(11) NOT NULL auto_increment,
+	`storeid` int(11) not null,
+	`dataid` int(11) not null,
+	`gettime` timestamp default now(),
+	PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 //地址信息微信使用说明
