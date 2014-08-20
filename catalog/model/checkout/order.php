@@ -741,5 +741,27 @@ class ModelCheckoutOrder extends Model {
 			}
 		}
 	}
+	
+	public function fastupdate($order_id, $order_info) {
+
+		$setstr = (isset($order_info['customer_id']))? "customer_id = '" . (int)$order_info['customer_id'] . "'," : "" .
+		(isset($order_info['customer_group_id']))? "customer_group_id = '" . (int)$order_info['customer_group_id'] . "'," : "" .
+		(isset($order_info['firstname']))? "firstname = '" . $this->db->escape($order_info['firstname']) . "'," : "" .
+		(isset($order_info['lastname']))? "lastname = '" . $this->db->escape($order_info['lastname']) . "'," : "" .
+		(isset($order_info['email']))? "email = '" . $this->db->escape($order_info['email']) . "'," : "" .
+		(isset($order_info['telephone']))? "telephone = '" . $this->db->escape($order_info['telephone']) . "'," : "" .
+		(isset($order_info['fax']))? "fax = '" . $this->db->escape($order_info['fax']) . "'," : "" .
+		(isset($order_info['comment']))? "comment = '" . $this->db->escape($order_info['comment']) . "'," : "" .
+		(isset($order_info['total']))? "total = '" . (float)$order_info['total'] . "'," : "" .
+		(isset($order_info['order_status_id']))? "order_status_id = '" . (int)$order_info['order_status_id'] . "'," : "" .
+		(isset($order_info['shipping_district_id']))? "shipping_district_id = '" . (int)$order_info['shipping_district_id'] . "'," : "" .
+		(isset($order_info['shipping_time']))? "shipping_time = '" . (int)$order_info['shipping_time'] . "'," : "" .
+		(isset($order_info['ip']))? "ip = '" . $this->db->escape($order_info['ip']) . "'," : "" .
+		(isset($order_info['forwarded_ip']))? "forwarded_ip = '" . $this->db->escape($order_info['forwarded_ip']) . "'," : "";
+		
+		$setstr = trim(trim($setstr, ","));
+		
+		$this->db->query("UPDATE `" . DB_PREFIX . "order` SET $setstr where order_id = $order_id");
+	}
 }
 ?>

@@ -129,8 +129,9 @@ class ControllerMobileStoreCheckoutOnestep extends Controller {
 		$this->children = array(
 			'mobile_store/content_top',
 			'mobile_store/content_bottom',
+			'weixin/pay',
 			'mobile_store/footer',
-			'mobile_store/header'	
+			'mobile_store/header'
 		);
 
 		$this->response->setOutput($this->render());
@@ -372,7 +373,10 @@ class ControllerMobileStoreCheckoutOnestep extends Controller {
 					
 		$this->load->model('checkout/order');
 		
-		//$this->session->data['order_id'] = $this->model_checkout_order->addOrder($data);
+		//添加订单
+		$this->session->data['order_id'] = $this->model_checkout_order->addOrder($data);
+		
+		
 		$this->session->data['order_info'] = $data;
 		$this->data['order_info'] = $data;
 		

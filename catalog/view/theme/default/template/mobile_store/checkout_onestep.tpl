@@ -92,7 +92,7 @@
   </form>
   
   <div>
-    <div class="center"><a onclick="check_form();" class="button_11 orange orange_borderbottom radius4">微信支付</a></div>
+    <div class="center"><a onclick="if (check_form() && weixin_pay()) {$('#weixin_payment').submit();}" class="button_11 orange orange_borderbottom radius4">微信支付</a></div>
   </div>
   
   <?php echo $content_bottom; ?>
@@ -101,15 +101,15 @@
 function check_form() {
 	if ($('#district-select') == null) {
 		alert('请选择一下收货地址吧！');
-		return;
+		return false;
 	}
 
 	if ($('#district-select option:selected').val() == 0) {
 		alert('系统无法自动从您的地址中判断出就近的配送点，请人工选择。如果太远无法配送，客服会联络您哦～');
-		return;
+		return false;
 	}
 
-	$('#weixin_payment').submit();
+	return true;
 }
 //--></script>
 <?php echo $footer; ?>

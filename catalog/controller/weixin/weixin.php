@@ -3,48 +3,8 @@
 class ControllerWeixinWeixin extends Controller { 
 	public function index() {
 		
-		// 读取微信配置信息
-		$token = $this->config->get('weixin_token');
-
-		// 验证微信服务器
-		if ($token == null) {
-			$this->response->setOutput("");
-			$this->log->write("微信token未配置");
-			return;
-		}
-		
-		$valid_result = $this->valid($token);
-		if ($valid_result == false) {
-			$this->response->setOutput("");
-			$this->log->write("微信接入验证失败");
-			return;
-		}
-		else if (is_string($valid_result)){
-			// 首次验证，返回echostr
-			$this->response->setOutput($valid_result);
-			return;
-		}
-		
-		// 验证通过且不是首次验证
-		// 读取本地保存的access_token，没读到就去微信服务器取
-		$access_token = $this->config->get('weixin_access_token');
-		$token_expire = $this->config->get('weixin_token_expire');
-		$token_starttime = $this->config->get('weixin_token_starttime');
-		
-		$this->load->model('setting/setting');
-		$this->load->model('weixin/access_token');
-
-		if (null == $access_token || null == $token_starttime || null == $token_expire ||
-			(time() - $token_starttime >= $token_expire)) {
-
-			$access_token = $this->model_weixin_access_token->get($this->config->get('weixin_appid'),
-				$this->config->get('weixin_appsecret'));
-			if ($access_token == false) {
-				// 读取access_token失败
-				$this->response->setOutput("");
-				$this->log->write("从微信服务器取access_token失败");
-				return;
-			}
+		if ($this->weixin_init() != true) {
+			return; //首次验证或初始化失败
 		}
 		
 		// 接收到消息或事件
@@ -58,7 +18,7 @@ class ControllerWeixinWeixin extends Controller {
 			$this->load->model('weixin/get_userinfo');
 			if ($this->WeixinMsgType == 'event' && $this->WeixinEvent == 'subscribe') {
 				//取用户信息，并自动注册到商城
-				$userinfo = $this->model_weixin_get_userinfo->getUserInfo($access_token, $this->WeixinFromUserName);
+				$userinfo = $this->model_weixin_get_userinfo->getUserInfo($this->access_token, $this->WeixinFromUserName);
 			}
 			else if ($this->WeixinMsgType == 'event' && $this->WeixinEvent == 'unsubscribe') {
 				//注销用户
@@ -104,6 +64,60 @@ class ControllerWeixinWeixin extends Controller {
 			}
 		}
 		$this->response->setOutput("");
+	}
+	
+	public function weixin_init() {
+		// 读取微信接入配置
+		$this->appid = $this->config->get('weixin_appid');
+		$this->appsecret = $this->config->get('weixin_appsecret');
+		$this->token = $this->config->get('weixin_token');
+
+		// 验证微信服务器
+		if ($this->token == null) {
+			$this->response->setOutput("");
+			$this->log->write("微信token未配置");
+			return false;
+		}
+		
+		$valid_result = $this->valid($this->token);
+		if ($valid_result == false) {
+			$this->response->setOutput("");
+			$this->log->write("微信接入验证失败");
+			return false;
+		}
+		else if (is_string($valid_result)){
+			// 首次验证，返回echostr
+			$this->response->setOutput($valid_result);
+			return '';
+		}
+		
+		// 验证通过且不是首次验证
+		// 读取本地保存的access_token，没读到就去微信服务器取
+		$this->access_token = $this->config->get('weixin_access_token');
+		$this->token_expire = $this->config->get('weixin_token_expire');
+		$this->token_starttime = $this->config->get('weixin_token_starttime');
+		// 读取微信支付配置
+		$this->paysignkey = $this->config->get('weixin_paysignkey');
+		$this->partnerid = $this->config->get('weixin_partnerid');
+		$this->partnerkey = $this->config->get('weixin_partnerkey');
+		
+		// 获取新的access_token
+		$this->load->model('setting/setting');
+		$this->load->model('weixin/access_token');
+		if (null == $this->access_token || null == $this->token_starttime || null == $this->token_expire ||
+			(time() - $this->token_starttime >= $this->token_expire)) {
+
+			$this->access_token = $this->model_weixin_access_token->get($this->config->get('weixin_appid'),
+				$this->config->get('weixin_appsecret'));
+			if ($this->access_token == false) {
+				// 读取access_token失败
+				$this->response->setOutput("");
+				$this->log->write("从微信服务器取access_token失败");
+				return false;
+			}
+		}
+		
+		return true;
 	}
 	
 	private function valid($token)

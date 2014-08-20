@@ -45,8 +45,8 @@ abstract class Controller {
 			return $controller->output;
 		} else {
 			trigger_error('Error: Could not load controller ' . $child . '!');
-			exit();					
-		}		
+			exit();
+		}
 	}
 	
 	protected function render() {
