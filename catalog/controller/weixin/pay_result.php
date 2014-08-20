@@ -1,4 +1,6 @@
 <?php
+include_once("weixin.php");
+
 class ControllerPaymentWeixin extends ControllerWeixinWeixin {
 	public function index() {
     	$this->submit_order();

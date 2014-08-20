@@ -6,7 +6,7 @@ include_once("CommonUtil.php");
 include_once("SDKRuntimeException.class.php");
 include_once("MD5SignUtil.php");
 
-define(SIGNTYPE, "sha1"); //method
+define('SIGNTYPE', "sha1"); //method
 
 class WxPayHelper
 {

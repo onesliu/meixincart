@@ -1,5 +1,6 @@
 <?php
 include_once("lib/WxPayHelper.php");
+include_once("weixin.php");
 
 class ControllerWeixinPayNotify extends ControllerWeixinWeixin { 
 	public function index() {
