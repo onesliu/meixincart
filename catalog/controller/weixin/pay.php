@@ -31,7 +31,7 @@ class ControllerWeixinPay extends ControllerWeixinWeixin {
 			$this->template = 'default/template/weixin/pay.tpl';
 		}
 		
-		$this->response->setOutput($this->render());
+		$this->render();
 	}
 	
 }
