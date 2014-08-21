@@ -110,6 +110,8 @@ alter table oc_customer add `province` varchar(64) default null;
 alter table oc_customer add `language` varchar(64) default null;
 alter table oc_customer add `headimgurl` varchar(1024) default null;
 alter table oc_customer add `subscribe_time` integer default 0;
+alter table oc_customer add customer_type int(11) default 0; //0 opencart, 1 微信, 2 淘宝
+alter table oc_customer add `access_token` varchar(1024) default null;
 
 alter table oc_order modify order_id bigint NOT NULL auto_increment;
 alter table oc_order add shipping_time datetime default null;
@@ -126,8 +128,6 @@ alter table oc_product add `other_product_id` bigint default 0;
 
 alter table oc_address add `district_id` int(11) not null default '0';
 alter table oc_address add telephone varchar(32);
-
-alter table oc_customer add customer_type int(11) default 0; //0 opencart, 1 微信, 2 淘宝
 
 alter table oc_user add district_id int(11) default 0;
 

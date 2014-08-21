@@ -25,17 +25,22 @@ class ControllerWeixinPay extends ControllerWeixinWeixin {
 		
 		$addrHelper = new WxPayHelper($this);
 		$addrHelper->setParameter("appid", $this->appid);
-		$addrHelper->setParameter("url", "http://" . MY_DOMAIN . $this->request->server['REQUEST_URI']);
+		$addrHelper->setParameter("url", "http://".MY_DOMAIN.
+					"/pay/weixin.php?route=mobile_store/checkout_onestep".
+					"&code=". $this->session->data['oauth_code'].
+					"&state=1");
 		$addrParam['timeStamp'] = time();
 		$addrHelper->setParameter("timestamp", $addrParam['timeStamp']);
 		$addrParam['nonceStr'] = $addrHelper->create_noncestr();
 		$addrHelper->setParameter("noncestr", $addrParam['nonceStr']);
-		$addrHelper->setParameter("accesstoken", $this->access_token);
+		$addrHelper->setParameter("accesstoken", $this->session->data['oauth_access_token']);
 		
 		$addrParam['addrSign'] = $addrHelper->create_addr_sign();
 		$addrParam['appId'] = $this->appid;
 		
 		$this->data['addrParam'] = $addrParam;
+		
+		$this->log->write(print_r($addrParam,true));
 		
 		// view template
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/weixin/pay.tpl')) {

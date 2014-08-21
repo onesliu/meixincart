@@ -20,11 +20,15 @@ class ControllerWeixinLogin extends Controller {
 			$this->load->model('weixin/access_token');
 			$this->load->model('setting/setting');
 			
+			$this->session->data['oauth_code'] = $this->request->get['code'];
+			
 			$wx = $this->model_setting_setting->getSetting('weixin');
 			$ac = $this->model_weixin_access_token->getTempAccessToken($wx['weixin_appid'],
 					$wx['weixin_appsecret'], $this->request->get['code']);
 			if ($ac != false) {
 				$openid = $ac->openid;
+				$this->session->data['openid'] = $openid;
+				$this->session->data['oauth_access_token'] = $ac->access_token;
 			}
 			else {
 				$this->response->setOutput("微信认证错误，请重试");

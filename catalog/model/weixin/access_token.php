@@ -61,6 +61,7 @@ class ModelWeixinAccessToken extends Model {
 		
 		if (isset($result->access_token)) {
 			$this->auth2_access_token = $result;
+			$this->save_oauth_access_token($result->openid, $result->access_token);
 			return $result;
 		}
 		else {
@@ -68,6 +69,15 @@ class ModelWeixinAccessToken extends Model {
 			$this->errmsg = $result->errmsg;
 			return false;
 		}
+	}
+	
+	private function save_oauth_access_token($openid, $access_token) {
+		$this->db->query("update ". DB_PREFIX ."customer set access_token='$access_token' WHERE	email='$openid'");
+	}
+	
+	function get_oauth_access_token($openid) {
+		$query = $this->db->query("SELECT access_token FROM ".DB_PREFIX."customer WHERE email='$openid'");
+		return (isset($query->row['access_token']))?$query->row['access_token'] : null;
 	}
 	
 	private function save($access_token, $expire_time, $startime) {
