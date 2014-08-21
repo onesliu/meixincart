@@ -109,4 +109,5 @@ function check_form() {
 	return true;
 }
 //--></script>
+<?php echo $pay; ?>
 <?php echo $footer; ?>
