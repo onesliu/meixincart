@@ -13,10 +13,11 @@ class WxPayHelper
 	var $parameters; //cft 参数
 	function __construct($wxconfig)
 	{
+		$this->commutil = new CommonUtil();
 		$this->wxconfig = $wxconfig;
 	}
 	function setParameter($parameter, $parameterValue) {
-		$this->parameters[CommonUtil::trimString($parameter)] = CommonUtil::trimString($parameterValue);
+		$this->parameters[$this->commutil->trimString($parameter)] = $this->commutil->trimString($parameterValue);
 	}
 	function getParameter($parameter) {
 		return $this->parameters[$parameter];

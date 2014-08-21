@@ -52,8 +52,8 @@
     
     <form id="weixin_payment" name="weixin_payment" method="post" action="<?php echo $weixin_payment; ?>">
     <div id="checkout">
-      <div class="checkout-content" style="display:block;">
-		<div id="addr" onclick="editaddr();"  <?php if (!isset($address)) echo "style=\"display:none\""; ?> >
+      <div class="checkout-content" style="display:block;" onclick="editaddr();" >
+		<div id="addr" <?php if (!isset($address)) echo "style=\"display:none\""; ?> >
 			<div class="checkout-heading">收货地址</div>
 		    <div><span id="user_name"><?php echo $address['firstname']; echo $address['lastname']; ?></span>
 		    	<span id="user_telephone"><?php echo $telephone; ?></span></div>
@@ -71,7 +71,7 @@
 	      		<?php }} ?>
       		</select>
       	</div>
-		<div id="addr_none" onclick="editaddr();" <?php if (isset($address)) echo "style=\"display:none\""; ?> >选择收货地址</div>
+		<div id="addr_none" <?php if (isset($address)) echo "style=\"display:none\""; ?> >选择收货地址</div>
       </div>
     </div>
 
