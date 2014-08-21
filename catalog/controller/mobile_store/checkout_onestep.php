@@ -70,7 +70,7 @@ class ControllerMobileStoreCheckoutOnestep extends Controller {
 
 			//查找历史选中的地址
 			foreach ($addresses as $address) {
-				if ($address['address_id'] == $address_id) {
+				if ($address['address_id'] == $this->data['address_id']) {
 					$this->data['address'] = $address;
 				}
 			}
