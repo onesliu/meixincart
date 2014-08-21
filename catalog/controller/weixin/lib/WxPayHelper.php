@@ -21,7 +21,7 @@ class WxPayHelper
 	function getParameter($parameter) {
 		return $this->parameters[$parameter];
 	}
-	protected function create_noncestr( $length = 16 ) {  
+	function create_noncestr( $length = 16 ) {  
 		$chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";  
 		$str ="";  
 		for ( $i = 0; $i < $length; $i++ )  {  
@@ -66,7 +66,7 @@ class WxPayHelper
 		 }
 		 try {
 		 	if($this->wxconfig->paysignkey == ""){
-		 			throw new SDKRuntimeException("paySignkey为空！" . "<br>");
+		 		throw new SDKRuntimeException("paySignkey为空！" . "<br>");
 		 	}
 		 	$bizParameters["appkey"] = $this->wxconfig->paysignkey;
 		 	ksort($bizParameters);
@@ -107,11 +107,8 @@ class WxPayHelper
 		    $nativeObj["noncestr"] = $this->create_noncestr();
 		    $nativeObj["app_signature"] = $this->get_biz_sign($nativeObj);
 		    $nativeObj["sign_method"] = SIGNTYPE;
-
-
 		   
-		    return   json_encode($nativeObj);
-
+		    return json_encode($nativeObj);
 		   
 		}catch (SDKRuntimeException $e)
 		{
@@ -143,7 +140,7 @@ class WxPayHelper
 		    $nativeObj["paySign"] = $this->get_biz_sign($nativeObj);
 		    $nativeObj["signType"] = SIGNTYPE;
 		   
-		    return   json_encode($nativeObj);
+		    return json_encode($nativeObj);
 		   
 		}catch (SDKRuntimeException $e)
 		{
@@ -203,6 +200,15 @@ class WxPayHelper
 			die($e->errorMessage());
 		}		
 
+	}
+	
+	function create_addr_sign() {
+		
+		$commonUtil = new CommonUtil();
+		ksort($this->parameters);
+		$unSignParaString = $commonUtil->formatQueryParaMap($this->parameters, false);
+
+		return sha1($unSignParaString);
 	}
 
 }

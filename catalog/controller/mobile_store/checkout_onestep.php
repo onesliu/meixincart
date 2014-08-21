@@ -64,8 +64,18 @@ class ControllerMobileStoreCheckoutOnestep extends Controller {
 		$this->load->model('account/address');
 		$this->load->model('account/district');
 
-		$this->data['addresses'] = $this->model_account_address->getAddresses();
+		$addresses = $this->model_account_address->getAddresses();
+		if (isset($addresses)) {
+			//$this->data['addresses'] = $addresses;
 
+			//查找历史选中的地址
+			foreach ($addresses as $address) {
+				if ($address['address_id'] == $address_id) {
+					$this->data['address'] = $address;
+				}
+			}
+		}
+		
 		$this->data['country_id'] = $this->config->get('config_country_id');
 		
 		$this->load->model('localisation/country');

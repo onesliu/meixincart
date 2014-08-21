@@ -4,7 +4,11 @@ class ControllerWeixinWeixin extends Controller {
 	public function index() {
 		
 		if ($this->weixin_init() != true) {
-			return; //首次验证或初始化失败
+			return; //初始化失败
+		}
+		
+		if ($this->valid_check() != true) {
+			return; //验证失败或首次验证成功
 		}
 		
 		// 接收到消息或事件
@@ -79,18 +83,6 @@ class ControllerWeixinWeixin extends Controller {
 			return false;
 		}
 		
-		$valid_result = $this->valid($this->token);
-		if ($valid_result == false) {
-			$this->response->setOutput("");
-			$this->log->write("微信接入验证失败");
-			return false;
-		}
-		else if (is_string($valid_result)){
-			// 首次验证，返回echostr
-			$this->response->setOutput($valid_result);
-			return '';
-		}
-		
 		// 验证通过且不是首次验证
 		// 读取本地保存的access_token，没读到就去微信服务器取
 		$this->access_token = $this->config->get('weixin_access_token');
@@ -117,6 +109,21 @@ class ControllerWeixinWeixin extends Controller {
 			}
 		}
 		
+		return true;
+	}
+	
+	private function valid_check() {
+		$valid_result = $this->valid($this->token);
+		if ($valid_result == false) {
+			$this->response->setOutput("");
+			$this->log->write("微信接入验证失败");
+			return false;
+		}
+		else if (is_string($valid_result)){
+			// 首次验证，返回echostr
+			$this->response->setOutput($valid_result);
+			return '';
+		}
 		return true;
 	}
 	

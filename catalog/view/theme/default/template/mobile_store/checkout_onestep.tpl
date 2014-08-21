@@ -53,13 +53,11 @@
     <form id="weixin_payment" name="weixin_payment" method="post" action="<?php echo $weixin_payment; ?>">
     <div id="checkout">
       <div class="checkout-content" style="display:block;">
-		<?php if ($addresses) {
-			foreach ($addresses as $address) {
-				if ($address['address_id'] == $address_id) { ?>
+		<div id="addr" onclick="editaddr();"  <?php if (!isset($address)) echo "style=\"display:none\""; ?> >
 			<div class="checkout-heading">收货地址</div>
-		    <div><span><?php echo $address['firstname']; echo $address['lastname']; ?></span>
-		    	<span><?php echo $telephone; ?></span></div>
-		    <div><?php echo $address['address_1']; ?></div>
+		    <div><span id="user_name"><?php echo $address['firstname']; echo $address['lastname']; ?></span>
+		    	<span id="user_telephone"><?php echo $telephone; ?></span></div>
+		    <div id="user_addr"><?php echo $address['address_1']; ?></div>
 		    <br/>
 		    <span class="checkout-heading"><?php echo $text_shipping_district; ?></span>
 		    <select id="district-select" name="district-select">
@@ -72,9 +70,8 @@
 	      		<option selected="selected" value="<?php echo $district['id']; ?>"><?php echo $district['name'];?></option>
 	      		<?php }} ?>
       		</select>
-		<?php }}} else { ?>
-			<div>选择收货地址</div>
-		<?php } ?>
+      	</div>
+		<div id="addr_none" onclick="editaddr();" <?php if (isset($address)) echo "style=\"display:none\""; ?> >选择收货地址</div>
       </div>
     </div>
 

@@ -9,7 +9,6 @@ class ControllerWeixinPay extends ControllerWeixinWeixin {
 			return; //首次验证或初始化失败
 		}
 		
-		$commonUtil = new CommonUtil();
 		$wxPayHelper = new WxPayHelper($this);
 		
 		$wxPayHelper->setParameter("bank_type", "WX");
@@ -23,6 +22,20 @@ class ControllerWeixinPay extends ControllerWeixinWeixin {
 		$wxPayHelper->setParameter("input_charset", "UTF-8");
 		
 		$this->data['wxPayHelper'] = $wxPayHelper;
+		
+		$addrHelper = new WxPayHelper($this);
+		$addrHelper->setParameter("appid", $this->appid);
+		$addrHelper->setParameter("url", "http://" . MY_DOMAIN . $this->request->server['REQUEST_URI']);
+		$addrParam['timeStamp'] = time();
+		$addrHelper->setParameter("timestamp", $addrParam['timestamp']);
+		$addrParam['nonceStr'] = $addrHelper->create_noncestr();
+		$addrHelper->setParameter("noncestr", $addrParam['nonceStr']);
+		$addrHelper->setParameter("accesstoken", $this->access_token);
+		
+		$addrParam['addrSign'] = $addrHelper->create_addr_sign();
+		$addrParam['appId'] = $this->appid;
+		
+		$this->data['addrParam'] = $addrParam;
 		
 		// view template
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/weixin/pay.tpl')) {
