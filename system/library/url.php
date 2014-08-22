@@ -2,11 +2,13 @@
 class Url {
 	private $url;
 	private $ssl;
+	private $index;
 	private $rewrite = array();
 	
-	public function __construct($url, $ssl = '') {
+	public function __construct($url, $ssl = '', $index = 'index.php') {
 		$this->url = $url;
 		$this->ssl = $ssl;
+		$this->index = $index;
 	}
 		
 	public function addRewrite($rewrite) {
@@ -20,7 +22,7 @@ class Url {
 			$url = $this->ssl;	
 		}
 		
-		$url .= 'index.php?route=' . $route;
+		$url .= $this->index.'?route=' . $route;
 			
 		if ($args) {
 			$url .= str_replace('&', '&amp;', '&' . ltrim($args, '&')); 

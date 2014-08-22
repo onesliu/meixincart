@@ -64,7 +64,9 @@ if (!$store_query->num_rows) {
 }
 
 // Url
-$url = new Url($config->get('config_url'), $config->get('config_secure') ? $config->get('config_ssl') : $config->get('config_url'));	
+$url = new Url($config->get('config_url'),
+	$config->get('config_secure') ? $config->get('config_ssl') : $config->get('config_url'),
+	'pay/weixin.php');	
 $registry->set('url', $url);
 
 // Log 
