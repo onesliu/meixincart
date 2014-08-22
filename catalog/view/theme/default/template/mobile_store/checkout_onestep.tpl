@@ -55,9 +55,9 @@
       <div class="checkout-content" style="display:block;" onclick="editaddr();" >
 		<div id="addr" <?php if (!isset($address)) echo "style=\"display:none\""; ?> >
 			<div class="checkout-heading">收货地址</div>
-		    <div><span id="user_name"><?php echo $address['firstname']; echo $address['lastname']; ?></span>
+		    <div><span id="user_name"><?php if (isset($address)) {echo $address['firstname']; echo $address['lastname'];} ?></span>
 		    	<span id="user_telephone"><?php echo $telephone; ?></span></div>
-		    <div id="user_addr"><?php echo $address['address_1']; ?></div>
+		    <div id="user_addr"><?php echo if (isset($address)) {$address['address_1'];} ?></div>
 		    <br/>
 		    <span class="checkout-heading"><?php echo $text_shipping_district; ?></span>
 		    <select id="district-select" name="district-select">
