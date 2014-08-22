@@ -358,8 +358,9 @@ class ControllerMobileStoreCart extends Controller {
 			//$this->data['totals'] = $total_data;
 						
 			$this->data['continue'] = $this->url->link('mobile_store/home');
-						
-			$this->data['checkout'] = $this->url->link('mobile_store/checkout_onestep', 'showwxpaytitle=1', 'SSL');
+			
+			$param = 'showwxpaytitle=1&code=' . $this->session->data['oauth_code'] . "&state=" . $this->session->data['oauth_state'];
+			$this->data['checkout'] = $this->url->link('mobile_store/checkout_onestep', $param, 'SSL');
 			//$this->data['checkout'] = $this->url->link('checkout/checkout', '', 'SSL');
 
 			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/mobile_store/cart.tpl')) {
