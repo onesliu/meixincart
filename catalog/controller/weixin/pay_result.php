@@ -1,5 +1,5 @@
 <?php
-include_once("weixin.php");
+include_once(DIR_APPLICATION."controller/weixin/weixin.php");
 
 class ControllerPaymentWeixin extends ControllerWeixinWeixin {
 	public function index() {

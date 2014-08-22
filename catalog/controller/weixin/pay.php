@@ -1,6 +1,6 @@
 <?php
-include_once("lib/WxPayHelper.php");
-include_once("weixin.php");
+include_once(DIR_APPLICATION."controller/weixin/lib/WxPayHelper.php");
+include_once(DIR_APPLICATION."controller/weixin/weixin.php");
 
 class ControllerWeixinPay extends ControllerWeixinWeixin { 
 	public function index() {
