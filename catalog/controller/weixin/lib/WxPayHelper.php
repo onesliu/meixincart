@@ -207,8 +207,9 @@ class WxPayHelper
 		
 		ksort($this->parameters);
 		$unSignParaString = $this->commutil->formatQueryParaMap($this->parameters, false);
-
-		return sha1($unSignParaString);
+		$data['signstr'] = $unSignParaString;
+		$data['sha1'] = sha1($unSignParaString);
+		return $data;
 	}
 
 }
