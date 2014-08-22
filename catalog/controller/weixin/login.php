@@ -21,6 +21,7 @@ class ControllerWeixinLogin extends Controller {
 			$this->load->model('setting/setting');
 			
 			$this->session->data['oauth_code'] = $this->request->get['code'];
+			$this->session->data['oauth_state'] = $this->request->get['state'];
 			
 			$wx = $this->model_setting_setting->getSetting('weixin');
 			$ac = $this->model_weixin_access_token->getTempAccessToken($wx['weixin_appid'],

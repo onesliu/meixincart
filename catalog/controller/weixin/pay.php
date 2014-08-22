@@ -29,7 +29,7 @@ class ControllerWeixinPay extends ControllerWeixinWeixin {
 					//"/pay/weixin.php?".
 					str_replace("&amp;", "&", $this->request->server['REQUEST_URI']).
 					"&code=". $this->session->data['oauth_code'].
-					"&state=1";
+					"&state=". $this->session->data['oauth_state'];
 		$addrHelper->setParameter("url", $addrParam['url']);
 		$addrParam['timeStamp'] = time();
 		$addrHelper->setParameter("timestamp", $addrParam['timeStamp']);
