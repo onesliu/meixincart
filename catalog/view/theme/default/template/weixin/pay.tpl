@@ -23,14 +23,17 @@ function editaddr() {
 		//若res 中所带的返回值不为空，则表示用户选择该返回值作为收货地
 		//址。否则若返回空，则表示用户取消了这一次编辑收货地址。
 			if (res != null) {
-				$('#user_name').val(res.userName);
-				$('#user_telephone').val(res.telNumber);
-				$('#user_addr').val(res.proviceFirstStageName + 
-									res.addressCitySecondStageName +
-									res.addressCountiesThirdStageName + " " +
-									res.addressDetailInfo);
-				$('#addr_none').css("display", "none");
-				$('#addr').css("display", "block");
+				alert(res.err_msg);
+				if (res.err_msg == "edit_address:ok") {
+					$('#user_name').val(res.userName);
+					$('#user_telephone').val(res.telNumber);
+					$('#user_addr').val(res.proviceFirstStageName + 
+										res.addressCitySecondStageName +
+										res.addressCountiesThirdStageName + " " +
+										res.addressDetailInfo);
+					$('#addr_none').css("display", "none");
+					$('#addr').css("display", "block");
+				}
 			}
 		});
 }
