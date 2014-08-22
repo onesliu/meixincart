@@ -121,11 +121,45 @@ $registry->set('response', $response);
 $session = new Session();
 $registry->set('session', $session);
 
+// Document
+$registry->set('document', new Document()); 		
+
 // Customer
 $registry->set('customer', new Customer($registry));
 
+// Affiliate
+$registry->set('affiliate', new Affiliate($registry));
+
+if (isset($request->get['tracking'])) {
+	setcookie('tracking', $request->get['tracking'], time() + 3600 * 24 * 1000, '/');
+}
+		
+// Currency
+$registry->set('currency', new Currency($registry));
+
+// Tax
+$registry->set('tax', new Tax($registry));
+
+// Weight
+$registry->set('weight', new Weight($registry));
+
+// Length
+$registry->set('length', new Length($registry));
+
+// Cart
+$registry->set('cart', new Cart($registry));
+
+// Encryption
+$registry->set('encryption', new Encryption($config->get('config_encryption')));
+		
 // Front Controller 
 $controller = new Front($registry);
+
+// SEO URL's
+$controller->addPreAction(new Action('common/seo_url'));	
+
+// Maintenance Mode
+$controller->addPreAction(new Action('common/maintenance'));
 
 // Router
 if (isset($request->get['route'])) {
