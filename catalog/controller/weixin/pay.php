@@ -26,7 +26,8 @@ class ControllerWeixinPay extends ControllerWeixinWeixin {
 		$addrHelper = new WxPayHelper($this);
 		$addrHelper->setParameter("appid", $this->appid);
 		$addrParam['url'] = "http://".MY_DOMAIN.
-					"/pay/weixin.php?route=mobile_store/checkout_onestep".
+					//"/pay/weixin.php?route=mobile_store/checkout_onestep".
+					$this->request->server['REQUEST_URI'].
 					"&code=". $this->session->data['oauth_code'].
 					"&state=1";
 		$addrHelper->setParameter("url", $addrParam['url']);
@@ -34,7 +35,8 @@ class ControllerWeixinPay extends ControllerWeixinWeixin {
 		$addrHelper->setParameter("timestamp", $addrParam['timeStamp']);
 		$addrParam['nonceStr'] = $addrHelper->create_noncestr();
 		$addrHelper->setParameter("noncestr", $addrParam['nonceStr']);
-		$addrHelper->setParameter("accesstoken", $this->session->data['oauth_access_token']);
+		$addrParam['token'] = $this->session->data['oauth_access_token'];
+		$addrHelper->setParameter("accesstoken", $addrParam['token']);
 		
 		$addrParam['addrSign'] = $addrHelper->create_addr_sign();
 		$addrParam['appId'] = $this->appid;

@@ -205,9 +205,8 @@ class WxPayHelper
 	
 	function create_addr_sign() {
 		
-		$commonUtil = new CommonUtil();
 		ksort($this->parameters);
-		$unSignParaString = $commonUtil->formatQueryParaMap($this->parameters, false);
+		$unSignParaString = $this->commutil->formatQueryParaMap($this->parameters, false);
 
 		return sha1($unSignParaString);
 	}
