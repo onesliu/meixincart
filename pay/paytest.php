@@ -1,13 +1,17 @@
 <?php
+	include_once '../config.php';
 	include_once(DIR_APPLICATION."controller/weixin/lib/WxPayHelper.php");
+	require_once(DIR_SYSTEM . 'library/session.php');
 	
-	$code = $_SESSION['oauth_code'];
-	$state = $_SESSION['oauth_state'];
+	$session = new Session();
+	
+	$code = $session->data['oauth_code'];
+	$state = $session->data['oauth_state'];
 	
 	$addrParam['appId'] = 'wx6e583cf65adf0f29';
 	$addrParam['timeStamp'] = time();
 	$addrParam['nonceStr'] = '12345678';
-	$addrParam['token'] = $_SESSION['oauth_access_token'];
+	$addrParam['token'] = $session->data['oauth_access_token'];
 	$addrParam['url'] = "http://qy.gz.1251102575.clb.myqcloud.com/pay/paytest.php?code=$code&state=$state";
 	
 	$addrHelper = new WxPayHelper(null);
@@ -43,7 +47,7 @@
 </head>
 <body>
 	<a onclick="editaddr()">编辑收货地址</a>
-	<p><?php print_r($addrParam,true); ?></p>
+	<p><?php print_r($addrParam); ?></p>
 	<p><?php echo $_REQUEST['REQUEST_URI'];?></p>
 </body>
 </html>

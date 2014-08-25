@@ -6,6 +6,8 @@ class ControllerMobileStoreHome extends Controller {
 
 		$this->data['heading_title'] = $this->config->get('config_title');
 		
+		$this->data['session'] = $this->session->data;
+		
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/mobile_store/home.tpl')) {
 			$this->template = $this->config->get('config_template') . '/template/mobile_store/home.tpl';
 		} else {
