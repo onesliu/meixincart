@@ -96,11 +96,11 @@
 </div>
 <script type="text/javascript"><!--
 function check_form() {
-	if ($('#district-select') == null) {
+	if ($('#addr').css("display") == "none") {
 		alert('请选择一下收货地址吧！');
 		return false;
 	}
-
+	
 	if ($('#district-select option:selected').val() == 0) {
 		alert('系统无法自动从您的地址中判断出就近的配送点，请人工选择。如果太远无法配送，客服会联络您哦～');
 		return false;
