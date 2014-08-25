@@ -25,8 +25,8 @@ class ControllerWeixinPay extends ControllerWeixinWeixin {
 		
 		$addrHelper = new WxPayHelper($this);
 		$addrHelper->setParameter("appid", $this->appid);
-		$addrParam['url'] = "http://".MY_DOMAIN.
-				str_replace("&amp;", "&", $this->request->server['REQUEST_URI']);
+		$addrParam['url'] = "http://".MY_DOMAIN.$this->request->server['REQUEST_URI'];
+				//str_replace("&amp;", "&", $this->request->server['REQUEST_URI']);
 		$addrHelper->setParameter("url", $addrParam['url']);
 		$addrParam['timeStamp'] = time();
 		$addrHelper->setParameter("timestamp", $addrParam['timeStamp']);
