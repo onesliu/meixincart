@@ -35,7 +35,7 @@ class ControllerWeixinPay extends ControllerWeixinWeixin {
 		$addrParam['token'] = $this->session->data['oauth_access_token'];
 		$addrHelper->setParameter("accesstoken", $addrParam['token']);
 		
-		$sign = $addrHelper->create_addr_sign();;
+		$sign = $addrHelper->create_addr_sign();
 		$addrParam['addrSign'] = $sign['sha1'];
 		$addrParam['signStr'] = $sign['signstr'];
 		$addrParam['appId'] = $this->appid;
