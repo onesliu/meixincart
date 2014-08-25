@@ -48,6 +48,6 @@
 <body>
 	<a onclick="editaddr()">编辑收货地址</a>
 	<p><?php print_r($addrParam); ?></p>
-	<p><?php echo $_REQUEST['REQUEST_URI'];?></p>
+	<p><?php echo $_SERVER['REQUEST_URI'];?></p>
 </body>
 </html>
