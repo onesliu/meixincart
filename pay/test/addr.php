@@ -16,7 +16,8 @@ if($_GET["code"] == "")
 
 
 //https://api.weixin.qq.com/sns/oauth2/access_token?appid=APPID&secret=SECRET&code=CODE&grant_type=authorization_code
-//»ñÈ¡access_token
+//è·å–access_token
+/*
 $tokenurl= "https://api.weixin.qq.com/sns/oauth2/access_token?appid=".$appid."&secret=".$appsecret."&code=".$_GET["code"]."&grant_type=authorization_code";
 $tokenclient = new TenpayHttpClient();
 $tokenclient->setReqContent($tokenurl);
@@ -41,8 +42,11 @@ else {
 	echo "get access token error";
 	exit(0);
 }
+*/
 
-//µ÷ÆğµØÖ·¿Ø¼şÇ©Ãû
+$accesstoken = $_GET['accesstoken'];
+
+//è°ƒèµ·åœ°å€æ§ä»¶ç­¾å
 $timestamp = time();
 $noncestr = rand(100000,999999);
 $url="http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
@@ -66,9 +70,9 @@ log_result("addr|back|addsign:".$addrstring);
 <head>
 <meta http-equiv="content-type" content="text/html;charset=gbk"/>
 <meta id="viewport" name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1; user-scalable=no;" />
-<title>Î¢ĞÅÖ§¸¶</title>
+<title>å¾®ä¿¡æ”¯ä»˜</title>
 <style type="text/css">
-/* ÖØÖÃ [[*/
+/* é‡ç½® [[*/
 body,p,ul,li,h1,h2,form,input{margin:0;padding:0;}
 h1,h2{font-size:100%;}
 ul{list-style:none;}
@@ -76,21 +80,21 @@ body{-webkit-user-select:none;-webkit-text-size-adjust:none;font-family:Helvetic
 html,body{height:100%;}
 a,button,input,img{-webkit-touch-callout:none;outline:none;}
 a{text-decoration:none;}
-/* ÖØÖÃ ]]*/
+/* é‡ç½® ]]*/
 
-/* ¹¦ÄÜ [[*/
+/* åŠŸèƒ½ [[*/
 .hide{display:none!important;}
 .cf:after{content:".";display:block;height:0;clear:both;visibility:hidden;}
-/* ¹¦ÄÜ ]]*/
+/* åŠŸèƒ½ ]]*/
 
 
-/* °´Å¥ [[*/
+/* æŒ‰é’® [[*/
 a[class*="btn"]{display:block;height:42px;line-height:42px;color:#FFFFFF;text-align:center;border-radius:5px;}
 .btn-blue{background:#3D87C3;border:1px solid #1C5E93;}
 .btn-green{background-image:-webkit-gradient(linear, left top, left bottom, color-stop(0, #43C750), color-stop(1, #31AB40));border:1px solid #2E993C;box-shadow:0 1px 0 0 #69D273 inset;}
-/* °´Å¥ [[*/
+/* æŒ‰é’® [[*/
 
-/* ³äÖµÒ³ [[*/
+/* å……å€¼é¡µ [[*/
 .charge{font-family:Helvetica;padding-bottom:10px;-webkit-user-select:none;}
 .charge h1{height:44px;line-height:44px;color:#FFFFFF;background:#3D87C3;text-align:center;font-size:20px;-webkit-box-sizing:border-box;box-sizing:border-box;}
 .charge h2{font-size:14px;color:#777777;margin:5px 0;text-align:center;}
@@ -101,7 +105,7 @@ a[class*="btn"]{display:block;height:42px;line-height:42px;color:#FFFFFF;text-al
 .charge .showaddr{border:1px dashed #C9C9C9;padding:10px 10px 15px;margin-bottom:20px;color:#666666;font-size:12px;text-align:center;}
 .charge .showaddr strong{font-weight:normal;color:#9900FF;font-size:26px;font-family:Helvetica;}
 .charge .copy-right{margin:5px 0; font-size:12px;color:#848484;text-align:center;}
-/* ³äÖµÒ³ ]]*/
+/* å……å€¼é¡µ ]]*/
 </style>
 </head>
 <script language="javascript">
@@ -119,13 +123,13 @@ WeixinJSBridge.invoke('editAddress',{
 "timeStamp" : "<?php echo $timestamp ?>",
 "nonceStr" : "<?php echo $noncestr ?>",
 },function(res){
-//Èôres ÖĞËù´øµÄ·µ»ØÖµ²»Îª¿Õ£¬Ôò±íÊ¾ÓÃ»§Ñ¡Ôñ¸Ã·µ»ØÖµ×÷ÎªÊÕ»õµØÖ·¡£·ñÔòÈô·µ»Ø¿Õ£¬Ôò±íÊ¾ÓÃ»§È¡ÏûÁËÕâÒ»´Î±à¼­ÊÕ»õµØÖ·¡£
+//è‹¥res ä¸­æ‰€å¸¦çš„è¿”å›å€¼ä¸ä¸ºç©ºï¼Œåˆ™è¡¨ç¤ºç”¨æˆ·é€‰æ‹©è¯¥è¿”å›å€¼ä½œä¸ºæ”¶è´§åœ°å€ã€‚å¦åˆ™è‹¥è¿”å›ç©ºï¼Œåˆ™è¡¨ç¤ºç”¨æˆ·å–æ¶ˆäº†è¿™ä¸€æ¬¡ç¼–è¾‘æ”¶è´§åœ°å€ã€‚
 if(res.err_msg == 'edit_address:ok'){
-	//alert("ÊÕ¼şÈË£º"+res.userName+"  ÁªÏµµç»°£º"+res.telNumber+"  ÊÕ»õµØÖ·£º"+res.proviceFirstStageName+res.addressCitySecondStageName+res.addressCountiesThirdStageName+res.addressDetailInfo+"  ÓÊ±à£º"+res.addressPostalCode);
-	document.getElementById("showAddress").innerHTML="ÊÕ¼şÈË£º"+res.userName+"  ÁªÏµµç»°£º"+res.telNumber+"  ÊÕ»õµØÖ·£º"+res.proviceFirstStageName+res.addressCitySecondStageName+res.addressCountiesThirdStageName+res.addressDetailInfo+"  ÓÊ±à£º"+res.addressPostalCode;
+	//alert("æ”¶ä»¶äººï¼š"+res.userName+"  è”ç³»ç”µè¯ï¼š"+res.telNumber+"  æ”¶è´§åœ°å€ï¼š"+res.proviceFirstStageName+res.addressCitySecondStageName+res.addressCountiesThirdStageName+res.addressDetailInfo+"  é‚®ç¼–ï¼š"+res.addressPostalCode);
+	document.getElementById("showAddress").innerHTML="æ”¶ä»¶äººï¼š"+res.userName+"  è”ç³»ç”µè¯ï¼š"+res.telNumber+"  æ”¶è´§åœ°å€ï¼š"+res.proviceFirstStageName+res.addressCitySecondStageName+res.addressCountiesThirdStageName+res.addressDetailInfo+"  é‚®ç¼–ï¼š"+res.addressPostalCode;
 }
 else{
-	alert("»ñÈ¡µØÖ·Ê§°Ü£¬ÇëÖØĞÂµã»÷");
+	alert("è·å–åœ°å€å¤±è´¥ï¼Œè¯·é‡æ–°ç‚¹å‡»");
 }
 
 });
@@ -136,17 +140,17 @@ else{
 
 <body>
 	<article class="charge">
-		<h1>Î¢ĞÅÖ§¸¶-JSAPI-demo</h1>
+		<h1>å¾®ä¿¡æ”¯ä»˜-JSAPI-demo</h1>
 		<section class="content">
-				<h2>ÉÌÆ·£º²âÊÔÉÌÆ·¡£</h2>		
+				<h2>å•†å“ï¼šæµ‹è¯•å•†å“ã€‚</h2>		
 		  <ul class="select cf">
 					<li><img src="./weixin.jpg"></li>
 				</ul>
-				<p class="copy-right">Ç×£¬´ËÉÌÆ·²»Ìá¹©ÍË¿îºÍ·¢»õ·şÎñÅ¶</p>
-				<div class="price">Î¢ĞÅ¼Û£º<strong>£¤0.01Ôª</strong></div>
-				<div class="showaddr" id="showAddress" ><a id="editAddress" href="javascript:getaddr();"><strong>ÉèÖÃÊÕ»õµØÖ·</strong></a></div>
+				<p class="copy-right">äº²ï¼Œæ­¤å•†å“ä¸æä¾›é€€æ¬¾å’Œå‘è´§æœåŠ¡å“¦</p>
+				<div class="price">å¾®ä¿¡ä»·ï¼š<strong>ï¿¥0.01å…ƒ</strong></div>
+				<div class="showaddr" id="showAddress" ><a id="editAddress" href="javascript:getaddr();"><strong>è®¾ç½®æ”¶è´§åœ°å€</strong></a></div>
 
-				<p class="copy-right">Î¢ĞÅÖ§¸¶demo ÓÉÌÚÑ¶²Æ¸¶Í¨Ìá¹©</p> 
+				<p class="copy-right">å¾®ä¿¡æ”¯ä»˜demo ç”±è…¾è®¯è´¢ä»˜é€šæä¾›</p> 
 		</section>
 	</article>
 </body>
