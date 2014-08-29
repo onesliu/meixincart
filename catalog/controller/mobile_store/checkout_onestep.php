@@ -127,7 +127,7 @@ class ControllerMobileStoreCheckoutOnestep extends Controller {
 		// cart product values
 		$this->confirm();
 		
-		$this->data['weixin_payment'] = $this->url->link('payment/weixin');
+		$this->data['weixin_payment'] = $this->url->link('weixin/pay_result');
 
 		// view template
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/mobile_store/checkout_onestep.tpl')) {

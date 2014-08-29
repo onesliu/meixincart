@@ -211,6 +211,11 @@ class WxPayHelper
 		$data['sha1'] = sha1($unSignParaString);
 		return $data;
 	}
+	
+	function sort_param() {
+		ksort($this->parameters);
+		return $this->commutil->formatQueryParaMap($this->parameters, false);
+	}
 
 }
 

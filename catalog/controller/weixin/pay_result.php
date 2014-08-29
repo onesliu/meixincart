@@ -3,30 +3,32 @@ include_once(DIR_APPLICATION."controller/weixin/weixin.php");
 
 class ControllerPaymentWeixin extends ControllerWeixinWeixin {
 	public function index() {
-    	$this->submit_order();
 
+		$payresult = false;
+		
     	$this->load->model('checkout/order');
     	$order_info = $this->model_checkout_order->getOrder($this->request->post['out_trade_no']);
     	if ($order_info['order_status_id'] <= 1) {
     		//还是未支付状态，发起支付查询
-			$commonUtil = new CommonUtil();
-			$wxPayHelper = new WxPayHelper($this);
-			
 			$this->load->model('pay_result/query_order');
+    		$qrst = $this->model_weixin_query_order->query($this->access_token, $order_info);
 			
-			$wxPayHelper->setParameter("bank_type", "WX");
-			$wxPayHelper->setParameter("body", "购买商品");
-			
-			$qrst = $this->model_weixin_query_order->query($this->access_token, $wxPayHelper->create_biz_package());
-			
-			if ($qrst == false) {
-				//支付失败
+			if ($qrst->errcode == 0 && $qrst->errmsg == "ok") {
+				//支付成功
+				$this->submit_order();
+				$payresult = true;
 			}
 			else {
-				
+				//支付查询失败
+				$this->log->write("orderquery error, errcode:".$result->errcode." errmsg:".$result->errmsg);
 			}
     	}
+    	else {
+    		$this->submit_order();
+    		$payresult = true;
+    	}
     	
+    	$this->data['payresult'] = $payresult;
 		$this->data['continue'] = $this->url->link('mobile_store/order');
 
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/pay_result.tpl')) {
