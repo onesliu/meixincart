@@ -97,7 +97,7 @@
 <script type="text/javascript"><!--
 function check_form() {
 	if ($('#addr').css("display") == "none") {
-		alert('请选择一下收货地址吧！');
+		alert('请选择一个收货地址吧！');
 		return false;
 	}
 	

@@ -1,9 +1,9 @@
 <?php
 include_once(DIR_APPLICATION."controller/weixin/weixin.php");
 
-class ModelWeixinQueryOrder extends Model {
+class ModelWeixinDeliverNotify extends Model {
 	
-	public function query($access_token, $order_info) {
+	public function notify($access_token, $order_info) {
 		
 		if ($access_token == null || $order_info == null)
 			return false;
@@ -31,13 +31,16 @@ class ModelWeixinQueryOrder extends Model {
 	private function make_request($order_info) {
 		$wxPayHelper = new WxPayHelper($this);
 		
-		$wxPayHelper->setParameter("out_trade_no", $order_info['order_id']);
+		$wxPayHelper->setParameter("appid", $this->config->get('weixin_appid'));
+		$wxPayHelper->setParameter("openid", $this->session->data['openid']);
+		$wxPayHelper->setParameter("transid", $order_info['order_id']);
 		$wxPayHelper->setParameter("partner", $this->config->get('weixin_partnerid'));
 		$wxPayHelper->setParameter("key", $this->config->get('weixin_partnerkey'));
 		$sign = strtoupper(md5($wxPayHelper->sort_param()));
 		
 		$json = new stdClass();
 		$json->appid = $this->appid;
+		$json->openid = $this->session->data['openid'];
 		$json->package = "out_trade_no=".$order_info['order_id'].
 			"&partner=".$this->config->get('weixin_partnerid').
 			"&sign=".$sign;

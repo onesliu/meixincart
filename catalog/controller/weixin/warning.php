@@ -2,7 +2,7 @@
 include_once(DIR_APPLICATION."controller/weixin/lib/WxPayHelper.php");
 include_once(DIR_APPLICATION."controller/weixin/weixin.php");
 
-class ControllerWeixinPayNotify extends ControllerWeixinWeixin { 
+class ControllerWeixinWarning extends ControllerWeixinWeixin { 
 	public function index() {
 		
 		if ($this->check_notify()) {
