@@ -13,7 +13,7 @@ class ModelQingyouMqExchangeData extends Model
 
             //$sql = iconv("gbk","UTF-8//IGNORE", $sql); //Both methods can be used.
             $query = $this->db->query("set names gbk");
-            $sql = "INSERT INTO pos_exchange_data SET datatype = 2, dataval = '".$contents."'";
+            $sql = "INSERT INTO pos_exchange_data SET datatype = ".$type.", dataval = '".$contents."'";
             $query = $this->db->query($sql);
 
 //            file_put_contents('UpdatePrice.txt', $contents);
@@ -61,7 +61,7 @@ class ModelQingyouMqExchangeData extends Model
         }
         else if ( $type == 2 )  // download change price list
         {
-            $sql = "SELECT * FROM pos_exchange_data WHERE datatype = 2";
+            $sql = "SELECT * FROM pos_exchange_data WHERE datatype = ".$type;
             $query = $this->db->query($sql);
 
             $contents = "";
