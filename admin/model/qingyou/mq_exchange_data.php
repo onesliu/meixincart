@@ -1,12 +1,12 @@
 <?php
 class ModelQingyouMqExchangeData extends Model
 {
-    public function updateData($type)
+    public function uploadData($type)
     {
         if      ( $type == 1 )
         {
         }
-        else if ( $type == 2 )  // Change price
+        else if ( $type == 2 )  // upload change price list
         {
             $contents = file_get_contents("php://input");
             $this->log->write($contents);
@@ -53,4 +53,43 @@ class ModelQingyouMqExchangeData extends Model
         {
         }
     }
+
+    public function downloadData($shopNo, $type)
+    {
+        if      ( $type == 1 )
+        {
+        }
+        else if ( $type == 2 )  // download change price list
+        {
+            $sql = "SELECT * FROM pos_exchange_data WHERE datatype = 2";
+            $query = $this->db->query($sql);
+
+            $contents = "";
+            foreach ($query->rows as $row)
+            {
+                $dataID = $row['id'];
+                $sql = "SELECT * FROM pos_exchange_store WHERE storeid = ".$shopNo." AND dataid = ".$dataID;
+                $query1 = $this->db->query($sql);
+                if ($query1->num_rows != 0)
+                    continue;
+                else
+                {
+                    $contents .= $row['dataval']."\r\n";
+                    $sql = "INSERT INTO pos_exchange_store SET storeid = ".$shopNo.", dataid = ".$dataID;
+                    $query1 = $this->db->query($sql);
+                }
+            }
+            return  $contents;
+        }
+        else if ( $type == 3 )
+        {
+        }
+        else if ( $type == 4 )
+        {
+        }
+        else if ( $type == 5 )
+        {
+        }
+    }
 }
+
