@@ -1,3 +1,3 @@
 <?php
-echo &download;
+echo $download;
 ?>
