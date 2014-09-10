@@ -75,7 +75,7 @@ class ControllerWeixinShipping extends ControllerWeixinWeixin {
 		$addrHelper->setParameter("url", $addrParam['url']);
 		$addrParam['timeStamp'] = time();
 		$addrHelper->setParameter("timestamp", $addrParam['timeStamp']);
-		$addrParam['nonceStr'] = rand(100000,999999);
+		$addrParam['nonceStr'] = $addrParam['timeStamp'];
 		$addrHelper->setParameter("noncestr", $addrParam['nonceStr']);
 		$addrParam['token'] = $this->session->data['oauth_access_token'];
 		$addrHelper->setParameter("accesstoken", $addrParam['token']);
