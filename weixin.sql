@@ -126,6 +126,8 @@ alter table oc_order_product add `realtotal` double default 0.0;
 alter table oc_order_product add `other_product_id` bigint default 0;
 
 alter table oc_product add `other_product_id` bigint default 0;
+//0:重量可以固定的商品, 1:重量不能固定的商品
+alter table oc_product add `product_type` int default 0;
 
 alter table oc_address add `district_id` int(11) not null default '0';
 alter table oc_address add telephone varchar(32);

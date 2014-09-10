@@ -61,21 +61,6 @@ class ControllerMobileStoreCheckoutOnestep extends Controller {
 			$this->data['address_id'] = $this->customer->getAddressId();
 		}
 
-		$this->load->model('account/address');
-		$this->load->model('account/district');
-
-		$addresses = $this->model_account_address->getAddresses();
-		if (isset($addresses)) {
-			//$this->data['addresses'] = $addresses;
-
-			//查找历史选中的地址
-			foreach ($addresses as $address) {
-				if ($address['address_id'] == $this->data['address_id']) {
-					$this->data['address'] = $address;
-				}
-			}
-		}
-		
 		$this->data['country_id'] = $this->config->get('config_country_id');
 		
 		$this->load->model('localisation/country');
@@ -84,51 +69,9 @@ class ControllerMobileStoreCheckoutOnestep extends Controller {
 		
 		$this->data['telephone'] = $this->customer->getTelephone(); 
 
-		// shipping values
-		$this->data['text_shipping_time'] = $this->language->get('text_shipping_time');
-		$this->data['text_shipping_district'] = $this->language->get('text_shipping_district');
-		$this->data['shipping_districts'] = $this->model_account_district->getAddresses();
-		
-		// shipping time
-		$shipping_interval = $this->config->get('shipping_interval');
-		if ($shipping_interval == null)
-			$shipping_interval = 1;
-		
-		$first_shipping_time = $this->config->get('first_shipping_time');
-		if ($first_shipping_time == null)
-			$first_shipping_time = 9;
-			
-		$last_shipping_time = $this->config->get('last_shipping_time');
-		if ($last_shipping_time == null)
-			$last_shipping_time = 19;
-		
-		$date_now = getdate();
-		$start_time = $date_now['hours'] + 2;
-		
-		$today = date("Y-m-d", time());
-		$tomorow = date("Y-m-d", time()+24*60*60);
-		
-		if ($start_time > $first_shipping_time) {
-			$i = $start_time;
-			//$this->data['shipping_time'] = array(0 => '立即配送');
-		}
-		else {
-			$i = $first_shipping_time;
-		}
-
-		for(;$i <= $last_shipping_time; $i++) {
-			$this->data['shipping_time']["$today $i:00:00"] = "$i:00";
-		}
-		
-		for($i = $first_shipping_time; $i <= $last_shipping_time; $i++) {
-			$this->data['shipping_time']["$tomorow $i:00:00"] = "明天 $i:00";
-		}
-
 		// cart product values
 		$this->confirm();
 		
-		$this->data['weixin_payment'] = $this->url->link('weixin/pay_result');
-
 		// view template
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/mobile_store/checkout_onestep.tpl')) {
 			$this->template = $this->config->get('config_template') . '/template/mobile_store/checkout_onestep.tpl';
@@ -140,6 +83,7 @@ class ControllerMobileStoreCheckoutOnestep extends Controller {
 			'mobile_store/content_top',
 			'mobile_store/content_bottom',
 			'weixin/pay',
+			'weixin/shipping',
 			'mobile_store/footer',
 			'mobile_store/header'
 		);
