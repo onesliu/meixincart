@@ -67,8 +67,6 @@ class ControllerMobileStoreCheckoutOnestep extends Controller {
 		
 		$this->data['countries'] = $this->model_localisation_country->getCountries();
 		
-		$this->data['telephone'] = $this->customer->getTelephone(); 
-
 		// cart product values
 		$this->confirm();
 		
