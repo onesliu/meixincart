@@ -1,19 +1,19 @@
 <?php
 class ModelQingyouMqExchangeData extends Model
 {
-    public function updateData($type)
+    public function uploadData($type)
     {
         if      ( $type == 1 )
         {
         }
-        else if ( $type == 2 )  // Change price
+        else if ( $type == 2 )  // upload change price list
         {
             $contents = file_get_contents("php://input");
             $this->log->write($contents);
 
             //$sql = iconv("gbk","UTF-8//IGNORE", $sql); //Both methods can be used.
             $query = $this->db->query("set names gbk");
-            $sql = "INSERT INTO pos_exchange_data SET datatype = 2, dataval = '".$contents."'";
+            $sql = "INSERT INTO pos_exchange_data SET datatype = ".$type.", dataval = '".$contents."'";
             $query = $this->db->query($sql);
 
 //            file_put_contents('UpdatePrice.txt', $contents);
@@ -53,4 +53,43 @@ class ModelQingyouMqExchangeData extends Model
         {
         }
     }
+
+    public function downloadData($shopNo, $type)
+    {
+        if      ( $type == 1 )
+        {
+        }
+        else if ( $type == 2 )  // download change price list
+        {
+            $sql = "SELECT * FROM pos_exchange_data WHERE datatype = ".$type;
+            $query = $this->db->query($sql);
+
+            $contents = "";
+            foreach ($query->rows as $row)
+            {
+                $dataID = $row['id'];
+                $sql = "SELECT * FROM pos_exchange_store WHERE storeid = ".$shopNo." AND dataid = ".$dataID;
+                $query1 = $this->db->query($sql);
+                if ($query1->num_rows != 0)
+                    continue;
+                else
+                {
+                    $contents .= $row['dataval']."\r\n";
+                    $sql = "INSERT INTO pos_exchange_store SET storeid = ".$shopNo.", dataid = ".$dataID;
+                    $query1 = $this->db->query($sql);
+                }
+            }
+            return  $contents;
+        }
+        else if ( $type == 3 )
+        {
+        }
+        else if ( $type == 4 )
+        {
+        }
+        else if ( $type == 5 )
+        {
+        }
+    }
 }
+
