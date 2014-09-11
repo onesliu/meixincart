@@ -65,8 +65,11 @@ class ControllerWeixinShipping extends ControllerWeixinWeixin {
 		}
 		
 		$this->data['telephone'] = $this->customer->getTelephone(); 
-		$this->data['weixin_payment'] = $this->url->link('weixin/pay_result');
 		$this->data['order_info'] = $this->session->data['order_info'];
+		if ($this->data['order_info']['order_type'] == 0)
+			$this->data['weixin_payment'] = $this->url->link('weixin/pay_result');
+		else
+			$this->data['weixin_payment'] = $this->url->link('weixin/prepay_result');
 		
 		$addrHelper = new WxPayHelper($this);
 		$addrHelper->setParameter("appid", $this->appid);

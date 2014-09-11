@@ -77,11 +77,12 @@ class ControllerMobileStoreCheckoutOnestep extends Controller {
 			$this->template = 'default/template/mobile_store/checkout_onestep.tpl';
 		}
 
+		$order_type = ($this->data['order_type']==0)?'weixin/pay':'weixin/prepay';
 		$this->children = array(
 			'mobile_store/content_top',
 			'mobile_store/content_bottom',
-			'weixin/pay',
 			'weixin/shipping',
+			$order_type,
 			'mobile_store/footer',
 			'mobile_store/header'
 		);
@@ -213,6 +214,7 @@ class ControllerMobileStoreCheckoutOnestep extends Controller {
 		}				
 		
 		$product_data = array();
+		$order_type = 0; //0:固定客单价订单, 1:变客单价订单
 	
 		foreach ($this->cart->getProducts() as $product) {
 			$option_data = array();
@@ -234,6 +236,10 @@ class ControllerMobileStoreCheckoutOnestep extends Controller {
 					'type'                    => $option['type']
 				);					
 			}
+			
+			if ($product['product_type'] != 0) {
+				$order_type = 1;
+			}
  
 			$product_data[] = array(
 				'product_id' => $product['product_id'],
@@ -249,6 +255,9 @@ class ControllerMobileStoreCheckoutOnestep extends Controller {
 				'reward'     => $product['reward']
 			); 
 		}
+		
+		$this->data['order_type'] = $order_type;
+		$data['order_type'] = $order_type;
 		
 		// Gift Voucher
 		$voucher_data = array();

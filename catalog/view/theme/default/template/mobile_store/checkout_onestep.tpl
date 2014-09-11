@@ -53,7 +53,7 @@
     <?php echo $shipping; ?>
   </div>
   
-<?php echo $pay; ?>
+<?php if($order_type == 0) echo $pay; else echo $prepay; ?>
 <?php echo $content_bottom; ?>
 </div>
 <?php echo $footer; ?>
