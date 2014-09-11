@@ -1,4 +1,6 @@
-<?php  
+<?php
+include_once(DIR_APPLICATION."controller/weixin/lib/wxorder.php");
+
 class ControllerMobileStoreCheckoutOnestep extends Controller { 
 	public function index() {
 		if ((!$this->cart->hasProducts() && !empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
@@ -332,11 +334,10 @@ class ControllerMobileStoreCheckoutOnestep extends Controller {
 			$data['accept_language'] = '';
 		}
 					
-		$this->load->model('checkout/order');
-		
 		//添加订单
-		$this->session->data['order_id'] = $this->model_checkout_order->addOrder($data);
-		
+		$orderid = new_wx_orderid();
+		$this->session->data['order_id'] = $orderid;
+		$data['order_id'] = $orderid;
 		
 		$this->session->data['order_info'] = $data;
 		$this->data['order_info'] = $data;
