@@ -240,7 +240,8 @@ class Cart {
 						'length'          => $product_query->row['length'],
 						'width'           => $product_query->row['width'],
 						'height'          => $product_query->row['height'],
-						'length_class_id' => $product_query->row['length_class_id']					
+						'length_class_id' => $product_query->row['length_class_id'],
+						'product_type'    => $product_query->row['product_type']
 					);
 				} else {
 					$this->remove($key);
