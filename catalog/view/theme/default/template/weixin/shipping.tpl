@@ -7,7 +7,9 @@
 		    	<span id="user_telephone"><?php echo $telephone; ?></span></div>
 		    <div id="user_addr"><?php if (isset($address)) {echo $address['address_1'];} ?></div>
       	</div>
-		<div id="addr_none" <?php if (isset($address)) echo "style=\"display:none\""; ?> >选择收货地址</div>
+		<div id="addr_none" <?php if (isset($address)) echo "style=\"display:none\""; ?> >
+			<span class="checkout-heading">选择收货地址</span>
+		</div>
       </div>
     </div>
 
