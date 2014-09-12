@@ -53,7 +53,7 @@ class ControllerWeixinPayResult extends ControllerWeixinWeixin {
 		$this->session->data['order_info']['shipping_time'] = $this->request->post['time-select'];
 		
 		$this->model_checkout_order->addOrder($this->session->data['order_info']);
-		$this->model_checkout_order->confirm($this->session->data['order_id'], 2);
+		$this->model_checkout_order->confirm($this->session->data['order_id'], 1);
 		
 		$this->cart->clear();
 	}
