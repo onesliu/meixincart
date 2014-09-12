@@ -7,10 +7,10 @@ class ControllerWeixinPayResult extends ControllerWeixinWeixin {
 		$payresult = false;
 		
     	$this->load->model('checkout/order');
-    	$order_info = $this->model_checkout_order->getOrder($this->request->post['out_trade_no']);
-    	if ($order_info['order_status_id'] <= 1) {
+    	$order_info = $this->session->data['order_info'];
+    	/*if ($order_info['order_status_id'] < 3) {
     		//还是未支付状态，发起支付查询
-			$this->load->model('pay_result/query_order');
+			$this->load->model('weixin/query_order');
     		$qrst = $this->model_weixin_query_order->query($this->access_token, $order_info);
 			
 			if ($qrst->errcode == 0 && $qrst->errmsg == "ok") {
@@ -23,7 +23,7 @@ class ControllerWeixinPayResult extends ControllerWeixinWeixin {
 				$this->log->write("orderquery error, errcode:".$result->errcode." errmsg:".$result->errmsg);
 			}
     	}
-    	else {
+    	else*/ {
     		$this->submit_order();
     		$payresult = true;
     	}

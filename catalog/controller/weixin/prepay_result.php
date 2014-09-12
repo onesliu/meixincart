@@ -7,11 +7,9 @@ class ControllerWeixinPrepayResult extends ControllerWeixinWeixin {
 		$payresult = false;
 		
     	$this->load->model('checkout/order');
-    	$order_info = $this->model_checkout_order->getOrder($this->request->post['out_trade_no']);
-    	if ($order_info['order_status_id'] == 0) {
-    		$this->submit_order();
-    		$payresult = true;
-    	}
+    	$order_info = $this->session->data['order_info'];
+   		$this->submit_order();
+   		$payresult = true;
     	
     	$this->data['payresult'] = $payresult;
 		$this->data['continue'] = $this->url->link('mobile_store/order');
