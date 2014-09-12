@@ -1,12 +1,18 @@
   <form id="weixin_payment" name="weixin_payment" method="post" action="<?php echo $weixin_payment; ?>">
-    <div id="checkout">
+    <div id="shipping_address">
       <div class="checkout-content" style="display:block;" onclick="editaddr();" >
 		<div id="addr" <?php if (!isset($address)) echo "style=\"display:none\""; ?> >
 			<div class="checkout-heading">收货地址</div>
 		    <div><span id="user_name"><?php if (isset($address)) {echo $address['firstname']; echo $address['lastname'];} ?></span>
 		    	<span id="user_telephone"><?php echo $telephone; ?></span></div>
 		    <div id="user_addr"><?php if (isset($address)) {echo $address['address_1'];} ?></div>
-		    <br/>
+      	</div>
+		<div id="addr_none" <?php if (isset($address)) echo "style=\"display:none\""; ?> >选择收货地址</div>
+      </div>
+    </div>
+
+	<div id="district">
+		<div class="checkout-content" style="display:block;">
 		    <span class="checkout-heading"><?php echo $text_shipping_district; ?></span>
 		    <select id="district-select" name="district-select">
 	      		<option value="0">请选择就近的配送点</option>
@@ -18,11 +24,9 @@
 	      		<option selected="selected" value="<?php echo $district['id']; ?>"><?php echo $district['name'];?></option>
 	      		<?php }} ?>
       		</select>
-      	</div>
-		<div id="addr_none" <?php if (isset($address)) echo "style=\"display:none\""; ?> >选择收货地址</div>
-      </div>
-    </div>
-
+		</div>
+	</div>
+	
     <div id="shipping-time">
       <div class="checkout-content" style="display:block;">
       	<span class="checkout-heading"><?php echo $text_shipping_time; ?></span>
@@ -66,11 +70,10 @@ function editaddr() {
 			//若res 中所带的返回值不为空，则表示用户选择该返回值作为收货地
 			//址。否则若返回空，则表示用户取消了这一次编辑收货地址。
 				if (res != null) {
-					alert(res.err_msg);
 					if (res.err_msg == "edit_address:ok") {
-						$('#user_name').val(res.userName);
-						$('#user_telephone').val(res.telNumber);
-						$('#user_addr').val(res.proviceFirstStageName + 
+						$('#user_name').text(res.userName);
+						$('#user_telephone').text(res.telNumber);
+						$('#user_addr').text(res.proviceFirstStageName + 
 											res.addressCitySecondStageName +
 											res.addressCountiesThirdStageName + " " +
 											res.addressDetailInfo);
