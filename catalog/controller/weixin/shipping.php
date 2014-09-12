@@ -90,7 +90,7 @@ class ControllerWeixinShipping extends ControllerWeixinWeixin {
 		
 		$this->data['addrParam'] = $addrParam;
 		
-		$this->log->write(print_r($addrParam,true));
+		//$this->log->write(print_r($addrParam,true));
 		
 		// view template
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/weixin/shipping.tpl')) {
