@@ -158,7 +158,7 @@ class WxPayHelper
 			$commonUtil = new CommonUtil();
 		    $nativeObj["appid"] = $this->wxconfig->appid;
 		    $nativeObj["productid"] = urlencode($productid);
-		    $nativeObj["timestamp"] = time();
+		    $nativeObj["timestamp"] = sprintf("%d", time());
 		    $nativeObj["noncestr"] = $this->create_noncestr();
 		    $nativeObj["sign"] = $this->get_biz_sign($nativeObj);
 		    $bizString = $commonUtil->formatBizQueryParaMap($nativeObj, false);
