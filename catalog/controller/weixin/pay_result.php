@@ -31,10 +31,10 @@ class ControllerWeixinPayResult extends ControllerWeixinWeixin {
     	$this->data['payresult'] = $payresult;
 		$this->data['continue'] = $this->url->link('mobile_store/order');
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/pay_result.tpl')) {
-            $this->template = $this->config->get('config_template') . '/template/payment/pay_result.tpl';
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/weixin/pay_result.tpl')) {
+            $this->template = $this->config->get('config_template') . '/template/weixin/pay_result.tpl';
 		} else {
-            $this->template = 'default/template/payment/pay_result.tpl';
+            $this->template = 'default/template/weixin/pay_result.tpl';
         }
 		
 		$this->children = array(

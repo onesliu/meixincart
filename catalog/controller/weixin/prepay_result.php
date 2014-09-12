@@ -14,10 +14,10 @@ class ControllerWeixinPrepayResult extends ControllerWeixinWeixin {
     	$this->data['payresult'] = $payresult;
 		$this->data['continue'] = $this->url->link('mobile_store/order');
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/prepay_result.tpl')) {
-            $this->template = $this->config->get('config_template') . '/template/payment/prepay_result.tpl';
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/weixin/prepay_result.tpl')) {
+            $this->template = $this->config->get('config_template') . '/template/weixin/prepay_result.tpl';
 		} else {
-            $this->template = 'default/template/payment/prepay_result.tpl';
+            $this->template = 'default/template/weixin/prepay_result.tpl';
         }
 		
 		$this->children = array(
