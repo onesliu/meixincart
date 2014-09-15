@@ -21,7 +21,7 @@ class ModelQingyouOrder extends Model {
 		$data = array();
 		$sql = "select order_id, date_added as order_createtime, o.order_status_id, os.name as order_status, customer_id, CONCAT(firstname,lastname) as customer_name, telephone as customer_phone,
 		CONCAT(shipping_firstname,shipping_lastname) as shipping_name, shipping_telephone, comment, shipping_address_1 as shipping_addr, shipping_time
-		from " .DB_PREFIX. "order o join " .DB_PREFIX. "order_status os on o.order_status_id = os.order_status_id $condition order by order_id desc;";
+		from " .DB_PREFIX. "order o join " .DB_PREFIX. "order_status os on o.order_status_id = os.order_status_id $condition order by order_id;";
 		
 		$query = $this->db->query($sql);
 		//$this->log->write($history);
