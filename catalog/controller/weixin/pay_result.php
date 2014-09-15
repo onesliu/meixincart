@@ -6,7 +6,6 @@ class ControllerWeixinPayResult extends ControllerWeixinWeixin {
 
 		$payresult = false;
 		
-    	$this->load->model('checkout/order');
     	$order_info = $this->session->data['order_info'];
     	/*if ($order_info['order_status_id'] < 3) {
     		//还是未支付状态，发起支付查询
@@ -24,7 +23,7 @@ class ControllerWeixinPayResult extends ControllerWeixinWeixin {
 			}
     	}
     	else*/ {
-    		$this->submit_order();
+    		$this->submit_order($order_info);
     		$payresult = true;
     	}
     	
@@ -45,15 +44,15 @@ class ControllerWeixinPayResult extends ControllerWeixinWeixin {
 		$this->response->setOutput($this->render());
 	}
 	
-	public function submit_order() {
+	public function submit_order($order_info) {
 		$this->load->model('checkout/order');
 		
 		//$this->log->write(print_r($this->request->post, true));
-		$this->session->data['order_info']['shipping_district_id'] = $this->request->post['district-select'];
-		$this->session->data['order_info']['shipping_time'] = $this->request->post['time-select'];
+		$order_info['shipping_district_id'] = $this->request->post['district-select'];
+		$order_info['shipping_time'] = $this->request->post['time-select'];
 		
-		$this->model_checkout_order->addOrder($this->session->data['order_info']);
-		$this->model_checkout_order->confirm($this->session->data['order_id'], 1);
+		$this->model_checkout_order->addOrder($order_info);
+		$this->model_checkout_order->confirm($order_info['order_id'], 1);
 		
 		$this->cart->clear();
 	}
