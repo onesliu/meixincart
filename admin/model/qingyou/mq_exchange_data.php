@@ -61,6 +61,8 @@ class ModelQingyouMqExchangeData extends Model
         }
         else if ( $type == 2 )  // download change price list
         {
+            $sql = "set names gbk";
+            $query = $this->db->query($sql);
             $sql = "SELECT * FROM pos_exchange_data WHERE datatype = ".$type;
             $query = $this->db->query($sql);
 
