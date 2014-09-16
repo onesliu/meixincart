@@ -22,7 +22,21 @@ class ModelAccountAddress extends Model {
 	
 	public function deleteAddress($address_id) {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "address WHERE address_id = '" . (int)$address_id . "' AND customer_id = '" . (int)$this->customer->getId() . "'");
-	}	
+	}
+	
+	public function findAddress($data) {
+		$sql = sprintf("select * from oc_address where customer_id = %d and firstname = '%s' and telephone='%s' and address_1='%s' and district_id=%d",
+			(int)$this->customer->getId(),
+			$this->db->escape($data['firstname']),
+			$this->db->escape($data['telephone']),
+			$this->db->escape($data['address_1']),
+			(int)$data['district_id']);
+		$res = $this->db->query($sql);
+		if ($res->num_rows) {
+			return $res['address_id'];
+		}
+		return null;
+	}
 	
 	public function getAddress($address_id) {
 		$address_query = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "address WHERE address_id = '" . (int)$address_id . "' AND customer_id = '" . (int)$this->customer->getId() . "'");

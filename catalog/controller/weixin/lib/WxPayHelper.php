@@ -103,7 +103,7 @@ class WxPayHelper
 		    }
 		    $nativeObj["appid"] = $this->wxconfig->appid;
 		    $nativeObj["package"] = $this->get_cft_package();
-		    $nativeObj["timestamp"] = time();
+		    $nativeObj["timestamp"] = (string)sprintf("%d", time());
 		    $nativeObj["traceid"] = $traceid;
 		    $nativeObj["noncestr"] = $this->create_noncestr();
 		    $nativeObj["app_signature"] = $this->get_biz_sign($nativeObj);
@@ -136,7 +136,7 @@ class WxPayHelper
 		    }
 		    $nativeObj["appId"] = $this->wxconfig->appid;
 		    $nativeObj["package"] = $this->get_cft_package();
-		    $nativeObj["timeStamp"] = time();
+		    $nativeObj["timeStamp"] = (string)sprintf("%d", time());
 		    $nativeObj["nonceStr"] = $this->create_noncestr();
 		    $nativeObj["paySign"] = $this->get_biz_sign($nativeObj);
 		    $nativeObj["signType"] = SIGNTYPE;
@@ -158,7 +158,7 @@ class WxPayHelper
 			$commonUtil = new CommonUtil();
 		    $nativeObj["appid"] = $this->wxconfig->appid;
 		    $nativeObj["productid"] = urlencode($productid);
-		    $nativeObj["timestamp"] = time();
+		    $nativeObj["timestamp"] = (string)sprintf("%d", time());
 		    $nativeObj["noncestr"] = $this->create_noncestr();
 		    $nativeObj["sign"] = $this->get_biz_sign($nativeObj);
 		    $bizString = $commonUtil->formatBizQueryParaMap($nativeObj, false);
@@ -186,7 +186,7 @@ class WxPayHelper
 		    }
 		    $nativeObj["AppId"] = $this->wxconfig->appid;
 		    $nativeObj["Package"] = $this->get_cft_package();
-		    $nativeObj["TimeStamp"] = time();
+		    $nativeObj["TimeStamp"] = (string)sprintf("%d", time());
 		    $nativeObj["NonceStr"] = $this->create_noncestr();
 		    $nativeObj["RetCode"] = $retcode;
 		    $nativeObj["RetErrMsg"] = $reterrmsg;

@@ -1,3 +1,7 @@
+  <div>
+    <div class="center"><a onclick="if (check_form() && weixin_pay()) {$('#weixin_payment').submit();}" class="button_11 orange orange_borderbottom radius4">微信支付</a></div>
+  </div>
+  
 <script type="text/javascript"><!--
 
 function weixin_pay() {
@@ -9,37 +13,5 @@ function weixin_pay() {
 		}
 		return false;
 	});
-}
-
-function editaddr() {
-	if (typeof WeixinJSBridge == "undefined") {
-		alert("请通过微信加载该页面");
-	}
-	else {
-		WeixinJSBridge.invoke('editAddress',{
-			"appId" : "<?php echo $addrParam['appId']; ?>",
-			"scope" : "jsapi_address",
-			"signType" : "sha1",
-			"addrSign" : "<?php echo $addrParam['addrSign']; ?>",
-			"timeStamp" : "<?php echo $addrParam['timeStamp']; ?>",
-			"nonceStr" : "<?php echo $addrParam['nonceStr']; ?>",
-			},function(res){
-			//若res 中所带的返回值不为空，则表示用户选择该返回值作为收货地
-			//址。否则若返回空，则表示用户取消了这一次编辑收货地址。
-				if (res != null) {
-					alert(res.err_msg);
-					if (res.err_msg == "edit_address:ok") {
-						$('#user_name').val(res.userName);
-						$('#user_telephone').val(res.telNumber);
-						$('#user_addr').val(res.proviceFirstStageName + 
-											res.addressCitySecondStageName +
-											res.addressCountiesThirdStageName + " " +
-											res.addressDetailInfo);
-						$('#addr_none').css("display", "none");
-						$('#addr').css("display", "block");
-					}
-				}
-			});
-	}
 }
 //--></script>

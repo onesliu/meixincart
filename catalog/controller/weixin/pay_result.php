@@ -1,16 +1,15 @@
 <?php
 include_once(DIR_APPLICATION."controller/weixin/weixin.php");
 
-class ControllerPaymentWeixin extends ControllerWeixinWeixin {
+class ControllerWeixinPayResult extends ControllerWeixinWeixin {
 	public function index() {
 
 		$payresult = false;
 		
-    	$this->load->model('checkout/order');
-    	$order_info = $this->model_checkout_order->getOrder($this->request->post['out_trade_no']);
-    	if ($order_info['order_status_id'] <= 1) {
+    	$order_info = $this->session->data['order_info'];
+    	/*if ($order_info['order_status_id'] < 3) {
     		//还是未支付状态，发起支付查询
-			$this->load->model('pay_result/query_order');
+			$this->load->model('weixin/query_order');
     		$qrst = $this->model_weixin_query_order->query($this->access_token, $order_info);
 			
 			if ($qrst->errcode == 0 && $qrst->errmsg == "ok") {
@@ -23,18 +22,18 @@ class ControllerPaymentWeixin extends ControllerWeixinWeixin {
 				$this->log->write("orderquery error, errcode:".$result->errcode." errmsg:".$result->errmsg);
 			}
     	}
-    	else {
-    		$this->submit_order();
+    	else*/ {
+    		$this->submit_order($order_info);
     		$payresult = true;
     	}
     	
     	$this->data['payresult'] = $payresult;
 		$this->data['continue'] = $this->url->link('mobile_store/order');
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/pay_result.tpl')) {
-            $this->template = $this->config->get('config_template') . '/template/payment/pay_result.tpl';
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/weixin/pay_result.tpl')) {
+            $this->template = $this->config->get('config_template') . '/template/weixin/pay_result.tpl';
 		} else {
-            $this->template = 'default/template/payment/pay_result.tpl';
+            $this->template = 'default/template/weixin/pay_result.tpl';
         }
 		
 		$this->children = array(
@@ -45,16 +44,38 @@ class ControllerPaymentWeixin extends ControllerWeixinWeixin {
 		$this->response->setOutput($this->render());
 	}
 	
-	public function submit_order() {
+	public function submit_order($order_info) {
 		$this->load->model('checkout/order');
+		$this->load->model('account/district');
+		$this->load->model('account/address');
 		
 		//$this->log->write(print_r($this->request->post, true));
-		$this->session->data['order_info']['shipping_district_id'] = $this->request->post['district-select'];
-		$this->session->data['order_info']['shipping_time'] = $this->request->post['time-select'];
-		$this->model_checkout_order->fastupdate($this->session->data['order_id'],
-			$this->session->data['order_info']);
+		$order_info['shipping_district_id'] = $this->request->post['district-select'];
+		$order_info['shipping_time'] = $this->request->post['time-select'];
+		$order_info['shipping_firstname'] = $this->request->post['user_name'];
+		$order_info['shipping_telephone'] = $this->request->post['user_telephone'];
+		$order_info['shipping_address_1'] = $this->request->post['user_addr'];
 		
-		$this->model_checkout_order->confirm($this->session->data['order_id'], 1);
+		$addr['firstname'] = $order_info['shipping_firstname'];
+		$addr['telephone'] = $order_info['shipping_telephone'];
+		$addr['address_1'] = $order_info['shipping_address_1'];
+		$addr['district_id'] = $order_info['shipping_district_id'];
+		$addr['lastname'] = '';
+		$addr['company'] = '';
+		$addr['company_id'] = '';
+		$addr['tax_id'] = '';
+		$addr['address_2'] = '';
+		$addr['postcode'] = $this->request->post['user_postcode'];;
+		$addr['city'] = $this->request->post['user_city'];;
+		$addr['zone_id'] = 0;
+		$addr['country_id'] = 44;
+		
+		$addrid = $this->model_account_address->findAddress($addr);
+		if ($addrid == null)
+			 $addrid = $this->model_account_address->addAddress($addr);
+		
+		$this->model_checkout_order->addOrder($order_info);
+		$this->model_checkout_order->confirm($order_info['order_id'], 1);
 		
 		$this->cart->clear();
 	}

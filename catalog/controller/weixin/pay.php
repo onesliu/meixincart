@@ -23,27 +23,6 @@ class ControllerWeixinPay extends ControllerWeixinWeixin {
 		
 		$this->data['wxPayHelper'] = $wxPayHelper;
 		
-		$addrHelper = new WxPayHelper($this);
-		$addrHelper->setParameter("appid", $this->appid);
-		$addrParam['url'] = "http://".MY_DOMAIN.
-				str_replace("&amp;", "&", $this->request->server['REQUEST_URI']);
-		$addrHelper->setParameter("url", $addrParam['url']);
-		$addrParam['timeStamp'] = time();
-		$addrHelper->setParameter("timestamp", $addrParam['timeStamp']);
-		$addrParam['nonceStr'] = $addrHelper->create_noncestr();
-		$addrHelper->setParameter("noncestr", $addrParam['nonceStr']);
-		$addrParam['token'] = $this->session->data['oauth_access_token'];
-		$addrHelper->setParameter("accesstoken", $addrParam['token']);
-		
-		$sign = $addrHelper->create_addr_sign();
-		$addrParam['addrSign'] = $sign['sha1'];
-		$addrParam['signStr'] = $sign['signstr'];
-		$addrParam['appId'] = $this->appid;
-		
-		$this->data['addrParam'] = $addrParam;
-		
-		$this->log->write(print_r($addrParam,true));
-		
 		// view template
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/weixin/pay.tpl')) {
 			$this->template = $this->config->get('config_template') . '/template/weixin/pay.tpl';

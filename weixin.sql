@@ -126,6 +126,8 @@ alter table oc_order_product add `realtotal` double default 0.0;
 alter table oc_order_product add `other_product_id` bigint default 0;
 
 alter table oc_product add `other_product_id` bigint default 0;
+//0:重量可以固定的商品, 1:重量不能固定的商品
+alter table oc_product add `product_type` int default 0;
 
 alter table oc_address add `district_id` int(11) not null default '0';
 alter table oc_address add telephone varchar(32);
@@ -141,5 +143,5 @@ insert into oc_setting (`group`, `key`,`value`) values('weixin', 'weixin_appid',
 insert into oc_setting (`group`, `key`,`value`) values('weixin', 'weixin_appsecret', 'c7153a6b0dba17395e66c7f4d25e35a1');
 
 insert into oc_auto_message(pattern,MsgType,ItemCount,Items) values('order|订|买', 'news', 1, '[{"title":"点击开始买菜","description":"传承老一代，用心卖好菜。青悠悠菜园传统良心蔬菜。","url":"http://qy.gz.1251102575.clb.myqcloud.com/index.php","picurl":"http://qy.gz.1251102575.clb.myqcloud.com//image/data/weixin/logo.jpg"}]');
-insert into oc_auto_message(pattern,MsgType,ItemCount,Items) values('testpay', 'news', 1, '[{"title":"点击开始测试","description":"传承老一代，用心卖好菜。青悠悠菜园传统良心蔬菜。","url":"http://qy.gz.1251102575.clb.myqcloud.com/pay/test/weixin.php?route=mobile_store/home","picurl":"http://qy.gz.1251102575.clb.myqcloud.com//image/data/weixin/logo.jpg"}]');
+insert into oc_auto_message(pattern,MsgType,ItemCount,Items) values('testpay', 'news', 1, '[{"title":"点击开始测试","description":"传承老一代，用心卖好菜。青悠悠菜园传统良心蔬菜。","url":"http://qy.gz.1251102575.clb.myqcloud.com/pay/test/addr.php","picurl":"http://qy.gz.1251102575.clb.myqcloud.com//image/data/weixin/logo.jpg"}]');
 

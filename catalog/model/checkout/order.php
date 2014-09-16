@@ -3,6 +3,7 @@ class ModelCheckoutOrder extends Model {
 	public function addOrder($data) {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . 
 		"order` SET invoice_prefix = '" . $this->db->escape($data['invoice_prefix']) . 
+		((isset($data['order_id']))? ("', order_id = '".(int)$data['order_id']) : "") . 
 		"', store_id = '" . (int)$data['store_id'] . 
 		"', store_name = '" . $this->db->escape($data['store_name']) . 
 		"', store_url = '" . $this->db->escape($data['store_url']) . 
@@ -43,8 +44,8 @@ class ModelCheckoutOrder extends Model {
 		"', shipping_address_format = '" . $this->db->escape($data['shipping_address_format']) . 
 		"', shipping_method = '" . $this->db->escape($data['shipping_method']) . 
 		"', shipping_code = '" . $this->db->escape($data['shipping_code']) . 
-		//"', shipping_districtid = '" . (int)$data['shipping_district_id'] . 
-		//"', shipping_time = '" . $this->db->escape($data['shipping_time']) .
+		((isset($data['shipping_district_id']))? ("', shipping_districtid = '" . (int)$data['shipping_district_id']) : "") . 
+		((isset($data['shipping_time']))? ("', shipping_time = '" . $this->db->escape($data['shipping_time'])) : "") .
 		"', shipping_telephone = '" . $this->db->escape($data['shipping_telephone']) .  
 		"', comment = '" . $this->db->escape($data['comment']) . 
 		"', total = '" . (float)$data['total'] . 
