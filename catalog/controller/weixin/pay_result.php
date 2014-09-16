@@ -56,7 +56,7 @@ class ControllerWeixinPayResult extends ControllerWeixinWeixin {
 		$order_info['shipping_telephone'] = $this->request->post['user_telephone'];
 		$order_info['shipping_address_1'] = $this->request->post['user_addr'];
 		
-		$addr['first_name'] = $order_info['shipping_firstname'];
+		$addr['firstname'] = $order_info['shipping_firstname'];
 		$addr['telephone'] = $order_info['shipping_telephone'];
 		$addr['address_1'] = $order_info['shipping_address_1'];
 		$addr['district_id'] = $order_info['shipping_district_id'];

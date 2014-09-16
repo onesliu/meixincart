@@ -12,6 +12,12 @@ class ControllerWeixinShipping extends ControllerWeixinWeixin {
 		$this->load->model('account/address');
 		$this->load->model('account/district');
 
+		if (isset($this->session->data['payment_address_id'])) {
+			$this->data['address_id'] = $this->session->data['payment_address_id'];
+		} else {
+			$this->data['address_id'] = $this->customer->getAddressId();
+		}
+
 		$addresses = $this->model_account_address->getAddresses();
 		if (isset($addresses)) {
 			//$this->data['addresses'] = $addresses;

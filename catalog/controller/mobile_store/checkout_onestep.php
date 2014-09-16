@@ -57,12 +57,6 @@ class ControllerMobileStoreCheckoutOnestep extends Controller {
 		$this->data['entry_country'] = $this->language->get('entry_country');
 		$this->data['entry_zone'] = $this->language->get('entry_zone');
 	
-		if (isset($this->session->data['payment_address_id'])) {
-			$this->data['address_id'] = $this->session->data['payment_address_id'];
-		} else {
-			$this->data['address_id'] = $this->customer->getAddressId();
-		}
-
 		$this->data['country_id'] = $this->config->get('config_country_id');
 		
 		$this->load->model('localisation/country');
