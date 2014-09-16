@@ -46,6 +46,8 @@ class ControllerWeixinPayResult extends ControllerWeixinWeixin {
 	
 	public function submit_order($order_info) {
 		$this->load->model('checkout/order');
+		$this->load->model('account/district');
+		$this->load->model('account/address');
 		
 		//$this->log->write(print_r($this->request->post, true));
 		$order_info['shipping_district_id'] = $this->request->post['district-select'];
@@ -53,6 +55,24 @@ class ControllerWeixinPayResult extends ControllerWeixinWeixin {
 		$order_info['shipping_firstname'] = $this->request->post['user_name'];
 		$order_info['shipping_telephone'] = $this->request->post['user_telephone'];
 		$order_info['shipping_address_1'] = $this->request->post['user_addr'];
+		
+		$addr['first_name'] = $order_info['shipping_firstname'];
+		$addr['telephone'] = $order_info['shipping_telephone'];
+		$addr['address_1'] = $order_info['shipping_address_1'];
+		$addr['district_id'] = $order_info['shipping_district_id'];
+		$addr['lastname'] = '';
+		$addr['company'] = '';
+		$addr['company_id'] = '';
+		$addr['tax_id'] = '';
+		$addr['address_2'] = '';
+		$addr['postcode'] = $this->request->post['user_postcode'];;
+		$addr['city'] = $this->request->post['user_city'];;
+		$addr['zone_id'] = 0;
+		$addr['country_id'] = 44;
+		
+		$addrid = $this->model_account_address->findAddress($addr);
+		if ($addrid == null)
+			 $addrid = $this->model_account_address->addAddress($addr);
 		
 		$this->model_checkout_order->addOrder($order_info);
 		$this->model_checkout_order->confirm($order_info['order_id'], 1);

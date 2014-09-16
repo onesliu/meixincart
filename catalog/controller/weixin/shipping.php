@@ -28,6 +28,12 @@ class ControllerWeixinShipping extends ControllerWeixinWeixin {
 		$this->data['text_shipping_time'] = $this->language->get('text_shipping_time');
 		$this->data['text_shipping_district'] = $this->language->get('text_shipping_district');
 		$this->data['shipping_districts'] = $this->model_account_district->getAddresses();
+		if (!isset($this->data['shipping_districts'])) {
+			if (count($this->data['shipping_districts']) == 1 &&
+				$this->data['shipping_district_id'] == 0) {
+					$this->data['shipping_district_id'] = $this->data['shipping_districts']['id'];
+				}
+		}
 		
 		// shipping time
 		$shipping_interval = $this->config->get('shipping_interval');

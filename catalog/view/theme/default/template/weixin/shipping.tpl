@@ -9,6 +9,8 @@
 		    <input type="hidden" name="user_name" id="user_name2"></input>
 		    <input type="hidden" name="user_telephone" id="user_telephone2"></input>
 		    <input type="hidden" name="user_addr" id="user_addr2"></input>
+		    <input type="hidden" name="user_city" id="user_city"></input>
+		    <input type="hidden" name="user_postcode" id="user_postcode"></input>
       	</div>
 		<div id="addr_none" <?php if (isset($address)) echo "style=\"display:none\""; ?> >
 			<span class="checkout-heading">选择收货地址</span>
@@ -85,6 +87,9 @@ function editaddr() {
 						$('#user_name2').val(res.userName);
 						$('#user_telephone2').val(res.telNumber);
 						$('#user_addr2').val($('#user_addr').text());
+						$('#user_city').val(res.addressCitySecondStageName);
+						$('#user_postcode').val(res.addressPostalCode);
+						
 						$('#addr_none').css("display", "none");
 						$('#addr').css("display", "block");
 					}

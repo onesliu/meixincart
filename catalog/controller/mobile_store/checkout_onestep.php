@@ -187,7 +187,7 @@ class ControllerMobileStoreCheckoutOnestep extends Controller {
 		} else {
 			$data['payment_code'] = '';
 		}
-					
+	
 		$data['shipping_firstname'] = $payment_address['firstname'];
 		$data['shipping_lastname'] = $payment_address['lastname'];	
 		$data['shipping_company'] = $payment_address['company'];	
