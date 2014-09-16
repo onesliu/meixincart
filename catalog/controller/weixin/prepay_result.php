@@ -33,6 +33,9 @@ class ControllerWeixinPrepayResult extends ControllerWeixinWeixin {
 		//$this->log->write(print_r($this->request->post, true));
 		$order_info['shipping_district_id'] = $this->request->post['district-select'];
 		$order_info['shipping_time'] = $this->request->post['time-select'];
+		$order_info['shipping_firstname'] = $this->request->post['user_name'];
+		$order_info['shipping_telephone'] = $this->request->post['user_telephone'];
+		$order_info['shipping_address_1'] = $this->request->post['user_addr'];
 		
 		$this->model_checkout_order->addOrder($order_info);
 		$this->model_checkout_order->confirm($order_info['order_id'], 1);

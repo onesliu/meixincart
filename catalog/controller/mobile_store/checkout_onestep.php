@@ -160,8 +160,9 @@ class ControllerMobileStoreCheckoutOnestep extends Controller {
 			$payment_address = $this->session->data['guest']['payment'];
 		}
 		
-		$data['payment_firstname'] = $payment_address['firstname'];
-		$data['payment_lastname'] = $payment_address['lastname'];	
+		$data['payment_firstname'] = $this->customer->getFirstName();
+		$data['payment_lastname'] = $this->customer->getLastName();	
+		$data['payment_telephone'] = $this->customer->getTelephone();
 		$data['payment_company'] = $payment_address['company'];	
 		$data['payment_company_id'] = $payment_address['company_id'];	
 		$data['payment_tax_id'] = $payment_address['tax_id'];	
@@ -174,7 +175,6 @@ class ControllerMobileStoreCheckoutOnestep extends Controller {
 		$data['payment_country'] = $payment_address['country'];
 		$data['payment_country_id'] = $payment_address['country_id'];
 		$data['payment_address_format'] = $payment_address['address_format'];
-		$data['payment_telephone'] = $payment_address['telephone'];
 	
 		if (isset($this->session->data['payment_method']['title'])) {
 			$data['payment_method'] = $this->session->data['payment_method']['title'];
