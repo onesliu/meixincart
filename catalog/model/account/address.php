@@ -64,7 +64,7 @@ class ModelAccountAddress extends Model {
 			(int)$data['district_id']);
 		$res = $this->db->query($sql);
 		if ($res->num_rows) {
-			return $res['address_id'];
+			return $res->row['address_id'];
 		}
 		return null;
 	}
