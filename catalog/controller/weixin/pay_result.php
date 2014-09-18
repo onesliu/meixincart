@@ -48,6 +48,7 @@ class ControllerWeixinPayResult extends ControllerWeixinWeixin {
 		$this->load->model('checkout/order');
 		$this->load->model('account/district');
 		$this->load->model('account/address');
+		$this->load->model('account/customer');
 		
 		//$this->log->write(print_r($this->request->post, true));
 		$order_info['shipping_district_id'] = $this->request->post['district-select'];
@@ -71,8 +72,12 @@ class ControllerWeixinPayResult extends ControllerWeixinWeixin {
 		$addr['country_id'] = 44;
 		
 		$addrid = $this->model_account_address->findAddress($addr);
-		if ($addrid == null)
+		if ($addrid == null) {
 			 $addrid = $this->model_account_address->addAddress($addr);
+		}
+		else {
+			$this->model_account_customer->setLastAddress($this->customer->getId(), $addrid);
+		}
 		
 		$this->model_checkout_order->addOrder($order_info);
 		$this->model_checkout_order->confirm($order_info['order_id'], 1);

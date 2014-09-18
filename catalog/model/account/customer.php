@@ -202,12 +202,16 @@ class ModelAccountCustomer extends Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_ip` WHERE customer_id = '" . (int)$customer_id . "'");
 		
 		return $query->rows;
-	}	
+	}
 	
 	public function isBanIp($ip) {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_ban_ip` WHERE ip = '" . $this->db->escape($ip) . "'");
 		
 		return $query->num_rows;
-	}	
+	}
+	
+	public function setLastAddress($customerid, $addressid) {
+		$this->db->query("update ".DB_PREFIX."customer set address_id=$addressid where customer_id=$customerid");
+	}
 }
 ?>
