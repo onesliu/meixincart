@@ -198,7 +198,8 @@ class ControllerMobileStoreOrder extends Controller {
       			'{postcode}',
       			'{zone}',
 				'{zone_code}',
-      			'{country}'
+      			'{country}',
+    			'{telephone}'
 			);
 	
 			$replace = array(
@@ -211,7 +212,8 @@ class ControllerMobileStoreOrder extends Controller {
       			'postcode'  => $order_info['shipping_postcode'],
       			'zone'      => $order_info['shipping_zone'],
 				'zone_code' => $order_info['shipping_zone_code'],
-				'country'   => $order_info['shipping_country']  
+				'country'   => $order_info['shipping_country'],
+				'telephone' => $order_info['shipping_telephone']
 			);
 
 			$this->data['shipping_address'] = str_replace(array("\r\n", "\r", "\n"), '<br />', preg_replace(array("/\s\s+/", "/\r\r+/", "/\n\n+/"), '<br />', trim(str_replace($find, $replace, $format))));

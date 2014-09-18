@@ -9,7 +9,7 @@
 	  <tbody>
 	  	<tr>
 	      <td width="30%"><?php echo $text_order_id; ?></td>
-	      <td><?php echo $order["order_id"]; ?><span class="order-status"><?php echo $order["status"];?></span></td>
+	      <td><?php echo $order["order_id"]; ?></td>
 	  	</tr>
 	  	<tr>
 	      <td><?php echo $text_date_added; ?></td>
@@ -17,7 +17,8 @@
 	  	</tr>
 	  	<tr>
 	      <td><?php echo $text_total; ?></td>
-	      <td><span class="price"><?php echo $order["total"]; ?></span></td>
+	      <td><span class="price"><?php echo $order["total"]; ?></span>
+	      <span class="order-status"><?php echo $order["status"];?></span></td>
 	  	</tr>
 	  </tbody>
 	  </table>

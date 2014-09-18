@@ -99,6 +99,7 @@ class ModelAccountOrder extends Model {
 				'shipping_time'           => $order_query->row['shipping_time'],
 				'shipping_district'       => $shipping_district,
 				'shipping_district_addr'  => $shipping_district_addr,
+				'shipping_telephone'      => $order_query->row['shipping_telephone'],
 				'comment'                 => $order_query->row['comment'],
 				'total'                   => $order_query->row['total'],
 				'order_status_id'         => $order_query->row['order_status_id'],
