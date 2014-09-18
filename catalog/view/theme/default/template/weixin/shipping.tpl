@@ -4,7 +4,7 @@
 		<div id="addr" <?php if (!isset($address)) echo "style=\"display:none\""; ?> >
 			<div class="checkout-heading">收货地址</div>
 		    <div><span id="user_name"><?php if (isset($address)) {echo $address['firstname']; echo $address['lastname'];} ?></span>
-		    	<span id="user_telephone"><?php echo $telephone; ?></span></div>
+		    	<span id="user_telephone"><?php echo $address['telephone']; ?></span></div>
 		    <div id="user_addr"><?php if (isset($address)) {echo $address['address_1'];} ?></div>
 		    <input type="hidden" name="user_name" id="user_name2"></input>
 		    <input type="hidden" name="user_telephone" id="user_telephone2"></input>

@@ -69,7 +69,7 @@ class ControllerWeixinShipping extends ControllerWeixinWeixin {
 			$this->data['shipping_time']["$tomorow $i:00:00"] = "明天 $i:00";
 		}
 		
-		$this->data['telephone'] = $this->customer->getTelephone(); 
+		$this->data['user_telephone'] = $this->customer->getTelephone(); 
 		$this->data['order_info'] = $this->session->data['order_info'];
 		if ($this->data['order_info']['order_type'] == 0)
 			$this->data['weixin_payment'] = $this->url->link('weixin/pay_result');
