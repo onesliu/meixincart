@@ -4,13 +4,13 @@
 		<div id="addr" <?php if (!isset($address)) echo "style=\"display:none\""; ?> >
 			<div class="checkout-heading">收货地址</div>
 		    <div><span id="user_name"><?php if (isset($address)) {echo $address['firstname']; echo $address['lastname'];} ?></span>
-		    	<span id="user_telephone"><?php echo $address['telephone']; ?></span></div>
+		    	<span id="user_telephone"><?php if (isset($address)) {echo $address['telephone'];} ?></span></div>
 		    <div id="user_addr"><?php if (isset($address)) {echo $address['address_1'];} ?></div>
-		    <input type="hidden" name="user_name" id="user_name2"></input>
-		    <input type="hidden" name="user_telephone" id="user_telephone2"></input>
-		    <input type="hidden" name="user_addr" id="user_addr2"></input>
-		    <input type="hidden" name="user_city" id="user_city"></input>
-		    <input type="hidden" name="user_postcode" id="user_postcode"></input>
+		    <input type="hidden" name="user_name" id="user_name2" value="<?php if (isset($address)) {echo $address['firstname']; echo $address['lastname'];} ?>"></input>
+		    <input type="hidden" name="user_telephone" id="user_telephone2" value="<?php if (isset($address)) {echo $address['telephone'];} ?>"></input>
+		    <input type="hidden" name="user_addr" id="user_addr2" value="<?php if (isset($address)) {echo $address['address_1'];} ?>"></input>
+		    <input type="hidden" name="user_city" id="user_city" value="<?php if (isset($address)) {echo $address['city'];} ?>"></input>
+		    <input type="hidden" name="user_postcode" id="user_postcode" value="<?php if (isset($address)) {echo $address['postcode'];} ?>"></input>
       	</div>
 		<div id="addr_none" <?php if (isset($address)) echo "style=\"display:none\""; ?> >
 			<span class="checkout-heading">选择收货地址</span>

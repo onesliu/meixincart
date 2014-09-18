@@ -125,6 +125,15 @@ alter table oc_order_product add `realweight` double default 0.0;
 alter table oc_order_product add `realtotal` double default 0.0;
 alter table oc_order_product add `other_product_id` bigint default 0;
 
+alter table oc_order_download modify order_id bigint;
+alter table oc_order_field modify order_id bigint;
+alter table oc_order_fraud modify order_id bigint;
+alter table oc_order_history modify order_id bigint;
+alter table oc_order_option modify order_id bigint;
+alter table oc_order_product modify order_id bigint;
+alter table oc_order_total modify order_id bigint;
+alter table oc_order_voucher modify order_id bigint;
+
 alter table oc_product add `other_product_id` bigint default 0;
 //0:重量可以固定的商品, 1:重量不能固定的商品
 alter table oc_product add `product_type` int default 0;
