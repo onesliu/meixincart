@@ -14,8 +14,8 @@ class ModelAccountAddress extends Model {
 		"', city = '" . $this->db->escape(isset($data['city']) ? $data['city'] : '') . 
 		"', zone_id = '" . (int)isset($data['zone_id']) ? $data['zone_id'] : '' . 
 		"', country_id = '" . (int)isset($data['country_id']) ? $data['country_id'] : '' . 
-		"', telephone = '" . isset($data['telephone']) ? $data['telephone'] : '' . 
-		"', district_id = '" . isset($data['district_id']) ? $data['district_id'] : '' . "'");
+		"', telephone = '" . $this->db->escape(isset($data['telephone']) ? $data['telephone'] : '') . 
+		"', district_id = '" . (int)isset($data['district_id']) ? $data['district_id'] : '' . "'");
 		
 		$address_id = $this->db->getLastId();
 		
