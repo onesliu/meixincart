@@ -185,7 +185,7 @@ class ControllerMobileStoreOrder extends Controller {
       			$format = $order_info['shipping_address_format'];
     		} else {
 				//$format = '{firstname} {lastname}' . "\n" . '{company}' . "\n" . '{address_1}' . "\n" . '{address_2}' . "\n" . '{city} {postcode}' . "\n" . '{zone}' . "\n" . '{country}';
-				$format = '{firstname}{lastname}' . "\n" . '{company}' . "\n" . '{address_1}' . "\n" . '{address_2}';
+				$format = '{firstname}{lastname}&nbsp;{telephone}' . "\n" . '{company}' . "\n" . '{address_1}' . "\n" . '{address_2}';
 			}
 		
     		$find = array(

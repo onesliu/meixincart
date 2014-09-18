@@ -13,11 +13,6 @@
           <?php echo $text_date_added; ?><?php echo $date_added; ?>
         </td>
       </tr>
-      <tr>
-        <td class="left"><?php if ($shipping_address) {
-        	echo $shipping_address; } ?>
-        </td>
-      </tr>
     </tbody>
   </table>
   <?php if (isset($shipping_district) && $shipping_district != '') { ?>
@@ -28,6 +23,11 @@
       </tr>
     </thead>
     <tbody>
+      <tr>
+        <td class="left"><?php if ($shipping_address) {
+        	echo $shipping_address; } ?>
+        </td>
+      </tr>
       <tr>
         <td class="left"><?php echo $shipping_district; ?><br/>
         <?php echo $shipping_district_addr; ?></td>
