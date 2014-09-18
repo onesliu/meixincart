@@ -18,16 +18,9 @@ class ControllerWeixinShipping extends ControllerWeixinWeixin {
 			$this->data['address_id'] = $this->customer->getAddressId();
 		}
 
-		$addresses = $this->model_account_address->getAddresses();
-		if (isset($addresses)) {
-			//$this->data['addresses'] = $addresses;
-
-			//查找历史选中的地址
-			foreach ($addresses as $address) {
-				if ($address['address_id'] == $this->data['address_id']) {
-					$this->data['address'] = $address;
-				}
-			}
+		$address = $this->model_account_address->getAddress($this->data['address_id']);
+		if ($address != false) {
+			$this->data['address'] = $address;
 		}
 
 		// shipping values
