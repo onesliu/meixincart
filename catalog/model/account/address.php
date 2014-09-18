@@ -12,10 +12,10 @@ class ModelAccountAddress extends Model {
 		"', address_2 = '" . $this->db->escape(isset($data['address_2']) ? $data['address_2'] : '') . 
 		"', postcode = '" . $this->db->escape(isset($data['postcode']) ? $data['postcode'] : '') . 
 		"', city = '" . $this->db->escape(isset($data['city']) ? $data['city'] : '') . 
-		"', zone_id = '" . (int)isset($data['zone_id']) ? $data['zone_id'] : '' . 
-		"', country_id = '" . (int)isset($data['country_id']) ? $data['country_id'] : '' . 
+		"', zone_id = '" . (int)(isset($data['zone_id']) ? $data['zone_id'] : 0) . 
+		"', country_id = '" . (int)(isset($data['country_id']) ? $data['country_id'] : 0) . 
 		"', telephone = '" . $this->db->escape(isset($data['telephone']) ? $data['telephone'] : '') . 
-		"', district_id = '" . (int)isset($data['district_id']) ? $data['district_id'] : '' . "'");
+		"', district_id = '" . (int)(isset($data['district_id']) ? $data['district_id'] : 0) . "'");
 		
 		$address_id = $this->db->getLastId();
 		

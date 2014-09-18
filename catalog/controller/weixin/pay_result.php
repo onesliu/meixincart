@@ -75,9 +75,7 @@ class ControllerWeixinPayResult extends ControllerWeixinWeixin {
 		if ($addrid == null) {
 			 $addrid = $this->model_account_address->addAddress($addr);
 		}
-		else {
-			$this->model_account_customer->setLastAddress($this->customer->getId(), $addrid);
-		}
+		$this->model_account_customer->setLastAddress($this->customer->getId(), $addrid);
 		
 		$this->model_checkout_order->addOrder($order_info);
 		$this->model_checkout_order->confirm($order_info['order_id'], 1);
