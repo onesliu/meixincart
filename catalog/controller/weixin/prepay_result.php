@@ -6,9 +6,14 @@ class ControllerWeixinPrepayResult extends ControllerWeixinWeixin {
 
 		$payresult = false;
 		
-    	$order_info = $this->session->data['order_info'];
-   		$this->submit_order($order_info);
-   		$payresult = true;
+		if (isset($this->session->data['order_info'])) {
+	    	$order_info = $this->session->data['order_info'];
+	   		$this->submit_order($order_info);
+	   		$payresult = true;
+		}
+		else {
+			$this->redirect($this->url->link('mobile_store/home'));
+		}
     	
     	$this->data['payresult'] = $payresult;
 		$this->data['continue'] = $this->url->link('mobile_store/order');
@@ -41,6 +46,7 @@ class ControllerWeixinPrepayResult extends ControllerWeixinWeixin {
 		$this->model_checkout_order->confirm($order_info['order_id'], 1);
 				
 		$this->cart->clear();
+		unset($this->session->data['order_info']);
 	}
 }
 ?>
