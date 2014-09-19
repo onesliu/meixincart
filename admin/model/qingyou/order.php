@@ -4,10 +4,10 @@ class ModelQingyouOrder extends Model {
 		
 		$condition = "";
 		if ($history == null || $history == 0) {
-			$condition = "where o.order_status_id < 5";
+			$condition = "where o.order_status_id < 4";
 		}
 		else {
-			$condition = "where o.order_status_id >= 5";
+			$condition = "where o.order_status_id >= 4";
 		}
 		
 		if ($last_orderid != null) {
