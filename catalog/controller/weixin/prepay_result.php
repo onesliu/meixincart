@@ -1,4 +1,6 @@
 <?php
+include_once(DIR_APPLICATION."controller/weixin/pay_result.php");
+
 class ControllerWeixinPrepayResult extends ControllerWeixinPayResult {
 	public function index() {
 
@@ -29,6 +31,5 @@ class ControllerWeixinPrepayResult extends ControllerWeixinPayResult {
 
 		$this->response->setOutput($this->render());
 	}
-	
 }
 ?>
