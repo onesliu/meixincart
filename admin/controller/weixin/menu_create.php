@@ -12,7 +12,7 @@ class ControllerWeixinMenuCreate extends ControllerWeixinWeixin {
 		$menu_def = $this->prepare_menu_def($this->config->get('weixin_menu'));
 		
 		//创建菜单
-		$url = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=$access_token";
+		$url = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=".$this->access_token;
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $url);
 		curl_setopt($ch, CURLOPT_POST, true);
