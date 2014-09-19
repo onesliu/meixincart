@@ -52,5 +52,20 @@ class ModelWeixinAutoReply extends Model {
 			</xml>", $ToUserName, $FromUserName, time(), $item);
 		return $xml;
 	}
+	
+	public function makeXmlMuService($ToUserName, $FromUserName, $toService = false) {
+		$service = '';
+		if ($toService != false) {
+			$service = "<TransInfo><KfAccount>$toService</KfAccount></TransInfo>";
+		}
+		$xml = sprintf("<xml>
+			<ToUserName><![CDATA[%s]]></ToUserName>
+			<FromUserName><![CDATA[%s]]></FromUserName>
+			<CreateTime>%s</CreateTime>
+			<MsgType><![CDATA[transfer_customer_service]]></MsgType>
+			%s
+			</xml>", $ToUserName, $FromUserName, time(), $service);
+		return $xml;
+	}
 }
 ?>

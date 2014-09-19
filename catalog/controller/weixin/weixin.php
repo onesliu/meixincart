@@ -57,13 +57,17 @@ class ControllerWeixinWeixin extends Controller {
 				//直接自动登录到商城并跳转到首页
 			}
 			else if ($this->WeixinMsgType == 'text') {
-				//测试自动回复
+				//自动回复
 				$this->load->model("weixin/auto_reply");
 				$reply = $this->model_weixin_auto_reply->getReply($this->WeixinFromUserName,
 					$this->WeixinToUserName, $this->WeixinContent);
 				if ($reply != false) {
 					$this->response->setOutput($reply);
 					return;
+				}
+				else { //转至多客服系统
+					$this->response->setOutput($this->model_weixin_auto_reply->makeXmlMuService(
+						$this->WeixinFromUserName, $this->WeixinToUserName));
 				}
 			}
 		}
