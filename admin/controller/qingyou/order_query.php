@@ -101,6 +101,7 @@ class ControllerQingyouOrderQuery extends ControllerWeixinWeixin {
 				break;
 		} 
 		
+		/*
 		$omsg = new stdClass();
 		$omsg->touser = $openid;
 		$omsg->msgtype = "news";
@@ -111,7 +112,13 @@ class ControllerQingyouOrderQuery extends ControllerWeixinWeixin {
 		$omsg->news->articles[0]->description = $msg;
 		$omsg->news->articles[0]->url = $url;
 		$omsg->news->articles[0]->picurl = "";
+		*/
 		
-		return encode_json($omsg);
+		$messages = array();
+		$messages[0]["title"] = "交易提醒";
+		$messages[0]["description"] = $msg;
+		$messages[0]["url"] = $url;
+		$messages[0]["picurl"] = "";
+		return $this->makeNewsMsg($openid, $messages);
 	}
 }
