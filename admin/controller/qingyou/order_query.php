@@ -83,11 +83,11 @@ class ControllerQingyouOrderQuery extends ControllerWeixinWeixin {
 		$res = $this->postToWx($url, $msg);
 	}
 	
-	private function prepareWxMsg($openid, $order) {
+	private function prepareWxMsg($order) {
 		$openid = $this->model_qingyou_order->getOrderCustomer($order->order_id);
 		if ($openid == false) return false;
 		
-		$status = $this->model_qingyou_order->getStatus();
+		$status = $this->model_qingyou_order->getStatusMsg();
 		$content = $status[$order->order_status];
 		
 		switch((int)$order->order_status) {
@@ -112,6 +112,6 @@ class ControllerQingyouOrderQuery extends ControllerWeixinWeixin {
 		$omsg->news->articles[0]->url = $url;
 		$omsg->news->articles[0]->picurl = "";
 		
-		return json_encode($omsg);
+		return encode_json($omsg);
 	}
 }

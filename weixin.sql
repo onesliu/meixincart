@@ -158,6 +158,6 @@ insert into oc_auto_message(pattern,MsgType,ItemCount,Items) values('testpay', '
 
 update oc_order_status set wxmsg = '亲爱的客户，您的订单已称重。\n点击此消息即可付款！\n\n订单编号：%s\n订单金额：%s\n下单时间：%s\n支付方式：微信支付\n消费明细：%s\n\n点击此消息付款' where order_status_id = 2;
 update oc_order_status set wxmsg = '亲爱的客户，您的订单已付款。我们正在安排配送！\n\n飞鸽传蔬将携程为您服务\n\n订单编号：%s\n订单金额：%s\n下单时间：%s\n支付方式：微信支付\n消费明细：%s\n\n点击查看订单详情' where order_status_id = 3;
-update oc_order_status set wxmsg = '亲爱的客户，您的订单已经配送到家！\n 欢迎惠顾！\n\n订单编号：%s\n订单金额：%s\n下单时间：%s\n支付方式：微信支付\n消费明细：%s\n\n点击查看详情' where order_status_id = 4;
+update oc_order_status set wxmsg = '亲爱的客户，您的订单已经配送到家！\n欢迎惠顾！\n\n订单编号：%s\n订单金额：%s\n下单时间：%s\n支付方式：微信支付\n消费明细：%s\n\n点击查看详情' where order_status_id = 4;
 update oc_order_status set wxmsg = '亲爱的客户，您的订单已退款！\n\n订单编号：%s\n订单金额：%s\n下单时间：%s\n支付方式：微信支付\n消费明细：%s\n\n点击查看详情' where order_status_id = 5;
 update oc_order_status set wxmsg = '亲爱的客户，您的订单已取消！\n\n订单编号：%s\n订单金额：%s\n下单时间：%s\n支付方式：微信支付\n消费明细：%s\n\n点击查看详情' where order_status_id = 6;

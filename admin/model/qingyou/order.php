@@ -82,11 +82,23 @@ class ModelQingyouOrder extends Model {
 	
 	public function getStatus() {
 		
-		$query = $this->db->query("select * from " .DB_PREFIX. "order_status");
+		$query = $this->db->query("select order_status_id,name from " .DB_PREFIX. "order_status");
 		
 		$data = array();
 		foreach ($query->rows as $result) {
 			$data[$result['order_status_id']] = $result['name'];
+		}
+		
+		return $data;
+	}
+	
+	public function getStatusMsg() {
+		
+		$query = $this->db->query("select order_status_id,wxmsg from " .DB_PREFIX. "order_status");
+		
+		$data = array();
+		foreach ($query->rows as $result) {
+			$data[$result['order_status_id']] = $result['wxmsg'];
 		}
 		
 		return $data;

@@ -132,4 +132,9 @@ if (!function_exists('json_decode')) {
 		return $return;
 	}
 }
+
+function encode_json($str){  
+    $code = json_encode($str);  
+    return preg_replace("#\\\u([0-9a-f]{4})#ie", "iconv('UCS-2', 'UTF-8', pack('H4', '\\1'))", $code);  
+}
 ?>
