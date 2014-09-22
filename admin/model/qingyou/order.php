@@ -37,6 +37,14 @@ class ModelQingyouOrder extends Model {
 		return $data;
 	}
 	
+	public function getOrderCustomer($orderid) {
+		$q = $this->db->query("select email from oc_customer where customer_id=(select customer_id from oc_order where order_id=$orderid)");
+		if ($q->num_rows != 0) {
+			return $q->row['email'];
+		}
+		return false;
+	}
+	
 	public function updateOrder($order) {
 		$sql = "update " .DB_PREFIX. "order set order_status_id=".$order->order_status." where order_id=".$order->order_id;
 		$query = $this->db->query($sql);

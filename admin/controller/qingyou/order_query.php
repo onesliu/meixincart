@@ -1,5 +1,7 @@
 <?php
-class ControllerQingyouOrderQuery extends Controller {
+include_once(DIR_APPLICATION."controller/weixin/weixin.php");
+
+class ControllerQingyouOrderQuery extends ControllerWeixinWeixin {
 	private $error = array();
 
 	public function index() {
@@ -33,6 +35,8 @@ class ControllerQingyouOrderQuery extends Controller {
 							$this->model_qingyou_order->updateProduct($order->order_id, $product);
 						}
 					}
+					//发送订单状态改变消息
+					$this->sendWxMsg($order);
 				}
 				$return->status = 0;
 			}
@@ -65,6 +69,49 @@ class ControllerQingyouOrderQuery extends Controller {
 		} else {
 			return false;
 		}	
-	}	
+	}
 	
+	public function sendWxMsg($order) {
+		
+		if ($this->weixin_init() != true) {
+			return; //首次验证或初始化失败
+		}
+		
+		$msg = $this->prepareWxMsg($order);
+		if ($msg == false) return;
+		$url = "https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=".$this->access_token;
+		$res = $this->postToWx($url, $msg);
+	}
+	
+	private function prepareWxMsg($openid, $order) {
+		$openid = $this->model_qingyou_order->getOrderCustomer($order->order_id);
+		if ($openid == false) return false;
+		
+		$status = $this->model_qingyou_order->getStatus();
+		$content = $status[$order->order_status];
+		
+		switch((int)$order->order_status) {
+			case 2:
+				$msg = sprintf($content, $order->order_id, $order->total, $order->order_createtime, $order->productSubject);
+				$url = $this->url->link2('mobile_store/order');
+				break;
+			default:
+				$msg = sprintf($content, $order->order_id, $order->total, $order->order_createtime, $order->productSubject);
+				$url = $this->url->link2('mobile_store/order');
+				break;
+		} 
+		
+		$omsg = new stdClass();
+		$omsg->touser = $openid;
+		$omsg->msgtype = "news";
+		$omsg->news = new stdClass();
+		$omsg->news->articles = array();
+		$omsg->news->articles[0] = new stdClass();
+		$omsg->news->articles[0]->title = "交易提醒";
+		$omsg->news->articles[0]->description = $msg;
+		$omsg->news->articles[0]->url = $url;
+		$omsg->news->articles[0]->picurl = "";
+		
+		return json_encode($omsg);
+	}
 }
