@@ -119,7 +119,7 @@ class ControllerQingyouOrderQuery extends ControllerWeixinWeixin {
 		*/
 		
 		$messages = array();
-		$messages[0]["title"] = "交易提醒  " . $content->wxtitle;
+		$messages[0]["title"] = "交易提醒 " . $content->wxtitle;
 		$messages[0]["description"] = $msg;
 		$messages[0]["url"] = $url;
 		$messages[0]["picurl"] = "";

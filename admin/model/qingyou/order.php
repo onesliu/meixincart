@@ -54,8 +54,8 @@ class ModelQingyouOrder extends Model {
 		$sql = "update " .DB_PREFIX. "order set order_status_id=".$order->order_status." where order_id=".$order->order_id;
 		$this->db->query($sql);
 		$sql = "insert into ".DB_PREFIX."order_history set order_id=".$order->order_id.
-			" order_status_id=".$order->order_status.
-			" date_added=NOW()";
+			",order_status_id=".$order->order_status.
+			",date_added=NOW()";
 		$this->db->query($sql);
 		return true;
 	}
