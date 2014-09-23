@@ -39,7 +39,7 @@ class ControllerQingyouOrderQuery extends ControllerWeixinWeixin {
 						$this->sendWxMsg($order);
 					}
 					else {
-						$this->log->write("order already updated. orderid=".$order->order_id);
+						$this->log->write("order already updated. orderid=".$order->order_id.",status=".$order->order_status);
 					}
 				}
 				$return->status = 0;
