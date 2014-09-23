@@ -4,6 +4,14 @@ class ControllerWeixinLogin extends Controller {
 	
 	public function index() {
 		// Login override for admin users
+		$redirect = 'mobile_store/home';
+		if (isset($this->request->post['redirect'])) {
+			$redirect = $this->request->post['redirect'];
+		}
+		else if (isset($this->request->get['redirect'])) {
+			$redirect = $this->request->get['redirect'];
+		}
+		
 		if (!empty($this->request->get['token'])) {
 			$this->customer->logout();
 			
@@ -12,7 +20,7 @@ class ControllerWeixinLogin extends Controller {
 			$customer_info = $this->model_account_customer->getCustomerByToken($this->request->get['token']);
 			
 		 	if ($customer_info && $this->customer->login($customer_info['email'], '', true)) {
-				$this->redirect($this->url->link('mobile_store/home', '', 'SSL')); 
+				$this->redirect($this->url->link($redirect, '', 'SSL')); 
 			}
 		}
 		
@@ -58,10 +66,8 @@ class ControllerWeixinLogin extends Controller {
   		if ($this->customer->login($email, WEIXIN_USERPWD)) {
 			unset($this->session->data['guest']);
 			
-			if (isset($this->request->post['redirect']) && (strpos($this->request->post['redirect'], HTTP_SERVER) !== false || strpos($this->request->post['redirect'], HTTPS_SERVER) !== false)) {
-				$this->redirect(str_replace('&amp;', '&', $this->request->post['redirect']));
-			} else {
-				$this->redirect($this->url->link('mobile_store/home', '', 'SSL')); 
+			if (isset($redirect)) {
+				$this->redirect($this->url->link($redirect, '', 'SSL')); 
 			}
     	}
     	else {

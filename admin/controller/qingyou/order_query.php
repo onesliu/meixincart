@@ -94,14 +94,16 @@ class ControllerQingyouOrderQuery extends ControllerWeixinWeixin {
 		$status = $this->model_qingyou_order->getStatusMsg();
 		$content = $status[$order->order_status];
 		
+		if ($order->order_type == 0)
+			$msg = sprintf($content, $order->order_id, $order->total, $order->order_createtime, $order->productSubject);
+		else
+			$msg = sprintf($content, $order->order_id, $order->realtotal, $order->order_createtime, $order->productSubject);
 		switch((int)$order->order_status) {
 			case 2:
-				$msg = sprintf($content, $order->order_id, $order->total, $order->order_createtime, $order->productSubject);
-				$url = $this->url->link2('mobile_store/order');
+				$url = str_replace("admin/", "", $this->url->link2('mobile_store/order'));
 				break;
 			default:
-				$msg = sprintf($content, $order->order_id, $order->total, $order->order_createtime, $order->productSubject);
-				$url = $this->url->link2('mobile_store/order');
+				$url = str_replace("admin/", "", $this->url->link2('mobile_store/login', 'redirect=mobile_store/order'));
 				break;
 		} 
 		
