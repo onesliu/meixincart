@@ -47,8 +47,8 @@ class ModelQingyouOrder extends Model {
 	
 	public function updateOrder($order) {
 		$query = $this->db->query("select order_status_id from " .DB_PREFIX. "order where order_id=".$order->order_id);
-		if ($q->num_rows != 0) {
-			if ($q->row['order_status_id'] == $order->order_status)
+		if ($query->num_rows != 0) {
+			if ($query->row['order_status_id'] == $order->order_status)
 				return false;
 		}
 		$sql = "update " .DB_PREFIX. "order set order_status_id=".$order->order_status." where order_id=".$order->order_id;
