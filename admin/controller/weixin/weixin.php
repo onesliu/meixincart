@@ -81,6 +81,7 @@ class ControllerWeixinWeixin extends Controller {
 		    \"msgtype\":\"news\",
 		    \"news\": {\"articles\": [$msg]}
 		}";
+		return $omsg;
 	}
 }
 

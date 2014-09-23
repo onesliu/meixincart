@@ -29,14 +29,18 @@ class ControllerQingyouOrderQuery extends ControllerWeixinWeixin {
 				$this->load->model('qingyou/order');
 				
 				foreach ($orders as $order) {
-					$this->model_qingyou_order->updateOrder($order);
-					if (isset($order->products)) {
-						foreach($order->products as $product) {
-							$this->model_qingyou_order->updateProduct($order->order_id, $product);
+					if ($this->model_qingyou_order->updateOrder($order) == true) {
+						if (isset($order->products)) {
+							foreach($order->products as $product) {
+								$this->model_qingyou_order->updateProduct($order->order_id, $product);
+							}
 						}
+						//发送订单状态改变消息
+						$this->sendWxMsg($order);
 					}
-					//发送订单状态改变消息
-					$this->sendWxMsg($order);
+					else {
+						$this->log->write("order already updated. orderid=".$order->order_id);
+					}
 				}
 				$return->status = 0;
 			}
