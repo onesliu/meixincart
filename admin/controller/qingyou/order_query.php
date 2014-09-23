@@ -100,10 +100,10 @@ class ControllerQingyouOrderQuery extends ControllerWeixinWeixin {
 			$msg = sprintf($content, $order->order_id, $order->realtotal, $order->order_createtime, $order->productSubject);
 		switch((int)$order->order_status) {
 			case 2:
-				$url = str_replace("admin/", "", $this->url->link2('mobile_store/order'));
+				$url = str_replace("admin", "", $this->url->link2('weixin/order'));
 				break;
 			default:
-				$url = str_replace("admin/", "", $this->url->link2('mobile_store/login', 'redirect=mobile_store/order'));
+				$url = str_replace("admin", "", $this->url->link2('weixin/login', 'redirect='.urlencode('mobile_store/order/info&order_id='.$order->order_id)));
 				break;
 		} 
 		

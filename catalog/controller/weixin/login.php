@@ -46,7 +46,7 @@ class ControllerWeixinLogin extends Controller {
 		}
 		
 		if ($this->customer->isLogged()) {  
-      		$this->redirect($this->url->link('mobile_store/home', '', 'SSL'));
+      		$this->redirect($this->url->link($redirect, '', 'SSL'));
     	}
     	
     	if (isset($this->request->post['email'])) {
