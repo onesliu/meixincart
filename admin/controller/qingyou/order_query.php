@@ -95,15 +95,13 @@ class ControllerQingyouOrderQuery extends ControllerWeixinWeixin {
 		$content = $status[$order->order_status];
 		
 		if ($order->order_type == 0)
-			$msg = sprintf($content, $order->order_id, $order->total, $order->order_createtime, $order->productSubject);
+			$msg = sprintf($content->wxmsg, $order->order_id, $order->total, $order->order_createtime, $order->productSubject);
 		else
-			$msg = sprintf($content, $order->order_id, $order->realtotal, $order->order_createtime, $order->productSubject);
+			$msg = sprintf($content->wxmsg, $order->order_id, $order->realtotal, $order->order_createtime, $order->productSubject);
+		$url = str_replace("admin", "", $this->url->link2('weixin/login', 'redirect='.urlencode('mobile_store/order/info&order_id='.$order->order_id)));
 		switch((int)$order->order_status) {
 			case 2:
 				$url = str_replace("admin", "", $this->url->link2('weixin/order'));
-				break;
-			default:
-				$url = str_replace("admin", "", $this->url->link2('weixin/login', 'redirect='.urlencode('mobile_store/order/info&order_id='.$order->order_id)));
 				break;
 		} 
 		
@@ -121,7 +119,7 @@ class ControllerQingyouOrderQuery extends ControllerWeixinWeixin {
 		*/
 		
 		$messages = array();
-		$messages[0]["title"] = "交易提醒";
+		$messages[0]["title"] = "交易提醒  " . $content->wxtitle;
 		$messages[0]["description"] = $msg;
 		$messages[0]["url"] = $url;
 		$messages[0]["picurl"] = "";

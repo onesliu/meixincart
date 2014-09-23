@@ -146,6 +146,7 @@ alter table oc_user add district_id int(11) default 0;
 insert into oc_setting (`key`,`value`) values('first_shipping_time', '9');
 insert into oc_setting (`key`,`value`) values('last_shipping_time', '19');
 
+alter table oc_order_status add wxtitle varchar(128);
 alter table oc_order_status add wxmsg varchar(2048);
 
 //init
@@ -156,8 +157,8 @@ insert into oc_setting (`group`, `key`,`value`) values('weixin', 'weixin_appsecr
 insert into oc_auto_message(pattern,MsgType,ItemCount,Items) values('order|订|买', 'news', 1, '[{"title":"点击开始买菜","description":"传承老一代，用心卖好菜。青悠悠菜园传统良心蔬菜。","url":"http://qy.gz.1251102575.clb.myqcloud.com/index.php","picurl":"http://qy.gz.1251102575.clb.myqcloud.com//image/data/weixin/logo.jpg"}]');
 insert into oc_auto_message(pattern,MsgType,ItemCount,Items) values('testpay', 'news', 1, '[{"title":"点击开始测试","description":"传承老一代，用心卖好菜。青悠悠菜园传统良心蔬菜。","url":"http://qy.gz.1251102575.clb.myqcloud.com/pay/test/addr.php","picurl":"http://qy.gz.1251102575.clb.myqcloud.com//image/data/weixin/logo.jpg"}]');
 
-update oc_order_status set wxmsg = '亲爱的客户，您的订单已称重。\n点击此消息即可付款！\n\n订单编号：%s\n订单金额：%s\n下单时间：%s\n支付方式：微信支付\n消费明细：%s\n\n点击此消息付款' where order_status_id = 2;
-update oc_order_status set wxmsg = '亲爱的客户，您的订单已付款。我们正在安排配送！\n\n飞鸽传蔬将携程为您服务\n\n订单编号：%s\n订单金额：%s\n下单时间：%s\n支付方式：微信支付\n消费明细：%s\n\n点击查看订单详情' where order_status_id = 3;
-update oc_order_status set wxmsg = '亲爱的客户，您的订单已经配送到家！\n欢迎惠顾！\n\n订单编号：%s\n订单金额：%s\n下单时间：%s\n支付方式：微信支付\n消费明细：%s\n\n点击查看详情' where order_status_id = 4;
-update oc_order_status set wxmsg = '亲爱的客户，您的订单已退款！\n\n订单编号：%s\n订单金额：%s\n下单时间：%s\n支付方式：微信支付\n消费明细：%s\n\n点击查看详情' where order_status_id = 5;
-update oc_order_status set wxmsg = '亲爱的客户，您的订单已取消！\n\n订单编号：%s\n订单金额：%s\n下单时间：%s\n支付方式：微信支付\n消费明细：%s\n\n点击查看详情' where order_status_id = 6;
+update oc_order_status set wxtitle='订单可付款', wxmsg = '亲爱的客户，您的订单已称重。\n点击此消息即可付款！\n\n订单编号：%s\n订单金额：%s\n下单时间：%s\n消费明细：%s\n\n点击此消息付款' where order_status_id = 2;
+update oc_order_status set wxtitle='订单配送中', wxmsg = '亲爱的客户，您的订单已付款。我们正在安排配送！\n\n飞鸽传蔬将携程为您服务\n\n订单编号：%s\n订单金额：%s\n下单时间：%s\n消费明细：%s\n\n点击查看订单详情' where order_status_id = 3;
+update oc_order_status set wxtitle='订单已完成', wxmsg = '亲爱的客户，您的订单已经配送到家！\n欢迎惠顾！\n\n订单编号：%s\n订单金额：%s\n下单时间：%s\n消费明细：%s\n\n点击查看详情' where order_status_id = 4;
+update oc_order_status set wxtitle='订单已退款', wxmsg = '亲爱的客户，您的订单已退款！\n\n订单编号：%s\n订单金额：%s\n下单时间：%s\n消费明细：%s\n\n点击查看详情' where order_status_id = 5;
+update oc_order_status set wxtitle='订单已取消', wxmsg = '亲爱的客户，您的订单已取消！\n\n订单编号：%s\n订单金额：%s\n下单时间：%s\n消费明细：%s\n\n点击查看详情' where order_status_id = 6;

@@ -100,11 +100,14 @@ class ModelQingyouOrder extends Model {
 	
 	public function getStatusMsg() {
 		
-		$query = $this->db->query("select order_status_id,wxmsg from " .DB_PREFIX. "order_status");
+		$query = $this->db->query("select order_status_id,wxtitle,wxmsg from " .DB_PREFIX. "order_status");
 		
 		$data = array();
 		foreach ($query->rows as $result) {
-			$data[$result['order_status_id']] = $result['wxmsg'];
+			$omsg = new stdClass();
+			$omsg->wxtitle = $result['wxtitle'];
+			$omsg->wxmsg = $result['wxmsg'];
+			$data[$result['order_status_id']] = $omsg;
 		}
 		
 		return $data;
