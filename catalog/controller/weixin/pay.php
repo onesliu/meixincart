@@ -73,9 +73,9 @@ class ControllerWeixinPay extends ControllerWeixinWeixin {
 	}
 	
 	private function error() {
-		$this->sessioin->data['error_msg'] = "微信服务器出错";
-		$this->sessioin->data['url_continue'] = $this->url->link('mobile_store/cart');
-		$this->sessioin->data['text_continue'] = '返回购物车';
+		$this->session->data['error_msg'] = "微信服务器出错";
+		$this->session->data['url_continue'] = $this->url->link('mobile_store/cart');
+		$this->session->data['text_continue'] = '返回购物车';
 		$this->redirect($this->url->link('weixin/error'));
 	}
 }
