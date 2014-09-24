@@ -1,5 +1,5 @@
 <?php
-include_once(DIR_APPLICATION."controller/weixin/lib/WxPayHelper.php");
+include_once(DIR_APPLICATION."controller/weixin/lib/wxtools.php");
 include_once(DIR_APPLICATION."controller/weixin/weixin.php");
 
 class ControllerWeixinShipping extends ControllerWeixinWeixin { 
@@ -76,21 +76,20 @@ class ControllerWeixinShipping extends ControllerWeixinWeixin {
 		else
 			$this->data['weixin_payment'] = $this->url->link('weixin/prepay_result');
 		
-		$addrHelper = new WxPayHelper($this);
-		$addrHelper->setParameter("appid", $this->appid);
+		$addrHelper = new PayHelper($this);
+		$addrHelper->add_param("appid", $this->appid);
 		$url = "http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
 		$addrParam['url'] = str_replace("&amp;", "&", $url);
-		$addrHelper->setParameter("url", $addrParam['url']);
+		$addrHelper->add_param("url", $addrParam['url']);
 		$addrParam['timeStamp'] = time();
-		$addrHelper->setParameter("timestamp", $addrParam['timeStamp']);
+		$addrHelper->add_param("timestamp", $addrParam['timeStamp']);
 		$addrParam['nonceStr'] = $addrParam['timeStamp'];
-		$addrHelper->setParameter("noncestr", $addrParam['nonceStr']);
+		$addrHelper->add_param("noncestr", $addrParam['nonceStr']);
 		$addrParam['token'] = $this->session->data['oauth_access_token'];
-		$addrHelper->setParameter("accesstoken", $addrParam['token']);
+		$addrHelper->add_param("accesstoken", $addrParam['token']);
 		
-		$sign = $addrHelper->create_addr_sign();
+		$sign = $addrHelper->make_addr_sign();
 		$addrParam['addrSign'] = $sign['sha1'];
-		$addrParam['signStr'] = $sign['signstr'];
 		$addrParam['appId'] = $this->appid;
 		
 		$this->data['addrParam'] = $addrParam;

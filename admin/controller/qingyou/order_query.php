@@ -29,6 +29,13 @@ class ControllerQingyouOrderQuery extends ControllerWeixinWeixin {
 				$this->load->model('qingyou/order');
 				
 				foreach ($orders as $order) {
+					if ($this->checkOrderInfo($order) == false) {
+						$this->response->setOutput(json_encode($return));
+						return;
+					}
+				}
+				
+				foreach ($orders as $order) {
 					if ($this->model_qingyou_order->updateOrder($order) == true) {
 						if (isset($order->products)) {
 							foreach($order->products as $product) {
@@ -124,5 +131,16 @@ class ControllerQingyouOrderQuery extends ControllerWeixinWeixin {
 		$messages[0]["url"] = $url;
 		$messages[0]["picurl"] = "";
 		return $this->makeNewsMsg($openid, $messages);
+	}
+	
+	private function checkOrderInfo($order) {
+		if (!isset($order->order_id)) return false;
+		if (!isset($order->order_status)) return false;
+		if (!isset($order->total)) return false;
+		if (!isset($order->realtotal)) return false;
+		if (!isset($order->order_type)) return false;
+		if (!isset($order->order_createtime)) return false;
+		if (!isset($order->productSubject)) return false;
+		return true;
 	}
 }

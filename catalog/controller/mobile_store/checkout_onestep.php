@@ -1,5 +1,5 @@
 <?php
-include_once(DIR_APPLICATION."controller/weixin/lib/wxorder.php");
+include_once(DIR_APPLICATION."controller/weixin/lib/wxtools.php");
 
 class ControllerMobileStoreCheckoutOnestep extends Controller { 
 	public function index() {

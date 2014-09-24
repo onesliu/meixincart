@@ -1,5 +1,5 @@
 <?php
-include_once(DIR_APPLICATION."controller/weixin/lib/WxPayHelper.php");
+include_once(DIR_APPLICATION."controller/weixin/lib/wxtools.php");
 include_once(DIR_APPLICATION."controller/weixin/weixin.php");
 
 class ControllerWeixinWarning extends ControllerWeixinWeixin { 
