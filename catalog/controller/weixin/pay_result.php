@@ -32,13 +32,19 @@ class ControllerWeixinPayResult extends ControllerWeixinWeixin {
 			}
     	}
     	
-    	$this->data['payresult'] = $payresult;
+    	if ($payresult == true) {
+    		$this->data['error_msg'] = '支付成功';
+    	}
+    	else {
+    		$this->data['error_msg'] = '支付失败，请重试';
+    	}
 		$this->data['continue'] = $this->url->link('mobile_store/order');
+		$this->data['text_continue'] = '马上查看订单';
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/weixin/pay_result.tpl')) {
-            $this->template = $this->config->get('config_template') . '/template/weixin/pay_result.tpl';
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/weixin/error.tpl')) {
+            $this->template = $this->config->get('config_template') . '/template/weixin/error.tpl';
 		} else {
-            $this->template = 'default/template/weixin/pay_result.tpl';
+            $this->template = 'default/template/weixin/error.tpl';
         }
 		
 		$this->children = array(

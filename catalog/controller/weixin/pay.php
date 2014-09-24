@@ -29,6 +29,7 @@ class ControllerWeixinPay extends ControllerWeixinWeixin {
 		$response = postToWx($url, $request);
 		if ($response['rescode'] != 200) {
 			$this->log->write("weixin prepay response error, ". $response['rescode']);
+			$this->error();
 			return;
 		}
 		
@@ -38,11 +39,13 @@ class ControllerWeixinPay extends ControllerWeixinWeixin {
 			isset($res->result_code) == false || (string)$res->return_code != 'SUCCESS' ||
 			(string)$res->result_code != 'SUCCESS') {
 			$this->log->write("prepay response error: \n". $response['content']);
+			$this->error();
 			return;
 		}
 		
 		if ($resHelper->sign_verify($this->partnerkey) != true) {
 			$this->log->write("prepay response sign verify error: \n". $response['content']);
+			$this->error();
 			return;
 		}
 		
@@ -69,6 +72,12 @@ class ControllerWeixinPay extends ControllerWeixinWeixin {
 		$this->render();
 	}
 	
+	private function error() {
+		$this->sessioin->data['error_msg'] = "微信服务器出错";
+		$this->sessioin->data['url_continue'] = $this->url->link('mobile_store/cart');
+		$this->sessioin->data['text_continue'] = '返回购物车';
+		$this->redirect($this->url->link('weixin/error'));
+	}
 }
 
 ?>

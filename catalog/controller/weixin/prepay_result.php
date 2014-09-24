@@ -15,13 +15,19 @@ class ControllerWeixinPrepayResult extends ControllerWeixinPayResult {
 			$this->redirect($this->url->link('mobile_store/home'));
 		}
     	
-    	$this->data['payresult'] = $payresult;
+    	if ($payresult == true) {
+    		$this->data['error_msg'] = '下单成功，请等待门店称重计价后发送微信支付消息。';
+    	}
+    	else {
+    		$this->data['error_msg'] = '下单失败，请重试';
+    	}
 		$this->data['continue'] = $this->url->link('mobile_store/order');
-
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/weixin/prepay_result.tpl')) {
-            $this->template = $this->config->get('config_template') . '/template/weixin/prepay_result.tpl';
+		$this->data['text_continue'] = '马上查看订单';
+		
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/weixin/error.tpl')) {
+            $this->template = $this->config->get('config_template') . '/template/weixin/error.tpl';
 		} else {
-            $this->template = 'default/template/weixin/prepay_result.tpl';
+            $this->template = 'default/template/weixin/error.tpl';
         }
 		
 		$this->children = array(
