@@ -112,7 +112,7 @@ class PayHelper {
 		$this->params = array();
 		$xmlarr = get_object_vars($xml);
 		foreach ($xmlarr as $k => $val) {
-			$this->add_param($this->params[$k],(string)$val);
+			$this->add_param($k,(string)$val);
 		}
 		return $xml;
 	}
