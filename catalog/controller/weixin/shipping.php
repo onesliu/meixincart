@@ -76,7 +76,7 @@ class ControllerWeixinShipping extends ControllerWeixinWeixin {
 		else
 			$this->data['weixin_payment'] = $this->url->link('weixin/prepay_result');
 		
-		$addrHelper = new PayHelper($this);
+		$addrHelper = new PayHelper();
 		$addrHelper->add_param("appid", $this->appid);
 		$url = "http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
 		$addrParam['url'] = str_replace("&amp;", "&", $url);

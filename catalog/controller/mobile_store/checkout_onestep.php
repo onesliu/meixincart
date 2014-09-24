@@ -217,6 +217,7 @@ class ControllerMobileStoreCheckoutOnestep extends Controller {
 		
 		$product_data = array();
 		$order_type = 0; //0:固定客单价订单, 1:变客单价订单
+		$comment = "";
 	
 		foreach ($this->cart->getProducts() as $product) {
 			$option_data = array();
@@ -255,11 +256,16 @@ class ControllerMobileStoreCheckoutOnestep extends Controller {
 				'total'      => $product['total'],
 				'tax'        => $this->tax->getTax($product['price'], $product['tax_class_id']),
 				'reward'     => $product['reward']
-			); 
+			);
+			
+			$comment .= $product['name']." ";
 		}
 		
 		$this->data['order_type'] = $order_type;
 		$data['order_type'] = $order_type;
+		$data['comment'] = trim($comment);
+		//$data['comment'] = (isset($this->session->data['comment']))?$this->session->data['comment']:"";
+		
 		
 		// Gift Voucher
 		$voucher_data = array();
@@ -278,7 +284,7 @@ class ControllerMobileStoreCheckoutOnestep extends Controller {
 					'amount'           => $voucher['amount']
 				);
 			}
-		}  
+		}
 
 		foreach($total_data as $tt) {
       		if ($tt['code'] == 'total') {
@@ -288,7 +294,6 @@ class ControllerMobileStoreCheckoutOnestep extends Controller {
 		$data['products'] = $product_data;
 		$data['vouchers'] = $voucher_data;
 		$data['totals'] = $total_data;
-		$data['comment'] = (isset($this->session->data['comment']))?$this->session->data['comment']:"";
 		$data['total'] = $total;
 		
 		if (isset($this->request->cookie['tracking'])) {

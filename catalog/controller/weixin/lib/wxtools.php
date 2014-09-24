@@ -58,7 +58,7 @@ class PayHelper {
 	var $params = array();
 	
 	public function add_param($key, $val) {
-		$this->params[strtolower(trim($key))] = trim($val);
+		$this->params[trim($key)] = trim($val);
 	}
 	
 	public function get($key) {
@@ -70,7 +70,7 @@ class PayHelper {
 	}
 	
 	private function make_param_str() {
-		$this->ksort();
+		$this->psort();
 		$pstr = "";
 		foreach($this->params as $key => $val) {
 			if ($key != 'sign' && $val != null && $val != "") {
@@ -80,7 +80,7 @@ class PayHelper {
 		return trim($pstr, "&");
 	}
 	
-	private function sign_make($key) {
+	public function sign_make($key) {
 		$pstr = $this->make_param_str();
 		$pstr .= "key=$key";
 		return strtoupper(md5($pstr));

@@ -5,13 +5,21 @@
 <script type="text/javascript"><!--
 
 function weixin_pay() {
-	WeixinJSBridge.invoke('getBrandWCPayRequest', <?php echo $wxPayHelper->create_biz_package(); ?>, function(res) {
-		WeixinJSBridge.log(res.err_msg);
-		alert(res.err_code+res.desc);
-		if (res.err_msg == "get_brand_wcpay_request:ok") {
-			return true;
+	WeixinJSBridge.invoke('getBrandWCPayRequest', {
+		"appId" : "<?php echo $appId; ?>",
+		"signType" : "<?php echo $signType; ?>",
+		"package" : "<?php echo $package; ?>",
+		"timeStamp" : "<?php echo $timeStamp; ?>",
+		"nonceStr" : "<?php echo $nonceStr; ?>",
+		"paySign" : "<?php echo $paySign; ?>"
+		},function(res){
+			WeixinJSBridge.log(res.err_msg);
+			alert(res.err_code+res.desc);
+			if (res.err_msg == "get_brand_wcpay_request:ok") {
+				return true;
+			}
+			return false;
 		}
-		return false;
-	});
+	);
 }
 //--></script>
