@@ -18,7 +18,7 @@ class ControllerWeixinPay extends ControllerWeixinWeixin {
 		$wxPayHelper->add_param("nonce_str", (string)time());
 		$wxPayHelper->add_param("body", (string)$order_info['comment']);
 		$wxPayHelper->add_param("out_trade_no", (string)$order_info['order_id']);
-		$wxPayHelper->add_param("total_fee", (int)$order_info['total']*100);
+		$wxPayHelper->add_param("total_fee", (int)($order_info['total']*100));
 		$wxPayHelper->add_param("notify_url", $this->url->link('weixin/pay_notify'));
 		$wxPayHelper->add_param("spbill_create_ip", (string)$this->request->server['REMOTE_ADDR']);
 		$wxPayHelper->add_param("trade_type", "JSAPI");
@@ -34,7 +34,7 @@ class ControllerWeixinPay extends ControllerWeixinWeixin {
 		}
 		
 		$resHelper = new PayHelper();
-		$res = $resHelper->parse_response($response['content'], $this->partnerkey);
+		$res = $resHelper->parse_response($response['content']);
 		if (isset($res->return_code) == false || isset($res->return_msg) == false ||
 			isset($res->result_code) == false || (string)$res->return_code != 'SUCCESS' ||
 			(string)$res->result_code != 'SUCCESS') {

@@ -58,7 +58,10 @@ class PayHelper {
 	var $params = array();
 	
 	public function add_param($key, $val) {
-		$this->params[trim($key)] = trim($val);
+		if (is_string($val))
+			$this->params[trim($key)] = trim($val);
+		else
+			$this->params[trim($key)] = $val;
 	}
 	
 	public function get($key) {
@@ -82,7 +85,7 @@ class PayHelper {
 	
 	public function sign_make($key) {
 		$pstr = $this->make_param_str();
-		$pstr .= "key=$key";
+		$pstr .= "&key=".$key;
 		return strtoupper(md5($pstr));
 	}
 	
@@ -93,19 +96,19 @@ class PayHelper {
 	
 	public function make_request($key) {
 		$xml = new SimpleXMLExtend("<xml></xml>");
-		foreach($this->params as $key => $val) {
+		foreach($this->params as $k => $val) {
 			if ($val != null || $val != "") {
 				if (is_string($val))
-					$xml->addCData($key, $val);
+					$xml->addCData($k, $val);
 				else
-					$xml->addChild($key, $val);
+					$xml->addChild($k, $val);
 			}
 		}
 		$xml->addCData('sign', $this->sign_make($key));
 		return $xml->asXML();
 	}
 	
-	public function parse_response($xmlstr, $key) {
+	public function parse_response($xmlstr) {
 		//解析xml并写入params数组
 		$xml = new SimpleXMLExtend($xmlstr);
 		unset($this->params);
