@@ -114,7 +114,10 @@ class PayHelper {
 		foreach ($xmlarr as $k => $val) {
 			$this->add_param($this->params[$k],(string)$val);
 		}
-		
+		return $xml;
+	}
+	
+	public function sign_verify($key) {
 		//验证签名
 		if (!isset($this->params['sign'])) return false;
 		if ($this->params['sign'] != $this->sign_make($key)) return false;

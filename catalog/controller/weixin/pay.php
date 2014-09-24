@@ -22,7 +22,7 @@ class ControllerWeixinPay extends ControllerWeixinWeixin {
 		$wxPayHelper->add_param("notify_url", $this->url->link('weixin/pay_notify'));
 		$wxPayHelper->add_param("spbill_create_ip", (string)$this->request->server['REMOTE_ADDR']);
 		$wxPayHelper->add_param("trade_type", "JSAPI");
-		$wxPayHelper->add_param("openid", $this->customer->email);
+		$wxPayHelper->add_param("openid", $this->customer->getEmail());
 		
 		$request = $wxPayHelper->make_request($this->partnerkey);
 		$url = "https://api.mch.weixin.qq.com/pay/unifiedorder";
@@ -33,14 +33,16 @@ class ControllerWeixinPay extends ControllerWeixinWeixin {
 		}
 		
 		$resHelper = new PayHelper();
-		if ($resHelper->parse_response($response['content'], $this->partnerkey) == false) {
-			$this->log->write("parse prepay response error: \n". $response['content']);
+		$res = $resHelper->parse_response($response['content'], $this->partnerkey);
+		if (isset($res->return_code) == false || isset($res->return_msg) == false ||
+			isset($res->result_code) == false || (string)$res->return_code != 'SUCCESS' ||
+			(string)$res->result_code != 'SUCCESS') {
+			$this->log->write("prepay response error: \n". $response['content']);
 			return;
 		}
 		
-		if ($resHelper->get('return_code') != 'SUCCESS' ||
-			$resHelper->get('result_code') != 'SUCCESS') {
-			$this->log->write("pay result error: \n". $response['content']);
+		if ($resHelper->sign_verify($this->partnerkey) != true) {
+			$this->log->write("prepay response sign verify error: \n". $response['content']);
 			return;
 		}
 		
