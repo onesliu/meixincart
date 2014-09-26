@@ -271,6 +271,10 @@ class ControllerMobileStoreCheckoutOnestep extends Controller {
 		$this->data['order_type'] = $order_type;
 		$data['order_type'] = $order_type;
 		$data['comment'] = trim($comment);
+		if ($order_type == 0)
+			$data['order_status_id'] = 2;
+		else
+			$data['order_status_id'] = 1;
 		//$data['comment'] = (isset($this->session->data['comment']))?$this->session->data['comment']:"";
 		
 		

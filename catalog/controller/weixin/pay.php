@@ -60,7 +60,8 @@ class ControllerWeixinPay extends ControllerWeixinWeixin {
 			return;
 		}
 		
-		$this->submit_order($order_info);
+		if (isset($order_info['fromdb']) && $order_info['fromdb'] == true)
+			$this->submit_order($order_info);
 		
 		$jsHelper = new PayHelper();
 		$jsHelper->add_param('appId', $resHelper->get('appid'));

@@ -110,7 +110,8 @@ class ModelAccountOrder extends Model {
 				'date_modified'           => $order_query->row['date_modified'],
 				'date_added'              => $order_query->row['date_added'],
 				'ip'                      => $order_query->row['ip'],
-				'weixin_pay_result'       => $order_query->row['weixin_pay_result']
+				'weixin_pay_result'       => $order_query->row['weixin_pay_result'],
+				'fromdb'       			  => true
 			);
 		} else {
 			return false;	
