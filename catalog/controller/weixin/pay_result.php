@@ -1,5 +1,6 @@
 <?php
 include_once(DIR_APPLICATION."controller/weixin/weixin.php");
+include_once(DIR_APPLICATION."controller/weixin/lib/wxtools.php");
 
 class ControllerWeixinPayResult extends ControllerWeixinWeixin {
 	public function index() {
@@ -59,7 +60,18 @@ class ControllerWeixinPayResult extends ControllerWeixinWeixin {
 							'USERPAYING' => '用户支付中',
 							'NOPAY' => '未支付(输入密码或确认支付超时)',
 							'PAYERROR' => '支付失败(其他原因，如银行返回失败)');
-			$this->data['error_msg'] = $trade_state[(string)$resHelper->trade_state];
+			$this->data['error_msg'] = $trade_state[(string)$res->trade_state];
+			
+			if ((string)$res->trade_state == 'SUCCESS') {
+				if ($order_info['order_status_id'] == 2) {
+					if ($order_info['order_type'] == 0) //固定价格订单 状态转换至 待称重
+						$order_info['order_status_id'] = 1;
+					else if ($order_info['order_type'] == 1) //变价格订单 状态转换至 待配送
+						$order_info['order_status_id'] = 3;
+				}
+			}
+
+			$this->save_result($order_info, $response['content']);
     	}
     	else {
 			$this->data['error_msg'] = '订单已经支付';
@@ -80,6 +92,11 @@ class ControllerWeixinPayResult extends ControllerWeixinWeixin {
 		);
 
 		$this->response->setOutput($this->render());
+	}
+	
+	private function save_result($order_info, $result) {
+		$order_info['weixin_pay_result'] = $result;
+		$this->model_checkout_order->fastupdate($order_info['order_id'], $order_info);
 	}
 	
 }

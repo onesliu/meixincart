@@ -30,7 +30,7 @@ class ControllerWeixinPay extends ControllerWeixinWeixin {
 		$wxPayHelper->add_param("body", (string)$order_info['comment']);
 		$wxPayHelper->add_param("out_trade_no", (string)$order_info['order_id']);
 		$wxPayHelper->add_param("total_fee", (int)($order_info['total']*100));
-		$wxPayHelper->add_param("notify_url", $this->url->link('weixin/pay_notify'));
+		$wxPayHelper->add_param("notify_url", $this->url->link2('weixin/pay_notify'));
 		$wxPayHelper->add_param("spbill_create_ip", (string)$this->request->server['REMOTE_ADDR']);
 		$wxPayHelper->add_param("trade_type", "JSAPI");
 		$wxPayHelper->add_param("openid", $this->customer->getEmail());
