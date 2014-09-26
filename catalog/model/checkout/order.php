@@ -776,7 +776,7 @@ class ModelCheckoutOrder extends Model {
 		return false;
 	}
 	
-	public function orderChangeStatus($order_info) {
+	public function orderChangeStatus(&$order_info) {
 		if (!isset($order_info)) return;
 		
 		$state = array(0, 1);
@@ -788,7 +788,7 @@ class ModelCheckoutOrder extends Model {
 		$this->addOrderHistory($order_info);
 	}
 	
-	public function addOrderHistory($order_info) {
+	public function addOrderHistory(&$order_info) {
 		$sql = "insert into ".DB_PREFIX."order_history set order_id=".$order_info['order_id'].
 			",order_status_id=".$order_info['order_status_id'].
 			",notify=1,date_added=NOW()";
