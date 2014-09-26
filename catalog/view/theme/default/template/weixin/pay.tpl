@@ -1,4 +1,12 @@
 <?php echo $header; ?>
+<div id="content" class="square" style="background:transparent;border:0px;">
+  <div>
+	<div class="checkout-content" style="display:block;">
+	<span>正在支付...</span>
+	</div>
+  </div>
+</div>
+
 <script type="text/javascript"><!--
 
 $(document).ready(function(){
