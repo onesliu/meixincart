@@ -115,12 +115,13 @@ alter table oc_customer add `access_token` varchar(1024) default null;
 
 alter table oc_order modify order_id bigint NOT NULL auto_increment;
 alter table oc_order add shipping_time datetime default null;
-alter table oc_order add shipping_districtid integer default 0;
+alter table oc_order add shipping_district_id integer default 0;
 alter table oc_order add `shipping_pay` double default 0.0;
 alter table oc_order add other_order_id bigint default 0;
 alter table oc_order add shipping_telephone varchar(32);
 alter table oc_order add transaction_id varchar(256) default "";
 alter table oc_order add weixin_pay_result text default NULL;
+alter table oc_order add order_type integer default 0;
 
 alter table oc_order_product add `realweight` double default 0.0;
 alter table oc_order_product add `realtotal` double default 0.0;

@@ -44,8 +44,9 @@ class ModelCheckoutOrder extends Model {
 		"', shipping_address_format = '" . $this->db->escape($data['shipping_address_format']) . 
 		"', shipping_method = '" . $this->db->escape($data['shipping_method']) . 
 		"', shipping_code = '" . $this->db->escape($data['shipping_code']) . 
-		((isset($data['shipping_district_id']))? ("', shipping_districtid = '" . (int)$data['shipping_district_id']) : "") . 
+		((isset($data['shipping_district_id']))? ("', shipping_district_id = '" . (int)$data['shipping_district_id']) : "") . 
 		((isset($data['shipping_time']))? ("', shipping_time = '" . $this->db->escape($data['shipping_time'])) : "") .
+		((isset($data['order_type']))? ("', order_type = '".(int)$data['order_type']) : "") .
 		"', shipping_telephone = '" . $this->db->escape($data['shipping_telephone']) .  
 		"', comment = '" . $this->db->escape($data['comment']) . 
 		"', total = '" . (float)$data['total'] . 
@@ -128,7 +129,7 @@ class ModelCheckoutOrder extends Model {
 				$shipping_zone_code = '';
 			}
 			
-			$district_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "district` WHERE id = '" . (int)$order_query->row['shipping_districtid'] . "'");
+			$district_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "district` WHERE id = '" . (int)$order_query->row['shipping_district_id'] . "'");
 			if ($district_query->num_rows) {
 				$shipping_district = $district_query->row['name'];
 				$shipping_district_addr = $district_query->row['address'];
@@ -201,7 +202,7 @@ class ModelCheckoutOrder extends Model {
 				'shipping_address_format' => $order_query->row['shipping_address_format'],
 				'shipping_method'         => $order_query->row['shipping_method'],
 				'shipping_code'           => $order_query->row['shipping_code'],
-				'shipping_district_id'    => $order_query->row['shipping_districtid'],
+				'shipping_district_id'    => $order_query->row['shipping_district_id'],
 				'shipping_time'           => $order_query->row['shipping_time'],
 				'shipping_telephone'      => $order_query->row['shipping_telephone'],
 				'shipping_district'       => $shipping_district,
@@ -222,7 +223,8 @@ class ModelCheckoutOrder extends Model {
 				'user_agent'              => $order_query->row['user_agent'],	
 				'accept_language'         => $order_query->row['accept_language'],				
 				'date_modified'           => $order_query->row['date_modified'],
-				'date_added'              => $order_query->row['date_added']
+				'date_added'              => $order_query->row['date_added'],
+				'order_type'        	  => $order_query->row['order_type']
 			);
 		} else {
 			return false;	

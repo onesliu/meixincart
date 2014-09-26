@@ -40,7 +40,7 @@ class ModelAccountOrder extends Model {
 				$shipping_zone_code = '';
 			}
 			
-			$district_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "district` WHERE id = '" . (int)$order_query->row['shipping_districtid'] . "'");
+			$district_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "district` WHERE id = '" . (int)$order_query->row['shipping_district_id'] . "'");
 			if ($district_query->num_rows) {
 				$shipping_district = $district_query->row['name'];
 				$shipping_district_addr = $district_query->row['address'];
@@ -95,7 +95,7 @@ class ModelAccountOrder extends Model {
 				'shipping_iso_code_3'     => $shipping_iso_code_3,
 				'shipping_address_format' => $order_query->row['shipping_address_format'],
 				'shipping_method'         => $order_query->row['shipping_method'],
-				'shipping_districtid'     => $order_query->row['shipping_districtid'],
+				'shipping_district_id'     => $order_query->row['shipping_district_id'],
 				'shipping_time'           => $order_query->row['shipping_time'],
 				'shipping_district'       => $shipping_district,
 				'shipping_district_addr'  => $shipping_district_addr,
@@ -111,6 +111,7 @@ class ModelAccountOrder extends Model {
 				'date_added'              => $order_query->row['date_added'],
 				'ip'                      => $order_query->row['ip'],
 				'weixin_pay_result'       => $order_query->row['weixin_pay_result'],
+				'order_type'       => $order_query->row['order_type'],
 				'fromdb'       			  => true
 			);
 		} else {

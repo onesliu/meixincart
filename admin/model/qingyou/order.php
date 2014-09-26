@@ -15,7 +15,7 @@ class ModelQingyouOrder extends Model {
 		}
 		
 		if ($districtid != null) {
-			$condition .= " and shipping_districtid = $districtid";
+			$condition .= " and shipping_district_id = $districtid";
 		}
 		
 		$data = array();
