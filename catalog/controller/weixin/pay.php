@@ -86,7 +86,6 @@ class ControllerWeixinPay extends ControllerWeixinWeixin {
 		}
 		
 		$this->children = array(
-			'mobile_store/footer',
 			'mobile_store/header'
 		);
 		

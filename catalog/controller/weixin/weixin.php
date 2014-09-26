@@ -182,6 +182,9 @@ class ControllerWeixinWeixin extends Controller {
 		$this->redirect($this->url->link('weixin/error'));
 	}
 	
+	public function getpaytitle() {
+		$param = 'showwxpaytitle=1&code=' . $this->session->data['oauth_code'] . "&state=" . $this->session->data['oauth_state'];
+	}
 }
 
 ?>

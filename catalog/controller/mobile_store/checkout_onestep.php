@@ -81,7 +81,7 @@ class ControllerMobileStoreCheckoutOnestep extends Controller {
 
 		if ($this->data['order_type']==0) {
 			$this->data['text_pay_btn'] = '微信支付';
-			$this->data['weixin_payment'] = $this->url->link('weixin/pay');
+			$this->data['weixin_payment'] = $this->url->link('weixin/pay', $this->getpaytitle());
 		}
 		else {
 			$this->data['text_pay_btn'] = '下单待称重';
