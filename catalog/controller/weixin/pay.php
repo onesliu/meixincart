@@ -76,7 +76,7 @@ class ControllerWeixinPay extends ControllerWeixinWeixin {
 		$this->data['nonceStr'] = $jsHelper->get('nonceStr');
 		$this->data['paySign'] = $jsHelper->sign_make($this->partnerkey);
 		
-		$this->data['pay_result'] = $this->url->link('weixin/pay_result');
+		$this->data['pay_result'] = $this->url->link('weixin/pay_result', "showwxpaytitle=1");
 		
 		// view template
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/weixin/pay.tpl')) {
