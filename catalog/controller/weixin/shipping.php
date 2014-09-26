@@ -85,7 +85,7 @@ class ControllerWeixinShipping extends ControllerWeixinWeixin {
 		$addrHelper->add_param("accesstoken", $addrParam['token']);
 		
 		$sign = $addrHelper->make_addr_sign();
-		$addrParam['addrSign'] = $sign['sha1'];
+		$addrParam['addrSign'] = $sign;
 		$addrParam['appId'] = $this->appid;
 		
 		$this->data['addrParam'] = $addrParam;
