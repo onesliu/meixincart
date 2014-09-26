@@ -747,21 +747,21 @@ class ModelCheckoutOrder extends Model {
 	
 	public function fastupdate($order_id, $order_info) {
 
-		$setstr = (isset($order_info['customer_id']))? "customer_id = '" . (int)$order_info['customer_id'] . "'," : "" .
-		(isset($order_info['customer_group_id']))? "customer_group_id = '" . (int)$order_info['customer_group_id'] . "'," : "" .
-		(isset($order_info['firstname']))? "firstname = '" . $this->db->escape($order_info['firstname']) . "'," : "" .
-		(isset($order_info['lastname']))? "lastname = '" . $this->db->escape($order_info['lastname']) . "'," : "" .
-		(isset($order_info['email']))? "email = '" . $this->db->escape($order_info['email']) . "'," : "" .
-		(isset($order_info['telephone']))? "telephone = '" . $this->db->escape($order_info['telephone']) . "'," : "" .
-		(isset($order_info['fax']))? "fax = '" . $this->db->escape($order_info['fax']) . "'," : "" .
-		(isset($order_info['comment']))? "comment = '" . $this->db->escape($order_info['comment']) . "'," : "" .
-		(isset($order_info['total']))? "total = '" . (float)$order_info['total'] . "'," : "" .
-		(isset($order_info['order_status_id']))? "order_status_id = '" . (int)$order_info['order_status_id'] . "'," : "" .
-		(isset($order_info['shipping_district_id']))? "shipping_district_id = '" . (int)$order_info['shipping_district_id'] . "'," : "" .
-		(isset($order_info['shipping_time']))? "shipping_time = '" . (int)$order_info['shipping_time'] . "'," : "" .
-		(isset($order_info['ip']))? "ip = '" . $this->db->escape($order_info['ip']) . "'," : "" .
-		(isset($order_info['weixin_pay_result']))? "weixin_pay_result = '" . $this->db->escape($order_info['weixin_pay_result']) . "'," : "" .
-		(isset($order_info['forwarded_ip']))? "forwarded_ip = '" . $this->db->escape($order_info['forwarded_ip']) . "'," : "";
+		$setstr = ((isset($order_info['customer_id']))? "customer_id = '" . (int)$order_info['customer_id'] . "'," : "") .
+		((isset($order_info['customer_group_id']))? "customer_group_id = '" . (int)$order_info['customer_group_id'] . "'," : "") .
+		((isset($order_info['firstname']))? "firstname = '" . $this->db->escape($order_info['firstname']) . "'," : "") .
+		((isset($order_info['lastname']))? "lastname = '" . $this->db->escape($order_info['lastname']) . "'," : "") .
+		((isset($order_info['email']))? "email = '" . $this->db->escape($order_info['email']) . "'," : "") .
+		((isset($order_info['telephone']))? "telephone = '" . $this->db->escape($order_info['telephone']) . "'," : "") .
+		((isset($order_info['fax']))? "fax = '" . $this->db->escape($order_info['fax']) . "'," : "") .
+		((isset($order_info['comment']))? "comment = '" . $this->db->escape($order_info['comment']) . "'," : "") .
+		((isset($order_info['total']))? "total = '" . (float)$order_info['total'] . "'," : "") .
+		((isset($order_info['order_status_id']))? "order_status_id = '" . (int)$order_info['order_status_id'] . "'," : "") .
+		((isset($order_info['shipping_district_id']))? "shipping_district_id = '" . (int)$order_info['shipping_district_id'] . "'," : "") .
+		((isset($order_info['shipping_time']))? "shipping_time = '" . (int)$order_info['shipping_time'] . "'," : "") .
+		((isset($order_info['ip']))? "ip = '" . $this->db->escape($order_info['ip']) . "'," : "") .
+		((isset($order_info['weixin_pay_result']))? "weixin_pay_result = '" . $this->db->escape($order_info['weixin_pay_result']) . "'," : "") .
+		((isset($order_info['forwarded_ip']))? "forwarded_ip = '" . $this->db->escape($order_info['forwarded_ip']) . "'," : "");
 		
 		$setstr = trim(trim($setstr, ","));
 		
@@ -775,5 +775,25 @@ class ModelCheckoutOrder extends Model {
 		}
 		return false;
 	}
+	
+	public function orderChangeStatus($order_info) {
+		if (!isset($order_info)) return;
+		
+		$state = array(0, 1);
+		$state[0] = array(2=>1, 1=>3, 3=>4);//固定价格订单 状态转换至 待称重
+		$state[1] = array(1=>2, 2=>3, 3=>4);//变价格订单 状态转换至 待配送
+		
+		$next = $state[$order_info['order_type']][$order_info['order_status_id']];
+		$order_info['order_status_id'] = $next;
+		$this->addOrderHistory($order_info);
+	}
+	
+	public function addOrderHistory($order_info) {
+		$sql = "insert into ".DB_PREFIX."order_history set order_id=".$order_info['order_id'].
+			",order_status_id=".$order_info['order_status_id'].
+			",notify=1,date_added=NOW()";
+		$this->db->query($sql);
+	}
+	
 }
 ?>

@@ -143,7 +143,8 @@ class ControllerWeixinPay extends ControllerWeixinWeixin {
 			$this->model_checkout_order->confirm($order_info['order_id'], 1);
 		
 		$this->cart->clear();
-		unset($this->session->data['order_info']);
+		$this->session->data['order_id'] = $order_info['order_id'];
+		//unset($this->session->data['order_info']);
 	}
 }
 

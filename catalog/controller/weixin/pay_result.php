@@ -64,10 +64,7 @@ class ControllerWeixinPayResult extends ControllerWeixinWeixin {
 			
 			if ((string)$res->trade_state == 'SUCCESS') {
 				if ($order_info['order_status_id'] == 2) {
-					if ($order_info['order_type'] == 0) //固定价格订单 状态转换至 待称重
-						$order_info['order_status_id'] = 1;
-					else if ($order_info['order_type'] == 1) //变价格订单 状态转换至 待配送
-						$order_info['order_status_id'] = 3;
+					$this->model_checkout_order->orderChangeStatus($order_info);
 				}
 			}
 
@@ -95,8 +92,8 @@ class ControllerWeixinPayResult extends ControllerWeixinWeixin {
 	}
 	
 	private function save_result($order_info, $result) {
-		$order_info['weixin_pay_result'] = $result;
-		$this->model_checkout_order->fastupdate($order_info['order_id'], $order_info);
+		$o['weixin_pay_result'] = $result;
+		$this->model_checkout_order->fastupdate($order_info['order_id'], $o);
 	}
 	
 }
