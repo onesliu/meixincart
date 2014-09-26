@@ -92,8 +92,8 @@ class ControllerWeixinPayResult extends ControllerWeixinWeixin {
 	}
 	
 	private function save_result($order_info, $result) {
-		$o['weixin_pay_result'] = $result;
-		$this->model_checkout_order->fastupdate($order_info['order_id'], $o);
+		$order_info['weixin_pay_result'] = $result;
+		$this->model_checkout_order->fastupdate($order_info['order_id'], $order_info);
 	}
 	
 }
