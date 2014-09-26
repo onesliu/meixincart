@@ -287,6 +287,14 @@ class ControllerMobileStoreOrder extends Controller {
           			'comment'    => nl2br($result['comment'])
         		);
       		}
+      		
+	      	$status = $this->model_account_order->getOrderStatus();
+      		$this->data['order_status'] = $status[$order_info['order_status_id']]['name'];
+      		if ($order_info['order_status_id'] == 2) {
+	      		$this->data['text_pay_btn'] = '微信支付';
+	      		$this->data['weixin_payment'] = $this->url->link('weixin/pay');
+	      		$this->session->data['order_info'] = $order_info;
+      		}
 
       		$this->data['continue'] = $this->url->link('mobile_store/order', '', 'SSL');
 		

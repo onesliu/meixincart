@@ -1,4 +1,3 @@
-  <form id="weixin_payment" name="weixin_payment" method="post" action="<?php echo $weixin_payment; ?>">
     <div id="shipping_address">
       <div class="checkout-content" style="display:block;" onclick="editaddr();" >
 		<div id="addr" <?php if (!isset($address)) echo "style=\"display:none\""; ?> >
@@ -44,7 +43,6 @@
       	</select>
       </div>
     </div>
-  </form>
     
 <script type="text/javascript"><!--
 function check_form() {

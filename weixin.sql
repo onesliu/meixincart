@@ -120,6 +120,7 @@ alter table oc_order add `shipping_pay` double default 0.0;
 alter table oc_order add other_order_id bigint default 0;
 alter table oc_order add shipping_telephone varchar(32);
 alter table oc_order add transaction_id varchar(256) default "";
+alter table oc_order add weixin_pay_result text default NULL;
 
 alter table oc_order_product add `realweight` double default 0.0;
 alter table oc_order_product add `realtotal` double default 0.0;

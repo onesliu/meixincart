@@ -4,40 +4,67 @@ include_once(DIR_APPLICATION."controller/weixin/weixin.php");
 class ControllerWeixinPayResult extends ControllerWeixinWeixin {
 	public function index() {
 
-		$payresult = false;
+		if (!isset($this->session->data['order_info'])) {
+			$this->redirect($this->url->link('mobile_store/home'));
+		}
 		
-    	/*if ($order_info['order_status_id'] < 3) {
-    		//还是未支付状态，发起支付查询
-			$this->load->model('weixin/query_order');
-    		$qrst = $this->model_weixin_query_order->query($this->access_token, $order_info);
+		if ($this->weixin_init() != true) {
+			$this->error();
+			return; //首次验证或初始化失败
+		}
+		
+		$this->load->model('checkout/order');
+		$order_info = $this->model_checkout_order->fastgetOrder($this->session->data['order_info']['order_id']);
+    	if ($order_info['order_status_id'] < 3) {
+    		
+    		//订单还是未支付状态，发起支付查询
+			$wxPayHelper = new PayHelper();
+			$wxPayHelper->add_param("appid", (string)$this->appid);
+			$wxPayHelper->add_param("mch_id", (string)$this->partnerid);
+			$wxPayHelper->add_param("nonce_str", (string)time());
+			$wxPayHelper->add_param("out_trade_no", (string)$order_info['order_id']);
 			
-			if ($qrst->errcode == 0 && $qrst->errmsg == "ok") {
-				//支付成功
-				$this->submit_order();
-				$payresult = true;
+			$request = $wxPayHelper->make_request($this->partnerkey);
+			$url = "https://api.mch.weixin.qq.com/pay/orderquery";
+			$response = postToWx($url, $request);
+			
+			if ($response['rescode'] != 200) {
+				$this->log->write("weixin order query response error, ". $response['rescode']);
+				$this->error();
+				return;
 			}
-			else {
-				//支付查询失败
-				$this->log->write("orderquery error, errcode:".$result->errcode." errmsg:".$result->errmsg);
+			
+			$resHelper = new PayHelper();
+			$res = $resHelper->parse_response($response['content']);
+			if (isset($res->return_code) == false || isset($res->return_msg) == false ||
+				isset($res->result_code) == false || (string)$res->return_code != 'SUCCESS' ||
+				(string)$res->result_code != 'SUCCESS') {
+				$this->log->write("order query response error: \n". $response['content']);
+				$this->error();
+				return;
 			}
-    	}
-    	else*/ {
-			if (isset($this->session->data['order_info'])) {
-	    		$order_info = $this->session->data['order_info'];
-				$this->submit_order($order_info);
-	    		$payresult = true;
+			
+			if ($resHelper->sign_verify($this->partnerkey) != true) {
+				$this->log->write("order query response sign verify error: \n". $response['content']);
+				$this->error();
+				return;
 			}
-			else {
-				$this->redirect($this->url->link('mobile_store/home'));
-			}
-    	}
-    	
-    	if ($payresult == true) {
-    		$this->data['error_msg'] = '支付成功';
+
+			//支付结果显示
+			$trade_state = array('SUCCESS' => '支付成功',
+							'REFUND' => '转入退款',
+							'NOTPAY' => '未支付',
+							'CLOSED' => '已关闭',
+							'REVOKED' => '已撤销',
+							'USERPAYING' => '用户支付中',
+							'NOPAY' => '未支付(输入密码或确认支付超时)',
+							'PAYERROR' => '支付失败(其他原因，如银行返回失败)');
+			$this->data['error_msg'] = $trade_state[(string)$resHelper->trade_state];
     	}
     	else {
-    		$this->data['error_msg'] = '支付失败，请重试';
+			$this->data['error_msg'] = '订单已经支付';
     	}
+    	
 		$this->data['continue'] = $this->url->link('mobile_store/order');
 		$this->data['text_continue'] = '马上查看订单';
 
@@ -55,44 +82,5 @@ class ControllerWeixinPayResult extends ControllerWeixinWeixin {
 		$this->response->setOutput($this->render());
 	}
 	
-	public function submit_order($order_info) {
-		$this->load->model('checkout/order');
-		$this->load->model('account/district');
-		$this->load->model('account/address');
-		$this->load->model('account/customer');
-		
-		//$this->log->write(print_r($this->request->post, true));
-		$order_info['shipping_district_id'] = $this->request->post['district-select'];
-		$order_info['shipping_time'] = $this->request->post['time-select'];
-		$order_info['shipping_firstname'] = $this->request->post['user_name'];
-		$order_info['shipping_telephone'] = $this->request->post['user_telephone'];
-		$order_info['shipping_address_1'] = $this->request->post['user_addr'];
-		
-		$addr['firstname'] = $order_info['shipping_firstname'];
-		$addr['telephone'] = $order_info['shipping_telephone'];
-		$addr['address_1'] = $order_info['shipping_address_1'];
-		$addr['district_id'] = $order_info['shipping_district_id'];
-		$addr['lastname'] = '';
-		$addr['company'] = '';
-		$addr['company_id'] = '';
-		$addr['tax_id'] = '';
-		$addr['address_2'] = '';
-		$addr['postcode'] = $this->request->post['user_postcode'];;
-		$addr['city'] = $this->request->post['user_city'];;
-		$addr['zone_id'] = 0;
-		$addr['country_id'] = 44;
-		
-		$addrid = $this->model_account_address->findAddress($addr);
-		if ($addrid == null) {
-			 $addrid = $this->model_account_address->addAddress($addr);
-		}
-		$this->model_account_customer->setLastAddress($this->customer->getId(), $addrid);
-		
-		$this->model_checkout_order->addOrder($order_info);
-		$this->model_checkout_order->confirm($order_info['order_id'], 1);
-		
-		$this->cart->clear();
-		unset($this->session->data['order_info']);
-	}
 }
 ?>

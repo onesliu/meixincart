@@ -108,6 +108,19 @@ class PayHelper {
 		return $xml->asXML();
 	}
 	
+	public function make_param_xml() {
+		$xml = new SimpleXMLExtend("<xml></xml>");
+		foreach($this->params as $k => $val) {
+			if ($val != null || $val != "") {
+				if (is_string($val))
+					$xml->addCData($k, $val);
+				else
+					$xml->addChild($k, $val);
+			}
+		}
+		return $xml->asXML();
+	}
+	
 	public function parse_response($xmlstr) {
 		//解析xml并写入params数组
 		$xml = new SimpleXMLExtend($xmlstr);

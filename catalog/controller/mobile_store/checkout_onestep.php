@@ -79,12 +79,19 @@ class ControllerMobileStoreCheckoutOnestep extends Controller {
 			$this->template = 'default/template/mobile_store/checkout_onestep.tpl';
 		}
 
-		$order_type = ($this->data['order_type']==0)?'weixin/pay':'weixin/prepay';
+		if ($this->data['order_type']==0) {
+			$this->data['text_pay_btn'] = '微信支付';
+			$this->data['weixin_payment'] = $this->url->link('weixin/pay');
+		}
+		else {
+			$this->data['text_pay_btn'] = '下单待称重';
+			$this->data['weixin_payment'] = $this->url->link('weixin/pay/prepay');
+		}
+		
 		$this->children = array(
 			'mobile_store/content_top',
 			'mobile_store/content_bottom',
 			'weixin/shipping',
-			$order_type,
 			'mobile_store/footer',
 			'mobile_store/header'
 		);

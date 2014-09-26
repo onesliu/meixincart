@@ -50,10 +50,15 @@
       </div>
     </div>
     
+	<form id="weixin_payment" name="weixin_payment" method="post" action="<?php echo $weixin_payment; ?>">
     <?php echo $shipping; ?>
+    </form>
+    
   </div>
-  
-<?php if($order_type == 0) echo $pay; else echo $prepay; ?>
+  <div>
+    <div class="center"><a onclick="if (check_form()) {$('#weixin_payment').submit();}" class="button_11 orange orange_borderbottom radius4"><?php echo $text_pay_btn; ?></a></div>
+  </div>
+    
 <?php echo $content_bottom; ?>
 </div>
 <?php echo $footer; ?>

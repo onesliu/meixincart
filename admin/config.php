@@ -27,7 +27,7 @@ define('DIR_CATALOG', DIR_PREFIX.'/catalog/');
 define('DB_DRIVER', 'mysql');
 define('DB_HOSTNAME', 'localhost');
 define('DB_USERNAME', 'root');
-define('DB_PASSWORD', '123456');
+define('DB_PASSWORD', 'nb33l2l3');
 define('DB_DATABASE', 'opencart');
 define('DB_PREFIX', 'oc_');
 ?>

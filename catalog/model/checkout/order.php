@@ -758,11 +758,20 @@ class ModelCheckoutOrder extends Model {
 		(isset($order_info['shipping_district_id']))? "shipping_district_id = '" . (int)$order_info['shipping_district_id'] . "'," : "" .
 		(isset($order_info['shipping_time']))? "shipping_time = '" . (int)$order_info['shipping_time'] . "'," : "" .
 		(isset($order_info['ip']))? "ip = '" . $this->db->escape($order_info['ip']) . "'," : "" .
+		(isset($order_info['weixin_pay_result']))? "weixin_pay_result = '" . $this->db->escape($order_info['weixin_pay_result']) . "'," : "" .
 		(isset($order_info['forwarded_ip']))? "forwarded_ip = '" . $this->db->escape($order_info['forwarded_ip']) . "'," : "";
 		
 		$setstr = trim(trim($setstr, ","));
 		
 		$this->db->query("UPDATE `" . DB_PREFIX . "order` SET $setstr where order_id = $order_id");
+	}
+	
+	public function fastgetOrder($order_id) {
+		$q = $this->db->query("select * from " . DB_PREFIX . "order where order_id=".$order_id);
+		if ($q->num_rows) {
+			return $q->row;
+		}
+		return false;
 	}
 }
 ?>

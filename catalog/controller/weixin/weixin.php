@@ -174,6 +174,14 @@ class ControllerWeixinWeixin extends Controller {
 			return false;
 		}
 	}
+	
+	public function error() {
+		$this->session->data['error_msg'] = "微信服务器出错";
+		$this->session->data['url_continue'] = $this->url->link('mobile_store/cart');
+		$this->session->data['text_continue'] = '返回购物车';
+		$this->redirect($this->url->link('weixin/error'));
+	}
+	
 }
 
 ?>

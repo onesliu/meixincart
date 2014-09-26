@@ -122,5 +122,10 @@
     </tbody>
   </table>
   <?php } ?>
+  <?php if (isset($text_pay_btn)) { ?>
+  <div>
+    <div class="center"><a href="<?php echo $weixin_payment; ?>" class="button_11 orange orange_borderbottom radius4"><?php echo $text_pay_btn; ?></a></div>
+  </div>
+  <?php } ?>
   <?php echo $content_bottom; ?></div>
 <?php echo $footer; ?> 

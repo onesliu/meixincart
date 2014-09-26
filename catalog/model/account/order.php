@@ -109,7 +109,8 @@ class ModelAccountOrder extends Model {
 				'currency_value'          => $order_query->row['currency_value'],
 				'date_modified'           => $order_query->row['date_modified'],
 				'date_added'              => $order_query->row['date_added'],
-				'ip'                      => $order_query->row['ip']
+				'ip'                      => $order_query->row['ip'],
+				'weixin_pay_result'       => $order_query->row['weixin_pay_result']
 			);
 		} else {
 			return false;	
@@ -164,7 +165,12 @@ class ModelAccountOrder extends Model {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_download WHERE order_id = '" . (int)$order_id . "' ORDER BY name");
 	
 		return $query->rows; 
-	}	
+	}
+	
+	public function getOrderStatus() {
+		$q = $this->db->query("select * from " . DB_PREFIX . "order_status");
+		return $q->rows;
+	}
 
 	public function getTotalOrders() {
       	$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "order` WHERE customer_id = '" . (int)$this->customer->getId() . "' AND order_status_id > '0'");
