@@ -1,5 +1,5 @@
 <?php echo $header; ?>
-<div id="content" class="square"><?php echo $content_top; ?>
+<div id="content" class="square" style="background:transparent;border:0px;"><?php echo $content_top; ?>
   <table class="list">
     <thead>
       <tr>
@@ -125,6 +125,8 @@
   <?php if (isset($text_pay_btn)) { ?>
   <div>
     <div class="center"><a href="<?php echo $weixin_payment; ?>" class="button_11 orange orange_borderbottom radius4"><?php echo $text_pay_btn; ?></a></div>
+    <br></br>
+    <br></br>
   </div>
   <?php } ?>
   <?php echo $content_bottom; ?></div>
