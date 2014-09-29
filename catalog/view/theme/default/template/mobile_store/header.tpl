@@ -78,19 +78,10 @@ DD_belatedPNG.fix('#logo img');
 
 <div id="floating-bar">
 	
-	<?php //if ($logged) { ?>
-		<div class="trans-button"><div id="account-button" class="gohome radius20"><a href="<?php echo $home;?>">
-		<img src="<?php echo $theme_img_dir?>mobile_store/icons/home2.png">
-		</a></div><div class="icon-name"><?php echo $text_home; ?></div></div>
+	<div class="trans-button"><div id="account-button" class="gohome radius20"><a href="<?php echo $home;?>">
+	<img src="<?php echo $theme_img_dir?>mobile_store/icons/home2.png">
+	</a></div><div class="icon-name"><?php echo $text_home; ?></div></div>
 	
-	<!-- 
-			<a id="account-button" class="trans-button" href="<?php echo $home;?>">
-				<div class="icon account"></div>
-				<div class="icon-name"><?php echo $text_home; ?></div>
-			</a>
-	-->
-	<?php //} ?>
-
 	<div class="trans-button"><div id="categories-button" class="gohome radius20"><a href="<?php echo $category_list;?>">
 	<img src="<?php echo $theme_img_dir?>mobile_store/icons/eggplant2.png">
 	</a></div><div class="icon-name"><?php echo $text_categories; ?></div></div>
@@ -103,23 +94,9 @@ DD_belatedPNG.fix('#logo img');
 	<img src="<?php echo $theme_img_dir?>mobile_store/icons/docs.png">
 	</a></div><div class="icon-name"><?php echo $text_order; ?></div></div>
 
-	<!-- 
-	<a id="categories-button" class="trans-button" href="<?php echo $category_list;?>">
-		<div class="icon categories"></div>
-		<div class="icon-name"><?php echo $text_categories; ?></div>
-	</a>
-
-	<a id="cart" class="trans-button" href="<?php echo $cart;?>">
-	    <div class="icon cart"></div>
-	    <div id="cart_total" class="icon-name"><?php echo $text_items.' '.$text_checkout; ?></div>
-	</a>
-
-	<a id="pay-button" class="trans-button" href="<?php echo $checkout;?>">
-		<div class="icon pay"></div>
-		<div class="icon-name"><?php echo $text_checkout; ?></div>
-	</a>
-	 -->
 </div>
+
+<div id="pseudo-bar" style="height:60px;"></div>
 
 <div id="notification"></div>
 

@@ -209,6 +209,7 @@ label {
     -moz-box-shadow: 0 6px 6px -6px #C0BCBC;
     box-shadow: 0 6px 6px -6px #C0BCBC;
 	overflow: auto;
+	position: fixed;
 }
 
 .trans-button {
