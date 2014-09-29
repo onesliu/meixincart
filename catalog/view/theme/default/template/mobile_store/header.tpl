@@ -71,6 +71,12 @@ var ADAPT_CONFIG = {
 DD_belatedPNG.fix('#logo img');
 </script>
 <![endif]-->
+<script type="text/javascript">
+$(function(){
+	$("#floating-bar").css("position", "fixed");
+	$("#pseudo-bar").height("62");
+});
+</script>
 <?php echo $google_analytics; ?>
 </head>
 <body>
@@ -96,7 +102,7 @@ DD_belatedPNG.fix('#logo img');
 
 </div>
 
-<div id="pseudo-bar" style="height:62px;"></div>
+<div id="pseudo-bar"></div>
 
 <div id="notification"></div>
 
