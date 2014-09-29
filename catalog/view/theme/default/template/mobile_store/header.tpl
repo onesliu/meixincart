@@ -96,7 +96,7 @@ DD_belatedPNG.fix('#logo img');
 
 </div>
 
-<div id="pseudo-bar" style="height:60px;"></div>
+<div id="pseudo-bar" style="height:62px;"></div>
 
 <div id="notification"></div>
 
