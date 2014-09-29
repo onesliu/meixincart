@@ -84,21 +84,21 @@ $(function(){
 
 <div id="floating-bar">
 	
-	<div class="trans-button"><div id="account-button" class="gohome radius20"><a href="<?php echo $home;?>">
+	<div class="trans-button"><a href="<?php echo $home;?>"><div id="account-button" class="gohome radius20">
 	<img src="<?php echo $theme_img_dir?>mobile_store/icons/home2.png">
-	</a></div><div class="icon-name"><?php echo $text_home; ?></div></div>
+	</div><div class="icon-name"><?php echo $text_home; ?></div></a></div>
 	
-	<div class="trans-button"><div id="categories-button" class="gohome radius20"><a href="<?php echo $category_list;?>">
+	<div class="trans-button"><a href="<?php echo $category_list;?>"><div id="categories-button" class="gohome radius20">
 	<img src="<?php echo $theme_img_dir?>mobile_store/icons/eggplant2.png">
-	</a></div><div class="icon-name"><?php echo $text_categories; ?></div></div>
+	</div><div class="icon-name"><?php echo $text_categories; ?></div></a></div>
 	
-	<div class="trans-button"><div id="cart" class="gohome radius20"><a href="<?php echo $cart;?>">
+	<div class="trans-button"><a href="<?php echo $cart;?>"><div id="cart" class="gohome radius20">
 	<img src="<?php echo $theme_img_dir?>mobile_store/icons/cart.png">
-	</a></div><div id="cart_total" class="icon-name"><?php echo $text_checkout.' '.$text_items; ?></div></div>
+	</div><div id="cart_total" class="icon-name"><?php echo $text_checkout.' '.$text_items; ?></div></a></div>
 
-	<div class="trans-button"><div id="cart" class="gohome radius20"><a href="<?php echo $order;?>">
+	<div class="trans-button"><a href="<?php echo $order;?>"><div id="cart" class="gohome radius20">
 	<img src="<?php echo $theme_img_dir?>mobile_store/icons/docs.png">
-	</a></div><div class="icon-name"><?php echo $text_order; ?></div></div>
+	</div><div class="icon-name"><?php echo $text_order; ?></div></a></div>
 
 </div>
 

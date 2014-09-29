@@ -227,6 +227,9 @@ label {
 	width: 100%;
 	height: 32px;
 }
+
+.trans-button a{ color:#FFFFFF; text-decoration:none; font-weight:bold; font-size:12px; display:block; text-align:center;}
+
 /*----------page buttons---------------*/
 a.button_12{ color:white; width:40%; margin:0 1% 10px 1%;padding:5px 0; float:left; display:block;font-size:16px; text-decoration:none; text-align:center;}
 a.button_11{ color:white; width:98%; margin:0 0 10px 1%;padding:10px 0; float:left; display:block;font-size:16px; text-decoration:none; text-align:center;}
@@ -278,8 +281,7 @@ li.table_row{width:100%; float:left; clear:both; line-height:30px; display:block
 
 .gohome{ background-color: #6e6e6e;}
 .gohome{ width:40px; height:40px; margin:0 auto;}
-.gohome a{ color:#FFFFFF; text-decoration:none; font-weight:bold; font-size:12px; display:block; text-align:center;}
-.gohome a img{display:inline-block;max-height:25px; margin:5px 0 0 0;}
+.gohome img{display:inline-block;max-height:25px; margin:5px 0 0 0;}
 
 .icon.home {
 	background: url('../image/mobile_store/mobile-store-account.png') center bottom no-repeat;
