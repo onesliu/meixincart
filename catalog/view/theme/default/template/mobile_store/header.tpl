@@ -73,8 +73,8 @@ DD_belatedPNG.fix('#logo img');
 <![endif]-->
 <script type="text/javascript">
 $(function(){
-	$("#floating-bar").css("position", "fixed");
-	$("#pseudo-bar").height("62");
+	//$("#floating-bar").css("position", "fixed");
+	//$("#pseudo-bar").height("62");
 });
 </script>
 <?php echo $google_analytics; ?>
