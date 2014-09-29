@@ -969,7 +969,7 @@ a.button:hover span {
 .refine-list span{
 	float: left;
 	padding: 8px 20px 8px 20px; 
-	margin: 3px;
+	margin: 8px;
 	-webkit-box-shadow: 0 6px 6px -6px #C0BCBC;
     -moz-box-shadow: 0 6px 6px -6px #C0BCBC;
     box-shadow: 0 6px 6px -6px #C0BCBC;
@@ -980,9 +980,10 @@ a.button:hover span {
     -moz-box-shadow: 0 8px 6px -6px #C0BCBC;
     box-shadow: 0 8px 6px -6px #C0BCBC;
 }
-.refine-list span  a{
+.refine-list a{
 	text-decoration: none;
 	color: #3B3B3B;
+	font-size: 14px;
 }
 
 .refine-list span  a:hover{
@@ -1016,11 +1017,15 @@ a.button:hover span {
 	/*background-color: #ececec;*/
 	clear: both;
 }
+
+/*
 .category-list li:hover {
 	-webkit-box-shadow: 0 8px 6px -6px #C0BCBC;
     -moz-box-shadow: 0 8px 6px -6px #C0BCBC;
     box-shadow: 0 8px 6px -6px #C0BCBC;
 }
+*/
+
 .category-list a{
 	text-decoration: none;
 	font-weight: bold;

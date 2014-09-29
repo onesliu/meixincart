@@ -47,7 +47,7 @@
         <td class="center title"><?php echo $column_price; ?></td>
         <td class="center title"><?php echo $column_total; ?></td>
         <?php if ($products) { ?>
-        <td class="center title"><?php echo $text_return; ?></td>
+        <!-- <td class="center title"><?php echo $text_return; ?></td>  -->
         <?php } ?>
       </tr>
     </thead>
@@ -62,7 +62,7 @@
         <td class="center"><?php echo $product['quantity']; ?></td>
         <td class="center"><?php echo $product['price']; ?></td>
         <td class="center"><?php echo $product['total']; ?></td>
-        <td class="center"><a href="<?php echo $product['return']; ?>"><img src="catalog/view/theme/default/image/return.png" alt="<?php echo $button_return; ?>" title="<?php echo $button_return; ?>" /></a></td>
+        <!-- <td class="center"><a href="<?php echo $product['return']; ?>"><img src="catalog/view/theme/default/image/return.png" alt="<?php echo $button_return; ?>" title="<?php echo $button_return; ?>" /></a></td> -->
       </tr>
       <?php } ?>
       <?php foreach ($vouchers as $voucher) { ?>

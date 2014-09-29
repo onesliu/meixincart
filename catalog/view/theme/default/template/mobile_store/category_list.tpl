@@ -37,7 +37,6 @@
 <?php } else { ?>
 <div class="content"><?php echo $text_empty; ?></div>
 <?php } ?>
- 
 
 <?php echo $content_bottom; ?></div>
 <?php echo $footer; ?>
