@@ -26,7 +26,7 @@ class ControllerWeixinWeixin extends Controller {
 				//发送关注欢迎消息
 				$this->load->model("weixin/auto_reply");
 				$param = "pay/weixin.php?route=weixin/login&email=$this->WeixinFromUserName";
-				$reply = $this->model_weixin_auto_reply->getReply($this->WeixinFromUserName,
+				$reply = $this->model_weixin_auto_reply->getReplyFromId($this->WeixinFromUserName,
 					$this->WeixinToUserName, 0);
 				if ($reply != false) {
 					$reply = str_replace('index.php', $param, $reply);

@@ -2,11 +2,11 @@
 
 class ModelWeixinAutoReply extends Model {
 	
-	public function getReply($ToUserName, $FromUserName, $msg_id) {
+	public function getReplyFromId($ToUserName, $FromUserName, $msg_id) {
 		if ($msg_id == null)
 			return false;
 
-		$q = $this->db->query("select * from %sauto_message where id=".$msg_id);
+		$q = $this->db->query("select * from ".DB_PREFIX."auto_message where id=".$msg_id);
 		if ($q->num_rows > 0) {
 			if ($q->row['MsgType'] == 'news') {
 				$reply = json_decode($q->row['Items']);
