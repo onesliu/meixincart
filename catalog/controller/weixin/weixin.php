@@ -23,6 +23,16 @@ class ControllerWeixinWeixin extends Controller {
 			if ($this->WeixinMsgType == 'event' && $this->WeixinEvent == 'subscribe') {
 				//取用户信息，并自动注册到商城
 				$userinfo = $this->model_weixin_get_userinfo->getUserInfo($this->access_token, $this->WeixinFromUserName);
+				//发送关注欢迎消息
+				$this->load->model("weixin/auto_reply");
+				$param = "pay/weixin.php?route=weixin/login&email=$this->WeixinFromUserName";
+				$reply = $this->model_weixin_auto_reply->getReply($this->WeixinFromUserName,
+					$this->WeixinToUserName, 0);
+				if ($reply != false) {
+					$reply = str_replace('index.php', $param, $reply);
+					$this->response->setOutput($reply);
+					return;
+				}
 			}
 			else if ($this->WeixinMsgType == 'event' && $this->WeixinEvent == 'unsubscribe') {
 				//注销用户
@@ -32,17 +42,7 @@ class ControllerWeixinWeixin extends Controller {
 				//发送自动应答消息，当用户点击该图文消息时，自动登录到商城并跳转到首页
 				$param = "pay/weixin.php?route=weixin/login&email=$this->WeixinFromUserName";
 				//菜单消息事件
-				if ($this->WeixinEventKey == 'V1001_BUY_NOW') {
-					$this->load->model("weixin/auto_reply");
-					$reply = $this->model_weixin_auto_reply->getReply($this->WeixinFromUserName,
-						$this->WeixinToUserName, 'order');
-					if ($reply != false) {
-						$reply = str_replace('index.php', $param, $reply);
-						$this->response->setOutput($reply);
-						return;
-					}
-				}
-				else if ($this->WeixinEventKey == 'V1001_SELF_INFO') {
+				if ($this->WeixinEventKey == 'V1001_SELF_INFO') {
 					$this->load->model("weixin/auto_reply");
 					$reply = $this->model_weixin_auto_reply->getReply($this->WeixinFromUserName,
 						$this->WeixinToUserName, 'order');
@@ -59,9 +59,11 @@ class ControllerWeixinWeixin extends Controller {
 			else if ($this->WeixinMsgType == 'text') {
 				//自动回复
 				$this->load->model("weixin/auto_reply");
+				$param = "pay/weixin.php?route=weixin/login&email=$this->WeixinFromUserName";
 				$reply = $this->model_weixin_auto_reply->getReply($this->WeixinFromUserName,
 					$this->WeixinToUserName, $this->WeixinContent);
 				if ($reply != false) {
+					$reply = str_replace('index.php', $param, $reply);
 					$this->response->setOutput($reply);
 					return;
 				}

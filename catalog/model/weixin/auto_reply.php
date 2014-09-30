@@ -2,6 +2,27 @@
 
 class ModelWeixinAutoReply extends Model {
 	
+	public function getReply($ToUserName, $FromUserName, $msg_id) {
+		if ($msg_id == null)
+			return false;
+
+		$q = $this->db->query("select * from %sauto_message where id=".$msg_id);
+		if ($q->num_rows > 0) {
+			if ($q->row['MsgType'] == 'news') {
+				$reply = json_decode($q->row['Items']);
+				if ($FromUserName)
+					return $this->makeXmlNewsReply($ToUserName, $FromUserName, $reply);
+			}
+			else if ($q->row['MsgType'] == 'text') {
+				$reply = $q->row['Items'];
+				if ($FromUserName)
+					return $this->makeXmlTextReply($ToUserName, $FromUserName, $reply);
+			}
+		}
+		
+		return false;
+	}
+	
 	public function getReply($ToUserName, $FromUserName, $msg_content) {
 		if ($msg_content == null)
 			return false;
