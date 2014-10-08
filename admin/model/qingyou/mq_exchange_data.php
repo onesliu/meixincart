@@ -3,10 +3,8 @@ class ModelQingyouMqExchangeData extends Model
 {
     public function uploadData($type)
     {
-        if      ( $type == 1 )
-        {
-        }
-        else if ( $type == 2 )  // upload change price list
+        if ( $type == 1 || // upload goods info
+             $type == 2 )  // upload change price list
         {
             $contents = file_get_contents("php://input");
             $this->log->write($contents);
@@ -56,10 +54,8 @@ class ModelQingyouMqExchangeData extends Model
 
     public function downloadData($shopNo, $type)
     {
-        if      ( $type == 1 )
-        {
-        }
-        else if ( $type == 2 )  // download change price list
+        if ( $type == 1 || // download goods info
+             $type == 2 )  // download change price list
         {
             $sql = "set names gbk";
             $query = $this->db->query($sql);
@@ -94,4 +90,3 @@ class ModelQingyouMqExchangeData extends Model
         }
     }
 }
-
