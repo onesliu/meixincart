@@ -12,11 +12,11 @@ class ModelQingyouMqExchangeData extends Model
             $sql = "INSERT INTO pos_exchange_data SET datatype = ".$type.", dataval = '".$contents."'";
             $query = $this->db->query($sql);
 
-            /* update new goods info to database */
+            /* Update new goods info to database */
             $arr_line = explode("\r\n", $contents);
-            foreach ($arr_line as $value)
+            foreach ( $arr_line as $value )
             {
-            	$value = trim($value);
+                $value = trim($value);
                 if ( empty($value) )
                     continue;
 
@@ -93,6 +93,29 @@ class ModelQingyouMqExchangeData extends Model
             $query = $this->db->query("set names gbk");
             $sql = "INSERT INTO pos_exchange_data SET datatype = ".$type.", dataval = '".$contents."'";
             $query = $this->db->query($sql);
+
+            /* Update price to database */
+            $arr_line = explode("\r\n", $contents);
+            foreach ( $arr_line as $value )
+            {
+                $value = trim($value);
+                if ( empty($value) )
+                    continue;
+
+                $arr_goodsproperty = explode("|", $value);
+                if ( count($arr_goodsproperty) == 6 ) //调价单的第一行
+                    continue;
+                else
+                {
+                    $sql = "SELECT * FROM oc_product WHERE ean = ".$arr_goodsproperty[2];
+                    $query = $this->db->query($sql);
+                    if ( $query->num_rows != 0 )
+                    {
+                        $sql = "UPDATE oc_product SET price = ".$arr_goodsproperty[4];
+                        $query = $this->db->query($sql);
+                    }
+                }
+            }
         }
         else if ( $type == 3 )
         {
