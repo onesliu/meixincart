@@ -15,10 +15,10 @@ class ControllerMobileStoreHome extends Controller {
 		$this->children = array(
 			'mobile_store/content_top',
 			'mobile_store/content_bottom',
-			'mobile_store/footer',
+			'mobile_store/navi',
 			'mobile_store/header'
 		);
-										
+
 		$this->response->setOutput($this->render());
 	}
 }

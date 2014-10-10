@@ -1,5 +1,10 @@
 <?php echo $header; ?>
-<div id="content"><?php echo $content_top; ?>
-<h1 style="display: none;"><?php echo $heading_title; ?></h1>
-<?php echo $content_bottom; ?></div>
-<?php echo $footer; ?>
+<body>
+<div data-role="page">
+	<?php echo $navi_bar; ?>
+	<div data-role="content">
+		<?php echo $content_top; ?>
+		<?php echo $content_bottom; ?>
+	</div>
+</div>
+</body>
