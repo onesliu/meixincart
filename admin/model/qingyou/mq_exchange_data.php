@@ -3,45 +3,119 @@ class ModelQingyouMqExchangeData extends Model
 {
     public function uploadData($type)
     {
-        if      ( $type == 1 )
-        {
-        }
-        else if ( $type == 2 )  // upload change price list
+        if ( $type == 1 )   // upload goods info
         {
             $contents = file_get_contents("php://input");
-            $this->log->write($contents);
 
             //$sql = iconv("gbk","UTF-8//IGNORE", $sql); //Both methods can be used.
             $query = $this->db->query("set names gbk");
             $sql = "INSERT INTO pos_exchange_data SET datatype = ".$type.", dataval = '".$contents."'";
             $query = $this->db->query($sql);
 
-//            file_put_contents('UpdatePrice.txt', $contents);
-//            $myfile = fopen("UpdatePrice.txt", "r") or die("Unable to open file!");
-//            while( !feof($myfile) )
-//            {
-//                $line = fgets($myfile);
-//                $this->log->write($line);
-//                if ( empty($line) )
-//                    continue;
-//
-//                $arr = explode('|', $line);
-//                $this->log->write($arr);
-//                if ( count($arr) == 5 ) // The first line of change price list
-//                {
-//                    $listID = $arr[0];
-//                }
-//                else
-//                {
-//                    $sql = "INSERT INTO pos_exchange_data SET ".
-//                        "id = ".$listID.", ".
-//                        "datatype = 2".", ".
-//                        "dataval = ".$line;
-//                    $this->log->write($sql);
-//                    $query = $this->db->query($sql);
-//                }
-//            }
-//            fclose($myfile);
+            /* Update new goods info to database */
+            $arr_line = explode("\r\n", $contents);
+            foreach ( $arr_line as $value )
+            {
+                $value = trim($value);
+                if ( empty($value) )
+                    continue;
+
+                $this->log->write($value);
+                $arr_goodsproperty = explode("|", $value);
+
+                $sql = "SELECT * FROM oc_product WHERE ean = '".$arr_goodsproperty[2]."'";
+                $query = $this->db->query($sql);
+                if ( $query->num_rows != 0 )
+                {
+                    ;// Update .....
+                }
+                else
+                {
+                    // Insert new goods
+                    $sql = "INSERT INTO oc_product SET ean = '".trim($arr_goodsproperty[2]).
+                                        "', price = ".trim($arr_goodsproperty[7]).
+                                        ", product_type = ".trim($arr_goodsproperty[10]);
+                    $query = $this->db->query($sql);
+
+                    $product_id = $this->db->getLastId();
+
+                    $sql = "SELECT * FROM oc_product_description WHERE product_id = ".$product_id;
+                    $query = $this->db->query($sql);
+                    if ( $query->num_rows != 0 )
+                    {
+                        ;// Update ...
+                    }
+                    else
+                    {
+                        $sql = "INSERT INTO oc_product_description SET product_id = ".$product_id.
+                                            ", name = '".trim($arr_goodsproperty[3]).
+                                            "', description = '".trim($arr_goodsproperty[9])."'";
+                        $query = $this->db->query($sql);
+
+                        $sql = "SELECT * FROM oc_product_to_category WHERE product_id = ".$product_id;
+                        $query = $this->db->query($sql);
+                        if ( $query->num_rows != 0 )
+                        {
+                            ;// Update ...
+                        }
+                        else
+                        {
+                            $sql = "INSERT INTO oc_product_to_category SET product_id = ".$product_id.
+                                                ", category_id = ".trim($arr_goodsproperty[0]);
+                            $query = $this->db->query($sql);
+
+                            $category_id = trim($arr_goodsproperty[0]);
+
+                            $sql = "SELECT * FROM oc_category WHERE category_id = ".$category_id;
+                            $query = $this->db->query($sql);
+                            if ( $query->num_rows != 0 )
+                            {
+                                ;// Update ...
+                            }
+                            else
+                            {
+                                $sql = "INSERT INTO oc_category SET category_id = ".$category_id;
+                                $query = $this->db->query($sql);
+
+                                $sql = "INSERT INTO oc_category_description SET name = '".trim($arr_goodsproperty[1])."'";
+                                $query = $this->db->query($sql);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        else if ( $type == 2 )  // upload change price list
+        {
+            $contents = file_get_contents("php://input");
+
+            //$sql = iconv("gbk","UTF-8//IGNORE", $sql); //Both methods can be used.
+            $query = $this->db->query("set names gbk");
+            $sql = "INSERT INTO pos_exchange_data SET datatype = ".$type.", dataval = '".$contents."'";
+            $query = $this->db->query($sql);
+
+            /* Update price to database */
+            $arr_line = explode("\r\n", $contents);
+            foreach ( $arr_line as $value )
+            {
+                $value = trim($value);
+                if ( empty($value) )
+                    continue;
+
+                $arr_goodsproperty = explode("|", $value);
+                if ( count($arr_goodsproperty) == 6 ) //调价单的第一行
+                    continue;
+                else
+                {
+                    $sql = "SELECT * FROM oc_product WHERE ean = ".$arr_goodsproperty[2];
+                    $query = $this->db->query($sql);
+                    if ( $query->num_rows != 0 )
+                    {
+                        $sql = "UPDATE oc_product SET price = ".$arr_goodsproperty[4];
+                        $query = $this->db->query($sql);
+                    }
+                }
+            }
         }
         else if ( $type == 3 )
         {
@@ -56,10 +130,8 @@ class ModelQingyouMqExchangeData extends Model
 
     public function downloadData($shopNo, $type)
     {
-        if      ( $type == 1 )
-        {
-        }
-        else if ( $type == 2 )  // download change price list
+        if ( $type == 1 || // download goods info
+             $type == 2 )  // download change price list
         {
             $sql = "set names gbk";
             $query = $this->db->query($sql);
@@ -94,4 +166,3 @@ class ModelQingyouMqExchangeData extends Model
         }
     }
 }
-
