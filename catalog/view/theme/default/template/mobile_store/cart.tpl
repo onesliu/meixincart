@@ -21,13 +21,14 @@
 	  	</h1>
 	  	<form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
 	  	<ul data-role="listview" data-inset="true">
+	  		<li data-role="divider">购物车</li>
 	  	<?php foreach ($products as $product) { ?>
-	  		<li data-role="list-divider"><?php echo $product['name']; ?></li>
 	  		<li data-icon="delete">
-	  			<a href="#"><img src="<?php echo $product['thumb']; ?>"></a>
+	  			<a href="#"><img src="<?php echo $product['thumb']; ?>">
 	  			<h2><?php echo $product['name']; ?></h2>
-	  			<p class="ui-li-aside">￥<?php echo $product['price']; ?><br/>
-	  				<a href="#change_count" data-rel="dialog" data-transition="pop"><?php echo $product['quantity']; ?></a></p>
+	  			<p class="ui-li-aside"><?php echo $product['price']; ?><br/>
+	  				<a data-role="button" href="#change_count" data-rel="dialog" data-transition="pop"><?php echo $product['quantity']; ?></a></p>
+	  			</a>
     			<a href="<?php echo $product['remove']; ?>"></a>
 	  		</li>
 	  	<?php } ?>
