@@ -15,7 +15,7 @@
 		<?php echo $content_top; ?>
 		
 	  	<form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
-	  	<ul data-role="listview" data-inset="true">
+	  	<ul data-role="listview">
 	  		<li data-role="divider"><h2><?php echo $heading_title; ?>
 			    <?php if ($weight) { ?>
 			    &nbsp;（<?php echo $weight; ?>）
