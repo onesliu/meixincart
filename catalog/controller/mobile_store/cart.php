@@ -372,8 +372,9 @@ class ControllerMobileStoreCart extends Controller {
 			$this->children = array(
 				'mobile_store/content_bottom',
 				'mobile_store/content_top',
-				'mobile_store/footer',
-				'mobile_store/header'	
+				'mobile_store/navi',
+				'mobile_store/header',
+				'mobile_store/category_list'	
 			);
 						
 			$this->response->setOutput($this->render());					
@@ -397,8 +398,9 @@ class ControllerMobileStoreCart extends Controller {
 			$this->children = array(
 				'mobile_store/content_top',
 				'mobile_store/content_bottom',
-				'mobile_store/footer',
-				'mobile_store/header'	
+				'mobile_store/navi',
+				'mobile_store/header',
+				'mobile_store/category_list'
 			);
 					
 			$this->response->setOutput($this->render());			
