@@ -51,11 +51,10 @@ var ADAPT_CONFIG = {
 <link rel="<?php echo $style['rel']; ?>" type="text/css" href="<?php echo $style['href']; ?>" media="<?php echo $style['media']; ?>" />
 <?php } ?>
 
-<link type="text/css" rel="stylesheet" href="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css">
-<script type="text/javascript" src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
-<script type="text/javascript" src="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
+<link type="text/css" rel="stylesheet" href="catalog/view/javascript/jquery_mobile/jquery.mobile-1.4.4.min.css">
+<script type="text/javascript" src="catalog/view/javascript/jquery/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="catalog/view/javascript/jquery_mobile/jquery.mobile-1.4.4.min.js"></script>
 
-<!-- <script type="text/javascript" src="catalog/view/javascript/jquery/jquery-1.7.1.min.js"></script> -->
 <script type="text/javascript" src="catalog/view/javascript/jquery/ui/jquery-ui-1.8.16.custom.min.js"></script>
 <link rel="stylesheet" type="text/css" href="catalog/view/javascript/jquery/ui/themes/ui-lightness/jquery-ui-1.8.16.custom.css" />
 <script type="text/javascript" src="catalog/view/javascript/mobile_store_common.js"></script> 
