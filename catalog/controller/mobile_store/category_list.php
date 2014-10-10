@@ -29,13 +29,14 @@ class ControllerMobileStoreCategoryList extends Controller {
 				);
 				$product_total2 = $this->model_catalog_product->getTotalProducts($data2);
 				$childs[] = array(
-					'name'  => $sub['name'] . ' (' . $product_total2 . ')',
+					'name'  => $sub['name'],
+					'count' => $product_total2,
 					'href'  => $this->url->link('mobile_store/category', 'fspath=' . $sub['category_id'])
 				);
 			}
 			
 			$this->data['categories'][] = array(
-				'name'  => $result['name'] . ' (' . $product_total . ')',
+				'name'  => $result['name'],
 				'href'  => $this->url->link('mobile_store/category', 'fspath=' . $result['category_id']),
 				'childs' => $childs
 			);
@@ -47,15 +48,7 @@ class ControllerMobileStoreCategoryList extends Controller {
 			$this->template = 'default/template/mobile_store/category_list.tpl';
 		}
 		
-		$this->children = array(
-			'mobile_store/column_left',
-			'mobile_store/content_top',
-			'mobile_store/content_bottom',
-			'mobile_store/footer',
-			'mobile_store/header'
-		);
-			
-		$this->response->setOutput($this->render());										
+		$this->render();										
   	}
 }
 ?>
