@@ -14,20 +14,21 @@
 		<?php } ?>
 		<?php echo $content_top; ?>
 		
-		<h1><?php echo $heading_title; ?>
-	    <?php if ($weight) { ?>
-	    &nbsp;(<?php echo $weight; ?>)
-	    <?php } ?>
-	  	</h1>
 	  	<form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
 	  	<ul data-role="listview" data-inset="true">
-	  		<li data-role="divider">购物车</li>
+	  		<li data-role="divider"><h2><?php echo $heading_title; ?>
+			    <?php if ($weight) { ?>
+			    &nbsp;（<?php echo $weight; ?>）
+			    <?php } ?>
+			  	</h2>
+			</li>
 	  	<?php foreach ($products as $product) { ?>
 	  		<li data-icon="delete">
-	  			<a href="#"><img src="<?php echo $product['thumb']; ?>">
+	  			<a href="#change_count" data-rel="dialog" data-transition="pop">
+	  			<img src="<?php echo $product['thumb']; ?>">
 	  			<h2><?php echo $product['name']; ?></h2>
 	  			<p class="ui-li-aside"><?php echo $product['price']; ?><br/>
-	  				<a data-role="button" href="#change_count" data-rel="dialog" data-transition="pop"><?php echo $product['quantity']; ?></a></p>
+	  				x<?php echo $product['quantity']; ?></p>
 	  			</a>
     			<a href="<?php echo $product['remove']; ?>"></a>
 	  		</li>
