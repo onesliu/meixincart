@@ -8,7 +8,7 @@
   	<ul data-role="listview">
   		<li data-role="divider"><h2><?php echo $heading_title; ?></h2></li>
   	<?php foreach ($products as $product) { ?>
-  		<li data-icon="delete">
+  		<li data-icon="plus">
   			<a href="<?php echo $product['href']; ?>">
   			<img src="<?php echo $product['thumb']; ?>">
   			<h2><?php echo $product['name']; ?></h2>
@@ -23,9 +23,6 @@
 				</p>
 			<?php } ?>
 			
-  			<p class="ui-li-aside"><?php echo $product['price']; ?><br/>
-  				x<?php echo $product['quantity']; ?></p>
-  			</a>
     		<a href="#" onclick="addToCart(<?php echo $product['product_id'];?>);"><?php echo $button_cart; ?></a>
   		</li>
   	<?php } ?>
