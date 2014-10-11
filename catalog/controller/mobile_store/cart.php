@@ -158,7 +158,7 @@ class ControllerMobileStoreCart extends Controller {
 			} else {
 				$this->data['weight'] = '';
 			}
-						 
+
 			$this->load->model('tool/image');
 			
       		$this->data['products'] = array();

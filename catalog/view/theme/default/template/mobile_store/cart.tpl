@@ -4,13 +4,13 @@
 	<?php echo $navi; ?>
 	<div data-role="content">
 		<?php if ($attention) { ?>
-		<div class="attention"><?php echo $attention; ?><img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>
+		<p><?php echo $attention; ?></p>
 		<?php } ?>
 		<?php if ($success) { ?>
-		<div class="success"><?php echo $success; ?><img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>
+		<p><?php echo $success; ?></p>
 		<?php } ?>
 		<?php if ($error_warning) { ?>
-		<div class="warning"><?php echo $error_warning; ?><img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>
+		<p><?php echo $error_warning; ?></p>
 		<?php } ?>
 		<?php echo $content_top; ?>
 		
@@ -25,42 +25,62 @@
 	  			<p class="ui-li-aside"><?php echo $product['price']; ?><br/>
 	  				x<?php echo $product['quantity']; ?></p>
 	  			</a>
-    			<a href="<?php echo $product['remove']; ?>" onclick="delcfm();"></a>
+    			<a href="#1" onclick="dconfirm();"></a>
 	  		</li>
 	  	<?php } ?>
 	  		<li data-role="divider"></li>
 	  	</ul>
 		
 		<?php echo $content_bottom; ?>
-	</div>
-</div>
+		
+		<script type="text/javascript"><!--
+		function closeBar() {
+			$('#alert_footer').slideUp('fast');
+			return true;
+		}
+		function dconfirm(url) {
+			$('#alert_footer').slideDown('fast');
+			$('#change_count').hide();
+			$('#confirm').show();
+			$('#del').attr('href', url);
+			$('#del').on('click', closeBar);
+			$('#delcancel').on('click', closeBar);
+		}
+		
+		function changecount(int val) {
+			$('#alert_footer').slideDown('fast');
+			$('#confirm').hide();
+			$('#change_count').show();
+			$('#cok').on('click', closeBar);
+			$('#ccancel').on('click', closeBar);
+		}
+		//--></script>
 
-<div data-role="page" id="change_count">
-	<div data-role="header"><h1>调整数量</h1></div>
-	<form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
-	<div data-role="content">
-		<div data-role="fieldcontain">
-			<label for="points">购买数量:</label>
-			<input type="range" name="points" id="points" value="50" min="1" max="100" data-highlight="true">
+	</div>
+	
+	<div data-role="footer" id="alert_footer" data-position="fixed" style="display:none;">
+		<div id="confirm" style="display:none;">
+			<div data-role="controlgroup" data-type="horizontal">
+				<a href="#" data-role="button" data-icon="delete" id="del">删除</a>
+				<a href="#" data-role="button" data-icon="back" id="delcancel">取消</a>
+			</div>
 		</div>
-		<input type="submit" value="确认">
-		<a href="#" data-role="button" data-rel="back">取消</a>
+		<div id="change_count" style="display:none;">
+			<div data-role="header"><h1>调整数量</h1></div>
+			<form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
+			<div data-role="content">
+				<div data-role="fieldcontain">
+					<label for="points">购买数量:</label>
+					<input type="range" name="points" id="points" value="50" min="1" max="100" data-highlight="true">
+				</div>
+				<div data-role="controlgroup" data-type="horizontal">
+					<a href="#" data-role="button" data-icon="delete" id="cok">确定</a>
+					<a href="#" data-role="button" data-icon="back" id="ccancel">取消</a>
+				</div>
+			</div>
+			</form>
+		</div>
 	</div>
-	</form>
+	
 </div>
-
-<?php echo $category_list; ?>
-
-<script type="text/javascript"><!--
-function delcfm() {
-    if (!confirm("确认要删除？")) {
-        window.event.returnValue = false;
-    }
-}
-
-function setval(int val) {
-	$("#points").val(val);
-}
-//--></script>
-
 </body>
