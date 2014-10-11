@@ -65,20 +65,17 @@
 	
 	<div data-role="footer" class="ui-btn" id="alert_footer" data-position="fixed" style="display:none;">
 		<div id="confirm" style="display:none;">
-			<h2 id="delname"></h2>
-			<div data-role="controlgroup" data-type="horizontal">
-				<a href="#" data-role="button" data-icon="delete" id="del">删除</a>
-				<a href="#" data-role="button" data-icon="back" id="delcancel">取消</a>
-			</div>
+			<p id="delname"></p>
+			<a href="#" data-role="button" data-icon="delete" id="del">删除</a>
+			<a href="#" data-role="button" data-icon="back" id="delcancel">取消</a>
 		</div>
 		<div id="change_count" style="display:none;">
 			<div data-role="content">
-				<h2>购买数量:</h2>
-				<input type="number" name="points" id="points" min="1">
-				<div data-role="controlgroup" data-type="horizontal">
-					<a href="#" data-role="button" data-icon="delete" id="cok">确定</a>
-					<a href="#" data-role="button" data-icon="back" id="ccancel">取消</a>
-				</div>
+				<p>购买数量:
+				<input type="range" data-role="none" name="points" id="points" min="1" value="1" max=100>
+				</p>
+				<a href="#" data-role="button" data-icon="delete" id="cok">确定</a>
+				<a href="#" data-role="button" data-icon="back" id="ccancel">取消</a>
 			</div>
 		</div>
 		<div id="info" style="display:none;">
