@@ -15,7 +15,7 @@ class ControllerMobileStoreCategory extends Controller {
 		} else {
 			$page = 1;
 		}
-		$limit = 5;
+		$limit = 20;
 
 		if (isset($this->request->get['fspath'])) {
 			$path = '';

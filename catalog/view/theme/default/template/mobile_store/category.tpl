@@ -1,12 +1,12 @@
 <?php echo $header; ?>
 <body>
-<div data-role="page" id="pageone">
+<div data-role="page" id="pageone" data-title="<?php echo $heading_title; ?>">
 	<?php echo $navi; ?>
 	<div data-role="content">
+	<h3 id="buy_alert" style="display:none"></h3>
 	<?php echo $content_top; ?>
 
   	<ul data-role="listview" id="plist">
-  		<li data-role="divider"><h2><?php echo $heading_title; ?></h2></li>
   	<?php foreach ($products as $product) { ?>
   		<li data-icon="plus">
   			<a href="<?php echo $product['href']; ?>">
@@ -23,13 +23,13 @@
 				</p>
 			<?php } ?>
 			
-    		<a href="#" onclick="addToCart(<?php echo $product['product_id'];?>);"><?php echo $button_cart; ?></a>
+    		<a href="#1" onclick="addToCart(<?php echo $product['product_id'];?>);"><?php echo $button_cart; ?></a>
   		</li>
   	<?php } ?>
   	</ul>
 	<br/>
 	<?php if ($pagination->page < $pagination->num_pages) { ?>
-	<p><a id="bmore" href="#" data-role="button">点击加载更多</a></p>
+	<p><a id="bmore" href="#" data-role="button">更多...</a></p>
 	<?php } ?>
 
 	<?php echo $content_bottom; ?>
@@ -43,7 +43,9 @@
 			um_page++;
 			url = "<?php echo $pagination->url; ?>" + "&page=" + um_page;
 			$.get(url, function(data,status) {
-				$("#plist").append(data);
+				$("#plist").append(data).find("li:last").hide();
+				$("#plist").listview('refresh');
+				$("#plist").find("li:last").slideDown(300);
 				if (um_page >= um_pages) {
 					$("#bmore").hide();
 				}

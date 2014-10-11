@@ -18,14 +18,12 @@ function addToCart(product_id, quantity) {
 			}
 			
 			if (json['success']) {
-				$('#notify_text').html(json['success']);
+				$('#buy_alert').html(json['success']);
 				
-				//$('.success').fadeIn('fast');
-				$('#cart_total').html(json['total']);
-				//$('html, body').animate({ scrollTop: 0 }, 'fast'); 
-				$('#BeeperBox').slideDown('fast');
+				//$('#cart_total').html(json['total']);
+				$('#buy_alert').slideDown('fast');
 				setTimeout(function() {
-					$("#BeeperBox").hide()
+					$("#buy_alert").hide()
 				}, 1000);
 			}	
 		}

@@ -1,5 +1,5 @@
 <?php foreach ($products as $product) { ?>
-<li data-icon="plus" id="plist">
+<li data-icon="plus">
 	<a href="<?php echo $product['href']; ?>">
 	<img src="<?php echo $product['thumb']; ?>">
 	<h2><?php echo $product['name']; ?></h2>
@@ -14,6 +14,6 @@
 		</p>
 	<?php } ?>
 	
-	<a href="#" onclick="addToCart(<?php echo $product['product_id'];?>);"><?php echo $button_cart; ?></a>
+	<a href="#1" onclick="addToCart(<?php echo $product['product_id'];?>);"><?php echo $button_cart; ?></a>
 </li>
 <?php } ?>
