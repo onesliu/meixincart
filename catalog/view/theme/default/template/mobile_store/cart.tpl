@@ -12,7 +12,7 @@
 	  			<img src="<?php echo $product['thumb']; ?>">
 	  			<h2><?php echo $product['name']; ?></h2>
 	  			<p class="ui-li-aside"><span><?php echo $product['price']; ?></span><br/>
-	  				<span id="<?php echo "c".$product['key']; ?>">x<?php echo $product['quantity']; ?></span></p>
+	  				x<span id="<?php echo "c".$product['key']; ?>"><?php echo $product['quantity']; ?></span></p>
 	  			</a>
     			<a href="#1" onClick="dconfirm('<?php echo "p".$product['key']; ?>',
     			'<?php echo $product['remove']; ?>','<?php echo $product['name']; ?>');"></a>
@@ -36,6 +36,7 @@
 			$('#change_count').hide();
 			$('#confirm').hide();
 			$('#cart_info').show();
+			$('#idesc').text(desc);
 		}
 		function dconfirm(id, url, name) {
 			$('#cart_footer').slideDown('fast');
@@ -57,6 +58,7 @@
 			$('#confirm').hide();
 			$('#cart_info').hide();
 			$('#change_count').show();
+			$('#points').val($('#c'+key).text());
 			$('#cok').on('click', function(){
 				$.post(url, {
 						"update": "true",
@@ -66,6 +68,8 @@
 						var ret = eval("("+data+")");
 						if (ret.status == 0) {
 							closeBar();
+							$('#c'+key).text($('#points').val());
+							showinfo(name+' 调整数量为：'+$('#points').val());
 						}
 						else {
 							$('#cart_footer').hide();
