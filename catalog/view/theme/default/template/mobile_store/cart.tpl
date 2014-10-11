@@ -29,17 +29,16 @@
 			return true;
 		}
 		function showinfo(desc) {
-			$('#cart_footer').slideDown('fast');
-			setTimeout(function() {
-				$("#cart_footer").hide()
-			}, 1500);
 			$('#change_count').hide();
 			$('#confirm').hide();
 			$('#cart_info').show();
 			$('#idesc').text(desc);
+			$('#cart_footer').slideDown('fast');
+			setTimeout(function() {
+				$("#cart_footer").hide()
+			}, 1500);
 		}
 		function dconfirm(id, url, name) {
-			$('#cart_footer').slideDown('fast');
 			$('#change_count').hide();
 			$('#cart_info').hide();
 			$('#confirm').show();
@@ -52,13 +51,13 @@
 				});
 			});
 			$('#delcancel').on('click', closeBar);
+			$('#cart_footer').slideDown('fast');
 		}
 		function changecount(key, name, url) {
-			$('#cart_footer').slideDown('fast');
 			$('#confirm').hide();
 			$('#cart_info').hide();
 			$('#change_count').show();
-			$('#cname').text(name + '的购买数量<');
+			$('#cname').text(name + '的购买数量');
 			$('#points').val($('#c'+key).text()).slider("refresh");;
 			$('#cok').on('click', function(){
 				$.post(url, {
@@ -79,6 +78,7 @@
 				});
 			});
 			$('#ccancel').on('click', closeBar);
+			$('#cart_footer').slideDown('fast');
 		}
 		//--></script>
 
