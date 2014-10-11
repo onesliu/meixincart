@@ -24,25 +24,25 @@
 		
 		<script type="text/javascript"><!--
 		function closeBar() {
-			$('#alert_footer').slideUp('fast');
+			$('#cart_footer').slideUp('fast');
 			return true;
 		}
 		function showinfo(desc) {
-			$('#alert_footer').slideDown('fast');
+			$('#cart_footer').slideDown('fast');
 			setTimeout(function() {
-				$("#alert_footer").hide()
+				$("#cart_footer").hide()
 			}, 1500);
 			$('#change_count').hide();
 			$('#confirm').hide();
 			$('#info').show();
 		}
 		function dconfirm(id, url, name) {
-			$('#alert_footer').slideDown('fast');
+			$('#cart_footer').slideDown('fast');
 			$('#change_count').hide();
 			$('#info').hide();
 			$('#confirm').show();
 			$('#delname').text(name);
-			$('#del').on('click', function(){
+			$('#cart_del').on('click', function(){
 				$.get(url, function(){
 					closeBar();
 					showinfo(name+'删除成功');
@@ -52,7 +52,7 @@
 			$('#delcancel').on('click', closeBar);
 		}
 		function changecount() {
-			$('#alert_footer').slideDown('fast');
+			$('#cart_footer').slideDown('fast');
 			$('#confirm').hide();
 			$('#info').hide();
 			$('#change_count').show();
@@ -63,10 +63,10 @@
 
 	</div>
 	
-	<div data-role="footer" class="ui-btn" id="alert_footer" data-position="fixed" style="display:none;">
+	<div data-role="footer" class="ui-btn" id="cart_footer" data-position="fixed" style="display:none;">
 		<div id="confirm" style="display:none;">
-			<p id="delname"></p>
-			<a href="#" data-role="button" data-icon="delete" id="del">删除</a>
+			<p id="cart_delname"></p>
+			<a href="#" data-role="button" data-icon="delete" id="cart_del">删除</a>
 			<a href="#" data-role="button" data-icon="back" id="delcancel">取消</a>
 		</div>
 		<div id="change_count" style="display:none;">
