@@ -21,9 +21,9 @@ function addToCart(product_id, quantity) {
 				$('#buy_alert').html(json['success']);
 				
 				//$('#cart_total').html(json['total']);
-				$('#buy_alert').slideDown('fast');
+				$('#alert_footer').slideDown('fast');
 				setTimeout(function() {
-					$("#buy_alert").hide()
+					$("#alert_footer").hide()
 				}, 1000);
 			}	
 		}

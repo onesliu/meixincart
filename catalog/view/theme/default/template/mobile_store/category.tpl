@@ -3,7 +3,7 @@
 <div data-role="page" id="pageone" data-title="<?php echo $heading_title; ?>">
 	<?php echo $navi; ?>
 	<div data-role="content">
-	<h3 id="buy_alert" style="display:none"></h3>
+	<h3 id="buy_alert" style="display:none;"></h3>
 	<?php echo $content_top; ?>
 
   	<ul data-role="listview" id="plist">
@@ -53,7 +53,10 @@
 		});
 	});
 	//--></script> 
-
+	</div>
+	
+	<div data-role="footer" id="alert_footer" data-position="fixed" style="display:none;">
+		<h1 id="buy_alert"></h1>
 	</div>
 </div>
 
