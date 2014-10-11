@@ -5,10 +5,10 @@
 	<div data-role="content">
 	<?php echo $content_top; ?>
 
-  	<ul data-role="listview">
+  	<ul data-role="listview" id="plist">
   		<li data-role="divider"><h2><?php echo $heading_title; ?></h2></li>
   	<?php foreach ($products as $product) { ?>
-  		<li data-icon="plus" id="plist">
+  		<li data-icon="plus">
   			<a href="<?php echo $product['href']; ?>">
   			<img src="<?php echo $product['thumb']; ?>">
   			<h2><?php echo $product['name']; ?></h2>
