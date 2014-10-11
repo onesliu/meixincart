@@ -1,7 +1,7 @@
 $(document).ready(function() {
 
 });
-
+/*
 function addToCart(product_id, quantity) {
 	quantity = typeof(quantity) != 'undefined' ? quantity : 1;
 
@@ -66,5 +66,5 @@ function removeVoucher(key) {
 		}
 	});
 }
-
+*/
 
