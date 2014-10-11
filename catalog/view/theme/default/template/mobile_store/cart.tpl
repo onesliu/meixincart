@@ -3,7 +3,7 @@
 <div data-role="page">
 	<?php echo $navi; ?>
 	<div data-role="content">
-	  	<ul data-role="listview">
+	  	<ul data-role="listview" data-inset="true">
 	  		<li data-role="divider"><h2><?php echo $heading_title; ?></h2></li>
 	  	<?php foreach ($products as $product) { ?>
 	  		<li data-icon="delete" id="<?php echo "p".$product['key']; ?>">
@@ -34,14 +34,14 @@
 			}, 1500);
 			$('#change_count').hide();
 			$('#confirm').hide();
-			$('#info').show();
+			$('#cart_info').show();
 		}
 		function dconfirm(id, url, name) {
 			$('#cart_footer').slideDown('fast');
 			$('#change_count').hide();
-			$('#info').hide();
+			$('#cart_info').hide();
 			$('#confirm').show();
-			$('#delname').text(name);
+			$('#cart_delname').text(name);
 			$('#cart_del').on('click', function(){
 				$.get(url, function(){
 					closeBar();
@@ -54,7 +54,7 @@
 		function changecount() {
 			$('#cart_footer').slideDown('fast');
 			$('#confirm').hide();
-			$('#info').hide();
+			$('#cart_info').hide();
 			$('#change_count').show();
 			$('#cok').on('click', closeBar);
 			$('#ccancel').on('click', closeBar);
@@ -63,21 +63,20 @@
 
 	</div>
 	
-	<div data-role="footer" class="ui-btn" id="cart_footer" data-position="fixed" style="display:none;">
+	<div data-role="footer" id="cart_footer" data-position="fixed" style="display:none;text-align:center;">
 		<div id="confirm" style="display:none;">
 			<p id="cart_delname"></p>
 			<a href="#" data-role="button" data-icon="delete" id="cart_del">删除</a>
 			<a href="#" data-role="button" data-icon="back" id="delcancel">取消</a>
 		</div>
 		<div id="change_count" style="display:none;">
-			<p>购买数量:
-			<input type="range" name="points" id="points" min="1" value="1" max=100>
-			</p>
+			<p>购买数量:</p>
+			<input type="range" name="points" id="points" min="1" value="1" max="10">
 			<a href="#" data-role="button" data-icon="delete" id="cok">确定</a>
 			<a href="#" data-role="button" data-icon="back" id="ccancel">取消</a>
 		</div>
-		<div id="info" style="display:none;">
-			<h1 id="idesc"></h1>
+		<div id="cart_info" style="display:none;">
+			<p id="idesc"></p>
 		</div>
 	</div>
 	
