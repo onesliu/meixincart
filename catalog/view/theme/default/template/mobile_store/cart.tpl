@@ -33,24 +33,6 @@
 		
 		<?php echo $content_bottom; ?>
 	</div>
-</div>
-
-<div data-role="page" id="change_count">
-	<div data-role="header"><h1>调整数量</h1></div>
-	<form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
-	<div data-role="content">
-		<div data-role="fieldcontain">
-			<label for="points">购买数量:</label>
-			<input type="range" name="points" id="points" value="50" min="1" max="100" data-highlight="true">
-		</div>
-		<input type="submit" value="确认">
-		<a href="#" data-role="button" data-rel="back" data-mini="true">取消</a>
-	</div>
-	</form>
-</div>
-
-<?php echo $category_list; ?>
-</body>
 <script>
 function delcfm() {
     if (!confirm("确认要删除？")) {
@@ -62,3 +44,21 @@ function setval(int val) {
 	$("#points").val(val);
 }
 </script>
+</div>
+
+<div data-role="page" id="change_count">
+	<div data-role="header"><h1>调整数量</h1></div>
+	<form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
+	<div data-role="content">
+		<div data-role="fieldcontain">
+			<label for="points">购买数量:</label>
+			<input type="range" name="points" id="points" value="50" min="1" max="100" data-highlight="true">
+		</div>
+		<input type="submit" value="确认">
+		<a href="#" data-role="button" data-rel="back">取消</a>
+	</div>
+	</form>
+</div>
+
+<?php echo $category_list; ?>
+</body>
