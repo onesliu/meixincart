@@ -91,7 +91,7 @@
 			<a href="#" data-role="button" data-icon="back" id="delcancel">取消</a>
 		</div>
 		<div id="change_count" style="display:none;">
-			<p id="cname">/p>
+			<p id="cname"></p>
 			<input type="range" name="points" id="points" min="1" value="1" max="10" data-mini="true" data-highlight="true">
 			<a href="#" data-role="button" data-icon="delete" id="cok">确定</a>
 			<a href="#" data-role="button" data-icon="back" id="ccancel">取消</a>
