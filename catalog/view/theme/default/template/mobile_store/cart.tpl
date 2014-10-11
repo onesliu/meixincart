@@ -33,17 +33,6 @@
 		
 		<?php echo $content_bottom; ?>
 	</div>
-<script>
-function delcfm() {
-    if (!confirm("确认要删除？")) {
-        window.event.returnValue = false;
-    }
-}
-
-function setval(int val) {
-	$("#points").val(val);
-}
-</script>
 </div>
 
 <div data-role="page" id="change_count">
@@ -61,4 +50,17 @@ function setval(int val) {
 </div>
 
 <?php echo $category_list; ?>
+
+<script type="text/javascript"><!--
+function delcfm() {
+    if (!confirm("确认要删除？")) {
+        window.event.returnValue = false;
+    }
+}
+
+function setval(int val) {
+	$("#points").val(val);
+}
+//--></script>
+
 </body>
