@@ -13,8 +13,8 @@
 	  			<p class="ui-li-aside"><?php echo $product['price']; ?><br/>
 	  				x<?php echo $product['quantity']; ?></p>
 	  			</a>
-    			<a href="#1" onClick="dconfirm(<?php echo "p".$product['key']; ?>,
-    			<?php echo $product['remove']; ?>);"></a>
+    			<a href="#1" onClick="dconfirm('<?php echo "p".$product['key']; ?>',
+    			'<?php echo $product['remove']; ?>');"></a>
 	  		</li>
 	  	<?php } ?>
 	  		<li data-role="divider"></li>
