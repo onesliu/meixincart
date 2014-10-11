@@ -10,6 +10,20 @@ class ControllerMobileStoreCart extends Controller {
 		}
 		
 		// Update
+		if (!empty($this->request->post['update']) && $this->request->post['update'] == "true") {
+			$json = new stdClass();
+			if (isset($this->request->post['key']) && isset($this->request->post['num'])) {
+				$this->cart->update($this->request->post['key'], $this->request->post['num']);
+				$json->status = 0;
+			}
+			else {
+				$this->log->write(print_r($this->request->post,true));
+				$json->status = -1;
+			}
+			$this->response->setOutput(json_encode($json));
+			return;
+		}
+		
 		if (!empty($this->request->post['quantity'])) {
 			foreach ($this->request->post['quantity'] as $key => $value) {
 				$this->cart->update($key, $value);

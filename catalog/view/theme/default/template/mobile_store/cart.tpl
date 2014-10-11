@@ -7,11 +7,12 @@
 	  		<li data-role="divider"><h2><?php echo $heading_title; ?></h2></li>
 	  	<?php foreach ($products as $product) { ?>
 	  		<li data-icon="delete" id="<?php echo "p".$product['key']; ?>">
-	  			<a href="#1" onClick="changecount();">
+	  			<a href="#1" onClick="changecount('<?php echo $product['key']; ?>',
+	  				'<?php echo $product['name']; ?>', '<?php echo $action; ?>');">
 	  			<img src="<?php echo $product['thumb']; ?>">
 	  			<h2><?php echo $product['name']; ?></h2>
-	  			<p class="ui-li-aside"><?php echo $product['price']; ?><br/>
-	  				x<?php echo $product['quantity']; ?></p>
+	  			<p class="ui-li-aside"><span><?php echo $product['price']; ?></span><br/>
+	  				<span id="<?php echo "c".$product['key']; ?>">x<?php echo $product['quantity']; ?></span></p>
 	  			</a>
     			<a href="#1" onClick="dconfirm('<?php echo "p".$product['key']; ?>',
     			'<?php echo $product['remove']; ?>','<?php echo $product['name']; ?>');"></a>
@@ -44,19 +45,34 @@
 			$('#cart_delname').text(name);
 			$('#cart_del').on('click', function(){
 				$.get(url, function(){
-					closeBar();
+					$('#cart_footer').hide();
 					showinfo(name+'删除成功');
 					$('#'+id).remove();
 				});
 			});
 			$('#delcancel').on('click', closeBar);
 		}
-		function changecount() {
+		function changecount(key, name, url) {
 			$('#cart_footer').slideDown('fast');
 			$('#confirm').hide();
 			$('#cart_info').hide();
 			$('#change_count').show();
-			$('#cok').on('click', closeBar);
+			$('#cok').on('click', function(){
+				$.post(url, {
+						"update": "true",
+						"key": key,
+						"num": $('#points').val()
+					}, function(data,status){
+						var ret = eval("("+data+")");
+						if (ret.status == 0) {
+							closeBar();
+						}
+						else {
+							$('#cart_footer').hide();
+							showinfo('调整购买数量出错，请重试！');
+						}
+				});
+			});
 			$('#ccancel').on('click', closeBar);
 		}
 		//--></script>
@@ -70,7 +86,7 @@
 			<a href="#" data-role="button" data-icon="back" id="delcancel">取消</a>
 		</div>
 		<div id="change_count" style="display:none;">
-			<p>购买数量:</p>
+			<p>购买数量</p>
 			<input type="range" name="points" id="points" min="1" value="1" max="10">
 			<a href="#" data-role="button" data-icon="delete" id="cok">确定</a>
 			<a href="#" data-role="button" data-icon="back" id="ccancel">取消</a>
