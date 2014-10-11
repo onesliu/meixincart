@@ -4,7 +4,7 @@
 	<?php echo $navi; ?>
 	<div data-role="content">
 	<?php echo $content_top; ?>
-	  	
+
   	<ul data-role="listview">
   		<li data-role="divider"><h2><?php echo $heading_title; ?></h2></li>
   	<?php foreach ($products as $product) { ?>
@@ -33,25 +33,26 @@
 	<?php } ?>
 
 	<?php echo $content_bottom; ?>
-	</div>
-</div>
-
-<script type="text/javascript"><!--
-var url_more="<?php echo $pagination->url; ?>";
-var um_page=<?php echo $pagination->page; ?>;
-var um_pages=<?php echo $pagination->num_pages; ?>;
-$(document).on("pageinit","#pageone",function(){
-	$("#bmore").on("click", function(){
-		um_page++;
-		url = "<?php echo $pagination->url; ?>" + "&page=" + um_page;
-		$.get(url, function(data,status) {
-			$("#plist").append(data);
-			if (um_page >= um_pages) {
-				$("#bmore").hide();
-			}
+	
+	<script type="text/javascript"><!--
+	var url_more="<?php echo $pagination->url; ?>";
+	var um_page=<?php echo $pagination->page; ?>;
+	var um_pages=<?php echo $pagination->num_pages; ?>;
+	$(document).on("pageinit","#pageone",function(){
+		$("#bmore").on("click", function(){
+			um_page++;
+			url = "<?php echo $pagination->url; ?>" + "&page=" + um_page;
+			$.get(url, function(data,status) {
+				$("#plist").append(data);
+				if (um_page >= um_pages) {
+					$("#bmore").hide();
+				}
+			});
 		});
 	});
-});
-//--></script> 
+	//--></script> 
+
+	</div>
+</div>
 
 </body>
