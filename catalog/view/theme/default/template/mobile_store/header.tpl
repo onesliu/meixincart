@@ -18,5 +18,6 @@
 <link type="text/css" rel="stylesheet" href="catalog/view/javascript/jquery_mobile/jquery.mobile-1.4.4.min.css">
 <script type="text/javascript" src="catalog/view/javascript/jquery/jquery-1.11.1.min.js"></script>
 <script type="text/javascript" src="catalog/view/javascript/jquery_mobile/jquery.mobile-1.4.4.min.js"></script>
+<script type="text/javascript" src="catalog/view/javascript/mobile_store.js"></script>
 
 </head>
