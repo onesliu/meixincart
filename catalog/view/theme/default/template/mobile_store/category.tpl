@@ -1,45 +1,45 @@
-<?php echo $header; echo $column_left; ?>
-<div id="content" class="square"><?php echo $content_top; ?>
-  <h1><?php echo $heading_title; ?></h1>
-  <?php if ($products) { ?>
-  <div class="product-compare"></div>
-  <div id="plist" class="product-list">
+<?php echo $header; ?>
+<body>
+<div data-role="page">
+	<?php echo $navi; ?>
+	<div data-role="content">
+	<?php echo $content_top; ?>
+	  	
+  	<ul data-role="listview">
+  		<li data-role="divider"><h2><?php echo $heading_title; ?></h2></li>
+  	<?php foreach ($products as $product) { ?>
+  		<li data-icon="delete">
+  			<a href="<?php echo $product['href']; ?>">
+  			<img src="<?php echo $product['thumb']; ?>">
+  			<h2><?php echo $product['name']; ?></h2>
+  			<p><?php echo $product['description']; ?></p>
 
-    <?php foreach ($products as $product) { ?>
-    <div>
-      <?php if ($product['thumb']) { ?>
-      <div class="image"><a href="<?php echo $product['href']; ?>"><img src="<?php echo $product['thumb']; ?>" title="<?php echo $product['name']; ?>" alt="<?php echo $product['name']; ?>" /></a></div>
-      <?php } ?>
-      <div class="name"><a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a></div>
-      <div class="description"><?php echo $product['description']; ?></div>
-      <div class="cart"><a onclick="addToCart(<?php echo $product['product_id'];?>);" class="button"><span><?php echo $button_cart; ?></span></a></div>
-	  <?php if ($product['price']) { ?>
-      <div class="price">
-        <?php if (!$product['special']) { ?>
-        <?php echo $product['price']; ?>
-        <?php } else { ?>
-        <span class="price-old"><?php echo $product['price']; ?></span> <span class="price-new"><?php echo $product['special']; ?></span>
-        <?php } ?>
-      </div>
-      <?php } ?>
-    </div>
-    <?php } ?>
-  </div>
-  <?php } ?>
-  <?php if (!$categories && !$products) { ?>
-  <div class="content"><?php echo $text_empty; ?></div>
-  <!-- <div class="buttons">
-    <div class="right"><a href="<?php echo $continue; ?>" class="button"><span><?php echo $button_continue; ?></span></a></div>
-  </div> -->
-  <?php } ?>
-  <?php echo $content_bottom; ?></div>
-  
-  <?php if ($pagination->page < $pagination->num_pages) { ?>
-  	<br/>
-    <div>
-    	<div class="center"><a id="bmore" class="button_11 green green_borderbottom radius4">点击加载更多</a></div>
-  	</div>
-  <?php } ?>
+  			<?php if ($product['price']) { ?>
+				<p class="ui-li-aside">
+				<span><?php echo $product['price']; ?></span><br/>
+				<?php if (!$product['special']) { ?>
+					<span><?php echo $product['special']; ?></span>
+				<?php } ?>
+				</p>
+			<?php } ?>
+			
+  			<p class="ui-li-aside"><?php echo $product['price']; ?><br/>
+  				x<?php echo $product['quantity']; ?></p>
+  			</a>
+    		<a href="#" onclick="addToCart(<?php echo $product['product_id'];?>);"><?php echo $button_cart; ?></a>
+  		</li>
+  	<?php } ?>
+  		<li data-role="divider"></li>
+  	</ul>
+
+	<?php if ($pagination->page < $pagination->num_pages) { ?>
+	<p><a id="bmore" href="#" data-role="button">点击加载更多</a></p>
+	<?php } ?>
+
+	<?php echo $content_bottom; ?>
+	</div>
+</div>
+
 <script type="text/javascript"><!--
 var url_more="<?php echo $pagination->url; ?>";
 var um_page=<?php echo $pagination->page; ?>;
@@ -54,6 +54,6 @@ $("#bmore").click(function(){
 		}
 	});
 });
-
 //--></script> 
-<?php echo $footer;?>
+
+</body>
