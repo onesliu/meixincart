@@ -33,7 +33,7 @@ function addToCart(product_id, quantity) {
 
 function removeCart(key) {
 	$.ajax({
-		url: 'index.php?route=mobile_store/cart/update',
+		url: 'index.php?route=mobile_store/cart',
 		type: 'post',
 		data: 'remove=' + key,
 		dataType: 'json',

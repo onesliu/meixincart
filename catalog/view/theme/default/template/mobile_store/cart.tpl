@@ -3,28 +3,18 @@
 <div data-role="page">
 	<?php echo $navi; ?>
 	<div data-role="content">
-		<?php if ($attention) { ?>
-		<p><?php echo $attention; ?></p>
-		<?php } ?>
-		<?php if ($success) { ?>
-		<p><?php echo $success; ?></p>
-		<?php } ?>
-		<?php if ($error_warning) { ?>
-		<p><?php echo $error_warning; ?></p>
-		<?php } ?>
-		<?php echo $content_top; ?>
-		
 	  	<ul data-role="listview">
 	  		<li data-role="divider"><h2><?php echo $heading_title; ?></h2></li>
 	  	<?php foreach ($products as $product) { ?>
-	  		<li data-icon="delete">
+	  		<li data-icon="delete" id="<?php echo "p".$product['key']; ?>">
 	  			<a href="#1" onClick="changecount();">
 	  			<img src="<?php echo $product['thumb']; ?>">
 	  			<h2><?php echo $product['name']; ?></h2>
 	  			<p class="ui-li-aside"><?php echo $product['price']; ?><br/>
 	  				x<?php echo $product['quantity']; ?></p>
 	  			</a>
-    			<a href="#1" onClick="dconfirm();"></a>
+    			<a href="#1" onClick="dconfirm(<?php echo "p".$product['key']; ?>,
+    			<?php echo $product['remove']; ?>);"></a>
 	  		</li>
 	  	<?php } ?>
 	  		<li data-role="divider"></li>
@@ -37,12 +27,16 @@
 			$('#alert_footer').slideUp('fast');
 			return true;
 		}
-		function dconfirm(url) {
+		function dconfirm(id, url) {
 			$('#alert_footer').slideDown('fast');
 			$('#change_count').hide();
 			$('#confirm').show();
-			$('#del').attr('href', url);
-			$('#del').on('click', closeBar);
+			$('#del').on('click', function(){
+				$.get(url, function(){
+					closeBar();
+					$('#'+id).remove();
+				});
+			});
 			$('#delcancel').on('click', closeBar);
 		}
 		function changecount() {
@@ -56,7 +50,7 @@
 
 	</div>
 	
-	<div data-role="footer" id="alert_footer" data-position="fixed" style="display:none;">
+	<div data-role="footer" class="ui-btn" id="alert_footer" data-position="fixed" style="display:none;">
 		<div id="confirm" style="display:none;">
 			<div data-role="controlgroup" data-type="horizontal">
 				<a href="#" data-role="button" data-icon="delete" id="del">删除</a>
