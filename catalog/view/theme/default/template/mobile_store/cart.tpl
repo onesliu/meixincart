@@ -45,8 +45,7 @@
 			$('#del').on('click', closeBar);
 			$('#delcancel').on('click', closeBar);
 		}
-		
-		function changecount(int val) {
+		function changecount() {
 			$('#alert_footer').slideDown('fast');
 			$('#confirm').hide();
 			$('#change_count').show();
@@ -65,7 +64,6 @@
 			</div>
 		</div>
 		<div id="change_count" style="display:none;">
-			<div data-role="header"><h1>调整数量</h1></div>
 			<form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
 			<div data-role="content">
 				<div data-role="fieldcontain">

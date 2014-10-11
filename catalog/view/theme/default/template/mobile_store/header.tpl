@@ -4,7 +4,7 @@
 <head>
 <title><?php echo $title; ?></title>
 <base href="<?php echo $base; ?>" />
-<meta name="viewport" content="width=100%; initial-scale=1; maximum-scale=1; minimum-scale=1; user-scalable=no;" />
+<meta name="viewport" content="width=100%; initial-scale=1.0; maximum-scale=1.0; minimum-scale=1.0; user-scalable=no;" />
 <?php if ($mobile_store_charset) { ?>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 <?php } ?>
