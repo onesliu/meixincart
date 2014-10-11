@@ -18,14 +18,13 @@
 	  		<li data-role="divider"><h2><?php echo $heading_title; ?></h2></li>
 	  	<?php foreach ($products as $product) { ?>
 	  		<li data-icon="delete">
-	  			<a href="#change_count" data-rel="dialog" data-transition="slidedown"
-	  				onclick="setval(<?php echo $product['quantity']; ?>)">
+	  			<a href="#1" onClick="changecount();">
 	  			<img src="<?php echo $product['thumb']; ?>">
 	  			<h2><?php echo $product['name']; ?></h2>
 	  			<p class="ui-li-aside"><?php echo $product['price']; ?><br/>
 	  				x<?php echo $product['quantity']; ?></p>
 	  			</a>
-    			<a href="#1" onclick="dconfirm();"></a>
+    			<a href="#1" onClick="dconfirm();"></a>
 	  		</li>
 	  	<?php } ?>
 	  		<li data-role="divider"></li>
