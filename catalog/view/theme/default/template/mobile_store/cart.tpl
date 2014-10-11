@@ -58,7 +58,8 @@
 			$('#confirm').hide();
 			$('#cart_info').hide();
 			$('#change_count').show();
-			$('#points').val($('#c'+key).text());
+			$('#cname').text(name + '的购买数量<');
+			$('#points').val($('#c'+key).text()).slider("refresh");;
 			$('#cok').on('click', function(){
 				$.post(url, {
 						"update": "true",
@@ -67,7 +68,7 @@
 					}, function(data,status){
 						var ret = eval("("+data+")");
 						if (ret.status == 0) {
-							closeBar();
+							$('#cart_footer').hide();
 							$('#c'+key).text($('#points').val());
 							showinfo(name+' 调整数量为：'+$('#points').val());
 						}
@@ -90,8 +91,8 @@
 			<a href="#" data-role="button" data-icon="back" id="delcancel">取消</a>
 		</div>
 		<div id="change_count" style="display:none;">
-			<p>购买数量</p>
-			<input type="range" name="points" id="points" min="1" value="1" max="10">
+			<p id="cname">/p>
+			<input type="range" name="points" id="points" min="1" value="1" max="10" data-mini="true" data-highlight="true">
 			<a href="#" data-role="button" data-icon="delete" id="cok">确定</a>
 			<a href="#" data-role="button" data-icon="back" id="ccancel">取消</a>
 		</div>
