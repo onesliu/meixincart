@@ -48,7 +48,7 @@ class ControllerMobileStoreCategoryList extends Controller {
 			$this->template = 'default/template/mobile_store/category_list.tpl';
 		}
 		
-		$this->render();										
+		$this->response->setOutput($this->render());										
   	}
 }
 ?>

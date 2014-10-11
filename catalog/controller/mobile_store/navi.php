@@ -9,7 +9,7 @@ class ControllerMobileStoreNavi extends Controller {
     	$this->data['text_checkout'] = $this->language->get('text_checkout');
 				
 		$this->data['home'] = $this->url->link('mobile_store/home');
-		$this->data['category_list'] = "#category_list";
+		$this->data['category_list'] = $this->url->link('mobile_store/category_list', '', 'SSL');
 		$this->data['cart'] = $this->url->link('mobile_store/cart');
 		$this->data['order'] = $this->url->link('mobile_store/order', '', 'SSL');
 		
