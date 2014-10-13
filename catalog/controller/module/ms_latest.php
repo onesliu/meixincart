@@ -27,7 +27,7 @@ class ControllerModuleMSLatest extends Controller {
 
 		foreach ($results as $result) {
 			if ($result['image']) {
-				$image = $result['image'];
+				$image = $this->img_url($result['image']);
 			} else {
 				$image = false;
 			}
@@ -78,6 +78,14 @@ class ControllerModuleMSLatest extends Controller {
 		}
 
 		$this->render();
+	}
+	
+	private function img_url($dir) {
+		if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {
+			return $this->config->get('config_ssl') . 'image/' . $dir;
+		} else {
+			return $this->config->get('config_url') . 'image/' . $dir;
+		}
 	}
 }
 ?>
