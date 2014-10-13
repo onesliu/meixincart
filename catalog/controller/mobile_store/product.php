@@ -365,7 +365,8 @@ class ControllerMobileStoreProduct extends Controller {
 				'mobile_store/content_top',
 				'mobile_store/content_bottom',
 				'mobile_store/footer',
-				'mobile_store/header'
+				'mobile_store/header',
+				'mobile_store/navi'
 			);
 						
 			$this->response->setOutput($this->render());
@@ -422,7 +423,8 @@ class ControllerMobileStoreProduct extends Controller {
 				'mobile_store/content_top',
 				'mobile_store/content_bottom',
 				'mobile_store/footer',
-				'mobile_store/header'
+				'mobile_store/header',
+				'mobile_store/navi'
 			);
 						
 			$this->response->setOutput($this->render());
