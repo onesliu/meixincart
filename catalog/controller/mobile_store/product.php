@@ -202,10 +202,12 @@ class ControllerMobileStoreProduct extends Controller {
 				$this->data['popup'] = '';
 			}
 			
+			$this->data['image_width'] = $this->config->get('mobile_store_image_width');
+			$this->data['image_height'] = $this->config->get('mobile_store_image_height');
 			if ($product_info['image']) {
-				$this->data['thumb'] = $this->model_tool_image->resize($product_info['image'], $this->config->get('mobile_store_image_width'), $this->config->get('mobile_store_image_height'));
+				$this->data['thumb'] = $this->model_tool_image->img_url($product_info['image']);
 			} else {
-				$this->data['thumb'] = '';
+				$this->data['thumb'] = $this->model_tool_image->img_url('no_image.jpg');
 			}
 			
 			$this->data['images'] = array();

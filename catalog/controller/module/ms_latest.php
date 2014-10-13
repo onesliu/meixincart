@@ -9,6 +9,8 @@ class ControllerModuleMSLatest extends Controller {
 		
 		$this->data['show_class'] = ($setting['initial'] == "up") ? "active" : "";
 		
+		$this->load->model('tool/image');
+		
 		$this->data['image_width'] = $setting['image_width'];
 		$this->data['image_height'] = $setting['image_height'];
 
@@ -27,9 +29,9 @@ class ControllerModuleMSLatest extends Controller {
 
 		foreach ($results as $result) {
 			if ($result['image']) {
-				$image = $this->img_url($result['image']);
+				$image = $this->model_tool_image->img_url($result['image']);
 			} else {
-				$image = false;
+				$image = $this->model_tool_image->img_url('no_image.jpg');
 			}
 						
 			if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
@@ -80,12 +82,5 @@ class ControllerModuleMSLatest extends Controller {
 		$this->render();
 	}
 	
-	private function img_url($dir) {
-		if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {
-			return $this->config->get('config_ssl') . 'image/' . $dir;
-		} else {
-			return $this->config->get('config_url') . 'image/' . $dir;
-		}
-	}
 }
 ?>

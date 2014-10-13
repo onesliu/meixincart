@@ -23,7 +23,10 @@
 		<?php if ($thumb && !$images) { ?>
 		<div class="image">
 			<ul id="ps-gallery" style="list-style:none; margin:0; padding:0;">
-				<li><a href="<?php echo $popup; ?>" title="<?php echo $heading_title; ?>"><img src="<?php echo $thumb; ?>" title="<?php echo $heading_title; ?>" alt="<?php echo $heading_title; ?>" id="image" /></a></li>
+				<li><a href="<?php echo $popup; ?>" title="<?php echo $heading_title; ?>">
+					<img src="<?php echo $thumb; ?>" title="<?php echo $heading_title; ?>" 
+					alt="<?php echo $heading_title; ?>" id="image" 
+					style="width:<?php echo $image_width;?>px; height:<?php echo $image_height;?>px;"/></a></li>
 			</ul>	
 		</div>
 	    <?php } ?>

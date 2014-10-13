@@ -8,7 +8,7 @@ class ControllerMobileStoreCategory extends Controller {
 		$this->load->model('catalog/product');
 		$this->load->model('mobile_store/product');
 		
-		$this->load->model('tool/image'); 
+		$this->load->model('tool/image');
 		
 		if (isset($this->request->get['page'])) {
 			$page = $this->request->get['page'];
@@ -115,11 +115,14 @@ class ControllerMobileStoreCategory extends Controller {
 			
 			$results = $this->model_mobile_store_product->getProducts($data);
 			
+			$this->data['image_width'] = $this->config->get('mobile_store_image_width');
+			$this->data['image_height'] = $this->config->get('mobile_store_image_height');
+			
 			foreach ($results as $result) {
 				if ($result['image']) {
-					$image = $this->model_tool_image->resize($result['image'], $this->config->get('mobile_store_image_width'), $this->config->get('mobile_store_image_height'));
+					$image = $this->model_tool_image->img_url($result['image']);
 				} else {
-					$image = $this->model_tool_image->resize('no_image.jpg', $this->config->get('mobile_store_image_width'), $this->config->get('mobile_store_image_height'));
+					$image = $this->model_tool_image->img_url('no_image.jpg');
 				}
 				
 				if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
@@ -219,5 +222,6 @@ class ControllerMobileStoreCategory extends Controller {
 			$this->response->setOutput($this->render());
 		}
 	}
+	
 }
 ?>
