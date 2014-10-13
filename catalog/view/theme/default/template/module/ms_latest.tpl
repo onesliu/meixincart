@@ -5,7 +5,10 @@
       <?php foreach ($products as $product) { ?>
        <div class="borders-inside">
 		  <?php if ($product['thumb']) { ?>
-		  <div class="image"><a href="<?php echo $product['href']; ?>" ><img src="<?php echo $product['thumb']; ?>" title="<?php echo $product['name']; ?>" alt="<?php echo $product['name']; ?>" /></a></div>
+		  <div class="image"><a href="<?php echo $product['href']; ?>" >
+		  	<img src="<?php echo $product['thumb']; ?>" title="<?php echo $product['name']; ?>" 
+		  	alt="<?php echo $product['name']; ?>" style="width:<?php echo $image_width;?>px; height:<?php echo $image_height;?>px;"/></a>
+		  </div>
 		  <?php } ?>
 		
 		  <div class="name"><a href="<?php echo $product['href']; ?>" ><?php echo $product['name']; ?></a></div>

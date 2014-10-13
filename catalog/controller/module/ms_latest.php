@@ -8,10 +8,11 @@ class ControllerModuleMSLatest extends Controller {
 		$this->data['button_cart'] = $this->language->get('button_cart');
 		
 		$this->data['show_class'] = ($setting['initial'] == "up") ? "active" : "";
-				
-		$this->load->model('mobile_store/product');
 		
-		$this->load->model('tool/image');
+		$this->data['image_width'] = $setting['image_width'];
+		$this->data['image_height'] = $setting['image_height'];
+
+		$this->load->model('mobile_store/product');
 		
 		$this->data['products'] = array();
 		
@@ -26,7 +27,7 @@ class ControllerModuleMSLatest extends Controller {
 
 		foreach ($results as $result) {
 			if ($result['image']) {
-				$image = $this->model_tool_image->resize($result['image'], $setting['image_width'], $setting['image_height']);
+				$image = $result['image'];
 			} else {
 				$image = false;
 			}
