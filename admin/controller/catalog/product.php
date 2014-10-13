@@ -555,6 +555,7 @@ class ControllerCatalogProduct extends Controller {
 		$this->data['text_none'] = $this->language->get('text_none');
 		$this->data['text_percent'] = $this->language->get('text_percent');
 		$this->data['text_amount'] = $this->language->get('text_amount');
+		$this->data['text_type'] = '商品特性';
 
 		$this->data['entry_name'] = $this->language->get('entry_name');
 		$this->data['entry_meta_description'] = $this->language->get('entry_meta_description');
@@ -855,7 +856,15 @@ class ControllerCatalogProduct extends Controller {
       		$this->data['price'] = '';
     	}
 		
-		$this->load->model('localisation/tax_class');
+    	if (isset($this->request->post['product_type'])) {
+      		$this->data['product_type'] = $this->request->post['product_type'];
+    	} elseif (!empty($product_info)) {
+			$this->data['product_type'] = $product_info['product_type'];
+		} else {
+      		$this->data['product_type'] = '';
+    	}
+    	
+    	$this->load->model('localisation/tax_class');
 		
 		$this->data['tax_classes'] = $this->model_localisation_tax_class->getTaxClasses();
     	

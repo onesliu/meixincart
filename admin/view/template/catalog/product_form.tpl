@@ -216,6 +216,13 @@
               <td><?php echo $entry_sort_order; ?></td>
               <td><input type="text" name="sort_order" value="<?php echo $sort_order; ?>" size="2" /></td>
             </tr>
+            <tr>
+              <td><?php echo $text_type; ?></td>
+              <td><select name="product_type">
+                  <option value="0" <?php if ($product_type==0) echo 'selected="selected"'?>>固定重量商品</option>
+                  <option value="1" <?php if ($product_type!=0) echo 'selected="selected"'?>>需称重商品</option>
+                </select></td>
+            </tr>
           </table>
         </div>
         <div id="tab-links">
