@@ -9,7 +9,7 @@
 		  <?php } ?>
 		
 		  <div class="name"><a href="<?php echo $product['href']; ?>" ><?php echo $product['name']; ?></a></div>
-		  <div class="description"><?php echo $product['description']; ?></div>
+		  <div class="description"><?php echo $product['type']."，每".$product['type']."单价"; ?></div>
 		  
 		  <div class="cart"><a onclick="addToCart(<?php echo $product['product_id']; ?>);" class="button" ><span><?php echo $button_cart; ?></span></a></div>
 		  <?php if ($product['price']) { ?>
