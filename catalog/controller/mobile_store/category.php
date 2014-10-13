@@ -155,6 +155,8 @@ class ControllerMobileStoreCategory extends Controller {
 					'special'     => $special,
 					'tax'         => $tax,
 					'rating'      => $result['rating'],
+					'weight'	 => ((int)$result['weight']) . $result['weight_class'],
+					'type'		 => (($result['product_type']==0)?'每份固定重量':'先称重后付款'),
 					'reviews'     => sprintf($this->language->get('text_reviews'), (int)$result['reviews']),
 					'href'        => $this->url->link('mobile_store/product', 'fspath=' . $this->request->get['fspath'] . '&product_id=' . $result['product_id'])
 				);
