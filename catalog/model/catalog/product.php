@@ -84,7 +84,7 @@ class ModelCatalogProduct extends Model {
 				'viewed'           => $query->row['viewed'],
 				'product_type'     => $query->row['product_type'],
 				'type'			   => (($query->row['product_type']==0)?'固定重量商品':'先称重后付款商品'),
-				'subscribe'		   => $query->row['model'].'，每'.((int)$query->row['weight']) . $query->row['weight_class'].'单价'
+				'subscribe'		   => ($query->row['model'].'，每'.((int)$query->row['weight']) . $query->row['weight_class'].'单价')
 			);
 		} else {
 			return false;
@@ -257,7 +257,6 @@ class ModelCatalogProduct extends Model {
 		$query = $this->db->query($sql);
 	
 		foreach ($query->rows as $result) {
-			$product_data[$result['product_id']] = $this->getProduct($result['product_id']);
 			$product_data[$result['product_id']] = $this->getProduct($result['product_id']);
 		}
 

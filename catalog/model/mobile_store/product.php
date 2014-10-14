@@ -40,6 +40,8 @@ class ModelMobileStoreProduct extends Model {
 		if ($query->num_rows) {
 			$query->row['price'] = ($query->row['discount'] ? $query->row['discount'] : $query->row['price']);
 			$query->row['rating'] = (int)$query->row['rating'];
+			$query->row['type']	= (($query->row['product_type']==0)?'固定重量商品':'先称重后付款商品');
+			$query->row['subscribe'] = ($query->row['model'].'，每'.((int)$query->row['weight']) . $query->row['weight_class'].'单价');
 			
 			return $query->row;
 		} else {
