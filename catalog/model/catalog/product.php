@@ -82,7 +82,9 @@ class ModelCatalogProduct extends Model {
 				'date_added'       => $query->row['date_added'],
 				'date_modified'    => $query->row['date_modified'],
 				'viewed'           => $query->row['viewed'],
-				'product_type'     => $query->row['product_type']
+				'product_type'     => $query->row['product_type'],
+				'type'			   => (($query->row['product_type']==0)?'固定重量商品':'先称重后付款商品'),
+				'subscribe'		   => $query->row['model'].'，每'.((int)$query->row['weight']) . $query->row['weight_class'].'单价'
 			);
 		} else {
 			return false;
@@ -96,7 +98,7 @@ class ModelCatalogProduct extends Model {
 			$customer_group_id = $this->config->get('config_customer_group_id');
 		}	
 		
-		$sql = "SELECT p.product_id, p.weight, p.product_type, (SELECT AVG(rating) AS total FROM " . DB_PREFIX . "review r1 
+		$sql = "SELECT p.product_id, (SELECT AVG(rating) AS total FROM " . DB_PREFIX . "review r1 
 		WHERE r1.product_id = p.product_id AND r1.status = '1' GROUP BY r1.product_id) AS rating, 
 		(SELECT price FROM " . DB_PREFIX . "product_discount pd2 WHERE pd2.product_id = p.product_id AND 
 		pd2.customer_group_id = '" . (int)$customer_group_id . "' AND pd2.quantity = '1' AND 
@@ -104,9 +106,7 @@ class ModelCatalogProduct extends Model {
 		ORDER BY pd2.priority ASC, pd2.price ASC LIMIT 1) AS discount, 
 		(SELECT price FROM " . DB_PREFIX . "product_special ps WHERE ps.product_id = p.product_id AND 
 		ps.customer_group_id = '" . (int)$customer_group_id . "' AND ((ps.date_start = '0000-00-00' OR ps.date_start < NOW()) AND 
-		(ps.date_end = '0000-00-00' OR ps.date_end > NOW())) ORDER BY ps.priority ASC, ps.price ASC LIMIT 1) AS special,
-		(SELECT wcd.unit FROM " . DB_PREFIX . "weight_class_description wcd WHERE p.weight_class_id = wcd.weight_class_id AND 
-		wcd.language_id = '" . (int)$this->config->get('config_language_id') . "') AS weight_class";
+		(ps.date_end = '0000-00-00' OR ps.date_end > NOW())) ORDER BY ps.priority ASC, ps.price ASC LIMIT 1) AS special";
 		
 		if (!empty($data['filter_category_id'])) {
 			if (!empty($data['filter_sub_category'])) {
@@ -257,6 +257,7 @@ class ModelCatalogProduct extends Model {
 		$query = $this->db->query($sql);
 	
 		foreach ($query->rows as $result) {
+			$product_data[$result['product_id']] = $this->getProduct($result['product_id']);
 			$product_data[$result['product_id']] = $this->getProduct($result['product_id']);
 		}
 

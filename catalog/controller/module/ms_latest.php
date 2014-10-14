@@ -61,7 +61,10 @@ class ControllerModuleMSLatest extends Controller {
 				'special' 	 => $special,
 				'rating'     => $rating,
 				'weight'	 => ((int)$result['weight']) . $result['weight_class'],
-				'type'		 => (($result['product_type']==0)?'每份固定重量':'先称重后付款'),
+				'model'	 	 => $result['model'],
+				'type'		 => $result['type'],
+				'product_type' => $result['product_type'],
+				'subscribe'	 => $result['subscribe'],
 				'original_href'    	 => $this->url->link('product/product', 'product_id=' . $result['product_id']),
 				'href'    	 => $this->url->link('mobile_store/product', 'product_id=' . $result['product_id'])
 			);

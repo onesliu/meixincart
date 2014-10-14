@@ -158,6 +158,7 @@ class ControllerMobileStoreProduct extends Controller {
 			$this->data['text_share'] = $this->language->get('text_share');
 			$this->data['text_wait'] = $this->language->get('text_wait');
 			$this->data['text_tags'] = $this->language->get('text_tags');
+			$this->data['text_sellrule'] = '销售单位';
 			
 			$this->data['entry_name'] = $this->language->get('entry_name');
 			$this->data['entry_review'] = $this->language->get('entry_review');
@@ -185,6 +186,11 @@ class ControllerMobileStoreProduct extends Controller {
 			$this->data['model'] = $product_info['model'];
 			$this->data['reward'] = $product_info['reward'];
 			$this->data['points'] = $product_info['points'];
+			$this->data['weight'] = ((int)$product_info['weight']) . $product_info['weight_class'];
+			$this->data['model'] = $product_info['model'];
+			$this->data['type']	= $product_info['type'];
+			$this->data['product_type']	= $product_info['product_type'];
+			$this->data['subscribe'] = $product_info['subscribe'];
 			
 			if ($product_info['quantity'] <= 0) {
 				$this->data['stock'] = $product_info['stock_status'];
@@ -337,6 +343,11 @@ class ControllerMobileStoreProduct extends Controller {
 					'price'   	 => $price,
 					'special' 	 => $special,
 					'rating'     => $rating,
+					'weight'	 => ((int)$result['weight']) . $result['weight_class'],
+					'model'	 	 => $result['model'],
+					'type'		 => $result['type'],
+					'product_type' => $result['product_type'],
+					'subscribe'	 => $result['subscribe'],
 					'reviews'    => sprintf($this->language->get('text_reviews'), (int)$result['reviews']),
 					'href'    	 => $this->url->link('mobile_store/product', 'product_id=' . $result['product_id']),
 				);
