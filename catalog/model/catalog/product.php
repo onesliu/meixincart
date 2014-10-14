@@ -83,6 +83,7 @@ class ModelCatalogProduct extends Model {
 				'date_modified'    => $query->row['date_modified'],
 				'viewed'           => $query->row['viewed'],
 				'product_type'     => $query->row['product_type'],
+				'weight_class'  => $query->row['weight_class'],
 				'type'			   => (($query->row['product_type']==0)?'固定重量商品':'先称重后付款商品'),
 				'subscribe'		   => ($query->row['model'].'，每'.((int)$query->row['weight']) . $query->row['weight_class'].'单价')
 			);
