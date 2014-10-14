@@ -38,9 +38,9 @@
 	      <span><?php echo $text_price; ?></span>
 	      <span class="price" style="color:#f17225;">
 	        <?php if (!$special) { ?>
-	        <?php echo $price.'/'.$weight; ?>
+	        <?php echo $price; ?>
 	        <?php } else { ?>
-	        <span class="price-old"><?php echo $price.'/'.$weight; ?></span> <span class="price-new"><?php echo $special; ?></span>
+	        <span class="price-old"><?php echo $price; ?></span> <span class="price-new"><?php echo $special; ?></span>
 	        <?php } ?>
 	        <?php if ($tax) { ?>
 	        <span class="price-tax"><?php echo $text_tax; ?> <?php echo $tax; ?></span>
@@ -55,7 +55,7 @@
 	          <?php } ?>
 	        </div>
 	        <?php } ?>
-	      </span>
+	      </span><span><?php echo '/'.$weight; ?></span>
 	      <?php } ?>
 		<br/>
         <span><?php echo $text_sellrule; ?></span> <?php echo $model; ?><br />
@@ -63,7 +63,7 @@
         <span><?php echo $text_model; ?></span> <?php echo $type; ?>
 		
 		<?php if ($review_status) { ?>
-			<div style="margin-top: 3px;"><img src="catalog/view/theme/default/image/stars-<?php echo $rating; ?>.png" alt="<?php echo $reviews; ?>" /></div>
+			<!-- <div style="margin-top: 3px;"><img src="catalog/view/theme/default/image/stars-<?php echo $rating; ?>.png" alt="<?php echo $reviews; ?>" /></div> -->
 		<?php } ?>
 	  
 	  </div>

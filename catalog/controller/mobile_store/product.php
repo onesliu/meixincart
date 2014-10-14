@@ -158,7 +158,7 @@ class ControllerMobileStoreProduct extends Controller {
 			$this->data['text_share'] = $this->language->get('text_share');
 			$this->data['text_wait'] = $this->language->get('text_wait');
 			$this->data['text_tags'] = $this->language->get('text_tags');
-			$this->data['text_sellrule'] = '销售单位';
+			$this->data['text_sellrule'] = '销售单位：';
 			
 			$this->data['entry_name'] = $this->language->get('entry_name');
 			$this->data['entry_review'] = $this->language->get('entry_review');
