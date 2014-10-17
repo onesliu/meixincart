@@ -220,7 +220,7 @@ class ModelQingyouMqExchangeData extends Model
                     $query1 = $this->db->query($sql);
                 }
             }
-            return  $contents;
+            return $contents;
         }
         else if ( $type == 3 )
         {
