@@ -10,6 +10,20 @@ class ControllerMobileStoreCart extends Controller {
 		}
 		
 		// Update
+		if (!empty($this->request->post['update']) && $this->request->post['update'] == "true") {
+			$json = new stdClass();
+			if (isset($this->request->post['key']) && isset($this->request->post['num'])) {
+				$this->cart->update($this->request->post['key'], $this->request->post['num']);
+				$json->status = 0;
+			}
+			else {
+				$this->log->write(print_r($this->request->post,true));
+				$json->status = -1;
+			}
+			$this->response->setOutput(json_encode($json));
+			return;
+		}
+		
 		if (!empty($this->request->post['quantity'])) {
 			foreach ($this->request->post['quantity'] as $key => $value) {
 				$this->cart->update($key, $value);
@@ -158,7 +172,7 @@ class ControllerMobileStoreCart extends Controller {
 			} else {
 				$this->data['weight'] = '';
 			}
-						 
+
 			$this->load->model('tool/image');
 			
       		$this->data['products'] = array();
@@ -372,8 +386,8 @@ class ControllerMobileStoreCart extends Controller {
 			$this->children = array(
 				'mobile_store/content_bottom',
 				'mobile_store/content_top',
-				'mobile_store/footer',
-				'mobile_store/header'	
+				'mobile_store/navi',
+				'mobile_store/header'
 			);
 						
 			$this->response->setOutput($this->render());					
@@ -397,8 +411,8 @@ class ControllerMobileStoreCart extends Controller {
 			$this->children = array(
 				'mobile_store/content_top',
 				'mobile_store/content_bottom',
-				'mobile_store/footer',
-				'mobile_store/header'	
+				'mobile_store/navi',
+				'mobile_store/header'
 			);
 					
 			$this->response->setOutput($this->render());			

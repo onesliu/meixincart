@@ -15,7 +15,7 @@ class ControllerMobileStoreCategory extends Controller {
 		} else {
 			$page = 1;
 		}
-		$limit = 10;
+		$limit = 20;
 
 		if (isset($this->request->get['fspath'])) {
 			$path = '';
@@ -184,7 +184,7 @@ class ControllerMobileStoreCategory extends Controller {
 			
 			if ($page <= 1) {
 				$this->children = array(
-					'mobile_store/column_left',
+					'mobile_store/navi',
 					'mobile_store/content_top',
 					'mobile_store/content_bottom',
 					'mobile_store/footer',
@@ -207,7 +207,7 @@ class ControllerMobileStoreCategory extends Controller {
 			}
 			
 			$this->children = array(
-				'mobile_store/column_left',
+				'mobile_store/navi',
 				'mobile_store/content_top',
 				'mobile_store/content_bottom',
 				'mobile_store/footer',

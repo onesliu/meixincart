@@ -52,7 +52,7 @@ $(document).ready(function() {
 		});
 	});
 	
-	$('.success img, .warning img, .attention img, .information img').live('click', function() {
+	$('.success img, .warning img, .attention img, .information img').delegate('click', function() {
 		$(this).parent().fadeOut('slow', function() {
 			$(this).remove();
 		});
