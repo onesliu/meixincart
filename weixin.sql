@@ -52,7 +52,7 @@ create table if not exists oc_event(
 	Others text default null
 )ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-//配送区域
+/*配送区域*/
 CREATE TABLE if not exists `oc_district` (
   `id` int(11) NOT NULL auto_increment,
   `city` varchar(128) NOT NULL,
@@ -78,6 +78,93 @@ CREATE TABLE if not exists pos_exchange_store (
 	`gettime` timestamp default now(),
 	PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE if not exists qy_menu_group (
+	`id` int(11) NOT NULL auto_increment,
+	`name` varchar(256) not null,
+	`disable` int(11) default 0,
+	`sort` int(11) default 0,
+	`image` varchar(1024),
+	`hasname` int(11) default 1,
+	PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE if not exists qy_menu (
+	`id` int(11) NOT NULL auto_increment,
+	`name` varchar(256) not null,
+	`desp` text,
+	`disable` int(11) default 0,
+	`sort` int(11) default 0,
+	`image1` varchar(1024),
+	`image2` varchar(1024),
+	`image3` varchar(1024),
+	PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE if not exists qy_rel_menu_group (
+	`menu_id` int(11) NOT NULL,
+	`menu_group_id` int(11) not null,
+	PRIMARY KEY  (`menu_id`, `menu_group_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE if not exists qy_food (
+	`id` int(11) NOT NULL auto_increment,
+	`name` varchar(256) not null,
+	`desp` text,
+	`disable` int(11) default 0,
+	`sort` int(11) default 0,
+	`image1` varchar(1024),
+	`image2` varchar(1024),
+	`image3` varchar(1024),
+	`make_video` varchar(1024),
+	PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE if not exists qy_rel_food_menu (
+	`food_id` int(11) NOT NULL,
+	`menu_id` int(11) not null,
+	PRIMARY KEY  (`food_id`, `menu_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE if not exists qy_food_source (
+	`food_id` int(11) NOT NULL,
+	`product_id` int(11) not null,
+	`source_type` int(11) default 0, /*0主料，1辅料*/
+	`sort` int(11) default 0,
+	PRIMARY KEY  (`food_id`, `product_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE if not exists qy_food_make (
+	`id` int(11) NOT NULL auto_increment,
+	`food_id` int(11) NOT NULL,
+	`step` int(11),
+	`desp` text,
+	`image` varchar(1024),
+	PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE if not exists qy_food_attr (
+	`id` int(11) NOT NULL auto_increment,
+	`stype` varchar(32) NOT NULL,
+	`name` varchar(256) not null,
+	`disable` int(11) default 0,
+	`sort` int(11) default 0,
+	PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE if not exists qy_rel_food_attr (
+	`food_id` int(11) NOT NULL,
+	`attr_id` int(11) not null,
+	PRIMARY KEY  (`food_id`, `attr_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+insert into qy_food_attr set stype='制作难度', name='快速制作';
+insert into qy_food_attr set stype='制作难度', name='中等复杂度';
+insert into qy_food_attr set stype='制作难度', name='精细制作';
+insert into qy_food_attr set stype='适宜人群', name='老人';
+insert into qy_food_attr set stype='适宜人群', name='幼儿';
+insert into qy_food_attr set stype='适宜人群', name='青少年';
+insert into qy_food_attr set stype='适宜人群', name='孕产妇';
 
 //地址信息微信使用说明
 /*oc_address

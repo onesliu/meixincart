@@ -613,19 +613,19 @@
                 <td></td>
               </tr>
             </thead>
-            <?php $image_row = 0; ?>
+            <?php $step = 0; ?>
             <?php foreach ($product_images as $product_image) { ?>
-            <tbody id="image-row<?php echo $image_row; ?>">
+            <tbody id="image-row<?php echo $step; ?>">
               <tr>
-                <td class="left"><div class="image"><img src="<?php echo $product_image['thumb']; ?>" alt="" id="thumb<?php echo $image_row; ?>" />
-                    <input type="hidden" name="product_image[<?php echo $image_row; ?>][image]" value="<?php echo $product_image['image']; ?>" id="image<?php echo $image_row; ?>" />
+                <td class="left"><div class="image"><img src="<?php echo $product_image['thumb']; ?>" alt="" id="thumb<?php echo $step; ?>" />
+                    <input type="hidden" name="product_image[<?php echo $step; ?>][image]" value="<?php echo $product_image['image']; ?>" id="image<?php echo $step; ?>" />
                     <br />
-                    <a onclick="image_upload('image<?php echo $image_row; ?>', 'thumb<?php echo $image_row; ?>');"><?php echo $text_browse; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a onclick="$('#thumb<?php echo $image_row; ?>').attr('src', '<?php echo $no_image; ?>'); $('#image<?php echo $image_row; ?>').attr('value', '');"><?php echo $text_clear; ?></a></div></td>
-                <td class="right"><input type="text" name="product_image[<?php echo $image_row; ?>][sort_order]" value="<?php echo $product_image['sort_order']; ?>" size="2" /></td>
-                <td class="left"><a onclick="$('#image-row<?php echo $image_row; ?>').remove();" class="button"><?php echo $button_remove; ?></a></td>
+                    <a onclick="image_upload('image<?php echo $step; ?>', 'thumb<?php echo $step; ?>');"><?php echo $text_browse; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a onclick="$('#thumb<?php echo $step; ?>').attr('src', '<?php echo $no_image; ?>'); $('#image<?php echo $step; ?>').attr('value', '');"><?php echo $text_clear; ?></a></div></td>
+                <td class="right"><input type="text" name="product_image[<?php echo $step; ?>][sort_order]" value="<?php echo $product_image['sort_order']; ?>" size="2" /></td>
+                <td class="left"><a onclick="$('#image-row<?php echo $step; ?>').remove();" class="button"><?php echo $button_remove; ?></a></td>
               </tr>
             </tbody>
-            <?php $image_row++; ?>
+            <?php $step++; ?>
             <?php } ?>
             <tfoot>
               <tr>
@@ -1231,7 +1231,7 @@ function image_upload(field, thumb) {
 };
 //--></script> 
 <script type="text/javascript"><!--
-var image_row = <?php echo $image_row; ?>;
+var image_row = <?php echo $step; ?>;
 
 function addImage() {
     html  = '<tbody id="image-row' + image_row + '">';

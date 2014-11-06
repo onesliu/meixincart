@@ -1,4 +1,15 @@
 <?php echo $header; ?>
+<body>
+<div data-role="page">
+	<?php echo $navi; ?>
+	<div data-role="content">
+		<?php echo $content_top; ?>
+		<?php echo $content_bottom; ?>
+	</div>
+</div>
+</body>
+
+<?php echo $header; ?>
 <div id="content" class="square"><?php echo $content_top; ?>
   <h1><?php echo $heading_title; ?></h1>
   
