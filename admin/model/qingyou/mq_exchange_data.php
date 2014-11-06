@@ -23,65 +23,132 @@ class ModelQingyouMqExchangeData extends Model
                 $this->log->write($value);
                 $arr_goodsproperty = explode("|", $value);
 
-                $sql = "SELECT * FROM oc_product WHERE ean = '".$arr_goodsproperty[2]."'";
+                $goods_type_id          = trim($arr_goodsproperty[0]);
+                $goods_type_parentid    = trim($arr_goodsproperty[1]);
+                $goods_type_name        = trim($arr_goodsproperty[2]);
+                $goods_barcode          = trim($arr_goodsproperty[3]);
+                $goods_name             = trim($arr_goodsproperty[4]);
+                $goods_code             = trim($arr_goodsproperty[5]);
+                $goods_number           = trim($arr_goodsproperty[6]);
+                $goods_cost             = trim($arr_goodsproperty[7]);
+                $goods_labelprice       = trim($arr_goodsproperty[8]);
+                $goods_lowestprice      = trim($arr_goodsproperty[9]);
+                $goods_desp             = trim($arr_goodsproperty[10]);
+                $goods_goodtype         = trim($arr_goodsproperty[11]);
+
+                // oc_product
+                $sql = "SELECT * FROM oc_product WHERE ean = '".$goods_barcode."'";
                 $query = $this->db->query($sql);
                 if ( $query->num_rows != 0 )
                 {
-                    ;// Update .....
+                    $sql = "UPDATE oc_product SET product_type = ".$goods_goodtype.
+                                          " WHERE          ean = '".$goods_barcode."'";
+                    $query = $this->db->query($sql);
+
+                    $product_id = $query->row['product_id'];
                 }
                 else
                 {
-                    // Insert new goods
-                    $sql = "INSERT INTO oc_product SET ean = '".trim($arr_goodsproperty[2]).
-                                        "', price = ".trim($arr_goodsproperty[7]).
-                                        ", product_type = ".trim($arr_goodsproperty[10]);
+                    $sql = "INSERT INTO oc_product SET ean = '".$goods_barcode.
+                                                       "', price = ".$goods_labelprice.
+                                                       ", product_type = ".$goods_goodtype;
                     $query = $this->db->query($sql);
 
                     $product_id = $this->db->getLastId();
+                }
 
-                    $sql = "SELECT * FROM oc_product_description WHERE product_id = ".$product_id;
+                // oc_product_description
+                $sql = "SELECT * FROM oc_product_description WHERE product_id = ".$product_id;
+                $query = $this->db->query($sql);
+                if ( $query->num_rows != 0 )
+                {
+                    $sql = "UPDATE oc_product_description SET name = '".$goods_name.
+                                                              "', description = '".$goods_desp.
+                                                     "' WHERE product_id = ".$product_id;
                     $query = $this->db->query($sql);
-                    if ( $query->num_rows != 0 )
-                    {
-                        ;// Update ...
-                    }
-                    else
-                    {
-                        $sql = "INSERT INTO oc_product_description SET product_id = ".$product_id.
-                                            ", name = '".trim($arr_goodsproperty[3]).
-                                            "', description = '".trim($arr_goodsproperty[9])."'";
-                        $query = $this->db->query($sql);
+                }
+                else
+                {
+                    $sql = "INSERT INTO oc_product_description SET product_id = ".$product_id.
+                                                                   ", name = '".$goods_name.
+                                                                   "', description = '".$goods_desp."'";
+                    $query = $this->db->query($sql);
+                }
 
-                        $sql = "SELECT * FROM oc_product_to_category WHERE product_id = ".$product_id;
-                        $query = $this->db->query($sql);
-                        if ( $query->num_rows != 0 )
-                        {
-                            ;// Update ...
-                        }
-                        else
-                        {
-                            $sql = "INSERT INTO oc_product_to_category SET product_id = ".$product_id.
-                                                ", category_id = ".trim($arr_goodsproperty[0]);
-                            $query = $this->db->query($sql);
+                // oc_product_to_category
+                $sql = "SELECT * FROM oc_product_to_category WHERE product_id = ".$product_id;
+                $query = $this->db->query($sql);
+                if ( $query->num_rows != 0 )
+                {
+                    $sql = "UPDATE oc_product_to_category SET category_id = ".$goods_type_id.
+                                                      " WHERE  product_id = ".$product_id;
+                    $query = $this->db->query($sql);
+                }
+                else
+                {
+                    $sql = "INSERT INTO oc_product_to_category SET product_id = ".$product_id.
+                                                                   ", category_id = ".$goods_type_id;
+                    $query = $this->db->query($sql);
+                }
 
-                            $category_id = trim($arr_goodsproperty[0]);
+                // oc_category
+                $sql = "SELECT * FROM oc_category WHERE category_id = ".$goods_type_id;
+                $query = $this->db->query($sql);
+                if ( $query->num_rows != 0 )
+                {
+                    $sql = "UPDATE oc_category SET parent_id = ".$goods_type_parentid.
+                                           " WHERE category_id = ".$goods_type_id;
+                    $query = $this->db->query($sql);
+                }
+                else
+                {
+                    $sql = "INSERT INTO oc_category SET category_id = ".$goods_type_id.
+                                                        ", parent_id = ".$goods_type_parentid;
+                    $query = $this->db->query($sql);
+                }
 
-                            $sql = "SELECT * FROM oc_category WHERE category_id = ".$category_id;
-                            $query = $this->db->query($sql);
-                            if ( $query->num_rows != 0 )
-                            {
-                                ;// Update ...
-                            }
-                            else
-                            {
-                                $sql = "INSERT INTO oc_category SET category_id = ".$category_id;
-                                $query = $this->db->query($sql);
+                // oc_category_description
+                $sql = "SELECT * FROM oc_category_description WHERE category_id = ".$goods_type_id;
+                $query = $this->db->query($sql);
+                if ( $query->num_rows != 0 )
+                {
+                    $sql = "UPDATE oc_category_description SET name = '".$goods_type_name.
+                                                      "' WHERE category_id = ".$goods_type_id;
+                    $query = $this->db->query($sql);
+                }
+                else
+                {
+                    $sql = "INSERT INTO oc_category_description SET category_id = ".$goods_type_id.
+                                                                    ", name = '".$goods_type_name."'";
+                    $query = $this->db->query($sql);
+                }
 
-                                $sql = "INSERT INTO oc_category_description SET name = '".trim($arr_goodsproperty[1])."'";
-                                $query = $this->db->query($sql);
-                            }
-                        }
-                    }
+                // oc_category_to_store
+                $sql = "SELECT * FROM oc_category_to_store WHERE category_id = ".$goods_type_id;
+                $query = $this->db->query($sql);
+                if ( $query->num_rows != 0 )
+                {
+                     ;//
+                }
+                else
+                {
+                    $sql = "INSERT INTO oc_category_to_store SET category_id = ".$goods_type_id.
+                                                                 ", store_id = 0";
+                    $query = $this->db->query($sql);
+                }
+
+                // oc_category_to_store
+                $sql = "SELECT * FROM oc_category_to_store WHERE category_id = ".$goods_type_id;
+                $query = $this->db->query($sql);
+                if ( $query->num_rows != 0 )
+                {
+                     ;//
+                }
+                else
+                {
+                    $sql = "INSERT INTO oc_category_to_store SET category_id = ".$goods_type_id.
+                                                                 ", store_id = 0";
+                    $query = $this->db->query($sql);
                 }
             }
         }
@@ -107,11 +174,11 @@ class ModelQingyouMqExchangeData extends Model
                     continue;
                 else
                 {
-                    $sql = "SELECT * FROM oc_product WHERE ean = ".$arr_goodsproperty[2];
+                    $sql = "SELECT * FROM oc_product WHERE ean = ".trim($arr_goodsproperty[2]);
                     $query = $this->db->query($sql);
                     if ( $query->num_rows != 0 )
                     {
-                        $sql = "UPDATE oc_product SET price = ".$arr_goodsproperty[4];
+                        $sql = "UPDATE oc_product SET price = ".trim($arr_goodsproperty[4]);
                         $query = $this->db->query($sql);
                     }
                 }
@@ -153,7 +220,7 @@ class ModelQingyouMqExchangeData extends Model
                     $query1 = $this->db->query($sql);
                 }
             }
-            return  $contents;
+            return $contents;
         }
         else if ( $type == 3 )
         {
