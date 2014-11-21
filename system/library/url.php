@@ -24,6 +24,10 @@ class Url {
 		
 		$url .= $this->index.'?route=' . $route;
 			
+		if ($connection == 'wxpay' && isset($this->session->data['oauth_code']) && isset($this->session->data['oauth_state'])) {
+			$args .= '&showwxpaytitle=1&code=' . $this->session->data['oauth_code'] . "&state=" . $this->session->data['oauth_state'];
+		}
+		
 		if ($args) {
 			$url .= str_replace('&', '&amp;', '&' . ltrim($args, '&')); 
 		}

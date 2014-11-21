@@ -49,8 +49,7 @@ class ControllerMobileStoreCheckoutOrder extends Controller {
 		
 		if ($order_info['order_type']==0) {
 			//'微信支付'
-			$param = 'showwxpaytitle=1&code=' . $this->session->data['oauth_code'] . "&state=" . $this->session->data['oauth_state'];
-			$weixin_payment = $this->url->link('weixin/pay', $param);
+			$weixin_payment = $this->url->link('weixin/pay', '', 'wxpay');
 		}
 		else {
 			//'下单待称重'

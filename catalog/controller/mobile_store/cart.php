@@ -35,7 +35,7 @@ class ControllerMobileStoreCart extends Controller {
 			unset($this->session->data['payment_methods']); 
 			unset($this->session->data['reward']);
 			
-			$this->redirect($this->url->link('mobile_store/cart'));  			
+			$this->redirect($this->url->link('mobile_store/cart', '', 'wxpay'));  			
 		}
        	
 		// Remove
@@ -52,7 +52,7 @@ class ControllerMobileStoreCart extends Controller {
 			unset($this->session->data['payment_methods']); 
 			unset($this->session->data['reward']);  
 								
-			$this->redirect($this->url->link('mobile_store/cart'));
+			$this->redirect($this->url->link('mobile_store/cart', '', 'wxpay'));
 		}
 			
 		// Coupon    
@@ -61,7 +61,7 @@ class ControllerMobileStoreCart extends Controller {
 				
 			$this->session->data['success'] = $this->language->get('text_coupon');
 			
-			$this->redirect($this->url->link('mobile_store/cart'));
+			$this->redirect($this->url->link('mobile_store/cart', '', 'wxpay'));
 		}
 		
 		// Voucher
@@ -70,7 +70,7 @@ class ControllerMobileStoreCart extends Controller {
 				
 			$this->session->data['success'] = $this->language->get('text_voucher');
 				
-			$this->redirect($this->url->link('mobile_store/cart'));
+			$this->redirect($this->url->link('mobile_store/cart', '', 'wxpay'));
 		}
 
 		// Reward
@@ -79,7 +79,7 @@ class ControllerMobileStoreCart extends Controller {
 				
 			$this->session->data['success'] = $this->language->get('text_reward');
 				
-			$this->redirect($this->url->link('mobile_store/cart'));
+			$this->redirect($this->url->link('mobile_store/cart', '', 'wxpay'));
 		}
 		
 		// Shipping
@@ -90,7 +90,7 @@ class ControllerMobileStoreCart extends Controller {
 			
 			$this->session->data['success'] = $this->language->get('text_shipping');
 			
-			$this->redirect($this->url->link('mobile_store/cart'));
+			$this->redirect($this->url->link('mobile_store/cart', '', 'wxpay'));
 		}
 		
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -167,7 +167,7 @@ class ControllerMobileStoreCart extends Controller {
 				$this->data['success'] = '';
 			}
 			
-			$this->data['action'] = $this->url->link('mobile_store/cart');   
+			$this->data['action'] = $this->url->link('mobile_store/cart', '', 'wxpay');   
 						
 			if ($this->config->get('config_cart_weight')) {
 				$this->data['weight'] = $this->weight->format($this->cart->getWeight(), $this->config->get('config_weight_class_id'), $this->language->get('decimal_point'), $this->language->get('thousand_point'));
@@ -251,7 +251,7 @@ class ControllerMobileStoreCart extends Controller {
         			'weight_class' => $product['weight_class'],
         			'perweight' => ((int)($product['perweight'])),
 					'href'     => $this->url->link('mobile_store/product', 'product_id=' . $product['product_id']),
-					'remove'   => $this->url->link('mobile_store/cart', 'remove=' . $product['key'])
+					'remove'   => $this->url->link('mobile_store/cart', 'remove=' . $product['key'], 'wxpay')
 				);
 				
 				$this->data['order_type'] += $product['product_type'];
@@ -268,7 +268,7 @@ class ControllerMobileStoreCart extends Controller {
 						'key'         => $key,
 						'description' => $voucher['description'],
 						'amount'      => $this->currency->format($voucher['amount']),
-						'remove'      => $this->url->link('mobile_store/cart', 'remove=' . $key)   
+						'remove'      => $this->url->link('mobile_store/cart', 'remove=' . $key, 'wxpay')   
 					);
 				}
 			}
@@ -390,8 +390,7 @@ class ControllerMobileStoreCart extends Controller {
 						
 			$this->data['continue'] = $this->url->link('mobile_store/home');
 			
-			$param = 'showwxpaytitle=1&code=' . $this->session->data['oauth_code'] . "&state=" . $this->session->data['oauth_state'];
-			$this->data['checkout'] = $this->url->link('mobile_store/checkout_order', $param, 'SSL');
+			$this->data['checkout'] = $this->url->link('mobile_store/checkout_order', '', 'wxpay');
 			
 			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/mobile_store/cart.tpl')) {
 				$this->template = $this->config->get('config_template') . '/template/mobile_store/cart.tpl';

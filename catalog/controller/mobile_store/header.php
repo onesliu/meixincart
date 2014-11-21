@@ -91,7 +91,7 @@ class ControllerMobileStoreHeader extends Controller {
 		$this->data['logged'] = $this->customer->isLogged();
 		$this->data['account'] = $this->url->link('mobile_store/account', '', 'SSL');
 		$this->data['category_list'] = $this->url->link('mobile_store/category_list', '', 'SSL');
-		$this->data['cart'] = $this->url->link('mobile_store/cart', 'showwxpaytitle=1');
+		$this->data['cart'] = $this->url->link('mobile_store/cart', '', 'wxpay');
 		$this->data['checkout'] = $this->url->link('mobile_store/checkout', '', 'SSL');
 		$this->data['order'] = $this->url->link('mobile_store/order', '', 'SSL');
 		
