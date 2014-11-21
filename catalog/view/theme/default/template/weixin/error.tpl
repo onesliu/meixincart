@@ -1,15 +1,14 @@
 <?php echo $header; ?>
-<div id="content" class="square" style="background:transparent;border:0px;">
-
-  <div>
-	<div class="checkout-content" style="display:block;">
-	<span><?php echo $error_msg; ?></span>
+<body>
+<div data-role="page" id="weixinerrorpage" data-theme="a" data-title="下单结果">
+	<?php echo $titlebar; ?>
+	<div data-role="content">
+		<div class="ui-body ui-body-b ui-corner-all">
+			<p><?php echo $error_msg; ?></p>
+		</div>
+		<a href="<?php echo $continue; ?>" class="ui-btn ui-btn-a ui-corner-all"><?php echo $text_continue; ?></a>
 	</div>
-  </div>
-  <?php if (isset($continue)) { ?>
-  <div>
-    <div class="center"><a href="<?php echo $continue; ?>" class="button_11 blue blue_borderbottom radius4"><?php echo $text_continue; ?></a></div>
-  </div>
-  <?php } ?>
+	<?php if (isset($navi)) echo $navi;?>
 </div>
-<?php echo $footer; ?>
+</body>
+
