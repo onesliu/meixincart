@@ -40,7 +40,7 @@
 	  	
 	  	<form id="weixin_payment" name="weixin_payment" method="post" action="<?php echo $checkout; ?>">
 		<?php echo $shipping; ?>
-		<input type="submit" id="checkoutbtn" class="ui-btn ui-corner-all ui-shadow ui-btn-a" value="下单" />
+		<input type="button" id="checkoutbtn" onclick="checkout();" class="ui-btn ui-corner-all ui-shadow ui-btn-a" value="下单" />
 		</form>
 	  	
 		<div data-role="popup" id="popupDialog" data-position-to="window" data-transition="pop" data-theme="b" data-overlay-theme="b" data-dismissible="false" style="max-width:400px;">
@@ -112,7 +112,8 @@
 		}
 
 		function checkout(){
-			$.mobile.changePage(checkouturl);
+			if (check_form()) {$('#weixin_payment').submit();}
+			//$.mobile.changePage(checkouturl);
 		};
 
 		function changebtn(totals) {
