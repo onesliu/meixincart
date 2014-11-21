@@ -18,7 +18,7 @@
 		</p>
     </div>
 
-    <div id="shipping_address" class="ui-body ui-body-b ui-corner-all" style="margin-bottom:.4em;">
+    <div class="ui-body ui-body-b ui-corner-all" style="margin-bottom:.4em;">
 	    <h4 class="labelh">就近称重门店</h4>
 	    <select id="district-select" name="district-select">
       		<option value="0">请选择就近的称重门店</option>
@@ -40,12 +40,12 @@
 <script type="text/javascript"><!--
 function check_form() {
 	if ($('#addr').css("display") == "none") {
-		alert('请选择一个收货地址吧！');
+		alert('请选择一个电话号码和收货地址，称重过程中如果遇到问题我们会联络您。');
 		return false;
 	}
 	
 	if ($('#district-select option:selected').val() == 0) {
-		alert('系统无法自动从您的地址中判断出就近的配送点，请人工选择。如果太远无法配送，客服会联络您哦～');
+		alert('请选择就近的称重点。我们会判断您是否在服务范围内，并由客服联络您。');
 		return false;
 	}
 
