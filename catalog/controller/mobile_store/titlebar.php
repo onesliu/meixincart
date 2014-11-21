@@ -18,7 +18,7 @@ class ControllerMobileStoreTitlebar extends Controller {
 		$this->data['category_list'] = $this->url->link('mobile_store/category_list', '', 'SSL');
 		$this->data['category'] = $this->url->link('mobile_store/category', '', 'SSL');
 		$this->data['product'] = $this->url->link('mobile_store/allproduct', '', 'SSL');
-		$this->data['cart'] = $this->url->link('mobile_store/cart');
+		$this->data['cart'] = $this->url->link('mobile_store/cart', 'showwxpaytitle=1');
 		$this->data['order'] = $this->url->link('mobile_store/order', '', 'SSL');
 		$this->data['menu'] = $this->url->link('mobile_store/menu_group', '', 'SSL');
 		
@@ -38,7 +38,7 @@ class ControllerMobileStoreTitlebar extends Controller {
 		$options = array();
 		$options[] = array(
 				'name' => $this->language->get('text_checkout'),
-				'url' => $this->url->link('mobile_store/cart'),
+				'url' => $this->url->link('mobile_store/cart', 'showwxpaytitle=1'),
 			);
 		$options[] = array(
 				'name' => $this->language->get('text_order'),

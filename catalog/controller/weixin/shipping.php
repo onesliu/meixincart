@@ -77,6 +77,7 @@ class ControllerWeixinShipping extends ControllerWeixinWeixin {
 		$addrHelper = new PayHelper();
 		$addrHelper->add_param("appid", $this->appid);
 		$url = "http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+		$url = $url.'&code=' . $this->session->data['oauth_code'] . "&state=" . $this->session->data['oauth_state'];
 		$addrParam['url'] = str_replace("&amp;", "&", $url);
 		$addrHelper->add_param("url", $addrParam['url']);
 		$addrParam['timeStamp'] = time();

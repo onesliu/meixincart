@@ -40,12 +40,12 @@
 <script type="text/javascript"><!--
 function check_form() {
 	if ($('#addr').css("display") == "none") {
-		alert('请选择一个电话号码和收货地址，称重过程中如果遇到问题我们会联络您。');
+		alert('请编辑一个收货地址（电话），我们服务过程中如果遇到任何问题将会电话联络您。');
 		return false;
 	}
 	
 	if ($('#district-select option:selected').val() == 0) {
-		alert('请选择就近的称重点。我们会判断您是否在服务范围内，并由客服联络您。');
+		alert('请选择一个就近的服务门店。该门店一旦和您的收货地址匹配，以后都由他们为您服务。');
 		return false;
 	}
 
