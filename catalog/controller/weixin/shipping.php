@@ -22,6 +22,8 @@ class ControllerWeixinShipping extends ControllerWeixinWeixin {
 		if ($address != false) {
 			$this->data['address'] = $address;
 		}
+		
+		$this->data['saveaddr_url'] = $this->url->link('mobile_store/shipping/saveaddr');
 
 		// shipping values
 		$this->data['text_shipping_time'] = $this->language->get('text_shipping_time');

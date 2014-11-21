@@ -1,11 +1,12 @@
 <?php echo $header; ?>
-<div class="container">
-  <div id="content" class="round"><?php echo $content_top; ?>
-    <h1><?php echo $heading_title; ?></h1>
-    <div class="content"><?php echo $text_error; ?></div>
-    <div class="buttons">
-      <div class="right"><a href="<?php echo $continue; ?>" class="button"><span><?php echo $button_continue; ?></span></a></div>
-    </div>
-    <?php echo $content_bottom; ?></div>
+<body>
+<div data-role="page" id="errpage" data-theme="a" data-title="<?php echo $heading_title; ?>">
+	<?php echo $titlebar; ?>
+	<div data-role="content">
+		<div class="ui-body ui-body-b ui-corner-all">
+			<p><?php echo $text_error; ?></p>
+		</div>
+	</div>
+	<?php if (isset($navi)) echo $navi;?>
 </div>
-<?php echo $footer; ?>
+</body>

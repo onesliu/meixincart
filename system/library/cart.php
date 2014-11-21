@@ -31,7 +31,9 @@ class Cart {
 					$options = array();
 				} 
 				
-				$product_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product p LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) WHERE p.product_id = '" . (int)$product_id . "' AND pd.language_id = '" . (int)$this->config->get('config_language_id') . "' AND p.date_available <= NOW() AND p.status = '1'");
+				$product_query = $this->db->query("SELECT *,wd.title as weight_class FROM " . DB_PREFIX . "product p LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id)
+					left join " . DB_PREFIX . "weight_class_description wd on wd.weight_class_id=p.weight_class_id
+					WHERE p.product_id = '" . (int)$product_id . "' AND pd.language_id = '" . (int)$this->config->get('config_language_id') . "' AND p.date_available <= NOW() AND p.status = '1'");
 				
 				if ($product_query->num_rows) {
 					$option_price = 0;
@@ -163,6 +165,10 @@ class Cart {
 					}
 					
 					$price = $product_query->row['price'];
+					$sellprice = $product_query->row['mpn']; //销售单位价格
+					if (!isset($sellprice)) {
+						$sellprice = $price;
+					}
 					
 					// Product Discounts
 					$discount_quantity = 0;
@@ -227,16 +233,21 @@ class Cart {
 						'option'          => $option_data,
 						'download'        => $download_data,
 						'quantity'        => $quantity,
+						'unit'			  => $product_query->row['sku'], //库存单位 
+						'sellunit'		  => $product_query->row['upc'], //销售单位 
+						'sellprice'	  	  => $sellprice, //销售单位价格
 						'minimum'         => $product_query->row['minimum'],
 						'subtract'        => $product_query->row['subtract'],
 						'stock'           => $stock,
 						'price'           => ($price + $option_price),
-						'total'           => ($price + $option_price) * $quantity,
+						'total'           => ($sellprice + $option_price) * $quantity,
 						'reward'          => $reward * $quantity,
 						'points'          => ($product_query->row['points'] ? ($product_query->row['points'] + $option_points) * $quantity : 0),
 						'tax_class_id'    => $product_query->row['tax_class_id'],
 						'weight'          => ($product_query->row['weight'] + $option_weight) * $quantity,
 						'weight_class_id' => $product_query->row['weight_class_id'],
+						'weight_class' => $product_query->row['weight_class'],
+						'perweight'		=> ($product_query->row['weight'] + $option_weight),
 						'length'          => $product_query->row['length'],
 						'width'           => $product_query->row['width'],
 						'height'          => $product_query->row['height'],

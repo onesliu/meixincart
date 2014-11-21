@@ -1,28 +1,31 @@
 <?php echo $header; ?>
 <body>
-<div data-role="page" id="pageone" data-title="<?php echo $heading_title; ?>">
-	<?php echo $navi; ?>
+<div data-role="page" id="categorypage" data-theme="a" data-title="<?php echo $heading_title; ?>">
+	<?php echo $titlebar; ?>
 	<div data-role="content">
-	<?php echo $content_top; ?>
 
-  	<ul data-role="listview" id="plist">
+  	<ul data-role="listview" id="plist" data-inset="true" data-split-icon="shop" data-theme="c" data-divider-theme="c" data-count-theme="c">
+  		<li data-role="list-divider"><?php echo $heading_title; ?></li>
   	<?php foreach ($products as $product) { ?>
-  		<li data-icon="plus">
+  		<li>
   			<a href="<?php echo $product['href']; ?>">
-  			<img src="<?php echo $product['thumb']; ?>">
+  			<img src="<?php echo $product['thumb']; ?>" />
   			<h2><?php echo $product['name']; ?></h2>
-  			<p><?php echo $product['description']; ?></p>
+  			<p><span style="color:red;"><?php echo $product['price']; ?></span>/<?php echo $product['unit']; ?>
+  			<?php if ($product['product_type'] == 0) { ?>
+  			（每<?php echo $product['sellunit']; ?>:<span style="color:red;">￥<?php echo $product['sellprice']; ?></span>）
+  			<?php } else { ?>
+  			（每<?php echo $product['sellunit']; ?>约:<span style="color:red;">￥<?php echo $product['sellprice']; ?></span>）
+  			<?php } ?>
+			</p>
 
-  			<?php if ($product['price']) { ?>
-				<p class="ui-li-aside">
-				<span><?php echo $product['price']; ?></span><br/>
-				<?php if (!$product['special']) { ?>
-					<span><?php echo $product['special']; ?></span>
-				<?php } ?>
+  			<?php if ($product['model']) { ?>
+				<p class="ui-li-aside" style="right:.4em">
+					<?php echo $product['model']; ?>
 				</p>
 			<?php } ?>
-			
-    		<a href="#1" onclick="addToCart(<?php echo $product['product_id'];?>);"><?php echo $button_cart; ?></a>
+			</a>
+    		<a href="#1" onclick="addToCart(<?php echo $product['product_id'];?>);" style="border-left:0px;"><?php echo $button_cart; ?></a>
   		</li>
   	<?php } ?>
   	</ul>
@@ -31,8 +34,6 @@
 	<p><a id="bmore" href="#" data-role="button">更多...</a></p>
 	<?php } ?>
 
-	<?php echo $content_bottom; ?>
-	
 	<script type="text/javascript"><!--
 	function addToCart(product_id, quantity) {
 		quantity = typeof(quantity) != 'undefined' ? quantity : 1;
@@ -53,9 +54,10 @@
 					$('#buy_alert').html(json['success']);
 					
 					//$('#cart_total').html(json['total']);
-					$('#alert_footer').slideDown('fast');
+					$('#positionWindow').popup( 'reposition', 'positionTo: window' );
+					$('#positionWindow').popup('open', { positionTo: "window" });
 					setTimeout(function() {
-						$("#alert_footer").hide()
+						$("#positionWindow").popup('close');
 					}, 1000);
 				}	
 			}
@@ -65,12 +67,12 @@
 	var url_more="<?php echo $pagination->url; ?>";
 	var um_page=<?php echo $pagination->page; ?>;
 	var um_pages=<?php echo $pagination->num_pages; ?>;
-	$(document).on("pageinit","#pageone",function(){
+	$(document).on("pageinit","#categorypage",function(){
 		$("#bmore").on("click", function(){
 			um_page++;
 			url = "<?php echo $pagination->url; ?>" + "&page=" + um_page;
 			$.get(url, function(data,status) {
-				$("#plist").append(data).find("li:last").hide();
+				$("#plist").append(data);
 				$("#plist").listview('refresh');
 				$("#plist").find("li:last").slideDown(300);
 				if (um_page >= um_pages) {
@@ -79,12 +81,20 @@
 			});
 		});
 	});
+
+	function searchproduct() {
+        var url = "<?php echo $searchurl; ?>";
+        var filter = $('#product_search').val();
+        url += '&filter=' + filter;
+        $.mobile.changePage(url, {allowSamePageTransition:true});
+	}
 	//--></script> 
 	</div>
 	
-	<div data-role="footer" id="alert_footer" data-position="fixed" style="display:none;">
-		<h1 id="buy_alert"></h1>
+	<div data-role="popup" id="positionWindow" data-transition="slideup" data-position-to="window" class="ui-content" data-theme="a">
+		<p id="buy_alert"></p>
 	</div>
+	<?php echo $navi; ?>
 </div>
 
 </body>

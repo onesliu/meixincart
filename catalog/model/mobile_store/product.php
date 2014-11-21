@@ -23,7 +23,7 @@ class ModelMobileStoreProduct extends Model {
 		(int)$customer_group_id . "') AS reward, 
 		(SELECT ss.name FROM " . DB_PREFIX . "stock_status ss WHERE 
 		ss.stock_status_id = p.stock_status_id AND ss.language_id = '" . (int)$this->config->get('config_language_id') . "') AS stock_status, 
-		(SELECT wcd.unit FROM " . DB_PREFIX . "weight_class_description wcd WHERE p.weight_class_id = wcd.weight_class_id 
+		(SELECT wcd.title FROM " . DB_PREFIX . "weight_class_description wcd WHERE p.weight_class_id = wcd.weight_class_id 
 		AND wcd.language_id = '" . (int)$this->config->get('config_language_id') . "') AS weight_class, 
 		(SELECT lcd.unit FROM " . DB_PREFIX . "length_class_description lcd WHERE p.length_class_id = lcd.length_class_id 
 		AND lcd.language_id = '" . (int)$this->config->get('config_language_id') . "') AS length_class, 
@@ -40,6 +40,8 @@ class ModelMobileStoreProduct extends Model {
 		if ($query->num_rows) {
 			$query->row['price'] = ($query->row['discount'] ? $query->row['discount'] : $query->row['price']);
 			$query->row['rating'] = (int)$query->row['rating'];
+			$query->row['type']	= (($query->row['product_type']==0)?'�̶�����Ʒ':'�ȳ��غ󸶿���Ʒ');
+			$query->row['subscribe'] = ($query->row['model'].'��ÿ'.((int)$query->row['weight']) . $query->row['weight_class'].'����');
 			
 			return $query->row;
 		} else {

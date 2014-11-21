@@ -34,7 +34,9 @@ class ControllerMobileStoreOrder extends Controller {
 		} else {
 			$page = 1;
 		}
-		$limit = 10;
+		$limit = 30;
+		
+		$this->load->model('tool/image');
 		
 		$this->data['orders'] = array();
 		
@@ -44,7 +46,15 @@ class ControllerMobileStoreOrder extends Controller {
 		
 		foreach ($results as $result) {
 			$product_total = $this->model_account_order->getOrderProducts($result['order_id']);
-			$voucher_total = $this->model_account_order->getOrderVouchers($result['order_id']);
+			
+			$pname = '';
+			foreach($product_total as &$product) {
+				$pname .= $product['name'].' ';
+				if ($product['image'])
+					$product['image'] = $this->model_tool_image->resize($product['image'], $this->config->get('config_image_category_width'), $this->config->get('config_image_category_height'));
+				else
+					$product['image'] = $this->model_tool_image->img_url('no_image.jpg');
+			}
 
 			$this->data['orders'][] = array(
 				'order_id'   => $result['order_id'],
@@ -52,6 +62,7 @@ class ControllerMobileStoreOrder extends Controller {
 				'status'     => $result['status'],
 				'date_added' => $result['date_added'],
 				'products'   => $product_total,
+				'productnames' => $pname,
 				'total'      => $this->currency->format($result['total'], $result['currency_code'], $result['currency_value']),
 				'href'       => $this->url->link('mobile_store/order/info', 'order_id=' . $result['order_id'], 'SSL'),
 				'reorder'    => $this->url->link('mobile_store/order', 'order_id=' . $result['order_id'], 'SSL')
@@ -68,18 +79,24 @@ class ControllerMobileStoreOrder extends Controller {
 		//$pagination->render();
 		
 		$this->data['pagination'] = $pagination;
+		
+		$this->request->get['back'] = true;
+		
+		if ($page == 1)
+			$tfile = "order.tpl";
+		else
+			$tfile = "order_more.tpl";
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/mobile_store/order.tpl')) {
-			$this->template = $this->config->get('config_template') . '/template/mobile_store/order.tpl';
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . "/template/mobile_store/$tfile")) {
+			$this->template = $this->config->get('config_template') . "/template/mobile_store/$tfile";
 		} else {
-			$this->template = 'default/template/mobile_store/order.tpl';
+			$this->template = "default/template/mobile_store/$tfile";
 		}
 		
 		if ($page <= 1) {
 			$this->children = array(
-				'mobile_store/content_top',
-				'mobile_store/content_bottom',
-				'mobile_store/footer',
+				'mobile_store/titlebar',
+				'mobile_store/navi',
 				'mobile_store/header'
 			);
 		}
@@ -103,7 +120,8 @@ class ControllerMobileStoreOrder extends Controller {
     	}
 						
 		$this->load->model('account/order');
-			
+		$this->request->get['back'] = true;
+		
 		$order_info = $this->model_account_order->getOrder($order_id);
 		
 		if ($order_info) {
@@ -305,9 +323,7 @@ class ControllerMobileStoreOrder extends Controller {
 			}
 			
 			$this->children = array(
-			'mobile_store/content_top',
-			'mobile_store/content_bottom',
-			'mobile_store/footer',
+			'mobile_store/titlebar',
 			'mobile_store/header'
 			);
 								
@@ -323,16 +339,14 @@ class ControllerMobileStoreOrder extends Controller {
 			
       		$this->data['continue'] = $this->url->link('mobile_store/order', '', 'SSL');
 			 			
-			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/error/not_found.tpl')) {
-				$this->template = $this->config->get('config_template') . '/template/error/not_found.tpl';
+			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/mobile_store/not_found.tpl')) {
+				$this->template = $this->config->get('config_template') . '/template/mobile_store/not_found.tpl';
 			} else {
-				$this->template = 'default/template/error/not_found.tpl';
+				$this->template = 'default//template/mobile_store/not_found.tpl';
 			}
 			
 			$this->children = array(
-			'mobile_store/content_top',
-			'mobile_store/content_bottom',
-			'mobile_store/footer',
+			'mobile_store/titlebar',
 			'mobile_store/header'
 			);
 								

@@ -90,10 +90,8 @@ class ControllerMobileStoreCheckoutOnestep extends Controller {
 		}
 		
 		$this->children = array(
-			'mobile_store/content_top',
-			'mobile_store/content_bottom',
+			'mobile_store/titlebar',
 			'weixin/shipping',
-			'mobile_store/footer',
 			'mobile_store/header'
 		);
 

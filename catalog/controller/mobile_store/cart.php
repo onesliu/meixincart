@@ -8,7 +8,7 @@ class ControllerMobileStoreCart extends Controller {
 		if (!isset($this->session->data['vouchers'])) {
 			$this->session->data['vouchers'] = array();
 		}
-		
+
 		// Update
 		if (!empty($this->request->post['update']) && $this->request->post['update'] == "true") {
 			$json = new stdClass();
@@ -94,6 +94,8 @@ class ControllerMobileStoreCart extends Controller {
 		}
 		
 		$this->document->setTitle($this->language->get('heading_title'));
+		$this->request->get['back'] = true;
+		$this->data['minum_order'] = $this->config->get('minum_order');
 
     	if ($this->cart->hasProducts() || !empty($this->session->data['vouchers'])) {
 			$points = $this->customer->getRewardPoints();
@@ -156,7 +158,7 @@ class ControllerMobileStoreCart extends Controller {
 			} else {
 				$this->data['attention'] = '';
 			}
-						
+
 			if (isset($this->session->data['success'])) {
 				$this->data['success'] = $this->session->data['success'];
 			
@@ -177,6 +179,8 @@ class ControllerMobileStoreCart extends Controller {
 			
       		$this->data['products'] = array();
 			
+      		$this->data['order_type'] = 0;
+      		
 			$products = $this->cart->getProducts();
 
       		foreach ($products as $product) {
@@ -234,14 +238,26 @@ class ControllerMobileStoreCart extends Controller {
           			'model'    => $product['model'],
           			'option'   => $option_data,
           			'quantity' => $product['quantity'],
+        			'product_type' => $product['product_type'],
+        			'unit' 	   => $product['unit'],  //库存单位
+        			'sellunit' => $product['sellunit'], //销售单位
+        			'sellprice' => $product['sellprice'],  //销售单位价格
           			'stock'    => $product['stock'],
+        			'minimum'  => $product['minimum'],
 					'reward'   => ($product['reward'] ? sprintf($this->language->get('text_points'), $product['reward']) : ''),
-					'price'    => $price,
-					'total'    => $total,
+					'price'    => $this->currency->format($product['price'],'','',false),
+					'total'    => $this->currency->format($product['total'],'','',false),
+        			'weight'   => ((int)($product['weight'])),
+        			'weight_class' => $product['weight_class'],
+        			'perweight' => ((int)($product['perweight'])),
 					'href'     => $this->url->link('mobile_store/product', 'product_id=' . $product['product_id']),
 					'remove'   => $this->url->link('mobile_store/cart', 'remove=' . $product['key'])
 				);
+				
+				$this->data['order_type'] += $product['product_type'];
       		}
+      		
+      		$this->session->data['order_type'] = $this->data['order_type'];
 			
 			// Gift Voucher
 			$this->data['vouchers'] = array();
@@ -369,14 +385,14 @@ class ControllerMobileStoreCart extends Controller {
       				$this->data['totals'][] = $total;
       			}
       		}
+      		//$this->log->write(print_r($this->data['totals'],true));
 			//$this->data['totals'] = $total_data;
 						
 			$this->data['continue'] = $this->url->link('mobile_store/home');
 			
 			$param = 'showwxpaytitle=1&code=' . $this->session->data['oauth_code'] . "&state=" . $this->session->data['oauth_state'];
-			$this->data['checkout'] = $this->url->link('mobile_store/checkout_onestep', $param, 'SSL');
-			//$this->data['checkout'] = $this->url->link('checkout/checkout', '', 'SSL');
-
+			$this->data['checkout'] = $this->url->link('mobile_store/checkout_order', $param, 'SSL');
+			
 			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/mobile_store/cart.tpl')) {
 				$this->template = $this->config->get('config_template') . '/template/mobile_store/cart.tpl';
 			} else {
@@ -384,10 +400,10 @@ class ControllerMobileStoreCart extends Controller {
 			}
 			
 			$this->children = array(
-				'mobile_store/content_bottom',
-				'mobile_store/content_top',
+				'mobile_store/titlebar',
 				'mobile_store/navi',
-				'mobile_store/header'
+				'mobile_store/header',
+				'weixin/shipping'
 			);
 						
 			$this->response->setOutput($this->render());					
@@ -409,8 +425,7 @@ class ControllerMobileStoreCart extends Controller {
 			}
 			
 			$this->children = array(
-				'mobile_store/content_top',
-				'mobile_store/content_bottom',
+				'mobile_store/titlebar',
 				'mobile_store/navi',
 				'mobile_store/header'
 			);

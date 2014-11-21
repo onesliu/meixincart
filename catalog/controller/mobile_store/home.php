@@ -6,6 +6,13 @@ class ControllerMobileStoreHome extends Controller {
 
 		$this->data['heading_title'] = $this->config->get('config_title');
 		
+		if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {
+			$dir_img = $this->config->get('config_ssl') . 'image/';
+		} else {
+			$dir_img = $this->config->get('config_url') . 'image/';
+		}
+		$this->data['logo'] = $dir_img . 'logo.png';
+		
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/mobile_store/home.tpl')) {
 			$this->template = $this->config->get('config_template') . '/template/mobile_store/home.tpl';
 		} else {
@@ -13,8 +20,7 @@ class ControllerMobileStoreHome extends Controller {
 		}
 		
 		$this->children = array(
-			'mobile_store/content_top',
-			'mobile_store/content_bottom',
+			'mobile_store/titlebar',
 			'mobile_store/navi',
 			'mobile_store/header'
 		);

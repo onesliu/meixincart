@@ -8,7 +8,10 @@ class ControllerMobileStoreCategory extends Controller {
 		$this->load->model('catalog/product');
 		$this->load->model('mobile_store/product');
 		
-		$this->load->model('tool/image'); 
+		$this->load->model('tool/image');
+		
+		$this->request->get['back'] = true;
+		$this->request->get['product_page'] = true;
 		
 		if (isset($this->request->get['page'])) {
 			$page = $this->request->get['page'];
@@ -138,23 +141,37 @@ class ControllerMobileStoreCategory extends Controller {
 					$tax = $this->currency->format((float)$result['special'] ? $result['special'] : $result['price']);
 				} else {
 					$tax = false;
-				}				
+				}
 				
 				if ($this->config->get('config_review_status')) {
 					$rating = (int)$result['rating'];
 				} else {
 					$rating = false;
 				}
+				
+				if ($result['product_type'] == 0) {
+					$scalable = '付款后称重';
+				}
+				else {
+					$scalable = '称重后付款';
+				}
 								
 				$this->data['products'][] = array(
 					'product_id'  => $result['product_id'],
 					'thumb'       => $image,
+					'model'		  => $result['model'],
 					'name'        => $result['name'],
 					'description' => mb_substr(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')), 0, 100) . '..',
 					'price'       => $price,
+					'unit'		  => $result['sku'], //库存单位
+					'sellunit'	  => $result['upc'], //销售单位
+					'sellprice'	  => $result['mpn'], //销售单位价格
+					'product_type' => $result['product_type'],
 					'special'     => $special,
 					'tax'         => $tax,
 					'rating'      => $result['rating'],
+					'weight_show' => ((int)$result['weight']) . $result['weight_class'],
+					'scalable'	  => $scalable,
 					'reviews'     => sprintf($this->language->get('text_reviews'), (int)$result['reviews']),
 					'href'        => $this->url->link('mobile_store/product', 'fspath=' . $this->request->get['fspath'] . '&product_id=' . $result['product_id'])
 				);
@@ -168,6 +185,8 @@ class ControllerMobileStoreCategory extends Controller {
 			$pagination->text = $this->language->get('text_pagination');
 			$pagination->url = $this->url->link2('mobile_store/category', 'fspath=' . $this->request->get['fspath'], 'SSL');
 			$this->data['pagination'] = $pagination;
+			
+			$this->data['searchurl'] = $this->url->link('mobile_store/allproduct');
 			
 			if ($page <= 1) {
 				$cfile = 'category.tpl';
@@ -185,9 +204,7 @@ class ControllerMobileStoreCategory extends Controller {
 			if ($page <= 1) {
 				$this->children = array(
 					'mobile_store/navi',
-					'mobile_store/content_top',
-					'mobile_store/content_bottom',
-					'mobile_store/footer',
+					'mobile_store/titlebar',
 					'mobile_store/header'
 				);
 			}
@@ -208,9 +225,7 @@ class ControllerMobileStoreCategory extends Controller {
 			
 			$this->children = array(
 				'mobile_store/navi',
-				'mobile_store/content_top',
-				'mobile_store/content_bottom',
-				'mobile_store/footer',
+				'mobile_store/titlebar',
 				'mobile_store/header'
 			);
 					

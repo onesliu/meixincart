@@ -48,7 +48,7 @@ final class MySQL {
 				}
 			} else {
 				trigger_error('Error: ' . mysql_error($this->link) . '<br />Error No: ' . mysql_errno($this->link) . '<br />' . $sql);
-				exit();
+				return false;
 			}
 		}
   	}
@@ -67,7 +67,9 @@ final class MySQL {
 
   	public function getLastId() {
 		if ($this->link) {
-    		return mysql_insert_id($this->link);
+			$result = $this->query("SELECT last_insert_id() as maxid");
+			$lastid = $result->row['maxid'];
+    		return $lastid;
 		}
   	}	
 	

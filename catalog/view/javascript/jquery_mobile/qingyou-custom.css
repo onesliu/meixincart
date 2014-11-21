@@ -1,0 +1,4 @@
+/* Fallback */
+.ui-nosvg .ui-icon-logo:after {
+	background-image: url("iconimg.png");
+}

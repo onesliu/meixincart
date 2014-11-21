@@ -1,6 +1,6 @@
 <?php
 // HTTP
-define('MY_DOMAIN', '192.168.1.108/opencart');
+define('MY_DOMAIN', '192.168.1.4/opencart');
 define('HTTP_SERVER', 'http://'.MY_DOMAIN.'/');
 
 // HTTPS

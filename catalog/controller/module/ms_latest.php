@@ -8,10 +8,13 @@ class ControllerModuleMSLatest extends Controller {
 		$this->data['button_cart'] = $this->language->get('button_cart');
 		
 		$this->data['show_class'] = ($setting['initial'] == "up") ? "active" : "";
-				
-		$this->load->model('mobile_store/product');
 		
 		$this->load->model('tool/image');
+		
+		$this->data['image_width'] = $setting['image_width'];
+		$this->data['image_height'] = $setting['image_height'];
+
+		$this->load->model('mobile_store/product');
 		
 		$this->data['products'] = array();
 		
@@ -26,9 +29,9 @@ class ControllerModuleMSLatest extends Controller {
 
 		foreach ($results as $result) {
 			if ($result['image']) {
-				$image = $this->model_tool_image->resize($result['image'], $setting['image_width'], $setting['image_height']);
+				$image = $this->model_tool_image->img_url($result['image']);
 			} else {
-				$image = false;
+				$image = $this->model_tool_image->img_url('no_image.jpg');
 			}
 						
 			if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
@@ -57,6 +60,11 @@ class ControllerModuleMSLatest extends Controller {
 				'price'   	 => $price,
 				'special' 	 => $special,
 				'rating'     => $rating,
+				'weight'	 => ((int)$result['weight']) . $result['weight_class'],
+				'model'	 	 => $result['model'],
+				'type'		 => $result['type'],
+				'product_type' => $result['product_type'],
+				'subscribe'	 => $result['subscribe'],
 				'original_href'    	 => $this->url->link('product/product', 'product_id=' . $result['product_id']),
 				'href'    	 => $this->url->link('mobile_store/product', 'product_id=' . $result['product_id'])
 			);
@@ -76,5 +84,6 @@ class ControllerModuleMSLatest extends Controller {
 
 		$this->render();
 	}
+	
 }
 ?>

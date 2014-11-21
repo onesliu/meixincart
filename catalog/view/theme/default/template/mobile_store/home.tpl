@@ -1,10 +1,10 @@
 <?php echo $header; ?>
 <body>
-<div data-role="page">
-	<?php echo $navi; ?>
+<div data-role="page" data-theme="a" id="menugrouppage">
+	<?php echo $titlebar; ?>
 	<div data-role="content">
-		<?php echo $content_top; ?>
-		<?php echo $content_bottom; ?>
+		
 	</div>
+	<?php echo $navi; ?>
 </div>
 </body>

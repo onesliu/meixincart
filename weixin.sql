@@ -158,9 +158,16 @@ CREATE TABLE if not exists qy_rel_food_attr (
 	PRIMARY KEY  (`food_id`, `attr_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+create table if not exists qy_balance(
+	id integer not null auto_increment primary key,
+	shop_id integer not null,
+	last_balance_date timestamp default now(),
+	order_id bigint not null
+)ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
 insert into qy_food_attr set stype='制作难度', name='快速制作';
-insert into qy_food_attr set stype='制作难度', name='中等复杂度';
-insert into qy_food_attr set stype='制作难度', name='精细制作';
+insert into qy_food_attr set stype='制作难度', name='中等复杂';
+insert into qy_food_attr set stype='制作难度', name='较难制作';
 insert into qy_food_attr set stype='适宜人群', name='老人';
 insert into qy_food_attr set stype='适宜人群', name='幼儿';
 insert into qy_food_attr set stype='适宜人群', name='青少年';
@@ -209,6 +216,7 @@ alter table oc_order add shipping_telephone varchar(32);
 alter table oc_order add transaction_id varchar(256) default "";
 alter table oc_order add weixin_pay_result text default NULL;
 alter table oc_order add order_type integer default 0;
+alter table oc_order add balance integer default 0;
 
 alter table oc_order_product add `realweight` double default 0.0;
 alter table oc_order_product add `realtotal` double default 0.0;
@@ -234,6 +242,7 @@ alter table oc_user add district_id int(11) default 0;
 
 insert into oc_setting (`key`,`value`) values('first_shipping_time', '9');
 insert into oc_setting (`key`,`value`) values('last_shipping_time', '19');
+insert into oc_setting (`key`,`value`) values('minum_order', '20.00');
 
 alter table oc_order_status add wxtitle varchar(128);
 alter table oc_order_status add wxmsg varchar(2048);
@@ -251,3 +260,13 @@ update oc_order_status set wxtitle='订单配送中', wxmsg = '亲爱的客户�
 update oc_order_status set wxtitle='订单已完成', wxmsg = '亲爱的客户，您的订单已经配送到家！\n欢迎惠顾！\n\n订单编号：%s\n订单金额：%s\n下单时间：%s\n消费明细：%s\n\n点击查看详情' where order_status_id = 4;
 update oc_order_status set wxtitle='订单已退款', wxmsg = '亲爱的客户，您的订单已退款！\n\n订单编号：%s\n订单金额：%s\n下单时间：%s\n消费明细：%s\n\n点击查看详情' where order_status_id = 5;
 update oc_order_status set wxtitle='订单已取消', wxmsg = '亲爱的客户，您的订单已取消！\n\n订单编号：%s\n订单金额：%s\n下单时间：%s\n消费明细：%s\n\n点击查看详情' where order_status_id = 6;
+
+/* 维护SQL order */
+delete from oc_order_download where order_id=0;
+delete from oc_order_field where order_id=0;
+delete from oc_order_fraud where order_id=0;
+delete from oc_order_history where order_id=0;
+delete from oc_order_option where order_id=0;
+delete from oc_order_product where order_id=0;
+delete from oc_order_total where order_id=0;
+delete from oc_order_voucher where order_id=0;

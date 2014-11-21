@@ -60,9 +60,6 @@ class ControllerWeixinPay extends ControllerWeixinWeixin {
 			return;
 		}
 		
-		if (!isset($order_info['fromdb']))
-			$this->submit_order($order_info);
-		
 		$jsHelper = new PayHelper();
 		$jsHelper->add_param('appId', $resHelper->get('appid'));
 		$jsHelper->add_param('signType', 'MD5');
@@ -96,56 +93,12 @@ class ControllerWeixinPay extends ControllerWeixinWeixin {
 		if (!isset($this->session->data['order_info'])) {
 			$this->redirect($this->url->link('mobile_store/home'));
 		}
-		$this->submit_order($this->session->data['order_info']);
 		$this->session->data['error_msg'] = '下单成功，请等待门店称重计价后发送微信支付消息。';
 		$this->session->data['url_continue'] = $this->url->link('mobile_store/order');
 		$this->session->data['text_continue'] = '马上查看订单';
 		$this->redirect($this->url->link('weixin/error'));
 	}
 	
-	public function submit_order($order_info) {
-		$this->load->model('checkout/order');
-		$this->load->model('account/district');
-		$this->load->model('account/address');
-		$this->load->model('account/customer');
-		
-		//$this->log->write(print_r($this->request->post, true));
-		$order_info['shipping_district_id'] = $this->request->post['district-select'];
-		$order_info['shipping_time'] = $this->request->post['time-select'];
-		$order_info['shipping_firstname'] = $this->request->post['user_name'];
-		$order_info['shipping_telephone'] = $this->request->post['user_telephone'];
-		$order_info['shipping_address_1'] = $this->request->post['user_addr'];
-		
-		$addr['firstname'] = $order_info['shipping_firstname'];
-		$addr['telephone'] = $order_info['shipping_telephone'];
-		$addr['address_1'] = $order_info['shipping_address_1'];
-		$addr['district_id'] = $order_info['shipping_district_id'];
-		$addr['lastname'] = '';
-		$addr['company'] = '';
-		$addr['company_id'] = '';
-		$addr['tax_id'] = '';
-		$addr['address_2'] = '';
-		$addr['postcode'] = $this->request->post['user_postcode'];;
-		$addr['city'] = $this->request->post['user_city'];;
-		$addr['zone_id'] = 0;
-		$addr['country_id'] = 44;
-		
-		$addrid = $this->model_account_address->findAddress($addr);
-		if ($addrid == null) {
-			 $addrid = $this->model_account_address->addAddress($addr);
-		}
-		$this->model_account_customer->setLastAddress($this->customer->getId(), $addrid);
-		
-		$this->model_checkout_order->addOrder($order_info);
-		if ($order_info['order_type'] == 0) //固定价订单状态转换至：待付款
-			$this->model_checkout_order->confirm($order_info['order_id'], 2);
-		else  //变价订单状态转换至：待称重
-			$this->model_checkout_order->confirm($order_info['order_id'], 1);
-		
-		$this->cart->clear();
-		$this->session->data['order_id'] = $order_info['order_id'];
-		//unset($this->session->data['order_info']);
-	}
 }
 
 ?>

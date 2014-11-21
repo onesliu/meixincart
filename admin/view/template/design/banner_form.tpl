@@ -45,26 +45,26 @@
               <td></td>
             </tr>
           </thead>
-          <?php $step = 0; ?>
+          <?php $image_row = 0; ?>
           <?php foreach ($banner_images as $banner_image) { ?>
-          <tbody id="image-row<?php echo $step; ?>">
+          <tbody id="image-row<?php echo $image_row; ?>">
             <tr>
               <td class="left"><?php foreach ($languages as $language) { ?>
-                <input type="text" name="banner_image[<?php echo $step; ?>][banner_image_description][<?php echo $language['language_id']; ?>][title]" value="<?php echo isset($banner_image['banner_image_description'][$language['language_id']]) ? $banner_image['banner_image_description'][$language['language_id']]['title'] : ''; ?>" />
+                <input type="text" name="banner_image[<?php echo $image_row; ?>][banner_image_description][<?php echo $language['language_id']; ?>][title]" value="<?php echo isset($banner_image['banner_image_description'][$language['language_id']]) ? $banner_image['banner_image_description'][$language['language_id']]['title'] : ''; ?>" />
                 <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /><br />
-                <?php if (isset($error_banner_image[$step][$language['language_id']])) { ?>
-                <span class="error"><?php echo $error_banner_image[$step][$language['language_id']]; ?></span>
+                <?php if (isset($error_banner_image[$image_row][$language['language_id']])) { ?>
+                <span class="error"><?php echo $error_banner_image[$image_row][$language['language_id']]; ?></span>
                 <?php } ?>
                 <?php } ?></td>
-              <td class="left"><input type="text" name="banner_image[<?php echo $step; ?>][link]" value="<?php echo $banner_image['link']; ?>" /></td>
-              <td class="left"><div class="image"><img src="<?php echo $banner_image['thumb']; ?>" alt="" id="thumb<?php echo $step; ?>" />
-                  <input type="hidden" name="banner_image[<?php echo $step; ?>][image]" value="<?php echo $banner_image['image']; ?>" id="image<?php echo $step; ?>"  />
+              <td class="left"><input type="text" name="banner_image[<?php echo $image_row; ?>][link]" value="<?php echo $banner_image['link']; ?>" /></td>
+              <td class="left"><div class="image"><img src="<?php echo $banner_image['thumb']; ?>" alt="" id="thumb<?php echo $image_row; ?>" />
+                  <input type="hidden" name="banner_image[<?php echo $image_row; ?>][image]" value="<?php echo $banner_image['image']; ?>" id="image<?php echo $image_row; ?>"  />
                   <br />
-                  <a onclick="image_upload('image<?php echo $step; ?>', 'thumb<?php echo $step; ?>');"><?php echo $text_browse; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a onclick="$('#thumb<?php echo $step; ?>').attr('src', '<?php echo $no_image; ?>'); $('#image<?php echo $step; ?>').attr('value', '');"><?php echo $text_clear; ?></a></div></td>
-              <td class="left"><a onclick="$('#image-row<?php echo $step; ?>').remove();" class="button"><?php echo $button_remove; ?></a></td>
+                  <a onclick="image_upload('image<?php echo $image_row; ?>', 'thumb<?php echo $image_row; ?>');"><?php echo $text_browse; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a onclick="$('#thumb<?php echo $image_row; ?>').attr('src', '<?php echo $no_image; ?>'); $('#image<?php echo $image_row; ?>').attr('value', '');"><?php echo $text_clear; ?></a></div></td>
+              <td class="left"><a onclick="$('#image-row<?php echo $image_row; ?>').remove();" class="button"><?php echo $button_remove; ?></a></td>
             </tr>
           </tbody>
-          <?php $step++; ?>
+          <?php $image_row++; ?>
           <?php } ?>
           <tfoot>
             <tr>
@@ -78,7 +78,7 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-var image_row = <?php echo $step; ?>;
+var image_row = <?php echo $image_row; ?>;
 
 function addImage() {
     html  = '<tbody id="image-row' + image_row + '">';

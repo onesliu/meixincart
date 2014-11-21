@@ -1,66 +1,49 @@
 <?php echo $header; ?>
-<div id="content" class="square" style="background:transparent;border:0px;"><?php echo $content_top; ?>
-
-  <div class="checkout">
-    <div id="confirm">
-      <div class="checkout-content" style="display:block;">
-      <div class="checkout-heading">订单明细</div>
-		<div class="checkout-product">
-		  <table>
+<body>
+<div data-role="page" id="checkoutpage" data-theme="a" data-title="<?php echo $heading_title; ?>">
+<style type="text/css">
+.ui-table-columntoggle-btn {
+    display: none !important;
+}
+</style>
+	<?php echo $titlebar; ?>
+	<div data-role="content">
+		<h4 class="ui-bar" style="margin:3px 0 1px 0;">订单明细</h4>
+		<div class="ui-body ui-body-b ui-corner-all" style="margin-bottom:.4em;">
+		  <table data-role="table" data-mode="columntoggle" class="ui-responsive table-stroke">
 		    <thead>
 		      <tr>
-		        <td class="name"><?php echo $column_name; ?></td>
-		        <td class="quantity"><?php echo $column_quantity; ?></td>
-		        <td class="price"><?php echo $column_price; ?></td>
-		        <td class="total"><?php echo $column_total; ?></td>
+		        <td data-priority="1"><?php echo $column_name; ?></td>
+		        <td data-priority="2"><?php echo $column_quantity; ?></td>
+		        <td data-priority="3"><?php echo $column_total; ?></td>
 		      </tr>
 		    </thead>
 		    <tbody>
 		      <?php foreach ($products as $product) { ?>
 		      <tr>
-		        <td class="name"><a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a>
-		          <?php foreach ($product['option'] as $option) { ?>
-		          <br />
-		          &nbsp;<small> - <?php echo $option['name']; ?>: <?php echo $option['value']; ?></small>
-		          <?php } ?></td>
-		        <td class="quantity"><?php echo $product['quantity']; ?></td>
-		        <td class="price"><?php echo $product['price']; ?></td>
-		        <td class="total"><?php echo $product['total']; ?></td>
+		        <td><?php echo $product['name']; ?></td>
+		        <td><?php echo $product['quantity']; ?></td>
+		        <td><?php echo $product['total']; ?></td>
 		      </tr>
 		      <?php } ?>
-		      <?php if (isset($vouchers)) { foreach ($vouchers as $voucher) { ?>
 		      <tr>
-		        <td class="name"><?php echo $voucher['description']; ?></td>
-		        <td class="quantity">1</td>
-		        <td class="price"><?php echo $voucher['amount']; ?></td>
-		        <td class="total"><?php echo $voucher['amount']; ?></td>
+		      <tfoot>
+		        <?php foreach ($totals as $total) {  ?>
+		        <tr>
+		        <td> </td>
+		        <td><?php echo $total['title']; ?>:</td>
+		        <td><?php echo $total['text']; ?></td>
 		      </tr>
-		      <?php }} ?>
+		      <?php } ?>
 		    </tbody>
-		    <tfoot>
-		      <?php foreach ($totals as $total) { ?>
-		      <tr>
-		        <td colspan="3" class="price"><b><?php echo $total['title']; ?>:</b></td>
-		        <td class="total"><?php echo $total['text']; ?></td>
-		      </tr>
-		      <?php } ?>
-		    </tfoot>
 		  </table>
 		</div>
-      </div>
-    </div>
-    
-	<form id="weixin_payment" name="weixin_payment" method="post" action="<?php echo $weixin_payment; ?>">
-    <?php echo $shipping; ?>
-    </form>
-    
-  </div>
-  <div>
-    <div class="center"><a onclick="if (check_form()) {$('#weixin_payment').submit();}" class="button_11 orange orange_borderbottom radius4"><?php echo $text_pay_btn; ?></a></div>
-    <br></br>
-    <br></br>
-  </div>
-    
-<?php echo $content_bottom; ?>
+		
+		<form id="weixin_payment" name="weixin_payment" method="post" action="<?php echo $weixin_payment; ?>">
+	    <?php echo $shipping; ?>
+	    </form>
+		
+		<a onclick="if (check_form()) {$('#weixin_payment').submit();}" class="ui-btn ui-btn-a ui-corner-all"><?php echo $text_pay_btn; ?></a>
+	</div>
 </div>
-<?php echo $footer; ?>
+</body>

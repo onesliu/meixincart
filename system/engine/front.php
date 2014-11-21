@@ -32,12 +32,13 @@ final class Front {
     
 	private function execute($action) {
 		if (file_exists($action->getFile())) {
+			//$this->registry->get('log')->write($action->getFile());
 			require_once($action->getFile());
 			
 			$class = $action->getClass();
-
+			//$this->registry->get('log')->write(print_r($class,true));
 			$controller = new $class($this->registry);
-			
+			//$this->registry->get('log')->write(print_r($controller,true));
 			if (is_callable(array($controller, $action->getMethod()))) {
 				$action = call_user_func_array(array($controller, $action->getMethod()), $action->getArgs());
 			} else {
