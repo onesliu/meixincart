@@ -18,7 +18,7 @@ class ControllerWeixinMenuCreate extends ControllerWeixinWeixin {
 	}
 	
 	private function prepare_menu_def($menu_def) {
-		$url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&response_type=code&scope=snsapi_base&state=1#wechat_redirect&redirect_uri=REDIRECT_URI";
+		$url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=snsapi_base&state=1#wechat_redirect";
 		$url = str_replace('APPID', $this->config->get('weixin_appid'), $url);
 		
 		$u = "http://".MY_DOMAIN."/pay/weixin.php?route=weixin/login";
