@@ -32,6 +32,8 @@ class ModelQingyouMqBalance extends Model
             $last_date = $query->row['last_balance_date'];
         }
 
+        $user = $this->user->getUserInfo();
+        $districtid = $user['district_id'];
         $sql = "INSERT INTO qy_balance SET shop_id = ".$districtid;
         $query = $this->db->query($sql);
         $curr_id = $this->db->getLastId();
