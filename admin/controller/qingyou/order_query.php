@@ -8,10 +8,8 @@ class ControllerQingyouOrderQuery extends ControllerWeixinWeixin {
 
 		$this->load->model('qingyou/order');
 		
-		//$last_orderid = $this->request->get['last_orderid'];
-		$districtid = null;
-		if (isset($this->request->get['districtid']))
-			$districtid = $this->request->get['districtid'];
+		$user = $this->user->getUserInfo();
+		$districtid = $user['district_id'];
 			
 		$history = null;
 		if (isset($this->request->get['history']))

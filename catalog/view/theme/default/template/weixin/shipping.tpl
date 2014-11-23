@@ -23,11 +23,11 @@
 	    <select id="district-select" name="district-select">
       		<option value="0">请选择就近的称重门店</option>
       		<?php foreach($shipping_districts as $district) {
-      			if ($district['id'] != $order_info['shipping_district_id']) {
+      			if (isset($address) && ($district['id'] == $address['district_id'])) {
       		?>
-      		<option value="<?php echo $district['id']; ?>"><?php echo $district['name'];?></option>
-      		<?php } else { ?>
       		<option selected="selected" value="<?php echo $district['id']; ?>"><?php echo $district['name'];?></option>
+      		<?php } else { ?>
+      		<option value="<?php echo $district['id']; ?>"><?php echo $district['name'];?></option>
       		<?php }} ?>
       	</select>
       	<h4 class="labelh">收货时间</h4>
