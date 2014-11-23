@@ -14,7 +14,7 @@ class ModelQingyouOrder extends Model {
 			$condition .= " and o.order_id > $last_orderid";
 		}
 		
-		if ($districtid != null) {
+		if ($districtid > 0) {
 			$condition .= " and shipping_district_id = $districtid";
 		}
 		
