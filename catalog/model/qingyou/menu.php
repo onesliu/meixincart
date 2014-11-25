@@ -7,9 +7,12 @@ class ModelQingyouMenu extends Model {
 		return $query->row;
 	} 
 	
-	public function getMenus($groupid) {
+	public function getMenus($groupid = 0) {
 
-		$sql = "select * from qy_menu m join qy_rel_menu_group g on m.id=g.menu_id where g.menu_group_id=$groupid order by m.sort";
+		if ($groupid == 0)
+			$sql = "select * from qy_menu order by sort";
+		else
+			$sql = "select * from qy_menu m join qy_rel_menu_group g on m.id=g.menu_id where g.menu_group_id=$groupid order by m.sort";
 		$query = $this->db->query($sql);
 		return $query->rows;
 	}
@@ -18,7 +21,7 @@ class ModelQingyouMenu extends Model {
       	$query = $this->db->query("SELECT COUNT(*) AS total FROM qy_menu");
 		
 		return $query->row['total'];
-	}	
+	}
 	
 	public function getMenuGroups($id) {
 		$query = $this->db->query("select g.* from qy_rel_menu_group mg join qy_menu_group g on mg.menu_group_id=g.id where mg.menu_id=$id");

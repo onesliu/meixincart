@@ -16,7 +16,7 @@ class ControllerMobileStoreNavi extends Controller {
 		$this->data['product'] = $this->url->link('mobile_store/allproduct', '', 'SSL');
 		$this->data['cart'] = $this->url->link('mobile_store/cart', '', 'wxpay');
 		$this->data['order'] = $this->url->link('mobile_store/order', '', 'SSL');
-		$this->data['menu'] = $this->url->link('mobile_store/menu_group', '', 'SSL');
+		$this->data['menu'] = $this->url->link('mobile_store/menu/mlist', '', 'SSL');
 		
 		if (isset($this->request->get['product_page']))
 			$this->data['product_page'] = $this->request->get['product_page'];

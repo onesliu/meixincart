@@ -10,15 +10,7 @@
 	<?php } else { ?>
 		<ul data-role="listview" id="olist" data-inset="true" data-theme="c" data-divider-theme="c" data-count-theme="c">
 			<li data-role="list-divider">订单列表</li>
-			<?php foreach($orders as $order) { ?>
-			<li><a href="<?php echo $order["href"]; ?>">
-				<img src="<?php echo $order['products'][0]['image'];?>"></img>
-				<h4 style="margin-top:0px;padding-right:3em;"><?php echo $order['productnames'];?></h4>
-				<p style="margin-bottom:0px;"><?php echo $text_total.' '; ?><span style="color:red;"><?php echo $order["total"]; ?></span><br/>
-				<?php echo $order["date_added"]; ?></p>
-				<p class="ui-li-aside"><strong><?php echo $order["status"];?></strong></p>
-			</a></li>
-			<?php } ?>
+			<?php require('order_more.tpl'); ?>
 		</ul>
 	<?php } ?>
 		<?php if ($pagination->page < $pagination->num_pages) { ?>

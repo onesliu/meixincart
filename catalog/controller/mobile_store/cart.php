@@ -515,90 +515,45 @@ class ControllerMobileStoreCart extends Controller {
 								
 	public function add() {
 		$this->language->load('checkout/cart');
+		$this->load->model('catalog/product');
 		
-		$json = array();
+		$json = new stdClass();
 		
 		if (isset($this->request->post['product_id'])) {
 			$product_id = $this->request->post['product_id'];
-		} else {
-			$product_id = 0;
-		}
-		
-		$this->load->model('catalog/product');
-						
-		$product_info = $this->model_catalog_product->getProduct($product_id);
-		
-		if ($product_info) {			
 			if (isset($this->request->post['quantity'])) {
 				$quantity = $this->request->post['quantity'];
 			} else {
 				$quantity = 1;
 			}
-														
-			if (isset($this->request->post['option'])) {
-				$option = array_filter($this->request->post['option']);
-			} else {
-				$option = array();	
-			}
 			
-			$product_options = $this->model_catalog_product->getProductOptions($this->request->post['product_id']);
-			
-			foreach ($product_options as $product_option) {
-				if ($product_option['required'] && empty($option[$product_option['product_option_id']])) {
-					$json['error']['option'][$product_option['product_option_id']] = sprintf($this->language->get('error_required'), $product_option['name']);
-				}
-			}
-			
-			if (!$json) {
-				$this->cart->add($this->request->post['product_id'], $quantity, $option);
-
-				$json['success'] = sprintf($this->language->get('text_success'), $product_info['name']);
-				
-				unset($this->session->data['shipping_method']);
-				unset($this->session->data['shipping_methods']);
-				unset($this->session->data['payment_method']);
-				unset($this->session->data['payment_methods']);
-				
-				// Totals
-				$this->load->model('setting/extension');
-				
-				$total_data = array();					
-				$total = 0;
-				$taxes = $this->cart->getTaxes();
-				
-				$sort_order = array(); 
-				
-				$results = $this->model_setting_extension->getExtensions('total');
-				
-				foreach ($results as $key => $value) {
-					$sort_order[$key] = $this->config->get($value['code'] . '_sort_order');
-				}
-				
-				array_multisort($sort_order, SORT_ASC, $results);
-				
-				foreach ($results as $result) {
-					if ($this->config->get($result['code'] . '_status')) {
-						$this->load->model('total/' . $result['code']);
-			
-						$this->{'model_total_' . $result['code']}->getTotal($total_data, $total, $taxes);
-					}
-					
-					$sort_order = array(); 
-				  
-					foreach ($total_data as $key => $value) {
-						$sort_order[$key] = $value['sort_order'];
-					}
-		
-					array_multisort($sort_order, SORT_ASC, $total_data);			
-				}
-				
-				$json['total'] =  $this->currency->format($total);
-			} else {
-				$json['redirect'] = str_replace('&amp;', '&', $this->url->link('mobile_store/product', 'product_id=' . $this->request->post['product_id']));
-			}
+			$products[$product_id] = $quantity;
 		}
 		
-		$this->response->setOutput(json_encode($json));		
+		if (isset($this->request->post['product']))
+			$products = $this->request->post['product'];
+		
+		if (!isset($products)) {
+			$json->status = false;
+			$json->success = "加入购物车失败";
+		}
+		else {
+			$ids = array();
+			foreach($products as $product_id => $quantity) {
+				if ($quantity <= 0) $quantity = 1;
+				$this->cart->add($product_id, $quantity);
+				$ids[] = $product_id;
+			}
+			$ret = $this->model_catalog_product->getProductNames($ids);
+			$names = '';
+			foreach($ret as $row) { 
+				$names .= $row['name'].' ';
+			}
+			$json->success = sprintf($this->language->get('text_success'), $names);
+			$json->status = true;
+		}
+		
+		$this->response->setOutput(json_encode($json));
 	}
 	
 	public function quote() {
@@ -719,7 +674,7 @@ class ControllerMobileStoreCart extends Controller {
 			}				
 		}	
 		
-		$this->response->setOutput(json_encode($json));						
+		$this->response->setOutput(json_encode($json));
 	}
 	
   	public function zone() {

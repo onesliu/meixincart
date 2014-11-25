@@ -47,8 +47,8 @@
 			<p><?php echo $description; ?></p>
 		</div>
 		
-		<div data-role="popup" id="product_alert" data-transition="slideup" data-position-to="window" class="ui-content" data-theme="a">
-			<p id="palert_content"></p>
+		<div data-role="popup" id="positionWindow" data-transition="slideup" data-position-to="window" class="ui-content" data-theme="a">
+			<p id="buy_alert"></p>
 		</div>
 		
 		<script type="text/javascript"><!--
@@ -78,18 +78,13 @@
 				data: 'product_id=' + product_id + '&quantity=' + quantity,
 				dataType: 'json',
 				success: function(json) {
-					$('.success, .warning, .attention, .information, .error').remove();
-					
-					if (json['redirect']) {
-						location = json['redirect'];
-					}
-					
-					if (json['success']) {
-						$('#palert_content').html(json['success']);
+					if (json.success) {
+						$('#buy_alert').html(json.success);
 						
-						$('#product_alert').popup('open', { positionTo: "window" });
+						$('#positionWindow').popup( 'reposition', 'positionTo: window' );
+						$('#positionWindow').popup('open', { positionTo: "window" });
 						setTimeout(function() {
-							$("#product_alert").popup('close');
+							$("#positionWindow").popup('close');
 						}, 1000);
 					}
 				}

@@ -91,6 +91,13 @@ class ModelCatalogProduct extends Model {
 			return false;
 		}
 	}
+	
+	public function getProductNames($ids = array()) {
+		$sids = implode(",", $ids);
+		$sql = "select name from oc_product_description where product_id in ($sids)";
+		$query = $this->db->query($sql);
+		return $query->rows;
+	}
 
 	public function getProducts($data = array()) {
 		if ($this->customer->isLogged()) {

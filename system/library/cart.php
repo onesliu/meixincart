@@ -262,7 +262,7 @@ class Cart {
 		
 		return $this->data;
   	}
-		  
+
   	public function add($product_id, $qty = 1, $option = array()) {
     	if (!$option) {
       		$key = (int)$product_id;
