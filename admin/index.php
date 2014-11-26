@@ -21,6 +21,8 @@ require_once(DIR_SYSTEM . 'library/currency.php');
 require_once(DIR_SYSTEM . 'library/user.php');
 require_once(DIR_SYSTEM . 'library/weight.php');
 require_once(DIR_SYSTEM . 'library/length.php');
+require_once(DIR_SYSTEM . 'library/wxtools.php');
+require_once(DIR_SYSTEM . 'library/order.php');
 
 // Registry
 $registry = new Registry();

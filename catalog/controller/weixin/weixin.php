@@ -11,6 +11,8 @@ class ControllerWeixinWeixin extends Controller {
 			return; //验证失败或首次验证成功
 		}
 		
+		$wxtools = new WeixinTools();
+		
 		// 接收到消息或事件
 		if (($this->request->server['REQUEST_METHOD'] == 'POST')) {
 			//保存到数据库
@@ -25,11 +27,10 @@ class ControllerWeixinWeixin extends Controller {
 				$userinfo = $this->model_weixin_get_userinfo->getUserInfo($this->access_token, $this->WeixinFromUserName);
 				//发送关注欢迎消息
 				$this->load->model("weixin/auto_reply");
-				$param = "pay/weixin.php?route=weixin/login&email=$this->WeixinFromUserName";
 				$reply = $this->model_weixin_auto_reply->getReplyFromId($this->WeixinFromUserName,
 					$this->WeixinToUserName, 0);
 				if ($reply != false) {
-					$reply = str_replace('index.php', $param, $reply);
+					$reply = $wxtools->prepareMenu($reply, $this->appid);
 					$this->response->setOutput($reply);
 					return;
 				}
@@ -40,14 +41,13 @@ class ControllerWeixinWeixin extends Controller {
 			}
 			else if ($this->WeixinMsgType == 'event' && $this->WeixinEvent == 'CLICK') {
 				//发送自动应答消息，当用户点击该图文消息时，自动登录到商城并跳转到首页
-				$param = "pay/weixin.php?route=weixin/login&email=$this->WeixinFromUserName";
 				//菜单消息事件
 				if ($this->WeixinEventKey == 'V1001_SELF_INFO') {
 					$this->load->model("weixin/auto_reply");
 					$reply = $this->model_weixin_auto_reply->getReply($this->WeixinFromUserName,
 						$this->WeixinToUserName, 'order');
 					if ($reply != false) {
-						$reply = str_replace('index.php', $param, $reply);
+						$reply = $wxtools->prepareMenu($reply, $this->appid);
 						$this->response->setOutput($reply);
 						return;
 					}
@@ -59,11 +59,10 @@ class ControllerWeixinWeixin extends Controller {
 			else if ($this->WeixinMsgType == 'text') {
 				//自动回复
 				$this->load->model("weixin/auto_reply");
-				$param = "pay/weixin.php?route=weixin/login&email=$this->WeixinFromUserName";
 				$reply = $this->model_weixin_auto_reply->getReply($this->WeixinFromUserName,
 					$this->WeixinToUserName, $this->WeixinContent);
 				if ($reply != false) {
-					$reply = str_replace('index.php', $param, $reply);
+					$reply = $wxtools->prepareMenu($reply, $this->appid);
 					$this->response->setOutput($reply);
 					return;
 				}

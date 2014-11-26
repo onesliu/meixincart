@@ -1,5 +1,4 @@
 <?php
-include_once(DIR_APPLICATION."controller/weixin/lib/wxtools.php");
 include_once(DIR_APPLICATION."controller/weixin/weixin.php");
 
 class ControllerWeixinShipping extends ControllerWeixinWeixin { 

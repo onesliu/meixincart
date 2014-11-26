@@ -1,6 +1,5 @@
 <?php
 include_once(DIR_APPLICATION."controller/weixin/weixin.php");
-include_once(DIR_APPLICATION."controller/weixin/lib/wxtools.php");
 
 class ControllerWeixinPayResult extends ControllerWeixinWeixin {
 	public function index() {
@@ -25,9 +24,10 @@ class ControllerWeixinPayResult extends ControllerWeixinWeixin {
 			$wxPayHelper->add_param("nonce_str", (string)time());
 			$wxPayHelper->add_param("out_trade_no", (string)$order_info['order_id']);
 			
+			$wxtools = new WeixinTools();
 			$request = $wxPayHelper->make_request($this->partnerkey);
 			$url = "https://api.mch.weixin.qq.com/pay/orderquery";
-			$response = postToWx($url, $request);
+			$response = $wxtools->postToWx($url, $request);
 			
 			if ($response['rescode'] != 200) {
 				$this->log->write("weixin order query response error, ". $response['rescode']);

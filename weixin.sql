@@ -252,8 +252,8 @@ insert into oc_setting (`group`, `key`,`value`) values('weixin', 'weixin_token',
 insert into oc_setting (`group`, `key`,`value`) values('weixin', 'weixin_appid', 'wxc0a931d70de89f4c');
 insert into oc_setting (`group`, `key`,`value`) values('weixin', 'weixin_appsecret', 'c7153a6b0dba17395e66c7f4d25e35a1');
 
-insert into oc_auto_message set pattern='', MsgType='news', ItemCount=1, Items='[{"title":"菜鸽子欢迎您","description":"我们的承诺：传承老一代，用心卖好菜。\\n\\n选择菜单中的功能将全面使用本服务号。\\n如有任何疑问，请直接在此发送消息，在线客服将随时为您服务！","url":"http://qy.gz.1251102575.clb.myqcloud.com/pay/weixin.php?route=weixin/about","picurl":"http://qy.gz.1251102575.clb.myqcloud.com/image/data/weixin/caigezi2-green-360x200.jpg"}]';
-insert into oc_auto_message set pattern='order|订|买', MsgType='news', ItemCount=1, Items='[{"title":"点击开始买菜","description":"传承老一代，用心卖好菜。飞鸽传蔬期待为您服务。","url":"http://qy.gz.1251102575.clb.myqcloud.com/pay/weixin.php?route=mobile_store/home","picurl":"http://qy.gz.1251102575.clb.myqcloud.com/image/data/weixin/caigezi2-green-360x200.jpg"}]';
+insert into oc_auto_message set pattern='', MsgType='news', ItemCount=1, Items='[{"title":"菜鸽子欢迎您","description":"我们的承诺：传承老一代，用心卖好菜。\\n\\n选择菜单中的功能将全面使用本服务号。\\n如有任何疑问，请直接在此发送消息，在线客服将随时为您服务！","url":"AUTO_LOGIN:weixin/about","picurl":"HOST:/image/data/weixin/caigezi2-green-360x200.jpg"}]';
+insert into oc_auto_message set pattern='order|订|买', MsgType='news', ItemCount=1, Items='[{"title":"点击开始买菜","description":"传承老一代，用心卖好菜。飞鸽传蔬期待为您服务。","url":"AUTO_LOGIN:","picurl":"HOST:/image/data/weixin/caigezi2-green-360x200.jpg"}]';
 
 update oc_order_status set wxtitle='订单可付款', wxmsg = '亲爱的客户，您的订单已称重。\n点击此消息即可付款！\n\n订单编号：%s\n订单金额：%s\n下单时间：%s\n消费明细：%s\n\n点击此消息付款' where order_status_id = 2;
 update oc_order_status set wxtitle='订单配送中', wxmsg = '亲爱的客户，您的订单已付款。我们正在安排配送！\n\n飞鸽传蔬将携程为您服务\n\n订单编号：%s\n订单金额：%s\n下单时间：%s\n消费明细：%s\n\n点击查看订单详情' where order_status_id = 3;

@@ -95,7 +95,8 @@ class ControllerQingyouOrderQuery extends ControllerWeixinWeixin {
 		$msg = $this->prepareWxMsg($order);
 		if ($msg == false) return;
 		$url = "https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=".$this->access_token;
-		$res = $this->postToWx($url, $msg);
+		$wxtools = new WeixinTools();
+		$res = $wxtools->postToWx($url, $msg);
 	}
 	
 	private function prepareWxMsg($order) {

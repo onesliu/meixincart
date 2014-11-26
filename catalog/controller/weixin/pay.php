@@ -1,5 +1,4 @@
 <?php
-include_once(DIR_APPLICATION."controller/weixin/lib/wxtools.php");
 include_once(DIR_APPLICATION."controller/weixin/weixin.php");
 
 class ControllerWeixinPay extends ControllerWeixinWeixin { 
@@ -35,9 +34,10 @@ class ControllerWeixinPay extends ControllerWeixinWeixin {
 		$wxPayHelper->add_param("trade_type", "JSAPI");
 		$wxPayHelper->add_param("openid", $this->customer->getEmail());
 		
+		$wxtools = new WeixinTools();
 		$request = $wxPayHelper->make_request($this->partnerkey);
 		$url = "https://api.mch.weixin.qq.com/pay/unifiedorder";
-		$response = postToWx($url, $request);
+		$response = $wxtools->postToWx($url, $request);
 		if ($response['rescode'] != 200) {
 			$this->log->write("weixin prepay response error, ". $response['rescode']);
 			$this->error();

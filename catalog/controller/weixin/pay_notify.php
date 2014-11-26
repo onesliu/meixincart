@@ -1,5 +1,4 @@
 <?php
-include_once(DIR_APPLICATION."controller/weixin/lib/wxtools.php");
 include_once(DIR_APPLICATION."controller/weixin/weixin.php");
 
 class ControllerWeixinPayNotify extends ControllerWeixinWeixin { 
@@ -37,7 +36,7 @@ class ControllerWeixinPayNotify extends ControllerWeixinWeixin {
 		}
 	}
 	
-	private function error() {
+	public function error() {
 		$xml = new PayHelper();
 		$xml->add_param('return_code', 'FAIL');
 		$xml->add_param('return_msg', 'sign verify error');

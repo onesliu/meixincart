@@ -1,54 +1,63 @@
 <?php
 
-/*微信订单编号格式：
- * 平台：0-9 公众号支付(1)、小额刷卡(2)
- * 支付类型：0-9 JSAPI(0)、NATIVE(1)、APP支付(2)
- * 业务类型：0-9 菜鸽子(0)、快消品、等等
- * 时间：20040801150101 当前时间，年月日时分秒
- * 序号：00 同一时间发生的重复订单序号不同
-*/
-function new_wx_orderid($platform = 1, $paytype = 0, $btype = 0, $serial = 0, $time = '') {
-	$stime = $time;
-	if (strlen($time) != 14) $stime = strftime('%Y%m%d%H%M%S');
-	return sprintf("%d%d%d%s%02d", $platform, $paytype, $btype, $stime, $serial);
-}
-
-function inc_order_serial($orderid) {
-	list($platform, $paytype, $btype, $serial, $time) = sscanf($orderid, "%d%d%d%02d%s");
-	$serial++;
-	if ($serial == 0) return false;
-	return new_wx_orderid($platform, $paytype, $btype, $serial, $time);
-}
-
-function postToWx($url, $content) {
-	$ch = curl_init();
-	curl_setopt($ch, CURLOPT_URL, $url);
-	curl_setopt($ch, CURLOPT_POST, true);
-	curl_setopt($ch, CURLOPT_POSTFIELDS, $content);
-	curl_setopt($ch, CURLOPT_HEADER, false);
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-	curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.1 Safari/537.11');
-	$ret['content'] = curl_exec($ch);
-	$ret['rescode'] = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-	curl_close($ch);
+class WeixinTools {
+	public function postToWx($url, $content) {
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_POST, true);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $content);
+		curl_setopt($ch, CURLOPT_HEADER, false);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+		curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.1 Safari/537.11');
+		$ret['content'] = curl_exec($ch);
+		$ret['rescode'] = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+		curl_close($ch);
+		
+		return $ret;
+	}
 	
-	return $ret;
-}
-
-function getFromWx($url) {
-	$ch = curl_init();
-	curl_setopt($ch, CURLOPT_URL, $url);
-	curl_setopt($ch, CURLOPT_HTTPGET, true);
-	curl_setopt($ch, CURLOPT_HEADER, false);
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-	curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.1 Safari/537.11');
-	$ret['content'] = curl_exec($ch);
-	$ret['rescode'] = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-	curl_close($ch);
-
-	return $ret;
+	public function getFromWx($url) {
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_HTTPGET, true);
+		curl_setopt($ch, CURLOPT_HEADER, false);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+		curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.1 Safari/537.11');
+		$ret['content'] = curl_exec($ch);
+		$ret['rescode'] = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+		curl_close($ch);
+	
+		return $ret;
+	}
+	
+	public function prepareOauthUrl($remote_file, $appid) {
+		$url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=snsapi_base&state=1#wechat_redirect";
+		$url = str_replace('APPID', $appid, $url);
+		
+		$u = "http://".MY_DOMAIN."/pay/weixin.php?route=weixin/login";
+		if (strlen($remote_file) > 0) {
+			$link = $u."&jump=$remote_file";
+		}
+		$link = str_replace('REDIRECT_URI', urlencode($link), $url);
+		return $link;
+	}
+	
+	public function prepareMenu($menu_def, $appid) {
+		$ret = preg_match_all("/\"AUTO_LOGIN:(.*)\"/", $menu_def, $matches);
+		if ($ret > 0) {
+	        foreach($matches[1] as $remote_file) {
+                $link = $this->prepareOauthUrl($remote_file, $appid);
+                $menu_def = str_replace("\"AUTO_LOGIN:$remote_file\"", '"'.$link.'"', $menu_def);
+	        }
+		}
+		
+		$host = "http://".MY_DOMAIN."/";
+		$menu_def = str_replace("HOST:", $host, $menu_def);
+		
+		return $menu_def;
+	}
 }
 
 class SimpleXMLExtend extends SimpleXMLElement
