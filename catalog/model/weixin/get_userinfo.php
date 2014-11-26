@@ -11,7 +11,7 @@ class ModelWeixinGetUserinfo extends Model {
 
 		$url = "https://api.weixin.qq.com/cgi-bin/user/info?access_token=$access_token&openid=$openid&lang=zh_CN";
 		$wxtools = new WeixinTools();
-		$res = $wxtools->getFromWx();
+		$res = $wxtools->getFromWx($url);
 
 		$result = json_decode($res['content']);
 		
