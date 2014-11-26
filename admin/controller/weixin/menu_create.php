@@ -10,7 +10,7 @@ class ControllerWeixinMenuCreate extends ControllerWeixinWeixin {
 		}
 				
 		$wxtools = new WeixinTools();
-		$menu_def = $wxtools->prepareMenu($this->config->get('weixin_menu'));
+		$menu_def = $wxtools->prepareMenu($this->config->get('weixin_menu'), $this->config->get('weixin_appid'));
 		
 		//创建菜单
 		$url = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=".$this->access_token;
