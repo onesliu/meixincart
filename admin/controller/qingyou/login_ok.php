@@ -8,7 +8,7 @@ class ControllerQingyouLoginOk extends Controller {
 		$return = new stdClass();
 		$return->status = 0;
 		$return->token = $this->request->get['token'];
-		$return->district_id = $user['district_id'];
+		$return->district_id = (int)$user['district_id'];
 		$this->response->setOutput(json_encode($return));
 	}
 	

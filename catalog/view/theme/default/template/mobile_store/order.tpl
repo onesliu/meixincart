@@ -14,7 +14,7 @@
 		</ul>
 	<?php } ?>
 		<?php if ($pagination->page < $pagination->num_pages) { ?>
-		<p><a id="bmore" href="#" data-role="button">更多...</a></p>
+		<a id="bmore" href="#" class="ui-btn ui-btn-a ui-corner-all">更多...</a>
 		<?php } ?>
 
 		<script type="text/javascript"><!--
