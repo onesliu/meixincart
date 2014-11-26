@@ -27,8 +27,8 @@ class ControllerWeixinWeixin extends Controller {
 				$userinfo = $this->model_weixin_get_userinfo->getUserInfo($this->access_token, $this->WeixinFromUserName);
 				//发送关注欢迎消息
 				$this->load->model("weixin/auto_reply");
-				$reply = $this->model_weixin_auto_reply->getReplyFromId($this->WeixinFromUserName,
-					$this->WeixinToUserName, 0);
+				$reply = $this->model_weixin_auto_reply->getReply($this->WeixinFromUserName,
+					$this->WeixinToUserName, 'subscribe');
 				if ($reply != false) {
 					$reply = $wxtools->prepareMenu($reply, $this->appid);
 					$this->response->setOutput($reply);
