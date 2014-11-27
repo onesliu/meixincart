@@ -69,7 +69,8 @@ class ModelQingyouOrder extends Model {
 		
 		$data = array();
 		
-		$query = $this->db->query("select op.product_id, op.name as product_name, p.ean, p.jan, 
+		$query = $this->db->query("select op.product_id, op.name as product_name, p.ean, p.jan,
+		p.mpn as perprice, p.upc as perunit, p.weight as perweight, 
 		op.quantity, round(op.price,2) as price, round(op.total,2) as total, realweight, 
 		round(realtotal,2) as realtotal, p.product_type from " .DB_PREFIX. "order_product op 
 		join " .DB_PREFIX. "product p on p.product_id=op.product_id $condition");
