@@ -8,9 +8,8 @@
   		<li data-role="list-divider"><?php echo $heading_title; ?></li>
 		<?php require('category_more.tpl'); ?>
   	</ul>
-	<br/>
 	<?php if ($pagination->page < $pagination->num_pages) { ?>
-	<p><a id="bmore" href="#" data-role="button">更多...</a></p>
+	<a id="bmore" href="#" data-role="button">更多...</a>
 	<?php } ?>
 
 	<script type="text/javascript"><!--
