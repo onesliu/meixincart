@@ -75,7 +75,11 @@
 			    </tbody>
 		  	</table>
 		</div>
-		
+		<?php if ($order_info['order_status_id'] == 2 ) {?>
+		<div data-role="footer" data-position="fixed" data-theme="a" data-tap-toggle="false">
+			<a href="<?php echo $order_info['weixin_payment']; ?>" class="ui-btn ui-btn-a ui-corner-all"><?php echo $order_info['text_pay_btn'];?></a>
+		</div>
+		<?php } ?>
 	</div>
 </div>
 </body>
