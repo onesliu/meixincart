@@ -76,8 +76,8 @@
 		  	</table>
 		</div>
 		<?php if (isset($weixin_payment)) {?>
-		<div data-role="footer" data-position="fixed" data-theme="a" data-tap-toggle="false">
-			<a href="<?php echo $weixin_payment; ?>" class="ui-btn ui-btn-a ui-corner-all"><?php echo $text_pay_btn;?></a>
+		<div data-role="footer" data-position="fixed" data-theme="b" data-tap-toggle="false">
+			<span><center><a href="<?php echo $weixin_payment; ?>" class="ui-btn ui-btn-a ui-corner-all" style="width: 50%"><?php echo $text_pay_btn;?></a></center></span>
 		</div>
 		<?php } ?>
 	</div>
