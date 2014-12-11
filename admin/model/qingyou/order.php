@@ -55,7 +55,7 @@ class ModelQingyouOrder extends Model {
 		$this->db->query($sql);
 		
 		$sql = "update " .DB_PREFIX. "order_total set value=".$order->realtotal.
-			" text='".$this->currency->format($order->realtotal).
+			", text='".$this->currency->format($order->realtotal).
 			"' where code in ('total','sub_total') and order_id=".$order->order_id;
 		$this->db->query($sql);
 		
