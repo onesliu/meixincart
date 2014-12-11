@@ -1,11 +1,13 @@
-<?php echo $header; ?>
-<div id="content" class="square" style="background:transparent;border:0px;">
-  <div>
-	<div class="checkout-content" style="display:block;">
-	<span>正在支付...</span>
+<body>
+<div data-role="page" id="weixinerrorpage" data-theme="a" data-title="微信支付">
+	<?php echo $titlebar; ?>
+	<div data-role="content">
+		<div class="ui-body ui-body-b ui-corner-all">
+			<p>正在支付...</p>
+		</div>
 	</div>
-  </div>
 </div>
+</body>
 
 <script type="text/javascript"><!--
 
