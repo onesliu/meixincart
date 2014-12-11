@@ -770,7 +770,7 @@ class ModelCheckoutOrder extends Model {
 		((isset($order_info['total']))? "total = '" . (float)$order_info['total'] . "'," : "") .
 		((isset($order_info['order_status_id']))? "order_status_id = '" . (int)$order_info['order_status_id'] . "'," : "") .
 		((isset($order_info['shipping_district_id']))? "shipping_district_id = '" . (int)$order_info['shipping_district_id'] . "'," : "") .
-		((isset($order_info['shipping_time']))? "shipping_time = '" . (int)$order_info['shipping_time'] . "'," : "") .
+		((isset($order_info['shipping_time']))? "shipping_time = '" . $order_info['shipping_time'] . "'," : "") .
 		((isset($order_info['ip']))? "ip = '" . $this->db->escape($order_info['ip']) . "'," : "") .
 		((isset($order_info['weixin_pay_result']))? "weixin_pay_result = '" . $this->db->escape($order_info['weixin_pay_result']) . "'," : "") .
 		((isset($order_info['forwarded_ip']))? "forwarded_ip = '" . $this->db->escape($order_info['forwarded_ip']) . "'," : "");
