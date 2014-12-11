@@ -3,9 +3,9 @@
 <div data-role="page" id="orderpage" data-theme="a" data-title="<?php echo $heading_title; ?>">
 	<?php echo $titlebar; ?>
 	<div data-role="content">
-	<?php if (!isset($orders)) { ?>
+	<?php if (!isset($orders) || count($orders) == 0) { ?>
 		<div class="ui-body ui-body-b ui-corner-all">
-			<p>暂时没有订单</p>
+			<p>您还没有订单</p>
 		</div>
 	<?php } else { ?>
 		<ul data-role="listview" id="olist" data-inset="true" data-theme="c" data-divider-theme="c" data-count-theme="c">

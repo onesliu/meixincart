@@ -26,7 +26,7 @@
 		      <tr>
 		        <td><?php echo $product['name']; ?></td>
 		        <td><?php echo $product['quantity']; ?></td>
-		        <td><?php echo $product['realtotal']; ?></td>
+		        <td><?php echo $product['total']; ?></td>
 		      </tr>
 		      <?php } ?>
 		      <tr>

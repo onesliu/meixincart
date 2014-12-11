@@ -218,6 +218,7 @@ alter table oc_order add weixin_pay_result text default NULL;
 alter table oc_order add order_type integer default 0;
 alter table oc_order add balance integer default 0;
 
+alter table oc_order_product add `weight` double default 0.0;
 alter table oc_order_product add `realweight` double default 0.0;
 alter table oc_order_product add `realtotal` double default 0.0;
 alter table oc_order_product add `other_product_id` bigint default 0;
@@ -270,3 +271,12 @@ delete from oc_order_option where order_id=0;
 delete from oc_order_product where order_id=0;
 delete from oc_order_total where order_id=0;
 delete from oc_order_voucher where order_id=0;
+
+delete from oc_order_download;
+delete from oc_order_field;
+delete from oc_order_fraud;
+delete from oc_order_history;
+delete from oc_order_option;
+delete from oc_order_product;
+delete from oc_order_total;
+delete from oc_order_voucher;

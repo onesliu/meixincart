@@ -224,6 +224,7 @@ class ControllerMobileStoreCheckoutOrder extends Controller {
 				'quantity'   => $product['quantity'],
 				'subtract'   => $product['subtract'],
 				'price'      => $product['price'],
+				'weight'	 => $product['weight'],
 				'total'      => $product['total'],
 				'tax'        => $this->tax->getTax($product['price'], $product['tax_class_id']),
 				'reward'     => $product['reward']
