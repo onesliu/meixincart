@@ -87,7 +87,9 @@ class ModelQingyouOrder extends Model {
 	}
 	
 	public function updateProduct($orderid, $product) {
-		$sql = "update " .DB_PREFIX. "order_product set realweight=".$product->realweight.", realtotal=".$product->realtotal." where order_id=".$orderid." and product_id=".$product->product_id;
+		$sql = "update " .DB_PREFIX. "order_product set realweight=".$product->realweight
+			.", realtotal=".$product->realtotal
+			." where order_id=".$orderid." and product_id=".$product->product_id;
 		$query = $this->db->query($sql);
 	}
 	

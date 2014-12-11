@@ -150,6 +150,7 @@ class ControllerMobileStoreOrder extends Controller {
 			$this->data['column_date_added'] = $this->language->get('column_date_added');
       		$this->data['column_status'] = $this->language->get('column_status');
       		$this->data['column_comment'] = $this->language->get('column_comment');
+      		$this->data['column_weight'] = '重量';
 			
 			$this->data['button_return'] = $this->language->get('button_return');
       		$this->data['button_continue'] = $this->language->get('button_continue');
@@ -267,6 +268,7 @@ class ControllerMobileStoreOrder extends Controller {
           			'model'    => $product['model'],
           			'option'   => $option_data,
           			'quantity' => $product['quantity'],
+        			'weight' => $product['weight'],
           			'price'    => $this->currency->format($product['price'] + ($this->config->get('config_tax') ? $product['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']),
 					'total'    => $this->currency->format($product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value']),
 					'return'   => $this->url->link('account/return/insert', 'order_id=' . $order_info['order_id'] . '&product_id=' . $product['product_id'], 'SSL')

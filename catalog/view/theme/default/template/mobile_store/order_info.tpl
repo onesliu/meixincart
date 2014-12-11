@@ -18,7 +18,8 @@
 		      <tr>
 		        <td data-priority="1"><?php echo $column_name; ?></td>
 		        <td data-priority="2"><?php echo $column_quantity; ?></td>
-		        <td data-priority="3"><?php echo $column_total; ?></td>
+		        <td data-priority="3"><?php echo $column_weight; ?></td>
+		        <td data-priority="4"><?php echo $column_total; ?></td>
 		      </tr>
 		    </thead>
 		    <tbody>
@@ -26,6 +27,7 @@
 		      <tr>
 		        <td><?php echo $product['name']; ?></td>
 		        <td><?php echo $product['quantity']; ?></td>
+		        <td><?php echo $product['weight'].'g'; ?></td>
 		        <td><?php echo $product['total']; ?></td>
 		      </tr>
 		      <?php } ?>
@@ -33,6 +35,7 @@
 		      <tfoot>
       		  <?php foreach ($totals as $total) {  ?>
       		  <tr>
+		        <td> </td>
 		        <td> </td>
 		        <td><?php echo $total['title']; ?>:</td>
 		        <td><?php echo $total['text']; ?></td>

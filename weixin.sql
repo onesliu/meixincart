@@ -263,6 +263,7 @@ update oc_order_status set wxtitle='订单已退款', wxmsg = '亲爱的客户�
 update oc_order_status set wxtitle='订单已取消', wxmsg = '亲爱的客户，您的订单已取消！\n\n订单编号：%s\n订单金额：%s\n下单时间：%s\n消费明细：%s\n\n点击查看详情' where order_status_id = 6;
 
 /* 维护SQL order */
+delete from oc_order where order_id=0;
 delete from oc_order_download where order_id=0;
 delete from oc_order_field where order_id=0;
 delete from oc_order_fraud where order_id=0;
@@ -272,6 +273,7 @@ delete from oc_order_product where order_id=0;
 delete from oc_order_total where order_id=0;
 delete from oc_order_voucher where order_id=0;
 
+delete from oc_order;
 delete from oc_order_download;
 delete from oc_order_field;
 delete from oc_order_fraud;
