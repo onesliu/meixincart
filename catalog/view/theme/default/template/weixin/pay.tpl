@@ -1,3 +1,4 @@
+<?php echo $header; ?>
 <body>
 <div data-role="page" id="weixinpaypage" data-theme="a" data-title="微信支付">
 	<?php echo $titlebar; ?>
@@ -35,7 +36,7 @@
 	    }
 	}
 	
-	$(function(){
+	$(document).on("pageinit", "#weixinpaypage", function(){
 		wxJsBridgeReady(function(){
 			WeixinJSBridge.invoke('getBrandWCPayRequest', {
 				"appId" : "<?php echo $appId; ?>",
