@@ -53,6 +53,10 @@ class ModelQingyouOrder extends Model {
 		}
 		$sql = "update " .DB_PREFIX. "order set order_status_id=".$order->order_status." where order_id=".$order->order_id;
 		$this->db->query($sql);
+		
+		$sql = "update " .DB_PREFIX. "order_total set value=".$order->realtotal." where code in ('total','sub_total') and order_id=".$order->order_id;
+		$this->db->query($sql);
+		
 		$sql = "insert into ".DB_PREFIX."order_history set order_id=".$order->order_id.
 			",order_status_id=".$order->order_status.
 			",notify=1,date_added=NOW()";
@@ -89,6 +93,8 @@ class ModelQingyouOrder extends Model {
 	public function updateProduct($orderid, $product) {
 		$sql = "update " .DB_PREFIX. "order_product set realweight=".$product->realweight
 			.", realtotal=".$product->realtotal
+			.", weight=".$product->realweight
+			.", total=".$product->realtotal
 			." where order_id=".$orderid." and product_id=".$product->product_id;
 		$query = $this->db->query($sql);
 	}
