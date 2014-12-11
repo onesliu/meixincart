@@ -1,6 +1,4 @@
 <?php
-include_once(DIR_APPLICATION."controller/weixin/lib/wxtools.php");
-
 class ControllerMobileStoreCheckoutOrder extends Controller { 
 	public function index() {
 		if (!$this->customer->isLogged() && (!$this->cart->hasProducts() && !empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
