@@ -36,7 +36,7 @@ class ControllerQingyouOrderQuery extends ControllerWeixinWeixin {
 		$user = $this->user->getUserInfo();
 		$districtid = $user['district_id'];
 			
-		$this->data['orders'] = $this->model_qingyou_order->searchOrders($date);
+		$this->data['orders'] = $this->model_qingyou_order->searchOrders($date, $districtid);
 		
 		$this->template = 'qingyou/order_query.tpl';
 		
@@ -94,6 +94,16 @@ class ControllerQingyouOrderQuery extends ControllerWeixinWeixin {
 		$this->template = 'qingyou/order_query.tpl';
 		$this->data['orders'] = $this->model_qingyou_order->getDistricts();
 		$this->response->setOutput($this->render());
+	}
+	
+	public function balance() {
+		$this->load->model('qingyou/order');
+		
+		$user = $this->user->getUserInfo();
+		$districtid = $user['district_id'];
+		
+		$balance = $this->model_qingyou_order->getBalance($districtid);
+		$this->response->setOutput(json_encode($balance));
 	}
 	
 	protected function validate() {

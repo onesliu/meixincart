@@ -37,8 +37,12 @@ class ModelQingyouOrder extends Model {
 		return $data;
 	}
 	
-	public function searchOrders($date) {
+	public function searchOrders($date, $districtid = 0) {
 		$condition = "where o.date_added >= '$date 00:00:00' and o.date_added < '$date 23:59:59'";
+		
+		if ($districtid > 0) {
+			$condition .= " and shipping_district_id = $districtid";
+		}
 		
 		$data = array();
 		$sql = "select order_id, date_added as order_createtime, o.order_status_id, os.name as order_status, customer_id, CONCAT(firstname,lastname) as customer_name, telephone as customer_phone,
@@ -168,4 +172,37 @@ class ModelQingyouOrder extends Model {
 		return $data;
 	}
 	
+	public function getBalance($districtid) {
+		$condition = "";
+		if ($districtid > 0)
+			$condition = "where shop_id=$districtid";
+		
+		$sql = "select DATE(last_balance_date),DATE(NOW()) as current_date from qy_balance $condition order by id desc limit 1";
+		$query = $this->db->query($sql);
+		
+		$ret = new stdClass();
+		if ($query->num_rows == 0) {
+			$ret->last_balance_date = '0';
+			$ret->current_date = date('Y-m-d');
+		}
+		else {
+			$ret->last_balance_date = $query->row['last_balance_date'];
+			$ret->current_date = $query->row['current_date'];
+		}
+		
+		$condition = "";
+		if ($districtid > 0)
+			$condition = "and shipping_district_id=$districtid";
+			
+		$sql = "SELECT COUNT(*) AS count, SUM(total) AS total FROM oc_order WHERE order_status_id = 4 AND balance = 0 $condition";
+		$query = $this->db->query($sql);
+		
+		$ret->count = $query->row['count'];
+		if ($ret->count > 0)
+			$ret->total = $query->row['total'];
+		else
+			$ret->total = 0.0;
+		
+		return $ret;
+	}
 }
