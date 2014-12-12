@@ -197,11 +197,11 @@ class ModelQingyouOrder extends Model {
 		$sql = "SELECT COUNT(*) AS count, SUM(total) AS total FROM oc_order WHERE order_status_id = 4 AND balance = 0 $condition";
 		$query = $this->db->query($sql);
 		
-		$ret->count = $query->row['count'];
+		$ret->count = (int)$query->row['count'];
 		if ($ret->count > 0)
-			$ret->total = $query->row['total'];
+			$ret->total = (float)$query->row['total'];
 		else
-			$ret->total = 0.0;
+			$ret->total = (float)0.0;
 		
 		return $ret;
 	}
