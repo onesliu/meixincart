@@ -37,6 +37,28 @@ class ModelQingyouOrder extends Model {
 		return $data;
 	}
 	
+	public function searchOrders($date) {
+		$condition = "date_added >= $date 00:00:00 and date_added < $date 23:59:59";
+		
+		$data = array();
+		$sql = "select order_id, date_added as order_createtime, o.order_status_id, os.name as order_status, customer_id, CONCAT(firstname,lastname) as customer_name, telephone as customer_phone,
+		CONCAT(shipping_firstname,shipping_lastname) as shipping_name, shipping_telephone, comment, shipping_address_1 as shipping_addr, shipping_time
+		from " .DB_PREFIX. "order o join " .DB_PREFIX. "order_status os on o.order_status_id = os.order_status_id $condition order by order_id;";
+		
+		$query = $this->db->query($sql);
+		foreach ($query->rows as $result) {
+			$o = new stdClass();
+			foreach($result as $key => $val) {
+				$o->$key = $val;
+			}
+			$o->products = $this->getProducts($o->order_id);
+			$data[] = $o;
+		}
+
+		return $data;
+		
+	}
+	
 	public function getOrderCustomer($orderid) {
 		$q = $this->db->query("select email from oc_customer where customer_id=(select customer_id from oc_order where order_id=$orderid)");
 		if ($q->num_rows != 0) {
