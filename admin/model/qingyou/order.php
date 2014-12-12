@@ -177,13 +177,13 @@ class ModelQingyouOrder extends Model {
 		if ($districtid > 0)
 			$condition = "where shop_id=$districtid";
 		
-		$sql = "select DATE(last_balance_date),DATE(NOW()) as cdate from qy_balance $condition order by id desc limit 1";
+		$sql = "select DATE(last_balance_date),NOW() as cdate from qy_balance $condition order by id desc limit 1";
 		$query = $this->db->query($sql);
 		
 		$ret = new stdClass();
 		if ($query->num_rows == 0) {
 			$ret->last_balance_date = '0';
-			$ret->current_date = date('Y-m-d');
+			$ret->current_date = date('Y-m-d H:i:s');
 		}
 		else {
 			$ret->last_balance_date = $query->row['last_balance_date'];
