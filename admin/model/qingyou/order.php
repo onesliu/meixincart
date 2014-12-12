@@ -38,7 +38,7 @@ class ModelQingyouOrder extends Model {
 	}
 	
 	public function searchOrders($date) {
-		$condition = "date_added >= '$date 00:00:00' and date_added < '$date 23:59:59'";
+		$condition = "where o.date_added >= '$date 00:00:00' and o.date_added < '$date 23:59:59'";
 		
 		$data = array();
 		$sql = "select order_id, date_added as order_createtime, o.order_status_id, os.name as order_status, customer_id, CONCAT(firstname,lastname) as customer_name, telephone as customer_phone,
