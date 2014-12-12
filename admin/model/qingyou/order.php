@@ -177,7 +177,7 @@ class ModelQingyouOrder extends Model {
 		if ($districtid > 0)
 			$condition = "where shop_id=$districtid";
 		
-		$sql = "select DATE(last_balance_date),NOW() as cdate from qy_balance $condition order by id desc limit 1";
+		$sql = "select last_balance_date,NOW() as cdate from qy_balance $condition order by id desc limit 1";
 		$query = $this->db->query($sql);
 		
 		$ret = new stdClass();
@@ -194,15 +194,42 @@ class ModelQingyouOrder extends Model {
 		if ($districtid > 0)
 			$condition = "and shipping_district_id=$districtid";
 			
-		$sql = "SELECT COUNT(*) AS count, SUM(total) AS total FROM oc_order WHERE order_status_id = 4 AND balance = 0 $condition";
+		$sql = "SELECT order_id,total FROM oc_order WHERE order_status_id = 4 AND balance = 0 $condition";
 		$query = $this->db->query($sql);
 		
-		$ret->count = (int)$query->row['count'];
-		if ($ret->count > 0)
-			$ret->total = (float)$query->row['total'];
-		else
-			$ret->total = (float)0.0;
+		$ret->count = (int)$query->num_rows;
+		$total = (float)0.0;
+		$order_ids = array();
+		foreach ($query->rows as $row) {
+			$total += (float)$row['total'];
+			$order_ids[] = $row['order_id'];
+		}
+		$ret->total = $total;
+		$this->session->data['balance_order_id'] = $order_ids;
 		
 		return $ret;
+	}
+	
+	public function setBalance($districtid) {
+		
+		if (!isset($this->session->data['balance_order_id']))
+			return false;
+			
+		$order_ids = $this->session->data['balance_order_id'];
+		
+		if (count($order_ids) == 0)
+			return false;
+		
+		$condition = implode(",", $order_ids);
+
+		$sql = "update oc_order set balance=1 where order_id in ($condition)";
+		if ( $this->db->query($sql) == false)
+			return false;
+		
+		$sql = "insert into qy_balance set shop_id=$districtid, last_balance_date=now()";
+		if ( $this->db->query($sql) == false)
+			return false;
+
+		return true;
 	}
 }

@@ -106,6 +106,20 @@ class ControllerQingyouOrderQuery extends ControllerWeixinWeixin {
 		$this->response->setOutput(json_encode($balance));
 	}
 	
+	public function setbalance() {
+		$this->load->model('qingyou/order');
+		
+		$user = $this->user->getUserInfo();
+		$districtid = $user['district_id'];
+		
+		$ret = new stdClass();
+		$ret->status = -1;
+		if ($this->model_qingyou_order->setBalance($districtid) == true)
+			$ret->status = 0;
+			
+		$this->response->setOutput(json_encode($ret));
+	}
+	
 	protected function validate() {
 		if (!$this->user->hasPermission('modify', 'qingyou/order_query')) {
 			$this->error['warning'] = $this->language->get('error_permission');
