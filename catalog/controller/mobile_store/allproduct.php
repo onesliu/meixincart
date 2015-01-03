@@ -48,6 +48,7 @@ class ControllerMobileStoreAllproduct extends Controller {
 		$data = array(
 			'start'              => ($page - 1) * $limit,
 			'limit'              => $limit,
+			'sort'				 => 'p2c.category_id',
 		);
 		
 		if (isset($this->request->get['filter'])) {

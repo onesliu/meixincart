@@ -40,8 +40,8 @@ class ModelMobileStoreProduct extends Model {
 		if ($query->num_rows) {
 			$query->row['price'] = ($query->row['discount'] ? $query->row['discount'] : $query->row['price']);
 			$query->row['rating'] = (int)$query->row['rating'];
-			$query->row['type']	= (($query->row['product_type']==0)?'�̶�����Ʒ':'�ȳ��غ󸶿���Ʒ');
-			$query->row['subscribe'] = ($query->row['model'].'��ÿ'.((int)$query->row['weight']) . $query->row['weight_class'].'����');
+			$query->row['type']	= (($query->row['product_type']==0)?'固定重量商品':'先称重后付款商品');
+			$query->row['subscribe'] = ($query->row['model'].'，每'.((int)$query->row['weight']) . $query->row['weight_class'].'单价');
 			
 			return $query->row;
 		} else {
@@ -63,9 +63,7 @@ class ModelMobileStoreProduct extends Model {
 		if (!$product_data) {
 			$sql = "SELECT p.product_id, (SELECT AVG(rating) AS total FROM " . DB_PREFIX . "review r1 WHERE r1.product_id = p.product_id AND r1.status = '1' GROUP BY r1.product_id) AS rating FROM " . DB_PREFIX . "product p LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) LEFT JOIN " . DB_PREFIX . "product_to_store p2s ON (p.product_id = p2s.product_id)"; 
 						
-			if (!empty($data['filter_category_id'])) {
-				$sql .= " LEFT JOIN " . DB_PREFIX . "product_to_category p2c ON (p.product_id = p2c.product_id)";			
-			}
+			$sql .= " LEFT JOIN " . DB_PREFIX . "product_to_category p2c ON (p.product_id = p2c.product_id)";			
 			
 			// -- FILTER ATTRIBUTES MODULE ---
 			if (!empty($data['filter_attributes'])){
@@ -184,7 +182,8 @@ class ModelMobileStoreProduct extends Model {
 				'p.price',
 				'rating',
 				'p.sort_order',
-				'p.date_added'
+				'p.date_added',
+				'p2c.category_id',
 			);	
 			
 			if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
