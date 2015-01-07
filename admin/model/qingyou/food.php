@@ -9,6 +9,7 @@ class ModelQingyouFood extends Model {
 			"', `image2` = '" . $data['image2'] .
 			"', `image3` = '" . $data['image3'] .
 			"', `make_video` = '" . $data['make_video'] .
+			"', `make_url` = '" . $data['make_url'] .
 			"'");
 
 		$id = $this->db->getLastId();
@@ -51,6 +52,7 @@ class ModelQingyouFood extends Model {
 			"', `image2` = '" . $data['image2'] .
 			"', `image3` = '" . $data['image3'] .
 			"', `make_video` = '" . $data['make_video'] .
+			"', `make_url` = '" . $data['make_url'] .
 			"' where `id`= " . $id);
 
 		$this->cache->delete('food');

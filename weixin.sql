@@ -117,8 +117,11 @@ CREATE TABLE if not exists qy_food (
 	`image2` varchar(1024),
 	`image3` varchar(1024),
 	`make_video` varchar(1024),
+	`make_url` varchar(1024),
 	PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+alter table qy_food add `make_url` varchar(1024);
 
 CREATE TABLE if not exists qy_rel_food_menu (
 	`food_id` int(11) NOT NULL,
@@ -172,6 +175,39 @@ insert into qy_food_attr set stype='适宜人群', name='老人';
 insert into qy_food_attr set stype='适宜人群', name='幼儿';
 insert into qy_food_attr set stype='适宜人群', name='青少年';
 insert into qy_food_attr set stype='适宜人群', name='孕产妇';
+
+/*优惠劵添加*/
+create table if not exists `oc_coupon_customer` (
+  `coupon_id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `counts` int(11) default 0,   /*劵的数量*/
+  `amount` decimal(15,4) default 0.0,  /*劵的金额*/
+  PRIMARY KEY  (`coupon_id`, `customer_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+alter table oc_order add `coupon_total` decimal(15,4) default 0.0;
+
+/*
+mysql> desc oc_coupon;
++---------------+---------------+------+-----+---------------------+----------------+
+| Field         | Type          | Null | Key | Default             | Extra          |
++---------------+---------------+------+-----+---------------------+----------------+
+| coupon_id     | int(11)       | NO   | PRI | NULL                | auto_increment |
+| name          | varchar(128)  | NO   |     | NULL                |  名称              |
+| code          | varchar(10)   | NO   |     | NULL                |                |
+| type          | char(1)       | NO   |     | NULL                |  类型，百分比（比值，数量），金额 （面额，数量）            |
+| discount      | decimal(15,4) | NO   |     | NULL                |  比值，面额              |
+| logged        | tinyint(1)    | NO   |     | NULL                |  是否要登录              |
+| shipping      | tinyint(1)    | NO   |     | NULL                |  是否配送              |
+| total         | decimal(15,4) | NO   |     | NULL                |  最大生效金额              |
+| date_start    | date          | NO   |     | 0000-00-00          |  有效期开始              |
+| date_end      | date          | NO   |     | 0000-00-00          |  有效期结束              |
+| uses_total    | int(11)       | NO   |     | NULL                |  优惠劵总数量，0不限制              |
+| uses_customer | varchar(11)   | NO   |     | NULL                |  每个客户可以领取多少张该优惠劵，0或空白不限制              |
+| status        | tinyint(1)    | NO   |     | NULL                |  是否启用              |
+| date_added    | datetime      | NO   |     | 0000-00-00 00:00:00 |  添加日期              |
++---------------+---------------+------+-----+---------------------+----------------+
+*/
 
 //地址信息微信使用说明
 /*oc_address

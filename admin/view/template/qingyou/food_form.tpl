@@ -123,6 +123,10 @@
 	              <td><?php echo $entry_make_video; ?></td>
 	              <td><input type="text" name="make_video" value="<?php echo $make_video; ?>" size="100" /></td>
 	            </tr>
+	            <tr>
+	              <td><?php echo $entry_make_url; ?></td>
+	              <td><input type="text" name="make_url" value="<?php echo $make_url; ?>" size="100" /></td>
+	            </tr>
 	        </table>
 	        
 	        <table id="makestep" class="list">

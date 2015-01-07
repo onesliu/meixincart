@@ -22,7 +22,7 @@
 		
 		<ul data-role="listview" data-inset="true" data-theme="b" data-divider-theme="b" data-count-theme="b">
 			<li data-role="list-divider">制作过程</li>
-			<li><a href="#" data-transition="slidefade">
+			<li><a href="<?php echo $food['make_url']; ?>" data-transition="slidefade">
 				<img src="<?php echo $logoicon; ?>"/>
 				<h2>菜鸽子学做馆子菜</h2>
 				<p>在家里下馆子的味道！</p>

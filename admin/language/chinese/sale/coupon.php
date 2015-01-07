@@ -32,8 +32,8 @@ $_['entry_category']      = '&nbsp;&nbsp;&nbsp;商品分类：<br /><span class=
 $_['entry_product']       = '&nbsp;&nbsp;&nbsp;有效商品：';
 $_['entry_date_start']    = '&nbsp;&nbsp;&nbsp;开始日期：';
 $_['entry_date_end']      = '&nbsp;&nbsp;&nbsp;结束日期：';
-$_['entry_uses_total']    = '&nbsp;&nbsp;&nbsp;每张优惠券可以使用次数：<br /><span class="help">所有客户可使用优惠券的最大次数，空白既无限制。</span>';
-$_['entry_uses_customer'] = '&nbsp;&nbsp;&nbsp;每个客户可以使用次数：<br /><span class="help">每个客户可使用优惠券的最大次数，空白既无限制。</span>';
+$_['entry_uses_total']    = '&nbsp;&nbsp;&nbsp;优惠劵总数量：<br /><span class="help">本优惠劵发行总张数，0或空白既无限制。</span>';
+$_['entry_uses_customer'] = '&nbsp;&nbsp;&nbsp;每个客户可以领取次数：<br /><span class="help">每个客户可以领取多少张该优惠劵，0或空白不限制。</span>';
 $_['entry_status']        = '&nbsp;&nbsp;&nbsp;状态：';
 
 // Error

@@ -56,6 +56,7 @@ $_['f_entry_source_type']              = '原料类型';
 $_['text_main_source']              = '主料';
 $_['text_other_source']              = '辅料';
 $_['f_entry_make_video']              = '制作视频';
+$_['f_entry_make_url']              = '制作链接';
 $_['f_entry_step_image']              = '制作步骤图片';
 $_['f_entry_step_desp']              = '制作步骤说明';
 

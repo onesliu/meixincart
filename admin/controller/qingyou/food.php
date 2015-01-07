@@ -239,6 +239,7 @@ class ControllerQingyouFood extends Controller {
 		$this->data['text_main_source'] = $this->language->get('text_main_source');
 		$this->data['text_other_source'] = $this->language->get('text_other_source');
 		$this->data['entry_make_video'] = $this->language->get('f_entry_make_video');
+		$this->data['entry_make_url'] = $this->language->get('f_entry_make_url');
 		$this->data['entry_step_image'] = $this->language->get('f_entry_step_image');
 		$this->data['entry_step_desp'] = $this->language->get('f_entry_step_desp');
 		
@@ -326,6 +327,7 @@ class ControllerQingyouFood extends Controller {
 		$this->setMenuField($food_info, 'image2');
 		$this->setMenuField($food_info, 'image3');
 		$this->setMenuField($food_info, 'make_video');
+		$this->setMenuField($food_info, 'make_url');
 		
 		$this->setThumb($food_info, 1);
 		$this->setThumb($food_info, 2);
