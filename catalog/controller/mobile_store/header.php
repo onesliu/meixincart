@@ -9,6 +9,17 @@ class ControllerMobileStoreHeader extends Controller {
 			$server = $this->config->get('config_url');
 		}
 		
+		$showhelp = false;
+		$interval_day = 5;
+		if ($this->config->get('help_interval_day') != null)
+			$interval_day = $this->config->get('help_interval_day');
+			
+		if ($this->customer->isLogged()) {
+			$lastlogin = strtotime($this->customer->lastlogin);
+			$showhelp = ((time() - $lastlogin) >= (86400*$interval_day)); //默认连续5天没用本系统显示帮助
+		}
+		$this->data['showhelp'] = (int)$showhelp;
+		
 		$this->data['base'] = $server;
 		$this->data['description'] = $this->document->getDescription();
 		$this->data['keywords'] = $this->document->getKeywords();

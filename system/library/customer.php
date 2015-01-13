@@ -9,6 +9,7 @@ class Customer {
 	private $newsletter;
 	private $customer_group_id;
 	private $address_id;
+	public  $lastlogin;
 	
   	public function __construct($registry) {
 		$this->config = $registry->get('config');
@@ -31,6 +32,7 @@ class Customer {
 				$this->newsletter = $customer_query->row['newsletter'];
 				$this->customer_group_id = $customer_query->row['customer_group_id'];
 				$this->address_id = $customer_query->row['address_id'];
+				$this->lastlogin = $customer_query->row['lastlogin'];
 							
       			$this->db->query("UPDATE " . DB_PREFIX . "customer SET cart = '" .
       				$this->db->escape(isset($this->session->data['cart']) ? serialize($this->session->data['cart']) : '') .
@@ -99,7 +101,9 @@ class Customer {
 			$this->customer_group_id = $customer_query->row['customer_group_id'];
 			$this->address_id = $customer_query->row['address_id'];
 
-			$this->db->query("UPDATE " . DB_PREFIX . "customer SET ip = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "' WHERE customer_id = '" . (int)$this->customer_id . "'");
+			$this->db->query("UPDATE " . DB_PREFIX . "customer SET ip = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) .
+				"', lastlogin=now() " .
+				" WHERE customer_id = '" . (int)$this->customer_id . "'");
 			
 	  		return true;
     	} else {

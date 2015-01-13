@@ -10,6 +10,13 @@ class ControllerMobileStoreAllproduct extends Controller {
 		
 		$this->load->model('tool/image');
 		
+		if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {
+			$dir_img = $this->config->get('config_ssl') . 'image/';
+		} else {
+			$dir_img = $this->config->get('config_url') . 'image/';
+		}
+		$this->data['dir_img'] = $dir_img;
+		
 		$this->request->get['back'] = true;
 		$this->request->get['product_page'] = true;
 		

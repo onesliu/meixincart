@@ -36,4 +36,8 @@
 <script type="text/javascript" src="catalog/view/javascript/mobile_store.js"></script>
 <script type="text/javascript" src="catalog/view/javascript/jquery_mobile/jquery.mobile.custom.min.js"></script>
 
+<script type="text/javascript">
+var showhelp = <?php echo $showhelp; ?>;
+</script>
+
 </head>
