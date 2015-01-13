@@ -65,6 +65,13 @@ class ControllerWeixinPayResult extends ControllerWeixinWeixin {
 			if ((string)$res->trade_state == 'SUCCESS') {
 				if ($order_info['order_status_id'] == 2) {
 					$this->model_checkout_order->orderChangeStatus($order_info);
+					
+					if (isset($this->session->data['coupon']) && ($order_info['coupon_total'] > 0)) {
+						$coupon = $this->session->data['coupon'];
+						$this->load->model('checkout/coupon');
+						$ret = $this->model_checkout_coupon->commitCoupon($this->customer->getId(), $coupon['coupon_id'],
+							$order_info['order_id'], $order_info['total']);
+					}
 				}
 			}
 

@@ -1,35 +1,50 @@
-<div>
-  <div class="cart-heading"><?php echo $heading_title; ?></div>
-  <div class="cart-content" id="coupon"><?php echo $entry_coupon; ?>&nbsp;<br />
-    <input class="maximize" type="text" name="coupon" value="<?php echo $coupon; ?>" /><br />
-    &nbsp;<a id="button-coupon" class="button"><span><?php echo $button_coupon; ?></span></a></div>
-</div>
+<span>
+	<h4 style="margin:.2em 0;">可用优惠劵</h4>
+	<?php if (isset($coupons)) { ?>
+    <select id="coupon-select" name="coupon-select" onchange="selectcoupon(this.value);">
+      	<option value="-1">不使用优惠劵</option>
+      	<?php foreach($coupons as $coupon) { ?>
+      	<option value="<?php echo $coupon['coupon_id']; ?>"><?php echo $coupon['name'];?></option>
+      	<?php } ?>
+    </select>
+    <?php } else { ?>
+    <p>没有可用优惠劵</p>
+    <?php } ?>
+</span>
 <script type="text/javascript"><!--
-$('#button-coupon').bind('click', function() {
-	$.ajax({
-		type: 'POST',
-		url: 'index.php?route=mobile_store/coupon/calculate',
-		data: $('#coupon :input'),
-		dataType: 'json',		
-		beforeSend: function() {
-			$('.success, .warning').remove();
-			$('#button-coupon').attr('disabled', true);
-			$('#button-coupon').after('<span class="wait">&nbsp;<img src="catalog/view/theme/default/image/loading.gif" alt="" /></span>');
-		},
-		complete: function() {
-			$('#button-coupon').attr('disabled', false);
-			$('.wait').remove();
-		},		
-		success: function(json) {
-			if (json['error']) {
-				$('#basket').before('<div class="warning">' + json['error'] + '<img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>');
-				$('html, body').animate({ scrollTop: 0 }, 'slow');
-			}
+var Coupon = function() {
+	this.getTotal = function() {
+		return 0.0;
+	}
+	this.setCoupon = function(discount, remain) {
+	}
+	this.resetCoupon = function() {
+		$("#coupon-select").val(-1);
+	}
+}
+
+var coupon = new Coupon();
+
+function selectcoupon(coupon_id) {
+
+	if (coupon_id == -1) {
+		coupon.resetCoupon();
+		return;
+	}
+	
+	var url = '<?php echo $coupon_url; ?>';
+	url += '&order_total=' + coupon.getTotal() + '&coupon_id=' + coupon_id;
+	
+	$.get(url, null, function(data){
+			var ret = eval("("+data+")");
 			
-			if (json['redirect']) {
-				location = json['redirect'];
+			if (ret.status == 0) {
+				coupon.setCoupon(ret.discount, ret.remain);
 			}
-		}
+			else {
+				alert('计算优惠金额错误');
+				coupon.resetCoupon();
+			}
 	});
-});
-//--></script> 
+}
+//--></script>

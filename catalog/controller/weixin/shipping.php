@@ -38,11 +38,11 @@ class ControllerWeixinShipping extends ControllerWeixinWeixin {
 		// shipping time
 		$shipping_interval = $this->config->get('shipping_interval');
 		if ($shipping_interval == null)
-			$shipping_interval = 1;
+			$shipping_interval = 6;
 		
 		$first_shipping_time = $this->config->get('first_shipping_time');
 		if ($first_shipping_time == null)
-			$first_shipping_time = 9;
+			$first_shipping_time = 11;
 			
 		$last_shipping_time = $this->config->get('last_shipping_time');
 		if ($last_shipping_time == null)
@@ -54,19 +54,12 @@ class ControllerWeixinShipping extends ControllerWeixinWeixin {
 		$today = date("Y-m-d", time());
 		$tomorow = date("Y-m-d", time()+24*60*60);
 		
-		if ($start_time > $first_shipping_time) {
-			$i = $start_time;
-			//$this->data['shipping_time'] = array(0 => '立即配送');
-		}
-		else {
-			$i = $first_shipping_time;
-		}
-
-		for(;$i <= $last_shipping_time; $i++) {
-			$this->data['shipping_time']["$today $i:00:00"] = "$i:00";
+		for($i = $first_shipping_time;$i <= $last_shipping_time; $i+= $shipping_interval) {
+			if ($start_time < $i)
+				$this->data['shipping_time']["$today $i:00:00"] = "今天 $i:00";
 		}
 		
-		for($i = $first_shipping_time; $i <= $last_shipping_time; $i++) {
+		for($i = $first_shipping_time; $i <= $last_shipping_time; $i+= $shipping_interval) {
 			$this->data['shipping_time']["$tomorow $i:00:00"] = "明天 $i:00";
 		}
 		
@@ -81,8 +74,10 @@ class ControllerWeixinShipping extends ControllerWeixinWeixin {
 		$addrHelper->add_param("timestamp", $addrParam['timeStamp']);
 		$addrParam['nonceStr'] = $addrParam['timeStamp'];
 		$addrHelper->add_param("noncestr", $addrParam['nonceStr']);
-		$addrParam['token'] = $this->session->data['oauth_access_token'];
-		$addrHelper->add_param("accesstoken", $addrParam['token']);
+		if (isset($this->session->data['oauth_access_token'])) {
+			$addrParam['token'] = $this->session->data['oauth_access_token'];
+			$addrHelper->add_param("accesstoken", $addrParam['token']);
+		}
 		
 		$sign = $addrHelper->make_addr_sign();
 		$addrParam['addrSign'] = $sign;

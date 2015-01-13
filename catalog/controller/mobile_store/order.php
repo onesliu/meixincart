@@ -326,7 +326,8 @@ class ControllerMobileStoreOrder extends Controller {
 			
 			$this->children = array(
 			'mobile_store/titlebar',
-			'mobile_store/header'
+			'mobile_store/header',
+			'mobile_store/coupon'
 			);
 								
 			$this->response->setOutput($this->render());		

@@ -1,5 +1,110 @@
 <?php
 class ModelCheckoutCoupon extends Model {
+	public function getCustomerCoupon($customer_id) {
+		//折扣劵保留多条，代金劵合并
+		$sql = "select * from oc_coupon_customer cc
+			join oc_coupon c on cc.coupon_id=c.coupon_id where customer_id = $customer_id
+			and status>0 and (current_date() >= date_start and current_date() <= date_end)
+			and cc.amount > 0
+			order by c.coupon_id";
+		$result = $this->db->query($sql);
+		if ($result->num_rows > 0) {
+			
+			$ret = array();
+			
+			foreach($result->rows as $row) {
+				if ($row['type'] == 'F') { //代金劵
+					$cash['type'] = 'F';
+					if (isset($cash['amount']))
+						$cash['amount'] += $row['amount'];
+					else
+						$cash['amount'] = $row['amount'];
+					$cash['name'] = '代金劵  '.$this->currency->format($cash['amount']);
+					$cash['coupon_id'] = 0;
+				}
+				else if ($row['type'] == 'P') { //折扣劵
+					$r['type'] = 'P';
+					$r['name'] = $row['name'];
+					$r['discount'] = $row['discount'];
+					$r['coupon_id'] = $row['coupon_id'];
+					$ret[] = $r;
+				}
+			}
+			
+			if (isset($cash)) {
+				$ret[] = $cash;
+			}
+			
+			return $ret;
+		}
+		return null;
+	}
+	
+	//代金劵
+	//输入订单金额，返回优惠后金额，false优惠已失效
+	public function cashCoupon($customer_id, $order_id, $total) {
+		$result = $this->db->query("select * from oc_coupon_customer cc
+			join oc_coupon c on cc.coupon_id=c.coupon_id where customer_id = $customer_id
+			and status>0 and (current_date() >= date_start and current_date() <= date_end)
+			and cc.amount > 0 and type='F'
+			order by c.coupon_id");
+	
+		if ($result->num_rows <= 0)
+			return false;
+			
+		foreach($result->rows as $row) {
+			$coupon_id = $row['coupon_id'];
+			if ($row['amount'] - $total >= 0) {
+				$coupon_total = $total;
+				$total = 0;
+				$this->db->query("update oc_coupon_customer set amount=".($row['amount'] - $total));
+			}
+			else if ($row['amount'] - $total < 0) {
+				$coupon_total = $row['amount'];
+				$total -= $row['amount'];
+				$this->db->query("update oc_coupon_customer set amount=0");
+			}
+			
+			$this->db->query("insert into oc_coupon_history set coupon_id=$coupon_id, order_id=$order_id, customer_id=$customer_id,
+				amount=$coupon_total, date_added=now()");
+		}
+		
+		return $total;
+	}
+	
+	//折扣劵
+	//输入订单金额，返回优惠后金额，false优惠已失效
+	public function discountCoupon($customer_id, $coupon_id, $order_id, $total) {
+		$result = $this->db->query("select * from oc_coupon_customer cc
+			join oc_coupon c on cc.coupon_id=c.coupon_id where customer_id = $customer_id
+			and status>0 and (current_date() >= date_start and current_date() <= date_end)
+			and cc.coupon_id = $coupon_id");
+
+		if ($result->num_rows <= 0)
+			return false;
+			
+		$remain = $total * $result->row['discount'] / 100;
+		$coupon_total = $total - $remain;
+		
+		$this->db->query("insert into oc_coupon_history set coupon_id=$coupon_id, order_id=$order_id, customer_id=$customer_id,
+				amount=$coupon_total, date_added=now()");
+		
+		return $remain;
+	}
+	
+	public function commitCoupon($customer_id, $coupon_id, $order_id, $total) {
+		if ($coupon_id == 0)
+			$ret = $this->cashCoupon($customer_id, $order_id, $total);
+		else
+			$ret = $this->discountCoupon($customer_id, $coupon_id, $order_id, $total);
+		
+		if ($ret == false) return false;
+		
+		$coupon_total = $total - $ret;
+		$this->db->query("update oc_order set coupon_total=$coupon_total where order_id=$order_id");
+		return true;
+	}
+	
 	public function getCoupon($code) {
 		$status = true;
 		

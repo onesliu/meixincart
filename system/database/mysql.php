@@ -20,7 +20,7 @@ final class MySQL {
   	public function query($sql) {
 		if ($this->link) {
 			$resource = mysql_query($sql, $this->link);
-	
+
 			if ($resource) {
 				if (is_resource($resource)) {
 					$i = 0;
@@ -55,7 +55,7 @@ final class MySQL {
 	
 	public function escape($value) {
 		if ($this->link) {
-			return mysql_real_escape_string($value, $this->link);
+			return mysql_real_escape_string((string)$value, $this->link);
 		}
 	}
 	

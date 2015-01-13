@@ -12,6 +12,7 @@ class ControllerMobileStoreHome extends Controller {
 			$dir_img = $this->config->get('config_url') . 'image/';
 		}
 		$this->data['logo'] = $dir_img . 'logo.png';
+		$this->data['dir_img'] = $dir_img;
 		
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/mobile_store/home.tpl')) {
 			$this->template = $this->config->get('config_template') . '/template/mobile_store/home.tpl';

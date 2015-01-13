@@ -47,6 +47,7 @@ class ModelCheckoutOrder extends Model {
 		((isset($data['shipping_district_id']))? ("', shipping_district_id = '" . (int)$data['shipping_district_id']) : "") . 
 		((isset($data['shipping_time']))? ("', shipping_time = '" . $this->db->escape($data['shipping_time'])) : "") .
 		((isset($data['order_type']))? ("', order_type = '".(int)$data['order_type']) : "") .
+		((isset($data['coupon_total']))? ("', coupon_total = '".(float)$data['coupon_total']) : "") .
 		"', shipping_telephone = '" . $this->db->escape($data['shipping_telephone']) .  
 		"', comment = '" . $this->db->escape($data['comment']) . 
 		"', total = '" . (float)$data['total'] . 
@@ -768,6 +769,7 @@ class ModelCheckoutOrder extends Model {
 		((isset($order_info['fax']))? "fax = '" . $this->db->escape($order_info['fax']) . "'," : "") .
 		((isset($order_info['comment']))? "comment = '" . $this->db->escape($order_info['comment']) . "'," : "") .
 		((isset($order_info['total']))? "total = '" . (float)$order_info['total'] . "'," : "") .
+		((isset($order_info['coupon_total']))? "coupon_total = '" . (float)$order_info['coupon_total'] . "'," : "") .
 		((isset($order_info['order_status_id']))? "order_status_id = '" . (int)$order_info['order_status_id'] . "'," : "") .
 		((isset($order_info['shipping_district_id']))? "shipping_district_id = '" . (int)$order_info['shipping_district_id'] . "'," : "") .
 		((isset($order_info['shipping_time']))? "shipping_time = '" . $order_info['shipping_time'] . "'," : "") .

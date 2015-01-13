@@ -3,7 +3,7 @@
 <div data-role="page" data-theme="a" id="cart_page" data-title="<?php echo $heading_title; ?>">
 	<?php echo $titlebar; ?>
 	<div data-role="content">
-	  	<ul data-role="listview" data-inset="true" data-theme="c" data-divider-theme="c" data-count-theme="c">
+	  	<ul data-role="listview" id="cartlist" data-inset="true" data-theme="c" data-divider-theme="c" data-count-theme="c">
 	  		<li data-role="list-divider"><?php echo $heading_title; ?></li>
 	  	<?php foreach ($products as $product) { ?>
 	  		<li id="<?php echo "p".$product['key']; ?>">
@@ -31,8 +31,16 @@
   				</div>
 	  		</li>
 	  	<?php } ?>
+	  		<li id="coupon">
+	  		<?php echo $coupon; ?>
+	  		</li>
 	  		<li>
-	  			<h2><?php echo $totals[0]['title']; ?><span id="span1"></span>： <span id="totals" style="color:red;"><?php echo $totals[0]['text']; ?></span></h2>
+	  			<h2><?php echo $totals[0]['title']; ?><span id="span1"></span>： <span id="totals" style="color:red;"><?php echo $totals[0]['text']; ?></span>
+	  			<span id="couponshow">
+	  				<br/>优惠金额： <span id="discount" style="color:red">￥0.00</span>
+	  				<br/>实际应付： <span id="realtotal" style="color:red"><?php echo $totals[0]['text']; ?></span>
+	  			</span>
+	  			</h2>
 	  			<p id="span2"></p>
 	  			<span id="totalprice" style="display:none;"><?php echo $totals[0]['value']; ?></span>
 	  		</li>
@@ -74,13 +82,37 @@
 			enbtn = "微信支付";
 			var span1 = "";
 			var span2 = "订单可以直接支付";
+			var coupon = true;
 			if (order_type > 0) {
 				enbtn = "下单称重";
 				span1 = "估计";
 				span2 = "该价格只是估算价格，称重后会收到准确价格";
+				coupon = false;
+			}
+			if ($("#realtotal").text() == '￥0.00') {
+				enbtn = '优惠劵支付';
 			}
 			$("#span1").text(span1);
 			$("#span2").text(span2);
+			if (coupon == true) {
+				$("#coupon").show();
+				$("#couponshow").show();
+			}
+			else {
+				$("#coupon").hide();
+				$("#couponshow").hide();
+			}
+			$("#cartlist").listview( "refresh" );
+		}
+
+		function changediscount() {
+			if ((typeof selectcoupon != "undefined") &&
+					$('#coupon-select').val() != -1) {
+					selectcoupon($('#coupon-select').val());
+			}
+			else {
+				$("#realtotal").text($("#totals").text());
+			}
 		}
 
 		function delete_product(key, url, name) {
@@ -101,6 +133,7 @@
 
 					$('#p'+key).remove();
 
+					changediscount();
 					changebtn(totals);
 				});
 			});
@@ -112,8 +145,10 @@
 		}
 
 		function checkout(){
-			if (check_form()) {$('#weixin_payment').submit();}
-			//$.mobile.changePage(checkouturl);
+			if (typeof check_form != "undefined") {
+				if (check_form()) {$('#weixin_payment').submit();}
+				//$.mobile.changePage(checkouturl);
+			}
 		};
 
 		function changebtn(totals) {
@@ -163,11 +198,37 @@
 							$('#totals').text('￥'+totals.toFixed(2));
 							$('#totalprice').text(totals);
 
+							changediscount();
 							changebtn(totals);
 						}
 					}
 			});
 		}
+
+		var CartCoupon = function() {
+			this.superclass.call(this);
+			this.getTotal = function() {
+				return $('#totalprice').text() - 0;
+			}
+			this.setCoupon = function(discount, remain) {
+				discount = discount - 0;
+				remain = remain - 0;
+				$('#discount').html('￥' + discount.toFixed(2));
+				$('#realtotal').html('￥' + remain.toFixed(2));
+
+				changebtn(discount+remain);
+			}
+			this.resetCoupon = function() {
+				$('#discount').html('￥0.00');
+				$("#realtotal").html($("#totals").text());
+
+				var baseCoupon = new Coupon();
+				baseCoupon.resetCoupon.call(this);
+			}
+		}
+		CartCoupon = E.extend(CartCoupon, Coupon);
+		coupon = new CartCoupon();
+		
 		//--></script>
 
 	</div>

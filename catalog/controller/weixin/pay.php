@@ -17,6 +17,30 @@ class ControllerWeixinPay extends ControllerWeixinWeixin {
 			return;
 		}
 		
+		$pay_total = $order_info['total'];
+		if (isset($this->session->data['coupon'])) {
+			$coupon = $this->session->data['coupon'];
+			if ($pay_total == $coupon['order_total']) {
+				$pay_total = $coupon['remain'];
+			}
+		}
+		
+		if ($pay_total <= 0) {
+			$this->load->model('checkout/order');
+			$this->model_checkout_order->orderChangeStatus($order_info);
+			$this->model_checkout_order->fastupdate($order_info['order_id'], $order_info);
+			
+			$this->load->model('checkout/coupon');
+			$ret = $this->model_checkout_coupon->commitCoupon($this->customer->getId(), $coupon['coupon_id'],
+				$order_info['order_id'], $order_info['total']);
+
+			$this->session->data['error_msg'] = '优惠劵支付完成';
+			$this->session->data['url_continue'] = $this->url->link('mobile_store/order');
+			$this->session->data['text_continue'] = '马上查看订单';
+			$this->redirect($this->url->link('weixin/error'));
+			return;
+		}
+		
 		if ($this->weixin_init() != true) {
 			$this->error();
 			return; //首次验证或初始化失败
@@ -28,7 +52,7 @@ class ControllerWeixinPay extends ControllerWeixinWeixin {
 		$wxPayHelper->add_param("nonce_str", (string)time());
 		$wxPayHelper->add_param("body", (string)$order_info['comment']);
 		$wxPayHelper->add_param("out_trade_no", (string)$order_info['order_id']);
-		$wxPayHelper->add_param("total_fee", (int)($order_info['total']*100));
+		$wxPayHelper->add_param("total_fee", (int)($pay_total*100));
 		$wxPayHelper->add_param("notify_url", $this->url->link2('weixin/pay_notify'));
 		$wxPayHelper->add_param("spbill_create_ip", (string)$this->request->server['REMOTE_ADDR']);
 		$wxPayHelper->add_param("trade_type", "JSAPI");

@@ -3,7 +3,8 @@
 <div data-role="page" data-theme="a" id="menugrouppage">
 	<?php echo $titlebar; ?>
 	<div data-role="content">
-		
+		<img src="<?php echo $dir_img.'dm1.jpg'; ?>" width="100%"></img>
+		<img src="<?php echo $dir_img.'dm2.jpg'; ?>" width="100%"></img>
 	</div>
 	<?php echo $navi; ?>
 </div>

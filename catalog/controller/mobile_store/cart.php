@@ -55,7 +55,8 @@ class ControllerMobileStoreCart extends Controller {
 			$this->redirect($this->url->link('mobile_store/cart', '', 'wxpay'));
 		}
 			
-		// Coupon    
+		/*
+		// Coupon
 		if (isset($this->request->post['coupon']) && $this->validateCoupon()) { 
 			$this->session->data['coupon'] = $this->request->post['coupon'];
 				
@@ -92,6 +93,7 @@ class ControllerMobileStoreCart extends Controller {
 			
 			$this->redirect($this->url->link('mobile_store/cart', '', 'wxpay'));
 		}
+		*/
 		
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->request->get['back'] = true;
@@ -402,6 +404,7 @@ class ControllerMobileStoreCart extends Controller {
 				'mobile_store/titlebar',
 				'mobile_store/navi',
 				'mobile_store/header',
+				'mobile_store/coupon',
 				'weixin/shipping'
 			);
 						
