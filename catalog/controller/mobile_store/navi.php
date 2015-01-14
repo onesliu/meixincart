@@ -16,8 +16,13 @@ class ControllerMobileStoreNavi extends Controller {
 		$this->data['product'] = $this->url->link('mobile_store/allproduct', '', 'SSL');
 		$this->data['cart'] = $this->url->link('mobile_store/cart', '', 'wxpay');
 		$this->data['order'] = $this->url->link('mobile_store/order', '', 'SSL');
-		$this->data['menu'] = $this->url->link('mobile_store/menu/mlist', '', 'SSL');
+		//$this->data['menu'] = $this->url->link('mobile_store/menu/mlist', '', 'SSL');
+		$this->data['menu'] = $this->url->link('weixin/error', '', 'SSL');
 		
+		$this->session->data['error_msg'] = '商城建设中，敬请期待...';
+		$this->session->data['url_continue'] = $this->url->link('mobile_store/allproduct', '', 'SSL');
+		$this->session->data['text_continue'] = '转到买菜页';
+				
 		if (isset($this->request->get['product_page']))
 			$this->data['product_page'] = $this->request->get['product_page'];
 		
