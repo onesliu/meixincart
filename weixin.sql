@@ -259,6 +259,8 @@ alter table oc_order_product add `weight` double default 0.0;
 alter table oc_order_product add `realweight` double default 0.0;
 alter table oc_order_product add `realtotal` double default 0.0;
 alter table oc_order_product add `other_product_id` bigint default 0;
+alter table oc_order_product add `perprice` double default 0.0;
+alter table oc_order_product add `perweight` double default 0.0;
 
 alter table oc_order_download modify order_id bigint;
 alter table oc_order_field modify order_id bigint;
