@@ -105,6 +105,7 @@ class ControllerCommonHeader extends Controller {
 		
 		$this->data['text_weixin'] = $this->language->get('text_weixin');
 		$this->data['text_weixin_setting'] = $this->language->get('text_weixin_setting');
+		$this->data['text_store_setting'] = '商城设置';
 		$this->data['text_qy_menu_group'] = '菜谱组';
 		$this->data['text_qy_menu'] = '菜谱';
 		$this->data['text_qy_food'] = '菜品';
@@ -182,6 +183,7 @@ class ControllerCommonHeader extends Controller {
 			$this->data['zone'] = $this->url->link('localisation/zone', 'token=' . $this->session->data['token'], 'SSL');
 
 			$this->data['weixin_setting'] = $this->url->link('weixin/setting', 'token=' . $this->session->data['token'], 'SSL');
+			$this->data['weixin_store_setting'] = $this->url->link('qingyou/store_setting', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['qy_menu_group'] = $this->url->link('qingyou/menu_group', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['qy_menu'] = $this->url->link('qingyou/menu', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['qy_food'] = $this->url->link('qingyou/food', 'token=' . $this->session->data['token'], 'SSL');

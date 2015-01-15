@@ -193,6 +193,7 @@ $(document).ready(function(){
       <li id="weixin"><a class="top"><?php echo $text_weixin; ?></a>
         <ul>
           <li><a href="<?php echo $weixin_setting; ?>"><?php echo $text_weixin_setting; ?></a></li>
+          <li><a href="<?php echo $weixin_store_setting; ?>"><?php echo $text_store_setting; ?></a></li>
           <li><a href="<?php echo $qy_menu_group; ?>"><?php echo $text_qy_menu_group; ?></a></li>
           <li><a href="<?php echo $qy_menu; ?>"><?php echo $text_qy_menu; ?></a></li>
           <li><a href="<?php echo $qy_food; ?>"><?php echo $text_qy_food; ?></a></li>
