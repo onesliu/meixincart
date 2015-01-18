@@ -16,7 +16,7 @@
     <div class="content">
       <div id="htabs" class="htabs"><a href="#tab-general"><?php echo $tab_general; ?></a>
         <?php if ($customer_id) { ?>
-        <a href="#tab-history"><?php echo $tab_history; ?></a><a href="#tab-transaction"><?php echo $tab_transaction; ?></a><a href="#tab-reward"><?php echo $tab_reward; ?></a>
+        <a href="#tab-history"><?php echo $tab_history; ?></a><a href="#tab-transaction"><?php echo $tab_transaction; ?></a><a href="#tab-reward"><?php echo $tab_reward; ?></a><a href="#tab-coupon"><?php echo $tab_coupon; ?></a>
         <?php } ?>
         <a href="#tab-ip"><?php echo $tab_ip; ?></a></div>
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
@@ -252,6 +252,53 @@
             </tr>
           </table>
           <div id="reward"></div>
+        </div>
+        <div id="tab-coupon">
+          <?php if ($coupons == false) { ?>
+          <table class="form">
+            <tr>
+              <td><?php echo '没有可用优惠劵'; ?></td>
+            </tr>
+          </table>
+          <?php } else { ?>
+          <table class="list">
+            <thead>
+              <tr>
+                <td class="left"><?php echo '优惠劵名称'; ?></td>
+                <td class="left"><?php echo '优惠劵类型'; ?></td>
+                <td class="left"><?php echo '面额/折扣'; ?></td>
+                <td class="left"><?php echo '有效期'; ?></td>
+                <td class="left"><?php echo '有否启用'; ?></td>
+                <td class="left"><?php echo '总量'; ?></td>
+                <td class="left"><?php echo '剩余量'; ?></td>
+                <td class="left"><?php echo '每个客户最大量'; ?></td>
+                <td class="left"><?php echo '拥有数量'; ?></td>
+                <td class="left"><?php echo '拥有总额'; ?></td>
+                <td class="left"><?php echo '新发行量'; ?></td>
+              </tr>
+            </thead>
+            <tbody>
+              <?php foreach($coupons as $c) { ?>
+              <tr>
+                <td class="left"><?php echo $c['name']; ?></td>
+                <td class="left"><?php if ($c['type'] == 'F') echo '现金劵'; elseif ($c['type'] == 'P') echo '折扣劵'; else echo '未知劵'; ?></td>
+                <td class="left"><?php if ($c['type'] == 'P') echo $c['discount']/100; else echo $c['discount']; ?></td>
+                <td class="left"><?php echo $c['date_start']."至".$c['date_end']; ?></td>
+                <td class="left"><?php if ($c['status'] == 0) echo '停用'; else echo '启用'; ?></td>
+                <td class="left"><?php echo $c['uses_total']; ?></td>
+                <td class="left"><?php echo $c['remain']; ?></td>
+                <td class="left"><?php echo $c['uses_customer']; ?></td>
+                <td class="left"><?php if(isset($c['counts'])) echo $c['counts'];?></td>
+                <td class="left"><?php if(isset($c['amount'])) echo $c['amount'];?></td>
+                <td class="left"><?php if ($c['uses_total'] == 0 || $c['remain'] > 0) { ?>
+                	<input type="text" size="10" name="coupon[<?php echo $c['coupon_id']; ?>]" value="" />
+                	<?php } else { echo "已发行完"; }?>
+                </td>
+              </tr>
+              <?php } ?>
+            </tbody>
+          </table>
+          <?php } ?>
         </div>
         <?php } ?>
         <div id="tab-ip">

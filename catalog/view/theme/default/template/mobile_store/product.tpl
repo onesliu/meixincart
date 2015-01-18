@@ -15,11 +15,13 @@
 			
 			<h3 style="display:inline-block;margin-bottom:.4em;"><?php echo $heading_title; ?></h3>
 			<h4 style="display:inline-block;margin-bottom:.4em;"><span style="color:red;"><?php echo $price; ?></span>/<?php echo $unit; ?>
+			<!-- 
 			<?php if ($product_type == 0) { ?>
   			（每<?php echo $sellunit; ?>:<span style="color:red;">￥<?php echo $sellprice; ?></span>）
   			<?php } else { ?>
   			（每<?php echo $sellunit; ?>约:<span style="color:red;">￥<?php echo $sellprice; ?></span>）
   			<?php } ?>
+  			 -->
 			</h4>
 			<div>
 				<h4 style="display:block;margin:1em 0 .3em 0;">购买数量： （<?php echo $model; ?>）</h4>

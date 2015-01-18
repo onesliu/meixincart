@@ -23,6 +23,7 @@ require_once(DIR_SYSTEM . 'library/weight.php');
 require_once(DIR_SYSTEM . 'library/length.php');
 require_once(DIR_SYSTEM . 'library/wxtools.php');
 require_once(DIR_SYSTEM . 'library/order.php');
+require_once(DIR_SYSTEM . 'library/coupon.php');
 
 // Registry
 $registry = new Registry();
@@ -131,7 +132,10 @@ $registry->set('document', new Document());
 		
 // Currency
 $registry->set('currency', new Currency($registry));		
-		
+
+// Coupon
+$registry->set('coupon', new Coupon($registry));
+
 // Weight
 $registry->set('weight', new Weight($registry));
 

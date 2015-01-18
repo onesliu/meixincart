@@ -38,6 +38,17 @@ class ModelSaleCustomer extends Model {
 				}
 			}
 		}
+		
+		if (isset($data['coupon'])) {
+			foreach ($data['coupon'] as $coupon_id => $counts) {
+				if ($counts != null) {
+					$ret = $this->coupon->releaseCoupon($customer_id, $coupon_id, $counts, false);
+					if (is_string($ret)) {
+						$this->log->write("Coupon release: ".$ret);
+					}
+				}
+			}
+		}
 	}
 
 	public function editToken($customer_id, $token) {
@@ -62,6 +73,47 @@ class ModelSaleCustomer extends Model {
 		$query = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "customer WHERE LCASE(email) = '" . $this->db->escape(utf8_strtolower($email)) . "'");
 	
 		return $query->row;
+	}
+	
+	public function getCustomerCoupon($customer_id) {
+		$query = $this->db->query("select * from oc_coupon where status>0 and (current_date() >= date_start and current_date() <= date_end)");
+		if ($query->num_rows <= 0)
+			return false;
+		$coupons = $query->rows;
+		
+		$sql = "select * from oc_coupon_customer oc join oc_customer c on oc.customer_id=c.customer_id where oc.customer_id=$customer_id";
+		$query = $this->db->query($sql);
+		if ($query->num_rows <= 0)
+			return $coupons;
+		$coupon_customer = $query->rows;
+			
+		foreach($coupons as &$coupon) {
+			foreach($coupon_customer as $customer) {
+				if ($coupon['coupon_id'] == $customer['coupon_id']) {
+					$coupon['counts'] = $customer['counts'];
+					$coupon['amount'] = $customer['amount'];
+				}
+			}
+		}
+		
+		$query = $this->db->query("select coupon_id,sum(counts) as RealseCount from oc_coupon_customer group by coupon_id");
+		if ($query->num_rows <= 0)
+			return $coupons;
+		$coupon_released = $query->rows;
+		foreach($coupons as &$coupon) {
+			$coupon['released'] = 0;
+			$coupon['remain'] = $coupon['uses_total'];
+			
+			foreach($coupon_released as $release) {
+				if ($coupon['coupon_id'] == $release['coupon_id']) {
+					$coupon['released'] = $release['RealseCount'];
+					if ($coupon['uses_total'] > 0)
+						$coupon['remain'] = $coupon['uses_total'] - $coupon['released'];
+				}
+			}
+		}
+		
+		return $coupons;
 	}
 			
 	public function getCustomers($data = array()) {
