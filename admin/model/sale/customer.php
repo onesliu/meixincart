@@ -81,6 +81,25 @@ class ModelSaleCustomer extends Model {
 			return false;
 		$coupons = $query->rows;
 		
+		$query = $this->db->query("select coupon_id,sum(counts) as RealseCount from oc_coupon_customer group by coupon_id");
+		if ($query->num_rows > 0)
+			$coupon_released = $query->rows;
+		
+		foreach($coupons as &$coupon) {
+			$coupon['released'] = 0;
+			$coupon['remain'] = $coupon['uses_total'];
+			
+			if (isset($coupon_released)) {
+				foreach($coupon_released as $release) {
+					if ($coupon['coupon_id'] == $release['coupon_id']) {
+						$coupon['released'] = $release['RealseCount'];
+						if ($coupon['uses_total'] > 0)
+							$coupon['remain'] = $coupon['uses_total'] - $coupon['released'];
+					}
+				}
+			}
+		}
+		
 		$sql = "select * from oc_coupon_customer oc join oc_customer c on oc.customer_id=c.customer_id where oc.customer_id=$customer_id";
 		$query = $this->db->query($sql);
 		if ($query->num_rows <= 0)
@@ -92,23 +111,6 @@ class ModelSaleCustomer extends Model {
 				if ($coupon['coupon_id'] == $customer['coupon_id']) {
 					$coupon['counts'] = $customer['counts'];
 					$coupon['amount'] = $customer['amount'];
-				}
-			}
-		}
-		
-		$query = $this->db->query("select coupon_id,sum(counts) as RealseCount from oc_coupon_customer group by coupon_id");
-		if ($query->num_rows <= 0)
-			return $coupons;
-		$coupon_released = $query->rows;
-		foreach($coupons as &$coupon) {
-			$coupon['released'] = 0;
-			$coupon['remain'] = $coupon['uses_total'];
-			
-			foreach($coupon_released as $release) {
-				if ($coupon['coupon_id'] == $release['coupon_id']) {
-					$coupon['released'] = $release['RealseCount'];
-					if ($coupon['uses_total'] > 0)
-						$coupon['remain'] = $coupon['uses_total'] - $coupon['released'];
 				}
 			}
 		}
