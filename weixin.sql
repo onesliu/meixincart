@@ -195,7 +195,7 @@ mysql> desc oc_coupon;
 | coupon_id     | int(11)       | NO   | PRI | NULL                | auto_increment |
 | name          | varchar(128)  | NO   |     | NULL                |  名称              |
 | code          | varchar(10)   | NO   |     | NULL                |                |
-| type          | char(1)       | NO   |     | NULL                |  类型，百分比（比值，数量），金额 （面额，数量）            |
+| type          | char(1)       | NO   |     | NULL                |  类型，百分比P（比值，数量），金额F （面额，数量）            |
 | discount      | decimal(15,4) | NO   |     | NULL                |  比值，面额              |
 | logged        | tinyint(1)    | NO   |     | NULL                |  是否要登录              |
 | shipping      | tinyint(1)    | NO   |     | NULL                |  是否配送              |
@@ -274,6 +274,7 @@ alter table oc_order_voucher modify order_id bigint;
 alter table oc_product add `other_product_id` bigint default 0;
 //0:重量可以固定的商品, 1:重量不能固定的商品
 alter table oc_product add `product_type` int default 0;
+alter table oc_product add `hasedit` int default 0;
 
 alter table oc_address add `district_id` int(11) not null default '0';
 alter table oc_address add telephone varchar(32);

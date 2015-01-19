@@ -20,6 +20,7 @@ require_once(DIR_SYSTEM . 'library/length.php');
 require_once(DIR_SYSTEM . 'library/cart.php');
 require_once(DIR_SYSTEM . 'library/wxtools.php');
 require_once(DIR_SYSTEM . 'library/order.php');
+require_once(DIR_SYSTEM . 'library/coupon.php');
 
 // Registry
 $registry = new Registry();
@@ -186,6 +187,9 @@ $registry->set('document', new Document());
 
 // Customer
 $registry->set('customer', new Customer($registry));
+
+// Coupon
+$registry->set('coupon', new Coupon($registry));
 
 // Affiliate
 $registry->set('affiliate', new Affiliate($registry));

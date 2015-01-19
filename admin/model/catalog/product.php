@@ -29,6 +29,7 @@ class ModelCatalogProduct extends Model {
 		"', status = '" . (int)$data['status'] . 
 		"', tax_class_id = '" . $this->db->escape($data['tax_class_id']) . 
 		"', sort_order = '" . (int)$data['sort_order'] . 
+		"', hasedit = '1" .
 		"', date_added = NOW()");
 		
 		$product_id = $this->db->getLastId();
@@ -173,6 +174,7 @@ class ModelCatalogProduct extends Model {
 		"', status = '" . (int)$data['status'] . 
 		"', tax_class_id = '" . $this->db->escape($data['tax_class_id']) . 
 		"', sort_order = '" . (int)$data['sort_order'] . 
+		"', hasedit = '1" .
 		((isset($data['product_type']))?("', product_type = '" . (int)$data['product_type']):('')) . 
 		"', date_modified = NOW() WHERE product_id = '" . (int)$product_id . "'");
 

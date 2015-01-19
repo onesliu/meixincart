@@ -102,6 +102,7 @@
 		<?php } ?>
 	</div>
 	<script type="text/javascript"><!--
+	<?php if (isset($weixin_payment)) {?>
 	var CartCoupon = function() {
 		this.superclass.call(this);
 		this.getTotal = function() {
@@ -128,6 +129,7 @@
 			baseCoupon.resetCoupon.call(this);
 		}
 	}
+	<?php } ?>
 
 	if (typeof selectcoupon != "undefined") {
 		$("#coupon").show();

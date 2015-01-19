@@ -4,11 +4,13 @@
   		<img src="<?php echo $product['thumb']; ?>" />
   		<h2><?php echo $product['name']; ?></h2>
   		<p><span style="color:red;"><?php echo $product['price']; ?></span>/<?php echo $product['unit']; ?>
+  		<!-- 
   		<?php if ($product['product_type'] == 0) { ?>
-  		（每<?php echo $product['sellunit']; ?>:<span style="color:red;">￥<?php echo $product['sellprice']; ?></span>）
+  		（每<?php echo $product['sellunit']; ?>:<span style="color:red;">￥<?php echo $product['sellprice']; ?>）
   		<?php } else { ?>
-  		（每<?php echo $product['sellunit']; ?>约:<span style="color:red;">￥<?php echo $product['sellprice']; ?></span>）
+  		（每<?php echo $product['sellunit']; ?>约:<span style="color:red;">￥<?php echo $product['sellprice']; ?>）
   		<?php } ?>
+  		 -->
 		</p>
 
   		<?php if ($product['model']) { ?>

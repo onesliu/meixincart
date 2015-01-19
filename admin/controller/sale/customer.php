@@ -79,8 +79,9 @@ class ControllerSaleCustomer extends Controller {
 		
 		$this->load->model('sale/customer');
 		
-    	if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_sale_customer->editCustomer($this->request->get['customer_id'], $this->request->post);
+    	if (($this->request->server['REQUEST_METHOD'] == 'POST') /*&& $this->validateForm() */) {
+			
+    		$this->model_sale_customer->editCustomer($this->request->get['customer_id'], $this->request->post);
 	  		
 			$this->session->data['success'] = $this->language->get('text_success');
 	  
@@ -649,6 +650,7 @@ class ControllerSaleCustomer extends Controller {
 		$this->data['tab_transaction'] = $this->language->get('tab_transaction');
 		$this->data['tab_reward'] = $this->language->get('tab_reward');
 		$this->data['tab_ip'] = $this->language->get('tab_ip');
+		$this->data['tab_coupon'] = '优惠劵';
 
 		$this->data['token'] = $this->session->data['token'];
 
@@ -911,6 +913,8 @@ class ControllerSaleCustomer extends Controller {
 		} else {
       		$this->data['address_id'] = '';
     	}
+    	
+    	$this->data['coupons'] = $this->model_sale_customer->getCustomerCoupon($this->request->get['customer_id']);
 		
 		$this->data['ips'] = array();
     	
