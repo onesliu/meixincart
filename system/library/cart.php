@@ -11,6 +11,7 @@ class Cart {
 		$this->db = $registry->get('db');
 		$this->tax = $registry->get('tax');
 		$this->weight = $registry->get('weight');
+		$this->cache = $registry->get('cache');
 
 		if (!isset($this->session->data['cart']) || !is_array($this->session->data['cart'])) {
       		$this->session->data['cart'] = array();

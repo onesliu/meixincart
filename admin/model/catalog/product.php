@@ -377,7 +377,7 @@ class ModelCatalogProduct extends Model {
 	}
 	
 	public function setPriceOnly($product_id, $price) {
-		$this->db->query("UPDATE " . DB_PREFIX . "product SET price = '" . (float)$price . "', date_modified = NOW() WHERE product_id = '" . (int)$product_id . "'");
+		$this->db->query("UPDATE " . DB_PREFIX . "product SET price = '" . (float)$price . "', date_modified = NOW(), hasedit=1 WHERE product_id = '" . (int)$product_id . "'");
 	}
 	
 	public function getProduct($product_id) {

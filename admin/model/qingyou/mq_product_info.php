@@ -1,10 +1,15 @@
 <?php
 class ModelQingyouMqProductInfo extends Model
 {
-    public function getProductInfo()
+    public function getProductInfo($hasedit = true)
     {
+    	if ($hasedit) {
+    		$condition = "and hasedit=1";
+    	}
         $data = array();
-        $sql = "select p.isbn as plu_serial_no, p.ean, p.price, pd.name from oc_product as p left join oc_product_description as pd on p.product_id = pd.product_id where hasedit = 1";
+        $sql = "select p.isbn as plu_serial_no, p.ean, p.price, pd.name 
+        	from oc_product as p left join oc_product_description as pd on p.product_id = pd.product_id 
+        	where p.isbn <> '' and p.isbn is not null $condition order by p.ean";
 
         $query = $this->db->query($sql);
         foreach ($query->rows as $result) {
