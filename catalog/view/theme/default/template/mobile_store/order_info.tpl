@@ -45,7 +45,7 @@
       		  <tr class="couponshow">
 		        <td colspan="2"> </td>
 		        <td>优惠金额：</td>
-		        <td><span id="discount" style="color:red;"><?php echo $total['text']; ?></span></td>
+		        <td><span id="discount" style="color:red;">￥0.00</span></td>
 		      </tr>
       		  <tr class="couponshow">
 		        <td colspan="2"> </td>
@@ -124,6 +124,7 @@
 		this.resetCoupon = function() {
 			$('#discount').html('￥0.00');
 			$("#realtotal").html($("#total").text());
+			$("#paybtn").text("<?php echo $text_pay_btn;?>");
 
 			var baseCoupon = new Coupon();
 			baseCoupon.resetCoupon.call(this);

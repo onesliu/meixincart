@@ -221,6 +221,7 @@
 			this.resetCoupon = function() {
 				$('#discount').html('￥0.00');
 				$("#realtotal").html($("#totals").text());
+				changebtn($("#totalprice").text());
 
 				var baseCoupon = new Coupon();
 				baseCoupon.resetCoupon.call(this);

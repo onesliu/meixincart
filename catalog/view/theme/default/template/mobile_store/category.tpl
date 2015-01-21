@@ -3,7 +3,7 @@
 <div data-role="page" id="categorypage" data-theme="a" data-title="<?php echo $heading_title; ?>">
 	<?php echo $titlebar; ?>
 	<div data-role="content">
-	<img id="help2" src="<?php echo $dir_img.'help2.png'; ?>" width="100%" style="display:none;" onclick="$(this).hide();"></img>
+	<!-- <img id="help2" src="<?php //echo $dir_img.'help2.png'; ?>" width="100%" style="display:none;" onclick="$(this).hide();"></img> -->
   	<ul data-role="listview" id="plist" data-inset="true" data-split-icon="shop" data-theme="c" data-divider-theme="c" data-count-theme="c">
   		<li data-role="list-divider"><?php echo $heading_title; ?></li>
 		<?php require('category_more.tpl'); ?>
@@ -52,9 +52,9 @@
 			});
 		});
 
-		if (showhelp > 0) {
-			$("#help2").show();
-		}
+		//if (showhelp > 0) {
+		//	$("#help2").show();
+		//}
 	});
 
 	function searchproduct() {
