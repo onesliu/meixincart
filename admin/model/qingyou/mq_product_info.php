@@ -3,6 +3,7 @@ class ModelQingyouMqProductInfo extends Model
 {
     public function getProductInfo($hasedit = true)
     {
+    	$condition = "";
     	if ($hasedit) {
     		$condition = "and hasedit=1";
     	}
