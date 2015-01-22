@@ -779,7 +779,7 @@ class ModelCheckoutOrder extends Model {
 		
 		$setstr = trim(trim($setstr, ","));
 		
-		$this->db->query("UPDATE `" . DB_PREFIX . "order` SET $setstr where order_id = $order_id");
+		return $this->db->query("UPDATE `" . DB_PREFIX . "order` SET $setstr where order_id = $order_id");
 	}
 	
 	public function fastgetOrder($order_id) {
@@ -802,7 +802,7 @@ class ModelCheckoutOrder extends Model {
 		$this->addOrderHistory($order_info);
 	}
 	
-	public function orderCancelStatus($order_info) {
+	public function orderCancelStatus(&$order_info) {
 		if (!isset($order_info)) return;
 		
 		$state = array(1=>6, 2=>6, 3=>5, 4=>5);

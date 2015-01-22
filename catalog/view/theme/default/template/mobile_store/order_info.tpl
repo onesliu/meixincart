@@ -10,7 +10,11 @@
 	<?php echo $titlebar; ?>
 	<div data-role="content">
 		<div class="ui-body ui-body-b ui-corner-all" style="margin-bottom:.4em;">
-			<p><?php echo $text_order_id; ?><?php echo $order_id; ?></p>
+			<p><?php echo $text_order_id; ?><?php echo $order_id; ?>
+				<?php if (isset($cancel_order)) { ?>
+				<span style="color:blue" onclick="onCancelOrder();"> [<?php echo $text_cancel_btn; ?>]</span>
+				<?php } ?>
+			</p>
 			<p><?php echo $text_date_added; ?><?php echo $date_added; ?></p>
 		</div>
 		<div class="ui-body ui-body-b ui-corner-all" style="margin-bottom:.4em;">
@@ -36,20 +40,20 @@
 		      <tfoot>
       		  <?php foreach ($totals as $total) {  ?>
       		  <tr>
-		        <td colspan="2"> </td>
-		        <td><?php echo $total['title']; ?>：</td>
+      		  	<td> </td>
+		        <td colspan="2"><?php echo $total['title']; ?>：</td>
 		        <td><span id="total" style="color:red;"><?php echo $total['text']; ?></span>
 		        	<span id="totalprice" style="display:none;"><?php echo $total['value']; ?></span>
 		        </td>
 		      </tr>
       		  <tr class="couponshow">
-		        <td colspan="2"> </td>
-		        <td>优惠金额：</td>
+      		  	<td> </td>
+		        <td colspan="2">优惠金额：</td>
 		        <td><span id="discount" style="color:red;">￥0.00</span></td>
 		      </tr>
       		  <tr class="couponshow">
-		        <td colspan="2"> </td>
-		        <td>实际应付：</td>
+      		  	<td> </td>
+		        <td colspan="2">实际应付：</td>
 		        <td><span id="realtotal" style="color:red;"><?php echo $total['text']; ?></span></td>
 		      </tr>
 		      <?php } ?>
@@ -102,6 +106,16 @@
 		<?php } ?>
 	</div>
 	<script type="text/javascript"><!--
+	<?php if (isset($cancel_order)) { ?>
+	var cancel_url = "<?php echo $cancel_order; ?>";
+	var cancel_text = "确定" + "<?php echo $text_cancel_btn; ?>" + "订单吗？";
+	function onCancelOrder() {
+		if (window.confirm(cancel_text)) {
+			location.href = cancel_url;
+		}
+	}
+	<?php } ?>
+	
 	<?php if (isset($weixin_payment)) {?>
 	var CartCoupon = function() {
 		this.superclass.call(this);

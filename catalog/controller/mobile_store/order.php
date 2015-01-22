@@ -315,6 +315,11 @@ class ControllerMobileStoreOrder extends Controller {
 	      		$this->data['weixin_payment'] = $this->url->link('weixin/pay', '', 'wxpay');
 	      		$this->session->data['order_info'] = $order_info;
       		}
+      		if ($order_info['order_status_id'] <= 2) {
+	      		$this->data['text_cancel_btn'] = '关闭';
+	      		$this->data['cancel_order'] = $this->url->link('mobile_store/order/cancel', '', 'wxpay');
+	      		$this->session->data['order_info'] = $order_info;
+       		}
 
       		$this->data['continue'] = $this->url->link('mobile_store/order', '', 'SSL');
 		
@@ -355,6 +360,34 @@ class ControllerMobileStoreOrder extends Controller {
 								
 			$this->response->setOutput($this->render());				
     	}
+  	}
+  	
+  	public function cancel() {
+		if (!isset($this->session->data['order_info'])) {
+			$this->redirect($this->url->link('mobile_store/home'));
+		}
+		$order_info = &$this->session->data['order_info'];
+  		
+		$this->load->model('checkout/order');
+		if ($order_info['order_status_id'] < 5) {
+			$this->model_checkout_order->orderCancelStatus($order_info);
+			$ret = $this->model_checkout_order->fastupdate($order_info['order_id'], $order_info);
+		}
+		else {
+			$ret = true;
+		}
+
+		if ($ret != false) {
+			$this->session->data['error_msg'] = '订单已取消';
+			$this->session->data['url_continue'] = $this->url->link('mobile_store/allproduct', '', 'SSL');
+			$this->session->data['text_continue'] = '转到买菜页';
+		}
+		else {
+			$this->session->data['error_msg'] = '订单取消失败';
+			$this->session->data['url_continue'] = $this->url->link('mobile_store/order/info', 'order_id='.$order_info['order_id'], 'SSL');
+			$this->session->data['text_continue'] = '查看订单';
+		}
+		$this->redirect($this->url->link('weixin/error'));
   	}
 }
 ?>
