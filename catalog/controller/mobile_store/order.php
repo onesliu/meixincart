@@ -309,8 +309,14 @@ class ControllerMobileStoreOrder extends Controller {
       		}
       		
 	      	$status = $this->model_account_order->getOrderStatus();
-      		$this->data['order_status'] = $status[$order_info['order_status_id']]['name'];
-      		if ($order_info['order_status_id'] == 2) {
+	      	foreach($status as $s) {
+	      		if ($order_info['order_status_id'] == $s['order_status_id']) {
+	      			$this->data['order_status'] = $s['name'];
+	      			break;
+	      		}
+	      	}
+
+	      	if ($order_info['order_status_id'] == 2) {
 	      		$this->data['text_pay_btn'] = '微信支付';
 	      		$this->data['weixin_payment'] = $this->url->link('weixin/pay', '', 'wxpay');
 	      		$this->session->data['order_info'] = $order_info;
