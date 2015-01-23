@@ -183,6 +183,8 @@ class ControllerMobileStoreCart extends Controller {
 			
       		$this->data['order_type'] = 0;
       		
+      		unset($this->session->data['coupon']);
+      		
 			$products = $this->cart->getProducts();
 
       		foreach ($products as $product) {

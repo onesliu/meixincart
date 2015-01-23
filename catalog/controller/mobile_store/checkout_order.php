@@ -269,8 +269,11 @@ class ControllerMobileStoreCheckoutOrder extends Controller {
       	$data['coupon_total'] = 0.0;
       	if (isset($this->session->data['coupon'])) {
       		$coupon = $this->session->data['coupon'];
-      		if ($coupon["order_total"] != $total)
+      		if ($coupon["order_total"] != $total) {
+      			$this->log->write($coupon["order_total"].' '.$total);
+      			$this->log->write(print_r($coupon,true));
       			return false;
+      		}
       			
       		$data['coupon_total'] = $coupon['discount'];
       	}
