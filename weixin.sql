@@ -187,6 +187,18 @@ create table if not exists `oc_coupon_customer` (
 
 alter table oc_order add `coupon_total` decimal(15,4) default 0.0;
 
+/*合作伙伴结算*/
+CREATE TABLE if not exists `oc_partner` (
+  `id` int(11) NOT NULL auto_increment,
+  `name` varchar(128) NOT NULL,
+  `address` varchar(512) NOT NULL,
+  `phone` varchar(64) NOT NULL,
+  `desp` text default null,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+alter table oc_product add `partner_id` int default 0;
+
 /*
 mysql> desc oc_coupon;
 +---------------+---------------+------+-----+---------------------+----------------+

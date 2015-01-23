@@ -71,7 +71,7 @@ class ModelMobileStoreProduct extends Model {
 			}
 			// -- STOP FILTER ATTRIBUTES MODULE ---
 			
-			$sql .= " WHERE pd.language_id = '" . (int)$this->config->get('config_language_id') . "' AND p.status = '1' AND p.date_available <= NOW() AND p2s.store_id = '" . (int)$this->config->get('config_store_id') . "'"; 
+			$sql .= " WHERE p.product_id <> 1 and pd.language_id = '" . (int)$this->config->get('config_language_id') . "' AND p.status = '1' AND p.date_available <= NOW() AND p2s.store_id = '" . (int)$this->config->get('config_store_id') . "'"; 
 			
 			if ($this->config->get('mobile_store_selected_products') != 0 && $this->config->get('mobile_store_selected_products') != ""){
 				$sql .= " AND p.product_id IN (" . $this->config->get('mobile_store_selected_products') .") "; 
