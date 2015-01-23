@@ -35,6 +35,7 @@ class Weight {
 			$to = 0;
 		}	
 		
+		if ($from == 0) return $value;
 		return $value * ($to / $from);
   	}
 
