@@ -104,10 +104,11 @@ class ModelQingyouOrder extends Model {
 		$data = array();
 		
 		$query = $this->db->query("select op.product_id, op.name as product_name, p.ean, p.jan,
-		p.mpn as perprice, p.upc as perunit, p.weight as perweight, p.sku as unit, 
+		p.mpn as perprice, p.upc as perunit, p.weight as perweight, p.sku as unit, wd.title as weightunit,
 		op.quantity, round(op.price,2) as price, round(op.total,2) as total, realweight, 
 		round(realtotal,2) as realtotal, p.product_type from " .DB_PREFIX. "order_product op 
-		join " .DB_PREFIX. "product p on p.product_id=op.product_id $condition");
+		join " .DB_PREFIX. "product p on p.product_id=op.product_id 
+		join oc_weight_class_description wd on p.weight_class_id=wd.weight_class_id $condition");
 		
 		foreach ($query->rows as $result) {
 			$o = new stdClass();
