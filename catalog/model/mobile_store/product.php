@@ -353,7 +353,7 @@ class ModelMobileStoreProduct extends Model {
 	public function getBuchaProduct() {
 		$q = $this->db->query("select * from oc_product p join oc_product_description pd on p.product_id=pd.product_id where ean=1");
 		if ($q->num_rows > 0)
-			return $q;
+			return $q->row;
 		return false;
 	}
 	
