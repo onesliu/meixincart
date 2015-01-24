@@ -267,6 +267,25 @@ class ControllerMobileStoreCheckoutOnestep extends Controller {
 			$comment .= $product['name']." ";
 		}
 		
+		//补差商品加入
+		$this->load->model('mobile_store/product');
+		$bucha = $this->model_mobile_store_product->getBuchaProduct();
+		if ($bucha != false) {
+			$product_data[] = array(
+				'product_id' => $bucha['product_id'],
+				'name'       => $bucha['name'],
+				'model'      => $bucha['model'],
+				'option'     => array(),
+				'download'   => array(),
+				'quantity'   => 1,
+				'subtract'   => 0,
+				'price'      => $bucha['price'],
+				'total'      => $bucha['total'],
+				'tax'        => $this->tax->getTax($bucha['price'], $bucha['tax_class_id']),
+				'reward'     => 0
+			);
+		}
+		
 		$this->data['order_type'] = $order_type;
 		$data['order_type'] = $order_type;
 		$data['comment'] = trim($comment);
