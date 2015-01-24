@@ -246,7 +246,8 @@ class ControllerMobileStoreCheckoutOrder extends Controller {
 				'quantity'   => 1,
 				'subtract'   => 0,
 				'price'      => $bucha['price'],
-				'total'      => $bucha['total'],
+				'weight'	 => $bucha['weight'],
+				'total'      => 0.0,
 				'tax'        => $this->tax->getTax($bucha['price'], $bucha['tax_class_id']),
 				'reward'     => 0
 			);
