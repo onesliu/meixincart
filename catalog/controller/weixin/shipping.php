@@ -56,7 +56,7 @@ class ControllerWeixinShipping extends ControllerWeixinWeixin {
 		$tomorow = date("Y-m-d", time()+24*60*60);
 		
 		for($i = $first_shipping_time;$i <= $last_shipping_time; $i+= $shipping_interval) {
-			if ($date_now['hours'] <= $i-1) {
+			if ($date_now['hours'] < $i-1) {
 				$this->data['shipping_time']["$today $i:00:00"] = "今天 $i:00前";
 			}
 		}
