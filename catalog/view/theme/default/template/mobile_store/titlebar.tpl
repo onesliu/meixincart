@@ -9,20 +9,20 @@
 		<li><a href="#" data-rel="close">关闭</a></li>
 	</ul>
 </div>
-<div data-role="header" data-theme="a">
-    <?php if (isset($product_page) && $product_page == true) {?>
+<div data-role="header" data-position="fixed" data-theme="a">
+<?php if (isset($product_page) && $product_page == true) {?>
     <style type="text/css">
 		.ui-input-search {margin:0px 0 0px 0; height:26px;}
 	</style>
-    	<a href="#category_panel" class="ui-btn ui-icon-grid ui-corner-all ui-btn-icon-notext">分类</a>
-	   	<h1 style="padding:6px 0;margin:0 20%;"><input style="height:25px;min-height:0;font-size:.8em;" id="product_search" onchange="searchproduct();" type="search" name="product_search" value="" placeholder="查找商品..." /></h1>
-    <?php } else { ?>
+    	<a href="#category_panel" class="ui-btn ui-icon-grid ui-corner-all ui-btn-icon-left">分类</a>
+	   	<h1 style="padding:6px 0 6px 1.5em;margin:0 20%;"><input style="height:25px;min-height:0;font-size:.8em;" id="product_search" onchange="searchproduct();" type="search" name="product_search" value="" placeholder="查找商品..." /></h1>
+<?php } else { ?>
 		<?php if (isset($back)) {?>
 		<a href="#" data-rel="back" class="ui-btn ui-icon-arrow-l ui-btn-icon-notext ui-corner-all"></a>
 		<?php } elseif (isset($home_url)) {?>
 		<a href="<?php echo $home_url; ?>" class="ui-btn ui-icon-home ui-btn-icon-notext ui-corner-all"></a>
 		<?php } ?>
 	    <h1 style="padding:.4em 0;"><img src="<?php echo $logo; ?>" style="height:25px;" /></h1>
-    <?php } ?>
+<?php } ?>
     <a href="#option_panel" class="ui-btn ui-icon-user ui-btn-icon-notext ui-corner-all"></a>
 </div>
