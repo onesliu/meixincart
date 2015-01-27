@@ -57,12 +57,12 @@ class ControllerWeixinShipping extends ControllerWeixinWeixin {
 		
 		for($i = $first_shipping_time;$i <= $last_shipping_time; $i+= $shipping_interval) {
 			if ($date_now['hours'] <= $i-1) {
-				$this->data['shipping_time']["$today $i:00:00"] = "今天 $i:00";
+				$this->data['shipping_time']["$today $i:00:00"] = "今天 $i:00前";
 			}
 		}
 		
 		for($i = $first_shipping_time; $i <= $last_shipping_time; $i+= $shipping_interval) {
-			$this->data['shipping_time']["$tomorow $i:00:00"] = "明天 $i:00";
+			$this->data['shipping_time']["$tomorow $i:00:00"] = "明天 $i:00前";
 		}
 		
 		$this->data['user_telephone'] = $this->customer->getTelephone(); 
