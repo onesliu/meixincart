@@ -4,7 +4,7 @@
 <style type="text/css">
 .c1{font-size:xx-large;font-weight:bold;line-height:1em;width:1.5em; float:right;}
 .c2{width:1.5em; float:right}
-.c3 {float:right; margin-top:14em; margin-right:1.0em}
+.c3 {float:right; margin-right:1.0em}
 </style>
 	<?php echo $titlebar; ?>
 	<div style="margin:1em 1em 0 0">
@@ -18,7 +18,8 @@
 		<div class="c2">用体贴换来关怀</div>
 		<div class="c2"><span style="color:red;"> 菜鸽子</span></div>
 		<div class="c2">将给你一个  “ 青悠悠 ” 的生活 </div>
-		<div><a class="c3" href="http://m.wsq.qq.com/264065938/t/1"><img width="23px" src="<?php echo $dir_img.'ad1.png'; ?>"></img></a></div>
+		<div><a class="c3" style="margin-top:4em;" href="http://m.wsq.qq.com/264065938/t/4"><img width="23px" src="<?php echo $dir_img.'ad2.png'; ?>"></img></a></div>
+		<div><a class="c3" style="margin-top:2em;" href="http://m.wsq.qq.com/264065938/t/1"><img width="23px" src="<?php echo $dir_img.'ad1.png'; ?>"></img></a></div>
 	</div>
 </div>
 </body>

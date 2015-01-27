@@ -6,6 +6,7 @@
 		<?php } ?>
 		<li data-role="list-divider"></li>
 		<li><a href="<?php echo $about; ?>">关于我们</a></li>
+		<li><a href="http://m.wsq.qq.com/264065938/t/4">我们的服务</a></li>
 		<li><a href="#" data-rel="close">关闭</a></li>
 	</ul>
 </div>
