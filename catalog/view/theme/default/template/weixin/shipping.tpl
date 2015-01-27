@@ -36,6 +36,9 @@
       		<option value="<?php echo $sk; ?>"><?php echo $st; ?></option>
       		<?php } ?>
       	</select>
+      	<span><?php echo $first_shipping_time.':00收货，'.($first_shipping_time-1).':00截止下单。'; ?><br/>
+      		<?php echo $last_shipping_time.':00收货，'.($last_shipping_time-1).':00截止下单。'; ?>
+      	</span>
     </div>
 <script type="text/javascript"><!--
 function check_form() {

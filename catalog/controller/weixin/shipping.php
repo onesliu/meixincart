@@ -42,21 +42,23 @@ class ControllerWeixinShipping extends ControllerWeixinWeixin {
 		
 		$first_shipping_time = $this->config->get('first_shipping_time');
 		if ($first_shipping_time == null)
-			$first_shipping_time = 11;
+			$first_shipping_time = 12;
+		$this->data['first_shipping_time'] = $first_shipping_time;
 			
 		$last_shipping_time = $this->config->get('last_shipping_time');
 		if ($last_shipping_time == null)
-			$last_shipping_time = 19;
+			$last_shipping_time = 18;
+		$this->data['last_shipping_time'] = $last_shipping_time;
 		
 		$date_now = getdate();
-		$start_time = $date_now['hours'] + 2;
 		
 		$today = date("Y-m-d", time());
 		$tomorow = date("Y-m-d", time()+24*60*60);
 		
 		for($i = $first_shipping_time;$i <= $last_shipping_time; $i+= $shipping_interval) {
-			if ($start_time < $i)
+			if ($date_now['hours'] <= $i-1) {
 				$this->data['shipping_time']["$today $i:00:00"] = "今天 $i:00";
+			}
 		}
 		
 		for($i = $first_shipping_time; $i <= $last_shipping_time; $i+= $shipping_interval) {
