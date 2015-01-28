@@ -48,8 +48,12 @@
 	  	
 	  	<form id="weixin_payment" name="weixin_payment" method="post" action="<?php echo $checkout; ?>">
 		<?php echo $shipping; ?>
-		<input type="button" id="checkoutbtn" onclick="checkout();" class="ui-btn ui-corner-all ui-shadow ui-btn-a" value="下单" />
 		</form>
+		
+		<div data-role="footer" data-position="fixed" data-theme="d" data-tap-toggle="false">
+			<span><center><input type="button" id="checkoutbtn" onclick="checkout();" class="ui-btn ui-corner-all ui-shadow ui-btn-d ui-btn-inline" value="下单" />
+			<a href="<?php echo $url_continue; ?>" class="ui-btn ui-corner-all ui-shadow ui-btn-d ui-btn-inline">继续购物</a></center></span>
+		</div>
 	  	
 		<div data-role="popup" id="popupDialog" data-position-to="window" data-transition="pop" data-theme="b" data-overlay-theme="b" data-dismissible="false" style="max-width:400px;">
 			<div data-role="header" data-theme="b">

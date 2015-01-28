@@ -97,6 +97,7 @@ class ControllerMobileStoreCart extends Controller {
 		
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->request->get['back'] = true;
+		$this->data['url_continue'] = $this->url->link('mobile_store/allproduct', '', 'SSL');
 		$this->data['minum_order'] = $this->config->get('minum_order');
 
     	if ($this->cart->hasProducts() || !empty($this->session->data['vouchers'])) {
