@@ -42,7 +42,7 @@ class ControllerMobileStoreOrder extends Controller {
 		
 		$order_total = $this->model_account_order->getTotalOrders();
 		
-		$results = $this->model_account_order->getOrders(($page - 1) * $limit, $limit);
+		$results = $this->model_account_order->getOrders(($page - 1) * $limit, $limit, 6); //不查询已取消订单
 		
 		foreach ($results as $result) {
 			$product_total = $this->model_account_order->getOrderProducts($result['order_id']);
@@ -60,6 +60,7 @@ class ControllerMobileStoreOrder extends Controller {
 				'order_id'   => $result['order_id'],
 				'name'       => $result['firstname'] . ' ' . $result['lastname'],
 				'status'     => $result['status'],
+				'order_status_id' => $result['order_status_id'],
 				'date_added' => $result['date_added'],
 				'products'   => $product_total,
 				'productnames' => $pname,
