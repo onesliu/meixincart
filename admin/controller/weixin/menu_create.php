@@ -15,7 +15,13 @@ class ControllerWeixinMenuCreate extends ControllerWeixinWeixin {
 		//创建菜单
 		$url = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=".$this->access_token;
 		$res = $wxtools->postToWx($url, $menu_def);
-		$this->response->setOutput($res['content']);
+		if ($res == false) {
+			$this->log->write("weixin prepay response error.");
+			$this->response->setOutput("weixin prepay response error.");
+		}
+		else {
+			$this->response->setOutput($res);
+		}
 	}
 	
 }
