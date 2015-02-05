@@ -9,8 +9,8 @@ class WeixinTools {
 		if ($cli->call() != true) {
 			return false;
 		}
-			
-		return $cli->resContent();
+
+		return $cli->getResContent();
 	}
 	
 	public function getFromWx($url) {
@@ -20,8 +20,8 @@ class WeixinTools {
 		if ($cli->call() != true) {
 			return false;
 		}
-			
-		return $cli->resContent();
+
+		return $cli->getResContent();
 	}
 	
 	public function sslPostToWx($url, $content) {
@@ -35,8 +35,8 @@ class WeixinTools {
 		if ($cli->call() != true) {
 			return false;
 		}
-			
-		return $cli->resContent();
+
+		return $cli->getResContent();
 	}
 	
 	public function sslGetFromWx($url) {
@@ -50,8 +50,8 @@ class WeixinTools {
 		if ($cli->call() != true) {
 			return false;
 		}
-			
-		return $cli->resContent();
+
+		return $cli->getResContent();
 	}
 	
 	public function prepareOauthUrl($remote_file, $appid) {
