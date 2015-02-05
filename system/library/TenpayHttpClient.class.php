@@ -25,6 +25,8 @@ class TenpayHttpClient {
 	var $resContent;
 	//请求方法
 	var $method;
+	// url
+	var $url;
 	
 	//证书文件
 	var $certFile;
@@ -105,6 +107,10 @@ class TenpayHttpClient {
 		$this->timeOut = $timeOut;
 	}
 	
+	function setUrl($url) {
+		$this->url = $url;
+	}
+	
 	//执行http调用
 	function call() {
 		//启动一个CURL会话
@@ -114,21 +120,20 @@ class TenpayHttpClient {
 		curl_setopt ( $ch, CURLOPT_TIMEOUT, $this->timeOut );
 		
 		// 获取的信息以文件流的形式返回，而不是直接输出。
-		curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, 1 );
+		curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, true );
 		
 		// 从证书中检查SSL加密算法是否存在
-		curl_setopt ( $ch, CURLOPT_SSL_VERIFYHOST, 1 );
+		curl_setopt ( $ch, CURLOPT_SSL_VERIFYHOST, true );
 		
-		$arr = explode ( "?", $this->reqContent );
-		if (count ( $arr ) >= 2 && $this->method == "post") {
+		if ($this->method == "post") {
 			//发送一个常规的POST请求，类型为：application/x-www-form-urlencoded，就像表单提交的一样。
-			curl_setopt ( $ch, CURLOPT_POST, 1 );
-			curl_setopt ( $ch, CURLOPT_URL, $arr [0] );
+			curl_setopt ( $ch, CURLOPT_POST, true );
+			curl_setopt ( $ch, CURLOPT_URL, $this->url );
 			//要传送的所有数据
-			curl_setopt ( $ch, CURLOPT_POSTFIELDS, $arr [1] );
+			curl_setopt ( $ch, CURLOPT_POSTFIELDS, $this->reqContent );
 		
 		} else {
-			curl_setopt ( $ch, CURLOPT_URL, $this->reqContent );
+			curl_setopt ( $ch, CURLOPT_URL, $this->url );
 		}
 		
 		//设置证书信息
@@ -141,11 +146,11 @@ class TenpayHttpClient {
 		//设置CA
 		if ($this->caFile != "") {
 			// 对认证证书来源的检查，0表示阻止对证书的合法性的检查。1需要设置CURLOPT_CAINFO
-			curl_setopt ( $ch, CURLOPT_SSL_VERIFYPEER, 1 );
+			curl_setopt ( $ch, CURLOPT_SSL_VERIFYPEER, true );
 			curl_setopt ( $ch, CURLOPT_CAINFO, $this->caFile );
 		} else {
 			// 对认证证书来源的检查，0表示阻止对证书的合法性的检查。1需要设置CURLOPT_CAINFO
-			curl_setopt ( $ch, CURLOPT_SSL_VERIFYPEER, 0 );
+			curl_setopt ( $ch, CURLOPT_SSL_VERIFYPEER, false );
 		}
 		
 		// 执行操作

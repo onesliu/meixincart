@@ -4,7 +4,8 @@ require_once(DIR_SYSTEM."/library/TenpayHttpClient.class.php");
 class WeixinTools {
 	public function postToWx($url, $content) {
 		$cli = new TenpayHttpClient();
-		$cli->setReqContent("$url?$content");
+		$cli->setUrl($url);
+		$cli->setReqContent($content);
 		$cli->setMethod('post');
 		if ($cli->call() != true) {
 			return false;
@@ -15,7 +16,7 @@ class WeixinTools {
 	
 	public function getFromWx($url) {
 		$cli = new TenpayHttpClient();
-		$cli->setReqContent("$url");
+		$cli->setUrl($url);
 		$cli->setMethod('get');
 		if ($cli->call() != true) {
 			return false;
@@ -26,7 +27,8 @@ class WeixinTools {
 	
 	public function sslPostToWx($url, $content) {
 		$cli = new TenpayHttpClient();
-		$cli->setReqContent("$url?$content");
+		$cli->setUrl($url);
+		$cli->setReqContent($content);
 		$cli->setMethod('post');
 		if (!file_exists('/etc/httpd/certs/1220519101.pem'))
 			return false;
@@ -41,7 +43,7 @@ class WeixinTools {
 	
 	public function sslGetFromWx($url) {
 		$cli = new TenpayHttpClient();
-		$cli->setReqContent("$url");
+		$cli->setUrl($url);
 		$cli->setMethod('get');
 		if (!file_exists('/etc/httpd/certs/1220519101.pem'))
 			return false;
