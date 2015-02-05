@@ -124,7 +124,24 @@ class ControllerWeixinPay extends ControllerWeixinWeixin {
 		$this->session->data['text_continue'] = '马上查看订单';
 		$this->redirect($this->url->link('weixin/error'));
 	}
-	
+/*	
+	public function sendToKf() {
+		if (isset($this->session->data['openid'])) {
+			$this->load->model("weixin/auto_reply");
+			$xml = $this->model_weixin_auto_reply->makeXmlMuService(
+				$this->session->data['openid'], 'gh_98fc727a4c89', 'onesliu@caigezi2');
+
+			$wxtools = new WeixinTools();
+			$url = "https://api.mch.weixin.qq.com/pay/unifiedorder";
+			$response = $wxtools->postToWx($url, $request);
+			if ($response == false) {
+				$this->log->write("weixin prepay response error.");
+				$this->error();
+				return;
+			}
+		}
+	}
+*/
 }
 
 ?>

@@ -82,7 +82,7 @@ class ControllerWeixinWeixin extends Controller {
 				}
 				else { //转至多客服系统
 					$this->response->setOutput($this->model_weixin_auto_reply->makeXmlMuService(
-						$this->WeixinFromUserName, $this->WeixinToUserName));
+						$this->WeixinFromUserName, $this->WeixinToUserName), 'onesliu@caigezi2');
 					return;
 				}
 			}
