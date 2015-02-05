@@ -10,6 +10,10 @@ class ControllerWeixinKfplugin extends Controller {
 			$this->template = 'default/template/weixin/kfplugin.tpl';
 		}
 		
+		$this->children = array(
+				'mobile_store/header'
+			);
+		
 		$this->response->setOutput($this->render());
 	}
 	
