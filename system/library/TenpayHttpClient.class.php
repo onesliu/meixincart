@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 /**
  * http、https通信类
