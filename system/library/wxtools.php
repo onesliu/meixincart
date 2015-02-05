@@ -1,5 +1,5 @@
 <?php
-include_once(DIR_SYSTEM."/library/TenpayHttpClient.class.php");
+require_once(DIR_SYSTEM."/library/TenpayHttpClient.class.php");
 
 class WeixinTools {
 	public function postToWx($url, $content) {
