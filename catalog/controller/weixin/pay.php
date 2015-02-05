@@ -62,24 +62,24 @@ class ControllerWeixinPay extends ControllerWeixinWeixin {
 		$request = $wxPayHelper->make_request($this->partnerkey);
 		$url = "https://api.mch.weixin.qq.com/pay/unifiedorder";
 		$response = $wxtools->postToWx($url, $request);
-		if ($response['rescode'] != 200) {
-			$this->log->write("weixin prepay response error, ". $response['rescode']);
+		if ($response == false) {
+			$this->log->write("weixin prepay response error.");
 			$this->error();
 			return;
 		}
 		
 		$resHelper = new PayHelper();
-		$res = $resHelper->parse_response($response['content']);
+		$res = $resHelper->parse_response($response);
 		if (isset($res->return_code) == false || isset($res->return_msg) == false ||
 			isset($res->result_code) == false || (string)$res->return_code != 'SUCCESS' ||
 			(string)$res->result_code != 'SUCCESS') {
-			$this->log->write("prepay response error: \n". $response['content']);
+			$this->log->write("prepay response error: \n". $response);
 			$this->error();
 			return;
 		}
 		
 		if ($resHelper->sign_verify($this->partnerkey) != true) {
-			$this->log->write("prepay response sign verify error: \n". $response['content']);
+			$this->log->write("prepay response sign verify error: \n". $response);
 			$this->error();
 			return;
 		}

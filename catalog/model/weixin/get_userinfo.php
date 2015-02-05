@@ -12,8 +12,12 @@ class ModelWeixinGetUserinfo extends Model {
 		$url = "https://api.weixin.qq.com/cgi-bin/user/info?access_token=$access_token&openid=$openid&lang=zh_CN";
 		$wxtools = new WeixinTools();
 		$res = $wxtools->getFromWx($url);
+		if ($res == false) {
+			$this->log->write("weixin get user info error.");
+			return false;
+		}
 
-		$result = json_decode($res['content']);
+		$result = json_decode($res);
 		
 		if (isset($result->subscribe)) {
 			if ($result->subscribe == 1) {

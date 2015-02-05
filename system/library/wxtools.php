@@ -1,35 +1,57 @@
 <?php
+include_once(DIR_SYSTEM."/library/TenpayHttpClient.class.php");
 
 class WeixinTools {
 	public function postToWx($url, $content) {
-		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, $url);
-		curl_setopt($ch, CURLOPT_POST, true);
-		curl_setopt($ch, CURLOPT_POSTFIELDS, $content);
-		curl_setopt($ch, CURLOPT_HEADER, false);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-		curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.1 Safari/537.11');
-		$ret['content'] = curl_exec($ch);
-		$ret['rescode'] = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-		curl_close($ch);
-		
-		return $ret;
+		$cli = new TenpayHttpClient();
+		$cli->setReqContent("$url?$content");
+		$cli->setMethod('post');
+		if ($cli->call() != true) {
+			return false;
+		}
+			
+		return $cli->resContent();
 	}
 	
 	public function getFromWx($url) {
-		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, $url);
-		curl_setopt($ch, CURLOPT_HTTPGET, true);
-		curl_setopt($ch, CURLOPT_HEADER, false);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-		curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.1 Safari/537.11');
-		$ret['content'] = curl_exec($ch);
-		$ret['rescode'] = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-		curl_close($ch);
+		$cli = new TenpayHttpClient();
+		$cli->setReqContent("$url");
+		$cli->setMethod('get');
+		if ($cli->call() != true) {
+			return false;
+		}
+			
+		return $cli->resContent();
+	}
 	
-		return $ret;
+	public function sslPostToWx($url, $content) {
+		$cli = new TenpayHttpClient();
+		$cli->setReqContent("$url?$content");
+		$cli->setMethod('post');
+		if (!file_exists('/etc/httpd/certs/1220519101.pem'))
+			return false;
+		$cli->setCertInfo('/etc/httpd/certs/1220519101.pem', '1220519101');
+		$cli->setCaInfo('/etc/httpd/certs/cacert.pem');
+		if ($cli->call() != true) {
+			return false;
+		}
+			
+		return $cli->resContent();
+	}
+	
+	public function sslGetFromWx($url) {
+		$cli = new TenpayHttpClient();
+		$cli->setReqContent("$url");
+		$cli->setMethod('get');
+		if (!file_exists('/etc/httpd/certs/1220519101.pem'))
+			return false;
+		$cli->setCertInfo('/etc/httpd/certs/1220519101.pem', '1220519101');
+		$cli->setCaInfo('/etc/httpd/certs/cacert.pem');
+		if ($cli->call() != true) {
+			return false;
+		}
+			
+		return $cli->resContent();
 	}
 	
 	public function prepareOauthUrl($remote_file, $appid) {

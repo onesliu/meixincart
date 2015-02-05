@@ -143,6 +143,9 @@ class ControllerQingyouOrderQuery extends ControllerWeixinWeixin {
 		$url = "https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=".$this->access_token;
 		$wxtools = new WeixinTools();
 		$res = $wxtools->postToWx($url, $msg);
+		if ($res == false) {
+			$this->log->write("send weixin scale/pay notify error.");
+		}
 	}
 	
 	private function prepareWxMsg($order) {

@@ -29,24 +29,24 @@ class ControllerWeixinPayResult extends ControllerWeixinWeixin {
 			$url = "https://api.mch.weixin.qq.com/pay/orderquery";
 			$response = $wxtools->postToWx($url, $request);
 			
-			if ($response['rescode'] != 200) {
-				$this->log->write("weixin order query response error, ". $response['rescode']);
+			if ($response == false) {
+				$this->log->write("weixin order query response error.");
 				$this->error();
 				return;
 			}
 			
 			$resHelper = new PayHelper();
-			$res = $resHelper->parse_response($response['content']);
+			$res = $resHelper->parse_response($response);
 			if (isset($res->return_code) == false || isset($res->return_msg) == false ||
 				isset($res->result_code) == false || (string)$res->return_code != 'SUCCESS' ||
 				(string)$res->result_code != 'SUCCESS') {
-				$this->log->write("order query response error: \n". $response['content']);
+				$this->log->write("order query response error: \n". $response);
 				$this->error();
 				return;
 			}
 			
 			if ($resHelper->sign_verify($this->partnerkey) != true) {
-				$this->log->write("order query response sign verify error: \n". $response['content']);
+				$this->log->write("order query response sign verify error: \n". $response);
 				$this->error();
 				return;
 			}
@@ -75,7 +75,7 @@ class ControllerWeixinPayResult extends ControllerWeixinWeixin {
 				}
 			}
 
-			$this->save_result($order_info, $response['content']);
+			$this->save_result($order_info, $response);
     	}
     	else {
 			$this->data['error_msg'] = '订单已经支付';
