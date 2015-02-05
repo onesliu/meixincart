@@ -1,6 +1,6 @@
 <?php
 
-class ControllerKfplugin extends Controller { 
+class ControllerWeixinKfplugin extends Controller { 
 	public function index() {
 		
 		// view template
