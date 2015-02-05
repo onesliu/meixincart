@@ -89,7 +89,6 @@ class TenpayHttpClient {
 		$this->timeOut = $timeOut;
 	}
 	
-	//执行http调用
 	function call() {
 		//启动一个CURL会话
 		$ch = curl_init();
