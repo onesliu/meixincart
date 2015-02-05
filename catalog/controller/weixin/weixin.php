@@ -4,10 +4,12 @@ class ControllerWeixinWeixin extends Controller {
 	public function index() {
 		
 		if ($this->weixin_init() != true) {
+			$this->log->write("微信接口初始化失败");
 			return; //初始化失败
 		}
 		
 		if ($this->valid_check() != true) {
+			$this->log->write("首次验证成功或微信验证失败");
 			return; //验证失败或首次验证成功
 		}
 		
@@ -25,19 +27,28 @@ class ControllerWeixinWeixin extends Controller {
 			if ($this->WeixinMsgType == 'event' && $this->WeixinEvent == 'subscribe') {
 				//取用户信息，并自动注册到商城
 				$userinfo = $this->model_weixin_get_userinfo->getUserInfo($this->access_token, $this->WeixinFromUserName);
-				//发送关注欢迎消息
-				$this->load->model("weixin/auto_reply");
-				$reply = $this->model_weixin_auto_reply->getReply($this->WeixinFromUserName,
-					$this->WeixinToUserName, 'subscribe');
-				if ($reply != false) {
-					$reply = $wxtools->prepareMenu($reply, $this->appid);
-					$this->response->setOutput($reply);
-					return;
+				if ($userinfo == false) {
+					$this->log->write("自动注册用户出错：".$this->WeixinFromUserName);
+				}
+				else {
+					//发送关注欢迎消息
+					$this->load->model("weixin/auto_reply");
+					$reply = $this->model_weixin_auto_reply->getReply($this->WeixinFromUserName,
+						$this->WeixinToUserName, 'subscribe');
+					if ($reply != false) {
+						$reply = $wxtools->prepareMenu($reply, $this->appid);
+						$this->response->setOutput($reply);
+						return;
+					}
+					else {
+						$this->log->write("发送关注欢迎消息出错：".$this->WeixinFromUserName." ".$this->WeixinToUserName);
+					}
 				}
 			}
 			else if ($this->WeixinMsgType == 'event' && $this->WeixinEvent == 'unsubscribe') {
 				//注销用户
 				$this->model_weixin_get_userinfo->unSubscribeUser($this->WeixinFromUserName);
+				$this->log->write("注销微信用户：".$this->WeixinFromUserName);
 			}
 			else if ($this->WeixinMsgType == 'event' && $this->WeixinEvent == 'CLICK') {
 				//发送自动应答消息，当用户点击该图文消息时，自动登录到商城并跳转到首页
@@ -50,6 +61,9 @@ class ControllerWeixinWeixin extends Controller {
 						$reply = $wxtools->prepareMenu($reply, $this->appid);
 						$this->response->setOutput($reply);
 						return;
+					}
+					else {
+						$this->log->write("发送自动应答消息出错：".$this->WeixinFromUserName." ".$this->WeixinToUserName);
 					}
 				}
 			}
