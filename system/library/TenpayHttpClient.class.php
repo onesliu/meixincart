@@ -17,37 +17,21 @@
  *
  */
 class TenpayHttpClient {
-	//请求内容，无论post和get，都用get方式提供
 	var $reqContent;
-	//应答内容
 	var $resContent;
-	//请求方法
 	var $method;
-	
-	//证书文件
 	var $certFile;
-	//证书密码
 	var $certPasswd;
-	//证书类型PEM
-	var	$certType;
-	
-	//CA文件
+	var $certType;
 	var $caFile;
-	
-	//错误信息
 	var $errInfo;
-	
-	//超时时间
 	var $timeOut;
-	
-	//http状态码
 	var $responseCode;
 	
 	function __construct() {
 		$this->TenpayHttpClient();
 	}
-	
-	
+
 	function TenpayHttpClient() {
 		$this->reqContent = "";
 		$this->resContent = "";
