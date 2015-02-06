@@ -5,11 +5,6 @@
 	
 	<script type="text/javascript"><!--
 
-	$(document).on("pageinit", "#kforders", function(){
-		$.mobile.ajaxEnabled = true;
-		$.mobile.pushStateEnabled = true; //建议在关闭 Ajax 导航和大量使用外部链接的情况下关闭这个特性
-	});
-	
 	function MCS_ClientNotify(EventData) {
 	    var evdata = strToJson(EventData);
 	    switch(evdata['event']){
