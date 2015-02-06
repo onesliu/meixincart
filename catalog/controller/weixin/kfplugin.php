@@ -6,6 +6,13 @@ class ControllerWeixinKfplugin extends Controller {
 		$this->data['orderlist'] = $this->url->link('weixin/kfplugin/orderlist');
 		$this->data['orderdetail'] = $this->url->link('weixin/kfplugin/orderdetail');
 		
+		if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {
+			$dir_img = $this->config->get('config_ssl') . 'image/';
+		} else {
+			$dir_img = $this->config->get('config_url') . 'image/';
+		}
+		$this->data['logo'] = $dir_img . 'logo.png';
+
 		// view template
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . "/template/weixin/kfplugin.tpl")) {
 			$this->template = $this->config->get('config_template') . "/template/weixin/kfplugin.tpl";

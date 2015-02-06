@@ -43,7 +43,7 @@
 		var url = "<?php echo $orderlist; ?>" + "&customer=" + evdata.useraccount;
 		$.get(url, function(data,status) {
 			$('#content').html(data);
-			$("#olist").listview('refresh');
+			//$("#olist").listview('refresh');
 		});
 	}
 
