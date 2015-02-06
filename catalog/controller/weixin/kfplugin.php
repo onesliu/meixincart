@@ -37,6 +37,8 @@ class ControllerWeixinKfplugin extends Controller {
 		
 		if (isset($customerid)) {
 			
+			$this->session->data['kfcustomer'] = $customerid;
+			
 			$this->language->load('account/order');
 			$this->load->model('account/order');
 			
@@ -134,11 +136,8 @@ class ControllerWeixinKfplugin extends Controller {
 			$order_id = 0;
 		}
 		
-		if (isset($this->request->get['customer'])) {
-			$this->load->model('account/customer');
-			$customer = $this->model_account_customer->getCustomerByEmail($this->request->get['customer']);
-			if ($customer != null)
-				$customerid = $customer['customer_id'];
+		if (isset($this->session->data['kfcustomer'])) {
+			$customerid = $this->session->data['kfcustomer'];
 		}
 		
 		if (isset($customerid)) {

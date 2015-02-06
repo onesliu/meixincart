@@ -31,7 +31,7 @@
 	
 	function OnUserChange(evdata) {
 		var url = "<?php echo $orderlist; ?>" + "&customer=" + evdata.useraccount;
-		window.location.href = url;
+		$( ":mobile-pagecontainer" ).pagecontainer( "change", url );
 	}
 	
 	function OnMapMsgClick(evdata) {
