@@ -1,7 +1,10 @@
 <?php
 class ModelAccountOrder extends Model {
-	public function getOrder($order_id) {
-		$order_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order` WHERE order_id = '" . $order_id . "' AND customer_id = '" . (int)$this->customer->getId() . "' AND order_status_id > '0'");
+	public function getOrder($order_id, $customerid = false) {
+		if ($customerid != false)
+			$customerid = $this->customer->getId();
+		
+		$order_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order` WHERE order_id = '" . $order_id . "' AND customer_id = '" . (int)$customerid . "' AND order_status_id > '0'");
 	
 		if ($order_query->num_rows) {
 			$country_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "country` WHERE country_id = '" . (int)$order_query->row['payment_country_id'] . "'");
@@ -119,7 +122,7 @@ class ModelAccountOrder extends Model {
 		}
 	}
 	 
-	public function getOrders($start = 0, $limit = 20, $status = null) {
+	public function getOrders($start = 0, $limit = 20, $status = null, $customerid = false) {
 		if ($start < 0) {
 			$start = 0;
 		}
@@ -132,11 +135,14 @@ class ModelAccountOrder extends Model {
 		if ($status != null) {
 			$condition = "AND o.order_status_id <> '$status'";
 		}
+		
+		if ($customerid != false)
+			$customerid = $this->customer->getId();
 
 		$sql = "SELECT o.order_id, o.firstname, o.lastname, os.name as status, o.date_added, o.total, o.order_status_id, 
 			o.currency_code, o.currency_value FROM `" . DB_PREFIX . "order` o LEFT JOIN " .
 			DB_PREFIX . "order_status os ON (o.order_status_id = os.order_status_id) WHERE o.customer_id = '" . 
-			(int)$this->customer->getId() . "' AND o.order_status_id > '0' $condition AND os.language_id = '" . 
+			(int)$customerid . "' AND o.order_status_id > '0' $condition AND os.language_id = '" . 
 			(int)$this->config->get('config_language_id') . "' ORDER BY o.order_id DESC LIMIT " . 
 			(int)$start . "," . (int)$limit;
 		$query = $this->db->query($sql);	
@@ -186,8 +192,10 @@ class ModelAccountOrder extends Model {
 		return $q->rows;
 	}
 
-	public function getTotalOrders() {
-      	$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "order` WHERE customer_id = '" . (int)$this->customer->getId() . "' AND order_status_id > '0'");
+	public function getTotalOrders($customerid = false) {
+		if ($customerid != false)
+			$customerid = $this->customer->getId();
+      	$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "order` WHERE customer_id = '" . (int)$customerid . "' AND order_status_id > '0'");
 		
 		return $query->row['total'];
 	}
