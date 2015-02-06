@@ -5,6 +5,7 @@
 		<a href="#" data-rel="back" class="ui-btn ui-icon-arrow-l ui-btn-icon-notext ui-corner-all"></a>
 	    <h1 style="padding:.4em 0;"><img src="<?php echo $logo; ?>" style="height:25px;" /></h1>
 	</div>
+	<?php require('kfplugin_js.tpl'); ?>
 	<div data-role="content">
 		<?php if (!isset($heading_title)) { ?>
 			<div class="ui-body ui-body-b ui-corner-all">

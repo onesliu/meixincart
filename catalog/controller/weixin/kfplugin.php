@@ -32,6 +32,8 @@ class ControllerWeixinKfplugin extends Controller {
 		$tfile = "kforderlist.tpl";
 		$dir_img = $this->config->get('config_url') . 'image/';
 		$this->data['logo'] = $dir_img . 'logo.png';
+		$this->data['orderlist'] = $this->url->link('weixin/kfplugin/orderlist');
+		$this->data['orderdetail'] = $this->url->link('weixin/kfplugin/orderdetail');
 		
 		if (isset($customerid)) {
 			
@@ -151,6 +153,8 @@ class ControllerWeixinKfplugin extends Controller {
 		
 		$dir_img = $this->config->get('config_url') . 'image/';
 		$this->data['logo'] = $dir_img . 'logo.png';
+		$this->data['orderlist'] = $this->url->link('weixin/kfplugin/orderlist');
+		$this->data['orderdetail'] = $this->url->link('weixin/kfplugin/orderdetail');
 		
 		if ($order_info) {
 			$this->document->setTitle($this->language->get('text_order'));

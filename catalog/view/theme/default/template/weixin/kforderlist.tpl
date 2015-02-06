@@ -19,25 +19,26 @@
 			<?php } ?>
 		<?php } ?>
 	</div>
+
+	<script type="text/javascript"><!--
+	var url_more="<?php echo $pagination->url; ?>";
+	var um_page=<?php echo $pagination->page; ?>;
+	var um_pages=<?php echo $pagination->num_pages; ?>;
+	function OnMoreOrder() {
+		um_page++;
+		url = "<?php echo $pagination->url; ?>" + "&page=" + um_page;
+		$.get(url, function(data,status) {
+			$("#olist").append(data);
+			$("#olist").listview('refresh');
+			$("#olist").find("li:last").slideDown(300);
+			if (um_page >= um_pages) {
+				$("#bmore").hide();
+			}
+		});
+	}
+	//--></script>
+	<?php require('kfplugin_js.tpl'); ?>
 </div>
 </body>
-
-<script type="text/javascript"><!--
-var url_more="<?php echo $pagination->url; ?>";
-var um_page=<?php echo $pagination->page; ?>;
-var um_pages=<?php echo $pagination->num_pages; ?>;
-function OnMoreOrder() {
-	um_page++;
-	url = "<?php echo $pagination->url; ?>" + "&page=" + um_page;
-	$.get(url, function(data,status) {
-		$("#olist").append(data);
-		$("#olist").listview('refresh');
-		$("#olist").find("li:last").slideDown(300);
-		if (um_page >= um_pages) {
-			$("#bmore").hide();
-		}
-	});
-}
-//--></script>
 
 
