@@ -37,7 +37,6 @@
 		});
 	}
 	//--></script>
-	<?php require('kfplugin_js.tpl'); ?>
 </div>
 </body>
 
