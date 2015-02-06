@@ -1,4 +1,3 @@
-<?php require('kfheader.tpl'); ?>
 <body>
 <div data-role="page" id="kforderdetail" data-theme="a">
 <style type="text/css">

@@ -104,7 +104,7 @@ class ControllerWeixinKfplugin extends Controller {
 			$pagination->limit = $limit;
 			$pagination->num_pages = ceil($pagination->total / $pagination->limit);
 			$pagination->text = $this->language->get('text_pagination');
-			$pagination->url = $this->url->link('weixin/kfplugin/orderlist', 'customer='.$customerid);
+			$pagination->url = $this->url->link('weixin/kfplugin/orderlist', 'customer='.$this->request->get['customer']);
 			
 			$this->data['pagination'] = $pagination;
 			
