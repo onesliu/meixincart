@@ -2,11 +2,7 @@
 <body>
 <div data-role="page" id="kforders" data-theme="a">
 	<div data-role="header" data-position="fixed" data-theme="a">
-		<?php if (isset($back)) {?>
 		<a href="#" data-rel="back" class="ui-btn ui-icon-arrow-l ui-btn-icon-notext ui-corner-all"></a>
-		<?php } elseif (isset($home_url)) {?>
-		<a href="#" class="ui-btn ui-icon-home ui-btn-icon-notext ui-corner-all"></a>
-		<?php } ?>
 	    <h1 style="padding:.4em 0;"><img src="<?php echo $logo; ?>" style="height:25px;" /></h1>
 	</div>
 	<div data-role="content" id="content">
