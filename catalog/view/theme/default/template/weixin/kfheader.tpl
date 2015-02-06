@@ -1,19 +1,9 @@
 <?php if (isset($_SERVER['HTTP_USER_AGENT']) && !strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE 6')) echo '<?xml version="1.0" encoding="UTF-8"?>'. "\n"; ?>
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" dir="<?php echo $direction; ?>" lang="<?php echo $lang; ?>" xml:lang="<?php echo $lang; ?>">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title><?php echo $title; ?></title>
 <base href="<?php echo $base; ?>" />
-<meta name="viewport" content="width=100%; initial-scale=1.0; maximum-scale=1.0; minimum-scale=1.0; user-scalable=no;" />
-<?php if ($mobile_store_charset) { ?>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-<?php } ?>
-<?php if ($description) { ?>
-<meta name="description" content="<?php echo $description; ?>" />
-<?php } ?>
-<?php if ($keywords) { ?>
-<meta name="keywords" content="<?php echo $keywords; ?>" />
-<?php } ?>
 
 <style type="text/css">
 .ui-icon-cart:after {
@@ -33,11 +23,6 @@
 <script type="text/javascript" src="catalog/view/javascript/animate/animate_img.js"></script>
 <script type="text/javascript" src="catalog/view/javascript/oop.js"></script>
 <script type="text/javascript" src="catalog/view/javascript/jquery/jquery-1.11.1.min.js"></script>
-<script type="text/javascript" src="catalog/view/javascript/mobile_store.js"></script>
 <script type="text/javascript" src="catalog/view/javascript/jquery_mobile/jquery.mobile.custom.min.js"></script>
-
-<script type="text/javascript">
-var showhelp = <?php echo $showhelp; ?>;
-</script>
 
 </head>
