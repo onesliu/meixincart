@@ -1,48 +1,26 @@
-<?php if (!isset($orders) || count($orders) == 0) { ?>
-	<div class="ui-body ui-body-b ui-corner-all">
-		<p>没有订单</p>
+<?php echo $header; ?>
+<body>
+<div data-role="page" id="kforders" data-theme="a">
+	<div data-role="header" data-position="fixed" data-theme="a">
+	    <h1 style="padding:.4em 0;"><img src="<?php echo $logo; ?>" style="height:25px;" /></h1>
 	</div>
-<?php } elseif ($pagination->page == 1) { ?>
-	<ul data-role="listview" id="olist" data-inset="true" data-theme="c" data-divider-theme="c" data-count-theme="c">
-		<li data-role="list-divider">订单列表</li>
-		<?php foreach($orders as $order) { ?>
-		<li><a href="#" onclick="OrderDetail('<?php echo $order['href'];?>');">
-			<img src="<?php echo $order['products'][0]['image'];?>"></img>
-			<h4 style="margin-top:0px;padding-right:3em;"><?php echo $order['productnames'];?></h4>
-			<p style="margin-bottom:0px;"><?php echo $text_total.' '; ?><span style="color:red;"><?php echo $order["total"]; ?></span><br/>
-			<?php echo $order["date_added"]; ?></p>
-			<p class="ui-li-aside" style="color:<?php 
-				switch ($order["order_status_id"]) {
-					case '1': echo "blue"; break;
-					case '2': echo "red"; break;
-					case '3': echo "blue"; break;
-					default: echo "black"; break;
-				}
-			?>;"><strong><?php echo $order["status"];?></strong></p>
-		</a></li>
+	<div data-role="content">
+		<?php if (!isset($orders) || count($orders) == 0) { ?>
+			<div class="ui-body ui-body-b ui-corner-all">
+				<p>没有订单</p>
+			</div>
+		<?php } elseif ($pagination->page == 1) { ?>
+			<ul data-role="listview" id="olist" data-inset="true" data-theme="c" data-divider-theme="c" data-count-theme="c">
+				<li data-role="list-divider">订单列表</li>
+				<?php require('kfordermore.tpl'); ?>
+			</ul>
+			<?php if ($pagination->page < $pagination->num_pages) { ?>
+				<a id="bmore" href="#" onclick="OnMoreOrder();" class="ui-btn ui-btn-a ui-corner-all">更多...</a>
+			<?php } ?>
 		<?php } ?>
-	</ul>
-	<?php if ($pagination->page < $pagination->num_pages) { ?>
-		<a id="bmore" href="#" onclick="OnMoreOrder();" class="ui-btn ui-btn-a ui-corner-all">更多...</a>
-	<?php } ?>
-<?php } else { ?>
-		<?php foreach($orders as $order) { ?>
-		<li><a href="#" onclick="OrderDetail('<?php echo $order['href'];?>');">
-			<img src="<?php echo $order['products'][0]['image'];?>"></img>
-			<h4 style="margin-top:0px;padding-right:3em;"><?php echo $order['productnames'];?></h4>
-			<p style="margin-bottom:0px;"><?php echo $text_total.' '; ?><span style="color:red;"><?php echo $order["total"]; ?></span><br/>
-			<?php echo $order["date_added"]; ?></p>
-			<p class="ui-li-aside" style="color:<?php 
-				switch ($order["order_status_id"]) {
-					case '1': echo "blue"; break;
-					case '2': echo "red"; break;
-					case '3': echo "blue"; break;
-					default: echo "black"; break;
-				}
-			?>;"><strong><?php echo $order["status"];?></strong></p>
-		</a></li>
-		<?php } ?>
-<?php } ?>
+	</div>
+</div>
+</body>
 
 <script type="text/javascript"><!--
 var url_more="<?php echo $pagination->url; ?>";
@@ -58,13 +36,6 @@ function OnMoreOrder() {
 		if (um_page >= um_pages) {
 			$("#bmore").hide();
 		}
-	});
-}
-
-function OrderDetail(url) {
-	url += "&customer=" + userid;
-	$.get(url, function(data,status) {
-		$('#content').html(data);
 	});
 }
 //--></script>

@@ -6,13 +6,6 @@ class ControllerWeixinKfplugin extends Controller {
 		$this->data['orderlist'] = $this->url->link('weixin/kfplugin/orderlist');
 		$this->data['orderdetail'] = $this->url->link('weixin/kfplugin/orderdetail');
 		
-		if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {
-			$dir_img = $this->config->get('config_ssl') . 'image/';
-		} else {
-			$dir_img = $this->config->get('config_url') . 'image/';
-		}
-		$this->data['logo'] = $dir_img . 'logo.png';
-
 		// view template
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . "/template/weixin/kfplugin.tpl")) {
 			$this->template = $this->config->get('config_template') . "/template/weixin/kfplugin.tpl";
@@ -35,6 +28,10 @@ class ControllerWeixinKfplugin extends Controller {
 			if ($customer != null)
 				$customerid = $customer['customer_id'];
 		}
+		
+		$tfile = "kforderlist.tpl";
+		$dir_img = $this->config->get('config_url') . 'image/';
+		$this->data['logo'] = $dir_img . 'logo.png';
 		
 		if (isset($customerid)) {
 			
@@ -109,13 +106,15 @@ class ControllerWeixinKfplugin extends Controller {
 			
 			$this->data['pagination'] = $pagination;
 			
+			if ($page > 1)
+				$tfile = "kfordermore.tpl";
 		}
 		
 		// view template
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . "/template/weixin/kforderlist.tpl")) {
-			$this->template = $this->config->get('config_template') . "/template/weixin/kforderlist.tpl";
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . "/template/weixin/$tfile")) {
+			$this->template = $this->config->get('config_template') . "/template/weixin/$tfile";
 		} else {
-			$this->template = "default/template/weixin/kforderlist.tpl";
+			$this->template = "default/template/weixin/$tfile";
 		}
 		
 		$this->response->setOutput($this->render());
@@ -145,6 +144,9 @@ class ControllerWeixinKfplugin extends Controller {
 		else {
 			$order_info = false;
 		}
+		
+		$dir_img = $this->config->get('config_url') . 'image/';
+		$this->data['logo'] = $dir_img . 'logo.png';
 		
 		if ($order_info) {
 			$this->document->setTitle($this->language->get('text_order'));
