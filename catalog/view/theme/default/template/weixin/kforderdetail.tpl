@@ -1,6 +1,6 @@
 <?php echo $header; ?>
 <body>
-<div data-role="page" id="kforders" data-theme="a">
+<div data-role="page" id="kforderdetail" data-theme="a">
 	<div data-role="header" data-position="fixed" data-theme="a">
 		<a href="#" data-rel="back" class="ui-btn ui-icon-arrow-l ui-btn-icon-notext ui-corner-all"></a>
 	    <h1 style="padding:.4em 0;"><img src="<?php echo $logo; ?>" style="height:25px;" /></h1>
