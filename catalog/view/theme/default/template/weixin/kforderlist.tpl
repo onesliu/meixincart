@@ -1,4 +1,4 @@
-<?php echo $header; ?>
+<?php require('kfheader.tpl'); ?>
 <body>
 <div data-role="page" id="kforderlist" data-theme="a">
 	<div data-role="header" data-position="fixed" data-theme="a">

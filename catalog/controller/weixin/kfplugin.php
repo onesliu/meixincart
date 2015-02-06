@@ -3,6 +3,7 @@
 class ControllerWeixinKfplugin extends Controller { 
 	public function index() {
 		
+		$this->data['base'] = $this->config->get('config_url');
 		$this->data['orderlist'] = $this->url->link('weixin/kfplugin/orderlist');
 		$this->data['orderdetail'] = $this->url->link('weixin/kfplugin/orderdetail');
 		
@@ -12,10 +13,6 @@ class ControllerWeixinKfplugin extends Controller {
 		} else {
 			$this->template = "default/template/weixin/kfplugin.tpl";
 		}
-		
-		$this->children = array(
-			'mobile_store/header'
-		);
 		
 		$this->response->setOutput($this->render());
 	}
@@ -29,6 +26,7 @@ class ControllerWeixinKfplugin extends Controller {
 				$customerid = $customer['customer_id'];
 		}
 		
+		$this->data['base'] = $this->config->get('config_url');
 		$tfile = "kforderlist.tpl";
 		$dir_img = $this->config->get('config_url') . 'image/';
 		$this->data['logo'] = $dir_img . 'logo.png';
@@ -121,10 +119,6 @@ class ControllerWeixinKfplugin extends Controller {
 			$this->template = "default/template/weixin/$tfile";
 		}
 
-		$this->children = array(
-			'mobile_store/header'
-		);
-		
 		$this->response->setOutput($this->render());
 	}
 	
@@ -150,6 +144,7 @@ class ControllerWeixinKfplugin extends Controller {
 			$order_info = false;
 		}
 		
+		$this->data['base'] = $this->config->get('config_url');
 		$dir_img = $this->config->get('config_url') . 'image/';
 		$this->data['logo'] = $dir_img . 'logo.png';
 		$this->data['orderlist'] = $this->url->link('weixin/kfplugin/orderlist');
@@ -342,10 +337,6 @@ class ControllerWeixinKfplugin extends Controller {
 			$this->template = 'default/template/weixin/kforderdetail.tpl';
 		}
 		
-		$this->children = array(
-			'mobile_store/header'
-		);
-							
 		$this->response->setOutput($this->render());		
     	
 	}
