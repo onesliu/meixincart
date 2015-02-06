@@ -1,7 +1,7 @@
 <?php
 class ModelAccountOrder extends Model {
 	public function getOrder($order_id, $customerid = false) {
-		if ($customerid != false)
+		if ($customerid == false)
 			$customerid = $this->customer->getId();
 		
 		$order_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order` WHERE order_id = '" . $order_id . "' AND customer_id = '" . (int)$customerid . "' AND order_status_id > '0'");
@@ -136,7 +136,7 @@ class ModelAccountOrder extends Model {
 			$condition = "AND o.order_status_id <> '$status'";
 		}
 		
-		if ($customerid != false)
+		if ($customerid == false)
 			$customerid = $this->customer->getId();
 
 		$sql = "SELECT o.order_id, o.firstname, o.lastname, os.name as status, o.date_added, o.total, o.order_status_id, 
@@ -193,7 +193,7 @@ class ModelAccountOrder extends Model {
 	}
 
 	public function getTotalOrders($customerid = false) {
-		if ($customerid != false)
+		if ($customerid == false)
 			$customerid = $this->customer->getId();
       	$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "order` WHERE customer_id = '" . (int)$customerid . "' AND order_status_id > '0'");
 		

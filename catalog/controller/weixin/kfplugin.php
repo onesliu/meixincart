@@ -14,7 +14,6 @@ class ControllerWeixinKfplugin extends Controller {
 		}
 		
 		$this->children = array(
-			'mobile_store/titlebar',
 			'mobile_store/header'
 		);
 		
@@ -317,7 +316,6 @@ class ControllerWeixinKfplugin extends Controller {
 		}
 		
 		$this->children = array(
-		'mobile_store/titlebar',
 		'mobile_store/header'
 		);
 							
