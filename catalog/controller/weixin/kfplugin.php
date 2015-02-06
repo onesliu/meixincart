@@ -116,6 +116,10 @@ class ControllerWeixinKfplugin extends Controller {
 		} else {
 			$this->template = "default/template/weixin/$tfile";
 		}
+
+		$this->children = array(
+			'mobile_store/header'
+		);
 		
 		$this->response->setOutput($this->render());
 	}
@@ -336,7 +340,7 @@ class ControllerWeixinKfplugin extends Controller {
 		}
 		
 		$this->children = array(
-		'mobile_store/header'
+			'mobile_store/header'
 		);
 							
 		$this->response->setOutput($this->render());		
