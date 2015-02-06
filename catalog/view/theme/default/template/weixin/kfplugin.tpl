@@ -27,7 +27,7 @@
 
 	function OnUserChange(evdata) {
 		var url = "<?php echo $orderlist; ?>" + "&customer=" + evdata.useraccount;
-		window.open(url);
+		window.location.href = url;
 	}
 
 	function OnMapMsgClick(evdata) {
