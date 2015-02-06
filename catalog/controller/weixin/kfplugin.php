@@ -23,7 +23,13 @@ class ControllerWeixinKfplugin extends Controller {
 	public function orderlist() {
 		
 		if (isset($this->request->get['customer'])) {
-			$customerid = $this->request->get['customer'];
+			$this->load->model('account/customer');
+			$customer = $this->model_account_customer->getCustomerByEmail($this->request->get['customer']);
+			if ($customer != null)
+				$customerid = $customer['customer_id'];
+		}
+		
+		if (isset($customerid)) {
 			
 			$this->language->load('account/order');
 			$this->load->model('account/order');
@@ -117,8 +123,13 @@ class ControllerWeixinKfplugin extends Controller {
 		}
 		
 		if (isset($this->request->get['customer'])) {
-			$customerid = $this->request->get['customer'];
-
+			$this->load->model('account/customer');
+			$customer = $this->model_account_customer->getCustomerByEmail($this->request->get['customer']);
+			if ($customer != null)
+				$customerid = $customer['customer_id'];
+		}
+		
+		if (isset($customerid)) {
 			$this->language->load('account/order');
 			$this->load->model('account/order');
 			
