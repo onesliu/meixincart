@@ -118,6 +118,12 @@ class ControllerWeixinPay extends ControllerWeixinWeixin {
 		if (!isset($this->session->data['order_info'])) {
 			$this->redirect($this->url->link('mobile_store/home'));
 		}
+		
+		if ($this->weixin_init() != true) {
+			$this->error();
+			return; //首次验证或初始化失败
+		}
+		
 		$order_info = $this->session->data['order_info'];
 		$this->session->data['error_msg'] = '下单成功，请等待门店称重后发送微信支付消息。';
 		$this->session->data['url_continue'] = $this->url->link('mobile_store/order/info', 'order_id='.$order_info['order_id']);
