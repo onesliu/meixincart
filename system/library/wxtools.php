@@ -88,7 +88,7 @@ class WeixinTools {
 		$messages[0]["description"] = $msg;
 		$messages[0]["url"] = $url;
 		$messages[0]["picurl"] = "";
-	*/
+	
 	public function makeKfMsg($openid, $type, $messages, $kf = false) {
 		$msg = "";
 		if ($type == "text") {
@@ -117,6 +117,37 @@ class WeixinTools {
 		}";
 
 		return $omsg;
+	}*/
+	public function makeKfMsg($openid, $type, $messages, $kf = false) {
+		$o = new stdClass();
+		$o->touser = $openid;
+		$o->msgtype = $type;
+		if ($type == "text") {
+			$o->text = new stdClass();
+			$o->text->content = $messages;
+		}
+		elseif ($type == "news") {
+			$o->news = new stdClass();
+			$o->news->articles = array();
+			foreach($messages as $message) {
+				$item = new stdClass();
+				$item->title = $message['title'];
+				$item->description = $message['description'];
+				$item->url = $message['url'];
+				$item->picurl = $message['picurl'];
+				$o->news->articles[] = $item;
+			}
+		}
+		else {
+			return false;
+		}
+		
+		if ($kf != false) {
+			$o->customservice = new stdClass();
+			$o->customservice->kf_account = $kf;
+		}
+		
+		return encode_json($o);
 	}
 	
 	public function sendKfMsg($msg, $access_token) {
@@ -150,7 +181,7 @@ class WeixinTools {
 		$msg->topcolor = "#FF0000";
 		$msg->data = $odata;
 		
-		return encode_json($msg);		
+		return encode_json($msg);
 	}
 	
 	public function sendModelMsg($msg, $access_token) {
