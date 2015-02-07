@@ -124,15 +124,15 @@ class WeixinTools {
 		$o->msgtype = $type;
 		if ($type == "text") {
 			$o->text = new stdClass();
-			$o->text->content = $messages;
+			$o->text->content = urlencode($messages);
 		}
 		elseif ($type == "news") {
 			$o->news = new stdClass();
 			$o->news->articles = array();
 			foreach($messages as $message) {
 				$item = new stdClass();
-				$item->title = $message['title'];
-				$item->description = $message['description'];
+				$item->title = urlencode($message['title']);
+				$item->description = urlencode($message['description']);
 				$item->url = $message['url'];
 				$item->picurl = $message['picurl'];
 				$o->news->articles[] = $item;
@@ -147,7 +147,7 @@ class WeixinTools {
 			$o->customservice->kf_account = $kf;
 		}
 		
-		return encode_json($o);
+		return urldecode(json_encode($o));
 	}
 	
 	public function sendKfMsg($msg, $access_token) {
@@ -167,7 +167,7 @@ class WeixinTools {
 		$odata = new stdClass();
 		while($d = current($data)) {
 			$od = new stdClass();
-			$od->value = $d;
+			$od->value = urlencode($d);
 			$od->color = "#173177";
 			
 			$odata->{key($data)} = $od;
@@ -181,7 +181,7 @@ class WeixinTools {
 		$msg->topcolor = "#FF0000";
 		$msg->data = $odata;
 		
-		return encode_json($msg);
+		return urldecode(json_encode($msg));
 	}
 	
 	public function sendModelMsg($msg, $access_token) {

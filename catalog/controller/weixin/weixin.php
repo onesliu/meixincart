@@ -230,8 +230,7 @@ class ControllerWeixinWeixin extends Controller {
 			return;
 		}
 		
-		$messages[0]['title'] = '下单通知';
-		$messages[0]['description'] = sprintf('亲，我们已收到您的订单。\n订单编号：%s\n消费明细：%s\n预估金额：%s\n请在此发送消息联系客服或拨打热线电话18180423915。',
+		$messages = sprintf('亲，我们已收到您的订单。\n订单编号：%s\n消费明细：%s\n预估金额：%s\n请在此发送消息联系客服或拨打热线电话18180423915。',
 			$order_info['order_id'], $order_info['comment'], $order_info['total']);
 
 		$wxtools = new WeixinTools();
