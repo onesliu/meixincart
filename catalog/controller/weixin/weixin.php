@@ -238,7 +238,6 @@ class ControllerWeixinWeixin extends Controller {
 		$response = $wxtools->sendKfMsg($msg, $this->access_token);
 		if ($response == false) {
 			$this->log->write("发送下单通知出错");
-			return;
 		}
 	}
 

@@ -133,8 +133,8 @@ class WeixinTools {
 				$item = new stdClass();
 				$item->title = urlencode($message['title']);
 				$item->description = urlencode($message['description']);
-				$item->url = $message['url'];
-				$item->picurl = $message['picurl'];
+				$item->url = urlencode($message['url']);
+				$item->picurl = urlencode($message['picurl']);
 				$o->news->articles[] = $item;
 			}
 		}
