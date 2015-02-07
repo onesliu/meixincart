@@ -63,7 +63,8 @@ class ControllerWeixinWeixin extends Controller {
 		$omsg = "{
 		    \"touser\":\"$openid\",
 		    \"msgtype\":\"news\",
-		    \"news\": {\"articles\": [$msg]}
+		    \"news\": {\"articles\": [$msg]},
+		    \"customservice\": {\"kf_account\": \"onesliu@caigezi2\"}
 		}";
 		return $omsg;
 	}
