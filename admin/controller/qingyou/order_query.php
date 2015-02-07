@@ -138,20 +138,22 @@ class ControllerQingyouOrderQuery extends ControllerWeixinWeixin {
 			return; //首次验证或初始化失败
 		}
 		
-		$msg = $this->prepareWxMsg($order);
-		if ($msg == false) return;
-		$url = "https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=".$this->access_token;
+		$openid = $this->model_qingyou_order->getOrderCustomer($order->order_id);
+		if ($openid == false) {
+			$this->log->write("发送客服消息-查询客户出错");
+			return;
+		}
+
 		$wxtools = new WeixinTools();
-		$res = $wxtools->postToWx($url, $msg);
+		$messages = $this->prepareWxMsg($order);
+		$msg = $wxtools->makeKfMsg($openid, "news", $messages);
+		$res = $wxtools->sendKfMsg($msg, $this->access_token);
 		if ($res == false) {
-			$this->log->write("send weixin scale/pay notify error.");
+			$this->log->write("发送客服提醒消息出错");
 		}
 	}
 	
 	private function prepareWxMsg($order) {
-		$openid = $this->model_qingyou_order->getOrderCustomer($order->order_id);
-		if ($openid == false) return false;
-		
 		$status = $this->model_qingyou_order->getStatusMsg();
 		$content = $status[$order->order_status];
 		
@@ -161,31 +163,12 @@ class ControllerQingyouOrderQuery extends ControllerWeixinWeixin {
 			$msg = sprintf($content->wxmsg, $order->order_id, $this->currency->format($order->realtotal), $order->order_createtime, $order->productSubject);
 		$url = str_replace("admin/index.php", "pay/weixin.php", $this->url->link2('weixin/login', 'redirect='.urlencode('mobile_store/order/info&order_id='.$order->order_id)));
 		
-		/*
-		switch((int)$order->order_status) {
-			case 2:
-				$url = str_replace("admin/index.php", "pay/weixin.php", $this->url->link2('weixin/order'));
-				break;
-		} 
-		
-		$omsg = new stdClass();
-		$omsg->touser = $openid;
-		$omsg->msgtype = "news";
-		$omsg->news = new stdClass();
-		$omsg->news->articles = array();
-		$omsg->news->articles[0] = new stdClass();
-		$omsg->news->articles[0]->title = "交易提醒";
-		$omsg->news->articles[0]->description = $msg;
-		$omsg->news->articles[0]->url = $url;
-		$omsg->news->articles[0]->picurl = "";
-		*/
-		
 		$messages = array();
 		$messages[0]["title"] = "交易提醒 " . $content->wxtitle;
 		$messages[0]["description"] = $msg;
 		$messages[0]["url"] = $url;
 		$messages[0]["picurl"] = "";
-		return $this->makeNewsMsg($openid, $messages);
+		return $messages;
 	}
 	
 	private function checkOrderInfo($order) {

@@ -52,22 +52,7 @@ class ControllerWeixinWeixin extends Controller {
 		$ret->errmsg = $msg;
 		$this->response->setOutput(json_encode($ret));
 	}
-	
-	public function makeNewsMsg($openid, $messages) {
-		$msg = "";
-		foreach($messages as $message) {
-			$msg .= sprintf("{\"title\":\"%s\",\"description\":\"%s\",\"url\":\"%s\",\"picurl\":\"%s\"},",
-					$message['title'], $message['description'], $message['url'], $message['picurl']);
-		}
-		$msg = trim($msg, ",");
-		$omsg = "{
-		    \"touser\":\"$openid\",
-		    \"msgtype\":\"news\",
-		    \"news\": {\"articles\": [$msg]},
-		    \"customservice\": {\"kf_account\": \"onesliu@caigezi2\"}
-		}";
-		return $omsg;
-	}
+
 }
 
 ?>

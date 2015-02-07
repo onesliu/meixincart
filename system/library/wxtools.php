@@ -83,6 +83,80 @@ class WeixinTools {
 		
 		return $menu_def;
 	}
+	
+	/* 	$messages[0]["title"] = $title;
+		$messages[0]["description"] = $msg;
+		$messages[0]["url"] = $url;
+		$messages[0]["picurl"] = "";
+	*/
+	public function makeKfMsg($openid, $type, $messages, $kf = false) {
+		$msg = "";
+		if ($type == "text") {
+			foreach($messages as $message) {
+				$msg .= $message['title']."\n\n".$message['description'];
+			}
+		}
+		elseif ($type == "news") {
+			foreach($messages as $message) {
+				$msg .= sprintf("{\"title\":\"%s\",\"description\":\"%s\",\"url\":\"%s\",\"picurl\":\"%s\"},",
+						$message['title'], $message['description'], $message['url'], $message['picurl']);
+			}
+			$msg = trim($msg, ",");
+		}
+		
+		$kfstr = "";
+		if ($kf != false) {
+			$kfstr = ",\"customservice\": {\"kf_account\": \"$kf\"}";
+		}
+		
+		$omsg = "{
+		    \"touser\":\"$openid\",
+		    \"msgtype\":\"$type\",
+		    \"$type\": {\"articles\": [$msg]}
+		    $kfstr
+		}";
+
+		return $omsg;
+	}
+	
+	public function sendKfMsg($msg, $access_token) {
+		$url = "https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=".$access_token;
+		return $this->postToWx($url, $msg);
+	}
+	
+	/* $data数组，成员是模板消息的约定内容如下：
+		$data['first'] = "您的订单已付款成功";
+		$data['keyword1'] = $order_id;
+		$data['keyword2'] = $time;
+		$data['keyword3'] = $amount;
+		$data['keyword4'] = $bank;
+		$data['remark'] = "如有任何疑问请拨打客服电话18180423915";;
+	 */
+	public function makeModelMsg($openid, $tempid, $url, $data) {
+		$odata = new stdClass();
+		while($d = current($data)) {
+			$od = new stdClass();
+			$od->value = $d;
+			$od->color = "#173177";
+			
+			$odata->{key($data)} = $od;
+			next($data);
+		}
+		
+		$msg = new stdClass();
+		$msg->touser = $openid;
+		$msg->template_id = $tempid;
+		$msg->url = $url;
+		$msg->topcolor = "#FF0000";
+		$msg->data = $odata;
+		
+		return encode_json($msg);		
+	}
+	
+	public function sendModelMsg($msg, $access_token) {
+		$url = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=".$access_token;
+		return $this->postToWx($url, $msg);
+	}
 }
 
 class SimpleXMLExtend extends SimpleXMLElement

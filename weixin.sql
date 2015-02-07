@@ -310,7 +310,7 @@ insert into oc_setting (`group`, `key`,`value`) values('weixin', 'weixin_appsecr
 insert into oc_auto_message set pattern='subscribe', MsgType='news', ItemCount=1, Items='[{"title":"菜鸽子欢迎您","description":"我们的承诺：传承老一代，用心卖好菜。\\n\\n选择菜单中的功能将全面使用本服务号。\\n如有任何疑问，请直接在此发送消息，在线客服将随时为您服务！","url":"AUTO_LOGIN:mobile_store/about","picurl":"HOST:/image/data/weixin/caigezi2-green-360x200.jpg"}]';
 insert into oc_auto_message set pattern='order|订|买', MsgType='news', ItemCount=1, Items='[{"title":"点击开始买菜","description":"传承老一代，用心卖好菜。飞鸽传蔬期待为您服务。","url":"AUTO_LOGIN:mobile_store/home","picurl":"HOST:/image/data/weixin/caigezi2-green-360x200.jpg"}]';
 
-update oc_order_status set wxtitle='下单通知', wxmsg = '亲，我们已收到您的订单。请在此发送消息，在线客服将为您服务。\n\n订单编号：%s\n订单金额：%s\n下单时间：%s\n消费明细：%s\n' where order_status_id = 1;
+update oc_order_status set wxtitle='下单通知', wxmsg = '亲，我们已收到您的订单。请在此发送消息联系在线客服。\n\n订单编号：%s\n订单金额：%s\n下单时间：%s\n消费明细：%s\n' where order_status_id = 1;
 update oc_order_status set wxtitle='付款通知', wxmsg = '亲，您的订单已称重。\n点击此消息即可付款！\n\n订单编号：%s\n订单金额：%s\n下单时间：%s\n消费明细：%s\n\n点击此消息付款' where order_status_id = 2;
 update oc_order_status set wxtitle='配送通知', wxmsg = '亲，您的订单已付款。我们正在安排配送！\n\n飞鸽传蔬将携程为您服务\n\n订单编号：%s\n订单金额：%s\n下单时间：%s\n消费明细：%s\n\n点击查看订单详情' where order_status_id = 3;
 update oc_order_status set wxtitle='订单完成', wxmsg = '亲，您的订单已经配送完成！\n欢迎下次再来哦！\n\n订单编号：%s\n订单金额：%s\n下单时间：%s\n消费明细：%s\n\n点击查看详情' where order_status_id = 4;

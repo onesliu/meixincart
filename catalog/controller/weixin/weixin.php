@@ -196,6 +196,53 @@ class ControllerWeixinWeixin extends Controller {
 		$this->session->data['text_continue'] = '返回购物车';
 		$this->redirect($this->url->link('weixin/error'));
 	}
+	
+	//发送支付成功消息
+	public function sendPayNotify($url, $order_id, $time, $amount, $bank) {
+		if (isset($this->session->data['openid']))
+			$openid = $this->session->data['openid'];
+		else {
+			$this->log->write("不能发送付款成功消息，因为无openid");
+			return;
+		}
+		
+		$data = array();
+		$data['first'] = "您的订单已付款成功";
+		$data['keyword1'] = $order_id;
+		$data['keyword2'] = $time;
+		$data['keyword3'] = $amount;
+		$data['keyword4'] = $bank;
+		$data['remark'] = "如有任何疑问请拨打客服电话18180423915";;
+		
+		$wxtool = new WeixinTools();
+		$msg = $wxtool->makeModelMsg($openid, 'n-edcHT4FxaOFtm10sYUD8SRL52NCDQJ3pGWMGWUPKg', $url, $data);
+		$res = $wxtool->sendModelMsg($msg, $this->access_token);
+		if ($res == false) {
+			$this->log->write("发送付款成功消息出错");
+		}
+	}
+
+	public function sendOrderNotify($order_info) {
+		if (isset($this->session->data['openid']))
+			$openid = $this->session->data['openid'];
+		else {
+			$this->log->write("不能发送下单通知，因为无openid");
+			return;
+		}
+		
+		$messages[0]['title'] = '下单通知';
+		$messages[0]['description'] = sprintf('亲，我们已收到您的订单。\n订单编号：%s\n消费明细：%s\n预估金额：%s\n请在此发送消息联系客服或拨打热线电话18180423915。',
+			$order_info['order_id'], $order_info['comment'], $order_info['total']);
+
+		$wxtools = new WeixinTools();
+		$msg = $wxtools->makeKfMsg($openid, "text", $messages, "onesliu@caigezi2");
+		$response = $wxtools->sendKfMsg($msg, $this->access_token);
+		if ($response == false) {
+			$this->log->write("发送下单通知出错");
+			return;
+		}
+	}
+
 }
 
 ?>
