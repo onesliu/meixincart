@@ -177,7 +177,7 @@ class WeixinTools {
 		$msg = new stdClass();
 		$msg->touser = $openid;
 		$msg->template_id = $tempid;
-		$msg->url = urldecode($url);
+		$msg->url = urlencode($url);
 		$msg->topcolor = "#FF0000";
 		$msg->data = $odata;
 		
