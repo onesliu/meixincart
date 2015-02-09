@@ -84,7 +84,7 @@ class ControllerWeixinPayResult extends ControllerWeixinWeixin {
 						"(代金劵支付：".$this->currency->format($res->coupon_fee/100). ")";
 				}
 				$bank = $res->bank_type;
-				$this->sendOrderNotify($url, $order_id, $time, $amount, $bank);
+				$this->sendPayNotify($url, $order_id, $time, $amount, $bank);
 			}
 			else {
 				//发送支付失败消息

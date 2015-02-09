@@ -231,7 +231,7 @@ class ControllerWeixinWeixin extends Controller {
 		}
 		
 		$messages = sprintf('亲，我们已收到您的订单\n您已购买：%s\n预估金额：%s\n我们称重后您会收到支付通知，如有疑问请在此发送消息，或拨打热线电话18180423915。',
-			$order_info['comment'], $order_info['total']);
+			$order_info['comment'], $this->currency->format($order_info['total']));
 
 		$wxtools = new WeixinTools();
 		$msg = $wxtools->makeKfMsg($openid, "text", $messages, "onesliu@caigezi2");
