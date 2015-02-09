@@ -1,5 +1,12 @@
 <?php
 class ModelQingyouOrder extends Model {
+	
+	private $psql = "select order_id, date_added as order_createtime, o.order_status_id, os.name as order_status,
+		o.order_type, customer_id, CONCAT(firstname,lastname) as customer_name, telephone as customer_phone,
+		CONCAT(shipping_firstname,shipping_lastname) as shipping_name, shipping_telephone, comment, comment2,
+		shipping_address_1 as shipping_addr, shipping_time, o.iscash
+		from oc_order o join oc_order_status os on o.order_status_id = os.order_status_id %s order by order_id;";
+	
 	public function getOrders($last_orderid, $districtid, $history) {
 		
 		$condition = "";
@@ -19,9 +26,7 @@ class ModelQingyouOrder extends Model {
 		}
 		
 		$data = array();
-		$sql = "select order_id, date_added as order_createtime, o.order_status_id, os.name as order_status, o.order_type, customer_id, CONCAT(firstname,lastname) as customer_name, telephone as customer_phone,
-		CONCAT(shipping_firstname,shipping_lastname) as shipping_name, shipping_telephone, comment, shipping_address_1 as shipping_addr, shipping_time
-		from " .DB_PREFIX. "order o join " .DB_PREFIX. "order_status os on o.order_status_id = os.order_status_id $condition order by order_id;";
+		$sql = sprintf($this->psql, $condition);
 		
 		$query = $this->db->query($sql);
 		//$this->log->write($history);
@@ -45,9 +50,7 @@ class ModelQingyouOrder extends Model {
 		}
 		
 		$data = array();
-		$sql = "select order_id, date_added as order_createtime, o.order_status_id, os.name as order_status, customer_id, CONCAT(firstname,lastname) as customer_name, telephone as customer_phone,
-		CONCAT(shipping_firstname,shipping_lastname) as shipping_name, shipping_telephone, comment, shipping_address_1 as shipping_addr, shipping_time
-		from " .DB_PREFIX. "order o join " .DB_PREFIX. "order_status os on o.order_status_id = os.order_status_id $condition order by order_id;";
+		$sql = sprintf($this->psql, $condition);
 		
 		$query = $this->db->query($sql);
 		foreach ($query->rows as $result) {
@@ -79,6 +82,7 @@ class ModelQingyouOrder extends Model {
 		}
 		$sql = "update " .DB_PREFIX. "order set order_status_id=".$order->order_status.
 			", total=".$order->realtotal.
+			((isset($order->iscash))? (", iscash=".$order->iscash) : "") . 
 			" where order_id=".$order->order_id;
 		$this->db->query($sql);
 		

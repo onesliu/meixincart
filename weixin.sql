@@ -268,6 +268,8 @@ alter table oc_order add order_type integer default 0;
 alter table oc_order add balance integer default 0;
 alter table oc_order add refund_amount double default 0.0;
 alter table oc_order add refund_id int default 0;
+alter table oc_order add iscash int default 0;
+alter table oc_order add comment2 text default null;
 
 alter table oc_order_product add `weight` double default 0.0;
 alter table oc_order_product add `realweight` double default 0.0;
@@ -311,7 +313,7 @@ insert into oc_auto_message set pattern='subscribe', MsgType='news', ItemCount=1
 insert into oc_auto_message set pattern='order|订|买', MsgType='news', ItemCount=1, Items='[{"title":"点击开始买菜","description":"传承老一代，用心卖好菜。飞鸽传蔬期待为您服务。","url":"AUTO_LOGIN:mobile_store/home","picurl":"HOST:/image/data/weixin/caigezi2-green-360x200.jpg"}]';
 
 update oc_order_status set wxtitle='下单通知', wxmsg = '亲，我们已收到您的订单。请在此发送消息联系在线客服。\n\n订单编号：%s\n订单金额：%s\n下单时间：%s\n消费明细：%s\n' where order_status_id = 1;
-update oc_order_status set wxtitle='付款通知', wxmsg = '亲，您的订单已称重。\n点击此消息即可付款！\n\n订单编号：%s\n订单金额：%s\n下单时间：%s\n消费明细：%s\n\n点击此消息付款' where order_status_id = 2;
+update oc_order_status set wxtitle='付款通知', wxmsg = '亲，您的订单已称重。\n点击此消息即可付款！货到付款请在此发送文字消息：“到付”。\n\n订单编号：%s\n订单金额：%s\n下单时间：%s\n消费明细：%s\n\n点击查看订单详情' where order_status_id = 2;
 update oc_order_status set wxtitle='配送通知', wxmsg = '亲，您的订单已付款。我们正在安排配送！\n\n飞鸽传蔬将携程为您服务\n\n订单编号：%s\n订单金额：%s\n下单时间：%s\n消费明细：%s\n\n点击查看订单详情' where order_status_id = 3;
 update oc_order_status set wxtitle='订单完成', wxmsg = '亲，您的订单已经配送完成！\n欢迎下次再来哦！\n\n订单编号：%s\n订单金额：%s\n下单时间：%s\n消费明细：%s\n\n点击查看详情' where order_status_id = 4;
 update oc_order_status set wxtitle='订单退款', wxmsg = '亲，您的订单已退款！\n\n订单编号：%s\n订单金额：%s\n下单时间：%s\n消费明细：%s\n\n点击查看详情' where order_status_id = 5;
