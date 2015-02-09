@@ -73,6 +73,22 @@ class ControllerWeixinPayResult extends ControllerWeixinWeixin {
 							$order_info['order_id'], $order_info['total']);
 					}
 				}
+				
+				//发送支付成功消息
+				$url = $this->url->link('mobile_store/order/info', 'order_id='.$order_info['order_id']);
+				$order_id = $order_info['order_id'];
+				$time = $res->time_end;
+				$amount = $this->currency->format($res->total_fee/100);
+				if (isset($res->coupon_fee) && $res->coupon_fee > 0) {
+					$amount = $this->currency->format(($res->total_fee - $res->coupon_fee)/100) .
+						"(代金劵支付：".$this->currency->format($res->coupon_fee/100). ")";
+				}
+				$bank = $res->bank_type;
+				$this->sendOrderNotify($url, $order_id, $time, $amount, $bank);
+			}
+			else {
+				//发送支付失败消息
+				//$this->sendOrderNotify()
 			}
 
 			$this->save_result($order_info, $response);

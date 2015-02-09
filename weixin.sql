@@ -314,7 +314,7 @@ insert into oc_auto_message set pattern='order|订|买', MsgType='news', ItemCou
 
 update oc_order_status set wxtitle='下单通知', wxmsg = '亲，我们已收到您的订单。请在此发送消息联系在线客服。\n\n订单编号：%s\n订单金额：%s\n下单时间：%s\n消费明细：%s\n' where order_status_id = 1;
 update oc_order_status set wxtitle='付款通知', wxmsg = '亲，您的订单已称重。\n点击此消息即可付款！货到付款请在此发送文字消息：“到付”。\n\n订单编号：%s\n订单金额：%s\n下单时间：%s\n消费明细：%s\n\n点击查看订单详情' where order_status_id = 2;
-update oc_order_status set wxtitle='配送通知', wxmsg = '亲，您的订单已付款。我们正在安排配送！\n\n飞鸽传蔬将携程为您服务\n\n订单编号：%s\n订单金额：%s\n下单时间：%s\n消费明细：%s\n\n点击查看订单详情' where order_status_id = 3;
+update oc_order_status set wxtitle='配送通知', wxmsg = '亲，您的订单已付款，或改为货到付款，我们正在安排配送！\n\n飞鸽传蔬将携程为您服务\n\n订单编号：%s\n订单金额：%s\n下单时间：%s\n消费明细：%s\n\n点击查看订单详情' where order_status_id = 3;
 update oc_order_status set wxtitle='订单完成', wxmsg = '亲，您的订单已经配送完成！\n欢迎下次再来哦！\n\n订单编号：%s\n订单金额：%s\n下单时间：%s\n消费明细：%s\n\n点击查看详情' where order_status_id = 4;
 update oc_order_status set wxtitle='订单退款', wxmsg = '亲，您的订单已退款！\n\n订单编号：%s\n订单金额：%s\n下单时间：%s\n消费明细：%s\n\n点击查看详情' where order_status_id = 5;
 update oc_order_status set wxtitle='订单取消', wxmsg = '亲，您的订单已取消！\n\n订单编号：%s\n订单金额：%s\n下单时间：%s\n消费明细：%s\n\n点击查看详情' where order_status_id = 6;
