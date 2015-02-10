@@ -75,7 +75,7 @@ class ControllerWeixinPayResult extends ControllerWeixinWeixin {
 				}
 				
 				//发送支付成功消息
-				$url = $this->url->link('mobile_store/order/info', 'order_id='.$order_info['order_id']);
+				$url = $this->url->link2('mobile_store/order/info', 'order_id='.$order_info['order_id']);
 				$order_id = $order_info['order_id'];
 				$time = $res->time_end;
 				$amount = $this->currency->format($res->total_fee/100);
