@@ -437,9 +437,9 @@ class ControllerMobileStoreOrder extends Controller {
 			$this->log->write("不能发送付款成功消息，因为无openid");
 			return;
 		}
-  		  		
+
   		$status = $this->model_checkout_order->getOrderStatus();
-  		$content = $status[$order->order_status];
+  		$content = $status[$order_info['order_status_id']];
   		$msg = sprintf($content->wxmsg, $order_info['order_id'], $this->currency->format($order_info['total']), $order_info['date_added'], $order_info['comment']);
   		
   		$messages = array();
