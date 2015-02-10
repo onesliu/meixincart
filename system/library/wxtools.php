@@ -68,6 +68,12 @@ class WeixinTools {
 		return $link;
 	}
 	
+	public function loginToUrl($url) {
+		$ua = parse_url($url);
+		return sprintf('%s://%s/pay/weixin.php?route=weixin/login&redirect=%s',
+			$ua['scheme'], $ua['host'], urlencode($url));
+	}
+	
 	public function prepareMenu($menu_def, $appid) {
 		$ret = preg_match_all("/AUTO_LOGIN:([a-zA-Z0-9\.\/\\_-]*)/", $menu_def, $matches);
 		if ($ret > 0) {
@@ -88,36 +94,7 @@ class WeixinTools {
 		$messages[0]["description"] = $msg;
 		$messages[0]["url"] = $url;
 		$messages[0]["picurl"] = "";
-	
-	public function makeKfMsg($openid, $type, $messages, $kf = false) {
-		$msg = "";
-		if ($type == "text") {
-			foreach($messages as $message) {
-				$msg .= $message['title']."\n\n".$message['description'];
-			}
-		}
-		elseif ($type == "news") {
-			foreach($messages as $message) {
-				$msg .= sprintf("{\"title\":\"%s\",\"description\":\"%s\",\"url\":\"%s\",\"picurl\":\"%s\"},",
-						$message['title'], $message['description'], $message['url'], $message['picurl']);
-			}
-			$msg = trim($msg, ",");
-		}
-		
-		$kfstr = "";
-		if ($kf != false) {
-			$kfstr = ",\"customservice\": {\"kf_account\": \"$kf\"}";
-		}
-		
-		$omsg = "{
-		    \"touser\":\"$openid\",
-		    \"msgtype\":\"$type\",
-		    \"$type\": {\"articles\": [$msg]}
-		    $kfstr
-		}";
-
-		return $omsg;
-	}*/
+	*/
 	public function makeKfMsg($openid, $type, $messages, $kf = false) {
 		$o = new stdClass();
 		$o->touser = $openid;
@@ -133,7 +110,7 @@ class WeixinTools {
 				$item = new stdClass();
 				$item->title = urlencode($message['title']);
 				$item->description = urlencode($message['description']);
-				$item->url = urlencode($message['url']);
+				$item->url = urlencode('%s');
 				$item->picurl = urlencode($message['picurl']);
 				$o->news->articles[] = $item;
 			}
@@ -147,7 +124,8 @@ class WeixinTools {
 			$o->customservice->kf_account = $kf;
 		}
 		
-		return urldecode(json_encode($o));
+		$jstr = urldecode(json_encode($o));
+		return sprintf($jstr, $this->loginToUrl($message['url']));
 	}
 	
 	public function sendKfMsg($msg, $access_token) {
@@ -177,11 +155,12 @@ class WeixinTools {
 		$msg = new stdClass();
 		$msg->touser = $openid;
 		$msg->template_id = $tempid;
-		$msg->url = urlencode($url);
+		$msg->url = urlencode('%s');
 		$msg->topcolor = "#FF0000";
 		$msg->data = $odata;
 		
-		return urldecode(json_encode($msg));
+		$jstr = urldecode(json_encode($msg));
+		return sprintf($jstr, $this->loginToUrl($url));
 	}
 	
 	public function sendModelMsg($msg, $access_token) {

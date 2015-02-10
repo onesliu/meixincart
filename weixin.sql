@@ -339,3 +339,5 @@ delete from oc_order_option;
 delete from oc_order_product;
 delete from oc_order_total;
 delete from oc_order_voucher;
+
+select pd.name, p.price from oc_product p join oc_product_description pd on p.product_id=pd.product_id;
