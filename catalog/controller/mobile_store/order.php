@@ -320,8 +320,10 @@ class ControllerMobileStoreOrder extends Controller {
 	      	if ($order_info['order_status_id'] == 2) {
 	      		$this->data['text_pay_btn'] = '微信支付';
 	      		$this->data['weixin_payment'] = $this->url->link('weixin/pay', '', 'wxpay');
+				$this->data['text_cashpay'] = "货到付款";
+				$this->data['url_cashpay'] = $this->url->link('mobile_store/order/cashpay', '', 'wxpay');
 	      		$this->session->data['order_info'] = $order_info;
-      		}
+	      	}
       		if ($order_info['order_status_id'] <= 2) {
 	      		$this->data['text_cancel_btn'] = '关闭';
 	      		$this->data['cancel_order'] = $this->url->link('mobile_store/order/cancel', '', 'wxpay');
@@ -395,6 +397,64 @@ class ControllerMobileStoreOrder extends Controller {
 			$this->session->data['text_continue'] = '查看订单';
 		}
 		$this->redirect($this->url->link('weixin/error'));
+  	}
+  	
+  	public function cashpay() {
+		if (!isset($this->session->data['order_info'])) {
+			$this->redirect($this->url->link('mobile_store/home'));
+		}
+		$order_info = &$this->session->data['order_info'];
+  		
+		$this->load->model('checkout/order');
+		if ($order_info['order_status_id'] == 2) {
+			$this->model_checkout_order->orderChangeStatus($order_info);
+			$order_info['iscash'] = 1;
+			$ret = $this->model_checkout_order->fastupdate($order_info['order_id'], $order_info);
+		}
+		else {
+			$ret = false;
+		}
+		
+		$this->sendStatusChgMsg($order_info);
+
+		if ($ret != false) {
+			$this->session->data['error_msg'] = '订单无法改为到付';
+			$this->session->data['url_continue'] = $this->url->link('mobile_store/allproduct', '', 'SSL');
+			$this->session->data['text_continue'] = '转到买菜页';
+		}
+		else {
+			$this->session->data['error_msg'] = '订单已改为到付';
+			$this->session->data['url_continue'] = $this->url->link('mobile_store/order/info', 'order_id='.$order_info['order_id'], 'SSL');
+			$this->session->data['text_continue'] = '查看订单';
+		}
+		$this->redirect($this->url->link('weixin/error'));
+  	}
+  	
+  	private function sendStatusChgMsg($order_info) {
+		if (isset($this->session->data['openid']))
+			$openid = $this->session->data['openid'];
+		else {
+			$this->log->write("不能发送付款成功消息，因为无openid");
+			return;
+		}
+  		  		
+  		$status = $this->model_checkout_order->getOrderStatus();
+  		$content = $status[$order->order_status];
+  		$msg = sprintf($content->wxmsg, $order_info['order_id'], $this->currency->format($order_info['total']), $order_info['date_added'], $order_info['comment']);
+  		
+  		$messages = array();
+		$messages[0]["title"] = "交易提醒 " . $content->wxtitle;
+		$messages[0]["description"] = $msg;
+		$messages[0]["url"] = $this->url->link2('mobile_store/order/info', 'order_id='.$order_info['order_id']);
+		$messages[0]["picurl"] = "";
+		
+		$wxtools = new WeixinTools();
+		$msg = $wxtools->makeKfMsg($openid, "news", $messages);
+		$res = $wxtools->sendKfMsg($msg, $this->access_token);
+		if ($res == false) {
+			$this->log->write("发送客服提醒消息出错");
+		}
+		
   	}
 }
 ?>

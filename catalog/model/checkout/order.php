@@ -774,6 +774,7 @@ class ModelCheckoutOrder extends Model {
 		((isset($order_info['shipping_district_id']))? "shipping_district_id = '" . (int)$order_info['shipping_district_id'] . "'," : "") .
 		((isset($order_info['shipping_time']))? "shipping_time = '" . $order_info['shipping_time'] . "'," : "") .
 		((isset($order_info['ip']))? "ip = '" . $this->db->escape($order_info['ip']) . "'," : "") .
+		((isset($order_info['iscash']))? "iscash = '" . (int)$order_info['iscash'] . "'," : "") .
 		((isset($order_info['weixin_pay_result']))? "weixin_pay_result = '" . $this->db->escape($order_info['weixin_pay_result']) . "'," : "") .
 		((isset($order_info['forwarded_ip']))? "forwarded_ip = '" . $this->db->escape($order_info['forwarded_ip']) . "'," : "");
 		
@@ -816,6 +817,20 @@ class ModelCheckoutOrder extends Model {
 			",order_status_id=".$order_info['order_status_id'].
 			",notify=1,date_added=NOW()";
 		$this->db->query($sql);
+	}
+	
+	public function getOrderStatus() {
+		
+		$query = $this->db->query("select * from " .DB_PREFIX. "order_status");
+		$data = array();
+		foreach ($query->rows as $result) {
+			$omsg = new stdClass();
+			$omsg->name = $result['name'];
+			$omsg->wxtitle = $result['wxtitle'];
+			$omsg->wxmsg = $result['wxmsg'];
+			$data[$result['order_status_id']] = $omsg;
+		}
+		return $data;
 	}
 	
 }

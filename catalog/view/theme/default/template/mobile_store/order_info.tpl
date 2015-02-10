@@ -101,7 +101,9 @@
 		</div>
 		<?php if (isset($weixin_payment)) {?>
 		<div data-role="footer" data-position="fixed" data-theme="b" data-tap-toggle="false">
-			<span><center><a id="paybtn" href="<?php echo $weixin_payment; ?>" class="ui-btn ui-btn-a ui-corner-all" style="width: 50%"><?php echo $text_pay_btn;?></a></center></span>
+			<span><center><a id="paybtn" href="<?php echo $weixin_payment; ?>" class="ui-btn ui-btn-a ui-corner-all" style="width: 50%"><?php echo $text_pay_btn;?></a>
+			<a id="cashpay" href="<?php echo $url_cashpay; ?>" class="ui-btn ui-btn-a ui-corner-all" style="width: 50%"><?php echo $text_cashpay;?></a>
+			</center></span>
 		</div>
 		<?php } ?>
 	</div>
