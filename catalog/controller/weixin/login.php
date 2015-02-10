@@ -16,6 +16,12 @@ class ControllerWeixinLogin extends Controller {
 			$redirect = $this->request->get['redirect'];
 		}
 		
+		if (isset($redirect)) {
+			$ua = parse_url($redirect);
+			if (!isset($ua['host']))
+				$redirect = $this->url->link($redirect, '', 'SSL');
+		}
+		
 		if (!empty($this->request->get['token'])) {
 			$this->customer->logout();
 
@@ -43,7 +49,7 @@ class ControllerWeixinLogin extends Controller {
 			$customer_info = $this->model_account_customer->getCustomerByToken($this->request->get['token']);
 			
 		 	if ($customer_info && $this->customer->login($customer_info['email'], '', true)) {
-				$this->redirect($this->url->link($redirect, '', 'SSL')); 
+				$this->redirect($redirect); 
 			}
 		}
 		
@@ -69,7 +75,7 @@ class ControllerWeixinLogin extends Controller {
 		}
 		
 		if ($this->customer->isLogged()) {  
-      		$this->redirect($this->url->link($redirect, '', 'SSL'));
+      		$this->redirect($redirect);
     	}
     	
     	if (isset($this->request->post['email'])) {
@@ -90,7 +96,7 @@ class ControllerWeixinLogin extends Controller {
 			unset($this->session->data['guest']);
 			
 			if (isset($redirect)) {
-				$this->redirect($this->url->link($redirect, '', 'SSL')); 
+				$this->redirect($redirect); 
 			}
     	}
     	else {
