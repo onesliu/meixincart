@@ -105,14 +105,17 @@ class WeixinTools {
 		}
 		elseif ($type == "news") {
 			$o->news = new stdClass();
-			$o->news->articles = array();
+			$o->news->articles = '[VAL]';
+			$articles = "";
 			foreach($messages as $message) {
 				$item = new stdClass();
 				$item->title = urlencode($message['title']);
 				$item->description = urlencode($message['description']);
 				$item->url = urlencode('%s');
 				$item->picurl = urlencode($message['picurl']);
-				$o->news->articles[] = $item;
+				
+				$jstr = urldecode(json_encode($item));
+				$articles .= sprintf($jstr, $this->loginToUrl($message['url'])) . ",";
 			}
 		}
 		else {
@@ -125,7 +128,11 @@ class WeixinTools {
 		}
 		
 		$jstr = urldecode(json_encode($o));
-		return sprintf($jstr, $this->loginToUrl($message['url']));
+		if ($type == "news") {
+			$articles = trim($articles, ",");
+			$jstr = str_replace('"[VAL]"', "[$articles]", $jstr);
+		}
+		return $jstr;
 	}
 	
 	public function sendKfMsg($msg, $access_token) {
