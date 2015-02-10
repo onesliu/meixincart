@@ -417,7 +417,7 @@ class ControllerMobileStoreOrder extends Controller {
 		
 		$this->sendStatusChgMsg($order_info);
 
-		if ($ret != false) {
+		if ($ret == false) {
 			$this->session->data['error_msg'] = '订单无法改为到付';
 			$this->session->data['url_continue'] = $this->url->link('mobile_store/allproduct', '', 'SSL');
 			$this->session->data['text_continue'] = '转到买菜页';
