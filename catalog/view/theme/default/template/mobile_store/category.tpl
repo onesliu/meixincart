@@ -1,15 +1,17 @@
 <?php echo $header; ?>
 <body>
-<div data-role="page" id="categorypage" data-theme="a" data-title="<?php echo $heading_title; ?>">
+<div data-role="page" id="categorypage" data-theme="a" class="my-page" data-title="<?php echo $heading_title; ?>">
 	<?php echo $titlebar; ?>
 	<div data-role="content">
 	<!-- <img id="help2" src="<?php //echo $dir_img.'help2.png'; ?>" width="100%" style="display:none;" onclick="$(this).hide();"></img> -->
-  	<ul data-role="listview" id="plist" data-inset="true" data-split-icon="shop" data-theme="c" data-divider-theme="c" data-count-theme="c">
-  		<li data-role="list-divider"><?php echo $heading_title; ?></li>
+	<div class="colum-list">
+  	<ul data-role="listview" id="plist" data-inset="true" data-split-icon="cart" data-theme="c" data-divider-theme="c" data-count-theme="c">
+  		<li data-role="list-divider"><?php echo $heading_title; ?></li> 
 		<?php require('category_more.tpl'); ?>
   	</ul>
+  	</div>
 	<?php if ($pagination->page < $pagination->num_pages) { ?>
-	<a id="bmore" href="#" data-role="button">更多...</a>
+	<div style="float:left;clear:both;width:100%;"><a id="bmore" style="margin:.5625em;" href="#" data-role="button">更多...</a></div>
 	<?php } ?>
 
 	<script type="text/javascript"><!--
