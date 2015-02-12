@@ -71,6 +71,7 @@
     /* Make text wrap. */
     .my-page .colum-list .ui-listview h2,
     .my-page .colum-list .ui-listview p {
+		text-overflow: ellipsis;
         white-space: normal;
         overflow: visible;
         position: absolute;
@@ -94,7 +95,6 @@
     /* Semi transparent background and different position if there is a thumb. The button has overflow hidden so we don't need to set border-radius. */
     .my-page .colum-list .ui-listview .ui-li-has-thumb h2,
     .my-page .colum-list .ui-listview .ui-li-has-thumb p {
-        background: #111;
         background: inherit;
     }
     .my-page .colum-list .ui-listview .ui-li-has-thumb h2 {
@@ -102,6 +102,7 @@
     }
     .my-page .colum-list .ui-listview .ui-li-has-thumb p {
         min-height: 20%;
+		max-height: 20%;
     }
     /* ui-li-aside has class .ui-li-desc as well so we have to override some things. */
     .my-page .colum-list .ui-listview li .ui-btn .ui-li-aside {
@@ -113,7 +114,6 @@
         left: auto;
         bottom: auto;
         /* Custom styling. */
-        background: #111;
         background: inherit;
     }
     /* If you want to add shadow, don't kill the focus style. */
