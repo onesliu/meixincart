@@ -8,7 +8,7 @@ class ControllerMobileStoreCart extends Controller {
 		if (!isset($this->session->data['vouchers'])) {
 			$this->session->data['vouchers'] = array();
 		}
-
+		
 		// Update
 		if (!empty($this->request->post['update']) && $this->request->post['update'] == "true") {
 			$json = new stdClass();
@@ -17,7 +17,6 @@ class ControllerMobileStoreCart extends Controller {
 				$json->status = 0;
 			}
 			else {
-				$this->log->write(print_r($this->request->post,true));
 				$json->status = -1;
 			}
 			$this->response->setOutput(json_encode($json));
@@ -109,8 +108,8 @@ class ControllerMobileStoreCart extends Controller {
 				if ($product['points']) {
 					$points_total += $product['points'];
 				}
-			}		
-				
+			}
+			
       		$this->data['heading_title'] = $this->language->get('heading_title');
 			
 			$this->data['text_next'] = $this->language->get('text_next');
@@ -186,7 +185,7 @@ class ControllerMobileStoreCart extends Controller {
       		
       		unset($this->session->data['coupon']);
       		
-			$products = $this->cart->getProducts();
+      		$products = $this->cart->getProducts();
 
       		foreach ($products as $product) {
 				$product_total = 0;
@@ -390,8 +389,6 @@ class ControllerMobileStoreCart extends Controller {
       				$this->data['totals'][] = $total;
       			}
       		}
-      		//$this->log->write(print_r($this->data['totals'],true));
-			//$this->data['totals'] = $total_data;
 						
 			$this->data['continue'] = $this->url->link('mobile_store/home');
 			
@@ -538,7 +535,7 @@ class ControllerMobileStoreCart extends Controller {
 		
 		if (isset($this->request->post['product']))
 			$products = $this->request->post['product'];
-		
+			
 		if (!isset($products)) {
 			$json->status = false;
 			$json->success = "加入购物车失败";

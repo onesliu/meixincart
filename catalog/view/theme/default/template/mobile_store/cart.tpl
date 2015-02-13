@@ -138,7 +138,7 @@
 					$('#p'+key).remove();
 
 					changediscount();
-					changebtn(totals);
+					changebtn(totalprice);
 				});
 			});
 			$('#popupDialog').popup('open');

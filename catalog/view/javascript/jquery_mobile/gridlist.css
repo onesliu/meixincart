@@ -72,8 +72,8 @@
     .my-page .colum-list .ui-listview h2,
     .my-page .colum-list .ui-listview p {
 		text-overflow: ellipsis;
+		overflow: hidden;
         white-space: normal;
-        overflow: visible;
         position: absolute;
         left: 0;
         right: 0;

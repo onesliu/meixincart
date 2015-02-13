@@ -15,16 +15,6 @@
 <meta name="keywords" content="<?php echo $keywords; ?>" />
 <?php } ?>
 
-<style type="text/css">
-.ui-icon-cart:after {
-	background-image: url("iconimg.svg");
-}
-/* Fallback */
-.ui-nosvg .ui-icon-myicon:after {
-	background-image: url("iconimg.png");
-}
-</style>
-
 <link type="text/css" rel="stylesheet" href="catalog/view/javascript/jquery_mobile/qingyou-theme.min.css?version=1.3" />
 <link type="text/css" rel="stylesheet" href="catalog/view/javascript/jquery_mobile/jquery.mobile.icons.min.css" />
 <link type="text/css" rel="stylesheet" href="catalog/view/javascript/jquery_mobile/jquery.mobile.custom.structure.min.css">

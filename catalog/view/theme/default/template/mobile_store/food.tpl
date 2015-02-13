@@ -20,16 +20,15 @@
 			<p><?php echo $food['desp']; ?></p>
 		</div>
 		
+		<?php require('material_list.tpl'); ?>
+		
 		<ul data-role="listview" data-inset="true" data-theme="b" data-divider-theme="b" data-count-theme="b">
-			<li data-role="list-divider">制作过程</li>
+			<li data-role="list-divider">制作过程推荐</li>
 			<li><a href="<?php echo $food['make_url']; ?>" data-transition="slidefade">
-				<img src="<?php echo $logoicon; ?>"/>
 				<h2>菜鸽子学做馆子菜</h2>
-				<p>在家里下馆子的味道！</p>
+				<p>在家里体验下馆子的味道！</p>
 			</a></li>
 		</ul>
-		
-		<?php require('material_list.tpl'); ?>
 		
 		<script type="text/javascript"><!--
 		$(document).on("pageinit", "#foodpage", function(){

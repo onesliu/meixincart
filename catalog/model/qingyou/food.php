@@ -26,6 +26,26 @@ class ModelQingyouFood extends Model {
 		
 		return $query->rows;
 	}
+	
+	public function getFoodWithPrice($menu_id) {
+		$condition = "";
+		if ($menu_id > 0) {
+			$condition = "join qy_rel_food_menu fm on fm.food_id=f.id where fm.menu_id=$menu_id";
+		}
+		$sql = "select f.*,sum(p.price) as price from qy_food f join qy_food_source fp on f.id=fp.food_id 
+				join oc_product p on fp.product_id=p.product_id $condition group by fp.food_id;";
+		
+		/*
+		$cache_hash = md5($sql);
+		$data = $this->cache->get('food_with_price.' . $cache_hash);
+		if (!$data) {
+			$data = $this->db->query($sql);
+			$this->cache->set('food_with_price.' . $cache_hash, $data);
+		}
+		*/
+		$data = $this->db->query($sql);
+		return $data->rows;
+	}
 				
 	public function getTotalFood() {
       	$query = $this->db->query("SELECT COUNT(*) AS total FROM qy_food");

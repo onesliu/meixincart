@@ -7,7 +7,8 @@ class ControllerMobileStoreNavi extends Controller {
 		$this->data['text_categories'] = $this->language->get('text_categories');
     	$this->data['text_order'] = $this->language->get('text_order');
     	$this->data['text_checkout'] = $this->language->get('text_checkout');
-    	$this->data['text_menu'] = $this->language->get('text_menu');
+    	//$this->data['text_menu'] = $this->language->get('text_menu');
+    	$this->data['text_menu'] = "省心菜";
     	$this->data['text_products'] = $this->language->get('text_products');
 				
 		$this->data['home'] = $this->url->link('mobile_store/home');
@@ -16,8 +17,8 @@ class ControllerMobileStoreNavi extends Controller {
 		$this->data['product'] = $this->url->link('mobile_store/allproduct', '', 'SSL');
 		$this->data['cart'] = $this->url->link('mobile_store/cart', '', 'wxpay');
 		$this->data['order'] = $this->url->link('mobile_store/order', '', 'SSL');
-		//$this->data['menu'] = $this->url->link('mobile_store/menu/mlist', '', 'SSL');
-		$this->data['menu'] = $this->url->link('weixin/error', '', 'SSL');
+		$this->data['menu'] = $this->url->link('mobile_store/food_list/sxc', '', 'SSL');
+		//$this->data['menu'] = $this->url->link('weixin/error', '', 'SSL');
 		
 		$this->session->data['error_msg'] = '商城建设中，敬请期待...';
 		$this->session->data['url_continue'] = $this->url->link('mobile_store/allproduct', '', 'SSL');
