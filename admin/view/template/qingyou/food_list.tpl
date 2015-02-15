@@ -24,7 +24,7 @@
               <td width="1" style="text-align: center;"><input type="checkbox" onclick="$('input[name*=\'selected\']').attr('checked', this.checked);" /></td>
               <td class="left"><?php echo $column_name; ?></td>
               <td class="left"><?php echo $column_menus; ?></td>
-              <td class="left"><?php echo $column_attr; ?></td>
+              <td class="left"><?php echo $column_source; ?></td>
               <td class="right"><?php echo $column_disable; ?></td>
               <td class="right"><?php echo $column_sort_order; ?></td>
               <td class="right"><?php echo $column_action; ?></td>
@@ -41,7 +41,7 @@
                 <?php } ?></td>
               <td class="left"><?php echo $food['name']; ?></td>
               <td class="left"><?php echo $food['menu_names']; ?></td>
-              <td class="left"><?php echo $food['attr_names']; ?></td>
+              <td class="left"><?php echo $food['source_names']; ?></td>
               <td class="right"><?php echo ($food['disable']!=0)?$text_enabled:$text_disabled; ?></td>
               <td class="right"><?php echo $food['sort']; ?></td>
               <td class="right"><?php foreach ($food['action'] as $action) { ?>

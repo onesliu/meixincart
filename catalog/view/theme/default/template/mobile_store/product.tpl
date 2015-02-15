@@ -53,48 +53,47 @@
 			<p id="buy_alert"></p>
 		</div>
 		
-		<script type="text/javascript"><!--
-		$(document).on("pageinit", "#product_page", function(){
-			setSwipeImg('#productswipe', "swipe");
-		});
-
-		function scount(num) {
-			var count = $('#quantity').text() - 0;
-			num = num - 0;
-			count += num;
-			if (count < <?php echo $minimum; ?>) {
-				count = <?php echo $minimum; ?>;
-				return;
-			}
-
-			$('#quantity').text(count);
-		}
-
-		function addCart() {
-			var product_id = <?php echo $product_id; ?>;
-			var quantity = $('#quantity').text() - 0;
-
-			$.ajax({
-				url: 'index.php?route=mobile_store/cart/add',
-				type: 'post',
-				data: 'product_id=' + product_id + '&quantity=' + quantity,
-				dataType: 'json',
-				success: function(json) {
-					if (json.success) {
-						$('#buy_alert').html(json.success);
-						
-						$('#positionWindow').popup( 'reposition', 'positionTo: window' );
-						$('#positionWindow').popup('open', { positionTo: "window" });
-						setTimeout(function() {
-							$("#positionWindow").popup('close');
-						}, 1000);
-					}
-				}
-			});
-		}
-		//--></script>
-		
 	</div>
 	<?php echo $navi; ?>
+	<script type="text/javascript"><!--
+	$(document).on("pageinit", "#product_page", function(){
+		setSwipeImg('#productswipe', "swipe");
+	});
+
+	function scount(num) {
+		var count = $('#quantity').text() - 0;
+		num = num - 0;
+		count += num;
+		if (count < <?php echo $minimum; ?>) {
+			count = <?php echo $minimum; ?>;
+			return;
+		}
+
+		$('#quantity').text(count);
+	}
+
+	function addCart() {
+		var product_id = <?php echo $product_id; ?>;
+		var quantity = $('#quantity').text() - 0;
+
+		$.ajax({
+			url: 'index.php?route=mobile_store/cart/add',
+			type: 'post',
+			data: 'product_id=' + product_id + '&quantity=' + quantity,
+			dataType: 'json',
+			success: function(json) {
+				if (json.success) {
+					$('#buy_alert').html(json.success);
+					
+					$('#positionWindow').popup( 'reposition', 'positionTo: window' );
+					$('#positionWindow').popup('open', { positionTo: "window" });
+					setTimeout(function() {
+						$("#positionWindow").popup('close');
+					}, 1000);
+				}
+			}
+		});
+	}
+	//--></script>
 </div>
 </body>

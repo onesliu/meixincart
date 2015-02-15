@@ -121,12 +121,12 @@ class ModelQingyouFood extends Model {
 	}
 	
 	public function getFoodSources($id) {
-		$query = $this->db->query("select p.*,s.* from qy_food_source s join oc_product_description p on s.product_id=p.product_id where food_id=$id");
+		$query = $this->db->query("select p.*,s.* from qy_food_source s join oc_product_description p on s.product_id=p.product_id where food_id=$id order by groupid,name");
 		return $query->rows;
 	}
 	
 	public function getAllSources() {
-		$query = $this->db->query("select pd.name,p.* from oc_product_description pd join oc_product p on p.product_id=pd.product_id where language_id=1;");
+		$query = $this->db->query("select pd.name,p.* from oc_product_description pd join oc_product p on p.product_id=pd.product_id where language_id=1 order by pd.name desc");
 		return $query->rows;
 	}
 

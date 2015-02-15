@@ -146,14 +146,16 @@ class ControllerQingyouFood extends Controller {
 			}
 			$menu_names = implode("<br/>", $mn);
 
-			$fa = array();
-			$food_attrs = $this->model_qingyou_food->getFoodAttrs($result['id']);
-			foreach($food_attrs as $attr_class) {
-				foreach($attr_class as $attr) {
-					$fa[] = $attr['name'];
-				}
+			$fs = array();
+			$food_src = $this->model_qingyou_food->getFoodSources($result['id']);
+			foreach($food_src as $s) {
+				$src = (($s['source_type']==0)?'主料':'辅料')." ".$s['name'];
+				if ($s['groupid'] > 0)
+					$fs[] = sprintf('<strong>%s</strong>', $src);
+				else
+					$fs[] = $src;
 			}
-			$attr_names = implode("<br/>", $fa);
+			$source_names = implode("<br/>", $fs);
 			
 			$this->data['allfood'][] = array(
 				'id'		 => $result['id'],
@@ -161,7 +163,7 @@ class ControllerQingyouFood extends Controller {
 				'sort' 		 => $result['sort'],
 				'disable'	 => $result['disable'],
 				'menu_names' => $menu_names,
-				'attr_names'  => $attr_names,
+				'source_names'  => $source_names,
 				'selected'    => isset($this->request->post['selected']) && in_array($result['id'], $this->request->post['selected']),
 				'action'      => $action
 			);
@@ -175,7 +177,7 @@ class ControllerQingyouFood extends Controller {
 		
 		$this->data['column_name'] = $this->language->get('f_column_name');
 		$this->data['column_menus'] = $this->language->get('f_column_menus');
-		$this->data['column_attr'] = $this->language->get('f_column_attr');
+		$this->data['column_source'] = $this->language->get('f_entry_source_name');
 		$this->data['column_sort_order'] = $this->language->get('f_column_sort_order');
 		$this->data['column_action'] = $this->language->get('f_column_action');
 		$this->data['column_disable'] = $this->language->get('f_column_disable');
