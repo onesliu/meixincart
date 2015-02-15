@@ -133,6 +133,7 @@ CREATE TABLE if not exists qy_food_source (
 	`food_id` int(11) NOT NULL,
 	`product_id` int(11) not null,
 	`source_type` int(11) default 0, /*0主料，1辅料*/
+	`groupid` int(11) default 0,
 	`sort` int(11) default 0,
 	PRIMARY KEY  (`food_id`, `product_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;

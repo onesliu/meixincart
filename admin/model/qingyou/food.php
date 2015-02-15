@@ -30,7 +30,7 @@ class ModelQingyouFood extends Model {
 			$this->db->query("delete from qy_food_source where food_id=$id");
 			foreach ($data['source'] as $source) {
 				$this->db->query("insert into qy_food_source set food_id=$id, product_id=".$source['product_id'].
-				", source_type=".$source['type'].", sort=".$source['sort']);
+				", source_type=".$source['type'].", sort=".$source['sort'].", groupid=".$source['groupid']);
 			}
 		}
 
@@ -121,7 +121,7 @@ class ModelQingyouFood extends Model {
 	}
 	
 	public function getFoodSources($id) {
-		$query = $this->db->query("select p.*,s.source_type,s.sort from qy_food_source s join oc_product_description p on s.product_id=p.product_id where food_id=$id");
+		$query = $this->db->query("select p.*,s.* from qy_food_source s join oc_product_description p on s.product_id=p.product_id where food_id=$id");
 		return $query->rows;
 	}
 	

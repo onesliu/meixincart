@@ -13,12 +13,31 @@ class ControllerMobileStoreFood extends Controller {
 		$sources = $this->model_qingyou_food->getFoodSources($this->request->get['id']);
 		$food['makestep'] = $this->model_qingyou_food->getMakeSteps($this->request->get['id']);
 		
+		$source_major = array();
+		$source_minor = array();
 		foreach($sources as &$p) {
-			$p['weight_show'] = ((int)$p['weight']) . $p['weight_class'];
-			$p['price_show'] = $this->currency->format($this->tax->calculate($p['price'], $p['tax_class_id'], $this->config->get('config_tax')));
+			$p['href'] = $this->url->link('mobile_store/product', 'product_id=' . $p['product_id']);
+			$p['final_show'] = $p['name'];
+			if ((int)$p['weight'] > 0)
+				$p['final_show'] .= ' '.((int)$p['weight']) . $p['weight_class'];
+				
+			if ($p['status'] > 0) {
+				$p['price_show'] = $this->currency->format($p['price']);
+			}
+			else {
+				$p['price_show'] = '已下架';
+			}
+			
+			if ($p['source_type'] == 0) {
+				$source_major[] = $p;
+			}
+			else {
+				$source_minor[] = $p;
+			}
 		}
 		
-		$this->data['sources'] = $sources;
+		$this->data['source_major'] = $source_major;
+		$this->data['source_minor'] = $source_minor;
 		
 		if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {
 			$dir_img = $this->config->get('config_ssl') . 'image/';

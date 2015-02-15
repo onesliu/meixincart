@@ -86,6 +86,7 @@
               <tr>
                 <td class="left"><?php echo $entry_source_name; ?></td>
                 <td class="left"><?php echo $entry_source_type; ?></td>
+                <td class="left"><?php echo '推荐原料'; ?></td>
                 <td class="left"><?php echo $entry_sort_order; ?></td>
                 <td></td>
               </tr>
@@ -103,6 +104,7 @@
                 	<option value="0" <?php if ($source['source_type']==0) echo "selected=\"selected\""; ?>><?php echo $text_main_source; ?></option>
                 	<option value="1" <?php if ($source['source_type']==1) echo "selected=\"selected\""; ?>><?php echo $text_other_source; ?></option>
                 </select></td>
+                <td class="left"><input type="text" name="source[<?php echo $source_row; ?>][groupid]" value="<?php echo $source['groupid']; ?>" size="1" /></td>
                 <td class="left"><input type="text" name="source[<?php echo $source_row; ?>][sort]" value="<?php echo $source['sort']; ?>" size="1" /></td>
                 <td class="left"><a onclick="$('#source-row<?php echo $source_row; ?>').remove();" class="button"><?php echo $button_remove; ?></a></td>
               </tr>
@@ -208,6 +210,7 @@ function addSource() {
 	html += '  	<option value="0" selected="selected"><?php echo $text_main_source; ?></option>';
 	html += '  	<option value="1"><?php echo $text_other_source; ?></option>';
 	html += '  </select></td>';
+	html += '  <td class="left"><input type="text" name="source[' + source_row + '][groupid]" value="0" size="1" /></td>';
 	html += '  <td class="left"><input type="text" name="source[' + source_row + '][sort]" value="0" size="1" /></td>';
 	html += '  <td class="left"><a onclick="$(\'#source-row' + source_row + '\').remove();" class="button"><?php echo $button_remove; ?></a></td>';
 	html += '</tr>';

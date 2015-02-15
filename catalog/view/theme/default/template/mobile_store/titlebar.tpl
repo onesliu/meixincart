@@ -10,7 +10,7 @@
 		<li><a href="http://m.wsq.qq.com/264065938/t/4">我们的服务</a></li>
 	</ul>
 </div>
-<div data-role="header" data-position="fixed" data-theme="a">
+<div data-role="header" data-position="fixed" data-theme="a" data-tap-toggle="false">
 <?php if (isset($product_page) && $product_page == true) {?>
     <style type="text/css">
 		.ui-input-search {margin:0px 0 0px 0; height:26px;}

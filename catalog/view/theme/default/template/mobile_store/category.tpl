@@ -3,17 +3,23 @@
 <div data-role="page" id="categorypage" data-theme="a" class="my-page" data-title="<?php echo $heading_title; ?>">
 	<?php echo $titlebar; ?>
 	<div data-role="content">
-	<!-- <img id="help2" src="<?php //echo $dir_img.'help2.png'; ?>" width="100%" style="display:none;" onclick="$(this).hide();"></img> -->
-	<div class="colum-list">
-  	<ul data-role="listview" id="plist" data-inset="true" data-split-icon="cart" data-theme="c" data-divider-theme="c" data-count-theme="c">
-  		<li data-role="list-divider"><?php echo $heading_title; ?></li> 
-		<?php require('category_more.tpl'); ?>
-  	</ul>
-  	</div>
-	<?php if ($pagination->page < $pagination->num_pages) { ?>
-	<div style="float:left;clear:both;width:100%;"><a id="bmore" style="margin:.5625em;" href="#" data-role="button">更多...</a></div>
-	<?php } ?>
-
+		<div class="colum-list">
+	  	<ul data-role="listview" id="plist" data-inset="true" data-split-icon="cart" data-theme="c" data-divider-theme="c" data-count-theme="c">
+	  		<li data-role="list-divider"><?php echo $heading_title; ?></li> 
+			<?php require('category_more.tpl'); ?>
+	  	</ul>
+	  	</div>
+		<?php if ($pagination->page < $pagination->num_pages) { ?>
+		<div style="float:left;clear:both;width:100%;"><a id="bmore" style="margin:.5625em;" href="#" data-role="button">更多...</a></div>
+		<?php } ?>
+	</div>
+	
+	<div data-role="popup" id="positionWindow" data-transition="slideup" data-position-to="window" class="ui-content" data-theme="a">
+		<p id="buy_alert"></p>
+	</div>
+	
+	<?php echo $navi; ?>
+	
 	<script type="text/javascript"><!--
 	function addToCart(product_id, quantity) {
 		quantity = typeof(quantity) != 'undefined' ? quantity : 1;
@@ -66,12 +72,6 @@
         $.mobile.changePage(url, {allowSamePageTransition:true});
 	}
 	//--></script> 
-	</div>
-	
-	<div data-role="popup" id="positionWindow" data-transition="slideup" data-position-to="window" class="ui-content" data-theme="a">
-		<p id="buy_alert"></p>
-	</div>
-	<?php echo $navi; ?>
 </div>
 
 </body>

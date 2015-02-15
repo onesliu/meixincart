@@ -28,12 +28,16 @@ class ModelQingyouFood extends Model {
 	}
 	
 	public function getFoodWithPrice($menu_id) {
+
+		$join = "";
 		$condition = "";
+		
 		if ($menu_id > 0) {
-			$condition = "join qy_rel_food_menu fm on fm.food_id=f.id where fm.menu_id=$menu_id";
+			$join = "join qy_rel_food_menu fm on fm.food_id=f.id";
+			$condition = "and fm.menu_id=$menu_id";
 		}
 		$sql = "select f.*,sum(p.price) as price from qy_food f join qy_food_source fp on f.id=fp.food_id 
-				join oc_product p on fp.product_id=p.product_id $condition group by fp.food_id;";
+				join oc_product p on fp.product_id=p.product_id $join where fp.groupid > 0 $condition group by fp.food_id;";
 		
 		/*
 		$cache_hash = md5($sql);
@@ -80,7 +84,7 @@ class ModelQingyouFood extends Model {
 			join oc_product p on s.product_id=p.product_id 
 			join oc_weight_class_description wd on p.weight_class_id=wd.weight_class_id
 			where food_id = $id
-			order by s.sort");
+			order by s.groupid desc,s.sort");
 		return $query->rows;
 	}
 	

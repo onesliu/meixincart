@@ -30,12 +30,18 @@
 			</a></li>
 		</ul>
 		
-		<script type="text/javascript"><!--
-		$(document).on("pageinit", "#foodpage", function(){
-			setSwipeImg('#foodswipe', "swipe");
-		});
-		//--></script>
 	</div>
+
 	<?php echo $navi; ?>
+
+	<script type="text/javascript"><!--
+	$(document).on("pageinit", "#foodpage", function(){
+		setSwipeImg('#foodswipe', "swipe");
+
+		if (typeof(materials) != 'undefined') {
+			calc_price();
+		}
+	});
+	//--></script>
 </div>
 </body>

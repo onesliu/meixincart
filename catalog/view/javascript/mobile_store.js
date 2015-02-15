@@ -5,3 +5,7 @@ $(document).bind("mobileinit", function(){
 	$.mobile.defaultPageTransition = 'slidefade';
 	$.mobile.pageLoadErrorMessage = '文件载入出错';
 });
+
+function chgpage(url) {
+	$( ":mobile-pagecontainer" ).pagecontainer( "change", url);
+}
