@@ -32,12 +32,11 @@ function setSwipeImg(targetBox, touchEvt) {
 			funIndex(target.eleIndex, target.eleList);
 			return false;
 		}).trigger("swipe");
+
+		setTimeout(function(){
+			$(targetBox).height($(targetBox)[0].offsetWidth*4/5);
+		}, 500);
 	}
-	
-	//$(targetBox).trigger("swipe");
-	setTimeout(function(){
-		$(targetBox).height($(targetBox)[0].offsetWidth*4/5);
-	}, 100);
 }
 
 function clearSwipeImg(targetBox) {
