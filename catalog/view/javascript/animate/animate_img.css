@@ -20,14 +20,14 @@
 }
 .img-index i {
     display: inline-block;
-    width: 12px;
-    height: 12px;
+    width: 5px;
+    height: 5px;
     margin-right: 5px;
     border-radius: 12px;
-    background-color: #666;
-    background-color: rgba(0,0,0,.6);
+    background-color: #ffffff;
+    background-color: rgba(200,200,200,.6);
 }
 .img-index .on {
-    background-color: #cd0000;
-    background-color: rgba(255,0,0,.75);
+    background-color: #ffffff;
+    background-color: rgba(150,150,150,.75);
 }

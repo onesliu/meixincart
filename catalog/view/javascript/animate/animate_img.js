@@ -21,7 +21,7 @@ function setSwipeImg(targetBox, touchEvt) {
 	
 	var objEvt = $._data($(targetBox)[0], "events");
 	if (!objEvt || !objEvt[touchEvt]) {
-		$(targetBox).on(touchEvt,function(){
+		var o = $(targetBox).on(touchEvt,function(){
 			var target = $(this).get(0);
 			target.indexElement++;
 			if (target.indexElement >= target.eleList.length) {
@@ -31,11 +31,13 @@ function setSwipeImg(targetBox, touchEvt) {
 			target.eleSlideIn = $(target.eleList.get(target.indexElement)).removeClass("out").addClass("in");
 			funIndex(target.eleIndex, target.eleList);
 			return false;
-		}).trigger("swipe");
+		});
 
 		setTimeout(function(){
 			$(targetBox).height($(targetBox)[0].offsetWidth*4/5);
 		}, 500);
+		
+		o.trigger("swipe");
 	}
 }
 
