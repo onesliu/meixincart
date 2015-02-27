@@ -48,6 +48,30 @@ class ModelMobileStoreProduct extends Model {
 			return false;
 		}
 	}
+	
+	public function getProductsByCategoryName($name, $data = array()) {
+		$query = $this->db->query("select category_id from oc_category_description where name='$name'");
+		if ($query->num_rows) {
+			$cid = $query->row['category_id'];
+			
+			$data['filter_category_id'] = $cid;
+			$data['filter_sub_category'] = true;
+			return $this->getProducts($data);
+		}
+		return array();
+	}
+	
+	public function getTotalProductsByCategoryName($name, $data = array()) {
+		$query = $this->db->query("select category_id from oc_category_description where name='$name'");
+		if ($query->num_rows) {
+			$cid = $query->row['category_id'];
+			
+			$data['filter_category_id'] = $cid;
+			$data['filter_sub_category'] = true;
+			return $this->getTotalProducts($data);
+		}
+		return 0;
+	}
 
 	public function getProducts($data = array()) {
 		if ($this->customer->isLogged()) {

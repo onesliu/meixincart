@@ -27,6 +27,10 @@ class ControllerMobileStoreAllproduct extends Controller {
 		}
 		$limit = 20;
 		
+		if (isset($this->request->get['category_name'])) {
+			$category_name = $this->request->get['category_name'];
+		}
+		
 		$this->data['heading_title'] = '所有商品';
 		
 		$this->data['text_refine'] = $this->language->get('text_refine');
@@ -62,10 +66,21 @@ class ControllerMobileStoreAllproduct extends Controller {
 			$data['filter_name'] = $this->request->get['filter'];
 		}
 		
-		$product_total = $this->model_mobile_store_product->getTotalProducts($data);
+		if (isset($category_name) && $category_name != '') {
+			$product_total = $this->model_mobile_store_product->getTotalProductsByCategoryName($category_name, $data);
+		}
+		else {
+			$product_total = $this->model_mobile_store_product->getTotalProducts($data);
+		}
+		
 		if ($product_total > 0) {
 		
-			$results = $this->model_mobile_store_product->getProducts($data);
+			if (isset($category_name) && $category_name != '') {
+				$results = $this->model_mobile_store_product->getProductsByCategoryName($category_name, $data);
+			}
+			else {
+				$results = $this->model_mobile_store_product->getProducts($data);
+			}
 			
 			foreach ($results as $result) {
 				if ($result['image']) {
