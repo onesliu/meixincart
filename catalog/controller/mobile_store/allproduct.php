@@ -147,7 +147,12 @@ class ControllerMobileStoreAllproduct extends Controller {
 			$pagination->limit = $limit;
 			$pagination->num_pages = ceil($pagination->total / $pagination->limit);
 			$pagination->text = $this->language->get('text_pagination');
-			$pagination->url = $this->url->link2('mobile_store/allproduct', '', 'SSL');
+			if (isset($category_name) && $category_name != '') {
+				$pagination->url = $this->url->link2('mobile_store/allproduct', "category_name=$category_name", 'SSL');
+			}
+			else {
+				$pagination->url = $this->url->link2('mobile_store/allproduct', '', 'SSL');
+			}
 			$this->data['pagination'] = $pagination;
 			
 			$this->data['searchurl'] = $this->url->link('mobile_store/allproduct');
