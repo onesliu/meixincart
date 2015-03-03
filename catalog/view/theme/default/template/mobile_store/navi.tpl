@@ -1,5 +1,5 @@
 <div data-role="footer" data-position="fixed" data-theme="a" data-tap-toggle="false">
-	<div data-role="navbar" data-iconpos="left" style="margin-top:.4em;margin-bottom:.4em;" >
+	<div data-role="navbar" data-iconpos="none" style="margin-top:.4em;margin-bottom:.4em;" >
       <ul>
         <!-- <li><a href="<?php echo $home;?>" data-icon="home"><?php echo $text_home; ?></a></li>
        	<li><a href="#category_panel" data-icon="grid"><?php echo $text_categories; ?></a> -->
