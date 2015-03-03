@@ -4,13 +4,8 @@
 	<?php echo $titlebar; ?>
 	<div data-role="content">
 		<div class="ui-body ui-body-b ui-corner-all" style="margin-bottom:.4em;">
-			<div id="productswipe" class="img-box">
-				<?php if (isset($thumb)) {?>
-				<img class="img-list slide out" src="<?php echo $popup; ?>" />
-				<?php } foreach($images as $image) {?>
-				<img class="img-list slide out" src="<?php echo $image['popup']; ?>" />
-				<?php } ?>
-				<div class="img-index"></div>
+			<div id="productswipe">
+				<img width="100%" src="<?php echo $popup; ?>" />
 			</div>
 			
 			<h3 style="display:inline-block;margin-bottom:.4em;"><?php echo $heading_title; ?></h3>
@@ -57,7 +52,7 @@
 	<?php echo $navi; ?>
 	<script type="text/javascript"><!--
 	$(document).on("pageinit", "#product_page", function(){
-		setSwipeImg('#productswipe', "swipe");
+		//setSwipeImg('#productswipe', "swipe");
 	});
 
 	function scount(num) {

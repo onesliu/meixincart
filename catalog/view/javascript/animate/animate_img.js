@@ -21,6 +21,8 @@ function setSwipeImg(targetBox, touchEvt) {
 	
 	var objEvt = $._data($(targetBox)[0], "events");
 	if (!objEvt || !objEvt[touchEvt]) {
+		$(targetBox).height($(targetBox)[0].offsetWidth*4/5);
+		
 		var o = $(targetBox).on(touchEvt,function(){
 			var target = $(this).get(0);
 			target.indexElement++;
@@ -34,7 +36,7 @@ function setSwipeImg(targetBox, touchEvt) {
 		});
 
 		setTimeout(function(){
-			$(targetBox).height($(targetBox)[0].offsetWidth*4/5);
+			//$(targetBox).height($(targetBox)[0].offsetWidth*4/5);
 		}, 500);
 		
 		o.trigger("swipe");

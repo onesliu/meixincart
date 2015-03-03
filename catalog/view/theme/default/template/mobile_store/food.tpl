@@ -4,6 +4,10 @@
 	<?php echo $titlebar; ?>
 	<div data-role="content">
 		<div class="ui-body ui-body-b ui-corner-all">
+			<div id="foodswipe">
+				<img width="100%" src="<?php echo $food['image1']; ?>" />
+			</div>
+			<!-- 
 			<div id="foodswipe" class="img-box">
 				<?php if (isset($food['image1'])) {?>
 				<img class="img-list slide out" src="<?php echo $food['image1']; ?>" />
@@ -14,6 +18,7 @@
 				<?php } ?>
 				<div class="img-index"></div>
 			</div>
+			 -->
 			
 			<h3 style="display:inline-block;margin-bottom:.4em;"><?php echo $food['name']; ?></h3>
 			<h5 style="color:gray;display:inline-block;margin-bottom:.4em;">[ <?php foreach($food['attrs'] as $attr) { foreach($attr as $a) {echo $a['name'].' ';}} ?>]</h5>
@@ -36,7 +41,7 @@
 
 	<script type="text/javascript"><!--
 	$(document).on("pageinit", "#foodpage", function(){
-		setSwipeImg('#foodswipe', "swipe");
+		//setSwipeImg('#foodswipe', "swipe");
 
 		if (typeof(materials) != 'undefined') {
 			calc_price();
