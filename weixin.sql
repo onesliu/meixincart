@@ -256,6 +256,7 @@ alter table oc_customer add `subscribe_time` integer default 0;
 alter table oc_customer add customer_type int(11) default 0; //0 opencart, 1 微信, 2 淘宝
 alter table oc_customer add `access_token` varchar(1024) default null;
 alter table oc_customer add `lastlogin` timestamp;
+alter table oc_customer add `unsubscribe` integer default 0;
 
 alter table oc_order modify order_id bigint NOT NULL auto_increment;
 alter table oc_order add shipping_time datetime default null;

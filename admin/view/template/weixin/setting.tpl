@@ -69,6 +69,9 @@
                 <span class="error"><?php echo $error_menu; ?></span>
                 <?php } ?></td>
             </tr>
+            <tr>
+              <a onclick="refresh_customer();" class="button">刷新关注客户列表</a>
+            </tr>
           </table>
        </form>
     </div>
@@ -78,6 +81,19 @@
 function create_menu() {
 	$.ajax({
 		url: 'index.php?route=weixin/menu_create&token=<?php echo $token; ?>',
+		dataType: 'json',
+		success: function(json) {
+			alert(json.errmsg);
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+}
+
+function refresh_customer() {
+	$.ajax({
+		url: 'index.php?route=weixin/customerlist&token=<?php echo $token; ?>',
 		dataType: 'json',
 		success: function(json) {
 			alert(json.errmsg);
