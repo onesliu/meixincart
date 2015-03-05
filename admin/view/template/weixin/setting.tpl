@@ -70,7 +70,8 @@
                 <?php } ?></td>
             </tr>
             <tr>
-              <a onclick="refresh_customer();" class="button">刷新关注客户列表</a>
+            	<td>功能按钮</td>
+              	<td><a onclick="refresh_customer();" class="button">刷新关注客户列表</a></td>
             </tr>
           </table>
        </form>
