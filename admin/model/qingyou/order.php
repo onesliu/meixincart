@@ -100,6 +100,8 @@ class ModelQingyouOrder extends Model {
 	
 	public function getProducts($orderid) {
 		
+		$this->load->model('tool/image');
+		
 		$condition = "";
 		if ($orderid != null) {
 			$condition = "where order_id = $orderid";
@@ -118,6 +120,14 @@ class ModelQingyouOrder extends Model {
 			$o = new stdClass();
 			foreach($result as $key => $val) {
 				$o->$key = $val;
+				if ($key == "image") {
+					if ($val != "") {
+						$image = $this->model_tool_image->resize($val, $this->config->get('config_image_thumb_height'), $this->config->get('config_image_thumb_height'));
+					} else {
+						$image = $this->model_tool_image->resize('no_image.jpg', $this->config->get('config_image_thumb_height'), $this->config->get('config_image_thumb_height'));
+					}
+					$o->$key = $image;
+				}
 			}
 			$data[] = $o;
 		}
