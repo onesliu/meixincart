@@ -25,14 +25,22 @@ class ControllerWeixinCustomerlist extends ControllerWeixinWeixin {
 		$customers = array();
 		while(true) {
 			$json = json_decode($res);
+			if (isset($json->errcode)) {
+				$ret->status = -1;
+				$ret->return = $json;
+				$this->response->setOutput(json_encode($ret));
+				return;
+			}
+			
 			$customers = array_merge($customers, $json->data->openid);
-			if ($json->next_openid == null || $json->next_openid == "")
+			
+			if (!isset($json->next_openid) || $json->next_openid == null || $json->next_openid == "")
 				break;
 			
 			$url2 = $url."&next_openid=".$json->next_openid;
 			$res = $wxtools->getFromWx($url);
 			if ($res == false) {
-				$this->log->write("weixin user get error.");
+				$this->log->write("weixin user next get error.");
 				$ret->status = -1;
 				$this->response->setOutput(json_encode($ret));
 				return;
