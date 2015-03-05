@@ -97,7 +97,7 @@ function refresh_customer() {
 		url: 'index.php?route=weixin/customerlist&token=<?php echo $token; ?>',
 		dataType: 'json',
 		success: function(json) {
-			alert(json.errmsg);
+			alert(json);
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
