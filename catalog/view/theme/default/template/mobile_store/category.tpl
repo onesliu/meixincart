@@ -69,7 +69,8 @@
         var url = "<?php echo $searchurl; ?>";
         var filter = $('#product_search').val();
         url += '&filter=' + filter;
-        $.mobile.changePage(url, {allowSamePageTransition:true});
+        $( ":mobile-pagecontainer" ).pagecontainer( "change", url, {transition:"fade",dataUrl:"search"});
+        //$.mobile.changePage(url, {allowSamePageTransition:true});
 	}
 	//--></script> 
 </div>
