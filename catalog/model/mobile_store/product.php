@@ -210,9 +210,16 @@ class ModelMobileStoreProduct extends Model {
 				'p.sort_order',
 				'p.date_added',
 				'p2c.category_id',
-			);	
+			);
 			
-			if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
+			if (!isset($data['sort'])) {
+				$data['sort'] = 'pd.name';
+			}
+			else {
+				$data['sort'] .= ',pd.name';
+			}
+			
+			if (isset($data['sort'])) {
 				if ($data['sort'] == 'pd.name' || $data['sort'] == 'p.model') {
 					$sql .= " ORDER BY LCASE(" . $data['sort'] . ")";
 				} else {
