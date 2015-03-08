@@ -7,7 +7,7 @@ class ControllerWeixinLogin extends Controller {
 		if (isset($this->request->get['jump']))
 			$redirect = $this->request->get['jump'];
 		else
-			$redirect = 'mobile_store/home';
+			$redirect = 'mobile_store/allproduct';
 			
 		if (isset($this->request->post['redirect'])) {
 			$redirect = $this->request->post['redirect'];
