@@ -18,8 +18,8 @@
 		<div class="c2">用体贴换来关怀</div>
 		<div class="c2"><span style="color:red;"> 菜鸽子</span></div>
 		<div class="c2">将给你一个  “ 青悠悠 ” 的生活 </div>
-		<div><a class="c3" style="margin-top:2em;" href="http://m.wsq.qq.com/264065938/t/4"><img width="23px" src="<?php echo $dir_img.'ad2.png?ver=1.2'; ?>"></img></a></div>
-		<div><a class="c3" style="margin-top:2em;" href="http://m.wsq.qq.com/264065938/t/1"><img width="23px" src="<?php echo $dir_img.'ad1.png?ver=1.2'; ?>"></img></a></div>
+		<div><a class="c3" style="margin-top:2em;" href="http://mp.weixin.qq.com/s?__biz=MzA4Mzg4MjMwNA==&mid=204102894&idx=1&sn=59da5daeca988507ce26bda5daa72c7b#rd"><img width="23px" src="<?php echo $dir_img.'ad2.png?ver=1.2'; ?>"></img></a></div>
+		<!-- <div><a class="c3" style="margin-top:2em;" href="http://m.wsq.qq.com/264065938/t/1"><img width="23px" src="<?php echo $dir_img.'ad1.png?ver=1.2'; ?>"></img></a></div> -->
 	</div>
 </div>
 </body>
