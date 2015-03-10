@@ -68,10 +68,10 @@ class WeixinTools {
 		return $link;
 	}
 	
-	public function loginToUrl($url) {
+	public function loginToUrl($url, $openid) {
 		$ua = parse_url($url);
-		return sprintf('%s://%s/pay/weixin.php?route=weixin/login&redirect=%s',
-			$ua['scheme'], $ua['host'], urlencode($url));
+		return sprintf('%s://%s/pay/weixin.php?route=weixin/login&email=%s&redirect=%s',
+			$ua['scheme'], $ua['host'], $openid, urlencode($url));
 	}
 	
 	public function prepareMenu($menu_def, $appid) {
@@ -115,7 +115,7 @@ class WeixinTools {
 				$item->picurl = urlencode($message['picurl']);
 				
 				$jstr = urldecode(json_encode($item));
-				$articles .= sprintf($jstr, $this->loginToUrl($message['url'])) . ",";
+				$articles .= sprintf($jstr, $this->loginToUrl($message['url'], $openid)) . ",";
 			}
 		}
 		else {
