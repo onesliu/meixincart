@@ -4,7 +4,7 @@ class ModelQingyouOrder extends Model {
 	private $psql = "select order_id, date_added as order_createtime, o.order_status_id, os.name as order_status,
 		o.order_type, customer_id, CONCAT(firstname,lastname) as customer_name, telephone as customer_phone,
 		CONCAT(shipping_firstname,shipping_lastname) as shipping_name, shipping_telephone, comment, comment2,
-		shipping_address_1 as shipping_addr, shipping_time, o.iscash
+		shipping_address_1 as shipping_addr, shipping_time, o.iscash, o.costpay, o.cashpay 
 		from oc_order o join oc_order_status os on o.order_status_id = os.order_status_id %s order by order_id;";
 	
 	public function getOrders($last_orderid, $districtid, $history) {
@@ -80,9 +80,24 @@ class ModelQingyouOrder extends Model {
 			if ($query->row['order_status_id'] == $order->order_status)
 				return false;
 		}
+		
+		$costpay = "";
+		if (isset($order->costpay)) {
+			$costpay = ", costpay=".$order->costpay;
+		}
+		
+		$cashpay = "";
+		if (isset($order->cashpay)) {
+			$cashpay = ", cashpay=".$order->cashpay;
+		}
+		
+		$iscash = "";
+		if (isset($order->iscash)) {
+			$iscash = ", iscash=".$order->iscash;
+		}
+		
 		$sql = "update " .DB_PREFIX. "order set order_status_id=".$order->order_status.
-			", total=".$order->realtotal.
-			((isset($order->iscash))? (", iscash=".$order->iscash) : "") . 
+			", total=".$order->realtotal. $costpay. $cashpay. $iscash.
 			" where order_id=".$order->order_id;
 		$this->db->query($sql);
 		

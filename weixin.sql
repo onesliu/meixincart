@@ -272,6 +272,8 @@ alter table oc_order add refund_amount double default 0.0;
 alter table oc_order add refund_id int default 0;
 alter table oc_order add iscash int default 0;
 alter table oc_order add comment2 text default null;
+alter table oc_order add costpay double default 0.0; /*订单零星采购成本*/
+alter table oc_order add cashpay double default 0.0; /*到付实收金额*/
 
 alter table oc_order_product add `weight` double default 0.0;
 alter table oc_order_product add `realweight` double default 0.0;
@@ -342,4 +344,3 @@ delete from oc_order_product;
 delete from oc_order_total;
 delete from oc_order_voucher;
 
-select pd.name, p.price from oc_product p join oc_product_description pd on p.product_id=pd.product_id;
