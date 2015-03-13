@@ -19,7 +19,7 @@ class ControllerMobileStoreFood extends Controller {
 			$p['href'] = $this->url->link('mobile_store/product', 'product_id=' . $p['product_id']);
 			$p['final_show'] = $p['name'];
 			if ((int)$p['weight'] > 0)
-				$p['final_show'] .= ' '.((int)$p['weight']) . $p['weight_class'];
+				$p['final_show'] .= ' '.((int)$p['weight']) . $p['weight_class'] .'/'. $p['upc'];
 				
 			if ($p['status'] > 0) {
 				$p['price_show'] = $this->currency->format($p['price']);
