@@ -157,7 +157,7 @@ class ControllerQingyouOrderQuery extends ControllerWeixinWeixin {
 		}
 
 		$wxtools = new WeixinTools();
-		$msg = $wxtools->makeKfMsg($openid, "text", "亲，您有一笔订单尚未付款。您可以点击之前的付款消息进入订单，然后选择\"微信支付\"或者\"货到付款\"。");
+		$msg = $wxtools->makeKfMsg($openid, "text", "亲，您有一笔订单尚未付款。您可以点击之前的付款消息进入订单，然后选择”微信支付“或者”货到付款“。");
 		$res = $wxtools->sendKfMsg($msg, $this->access_token);
 		if ($res == false) {
 			$this->log->write("alertpay: 发送客服提醒消息出错");
