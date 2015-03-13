@@ -148,6 +148,7 @@ class ControllerQingyouOrderQuery extends ControllerWeixinWeixin {
 			return; //首次验证或初始化失败
 		}
 		
+		$this->load->model('qingyou/order');
 		$openid = $this->model_qingyou_order->getOrderCustomer($order_id);
 		if ($openid == false) {
 			$this->log->write("alertpay: 发送客服消息-查询客户出错");
