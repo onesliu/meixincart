@@ -47,9 +47,9 @@ class ModelWeixinGetUserinfo extends Model {
 			email,firstname,password,customer_group_id,date_added,status,approved) values (%d, '%s', '%s', %d, '%s',
 			'%s', '%s', '%s', '%s', %d, '%s', '%s', SHA1(CONCAT(salt, SHA1(CONCAT(salt, SHA1('%s'))))),
 			1, now(), 1, 1)", DB_PREFIX,
-			$info->subscribe, $info->openid, $info->nickname, $info->sex, $info->city,
-			$info->country, $info->province, $info->language, $info->headimgurl,
-			$info->subscribe_time, $info->openid, $info->nickname, WEIXIN_USERPWD));
+			$info->subscribe, $info->openid, $this->db->escape($info->nickname), $info->sex, $this->db->escape($info->city),
+			$this->db->escape($info->country), $this->db->escape($info->province), $this->db->escape($info->language), $info->headimgurl,
+			$info->subscribe_time, $info->openid, $this->db->escape($info->nickname), WEIXIN_USERPWD));
 		}
 		else {
 			$this->db->query(sprintf("update %scustomer set nickname='%s', sex=%d, city='%s', country='%s',
@@ -57,8 +57,9 @@ class ModelWeixinGetUserinfo extends Model {
 			subscribe=%d, approved=1,
 			status=1, date_added=now(), password=SHA1(CONCAT(salt, SHA1(CONCAT(salt, SHA1('%s')))))
 			where openid='%s'",
-			DB_PREFIX, $info->nickname, $info->sex, $info->city, $info->country, $info->province,
-			$info->language, $info->headimgurl, $info->subscribe_time, $info->nickname, $info->openid,
+			DB_PREFIX, $this->db->escape($info->nickname), $info->sex, $this->db->escape($info->city), $this->db->escape($info->country),
+			$this->db->escape($info->province), $this->db->escape($info->language), $info->headimgurl, $info->subscribe_time,
+			$this->db->escape($info->nickname), $info->openid,
 			$info->subscribe, WEIXIN_USERPWD, $openid));
 		}
 	}

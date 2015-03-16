@@ -22,8 +22,17 @@ class ControllerWeixinKfplugin extends Controller {
 		if (isset($this->request->get['customer'])) {
 			$this->load->model('account/customer');
 			$customer = $this->model_account_customer->getCustomerByEmail($this->request->get['customer']);
-			if ($customer != null)
+			if ($customer != null) {
 				$customerid = $customer['customer_id'];
+			}
+			else {
+				$this->response->setOutput("没有客户信息");
+				return;
+			}
+		}
+		else {
+			$this->response->setOutput("没有客户信息");
+			return;
 		}
 		
 		$this->data['base'] = $this->config->get('config_url');

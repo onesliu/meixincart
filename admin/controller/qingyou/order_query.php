@@ -132,15 +132,53 @@ class ControllerQingyouOrderQuery extends ControllerWeixinWeixin {
 		}	
 	}
 	
+	public function alertpay() {
+		$return = new stdClass();
+		$return->status = -1;
+		
+		if (!isset($this->request->get['order_id'])) {
+			$this->response->setOutput(json_encode($return));
+			return;
+		}
+		$order_id = $this->request->get['order_id'];
+		
+		if ($this->weixin_init() != true) {
+			$this->log->write("alertpay: 微信接口初始化出错");
+			$this->response->setOutput(json_encode($return));
+			return; //首次验证或初始化失败
+		}
+		
+		$this->load->model('qingyou/order');
+		$openid = $this->model_qingyou_order->getOrderCustomer($order_id);
+		if ($openid == false) {
+			$this->log->write("alertpay: 发送客服消息-查询客户出错");
+			$this->response->setOutput(json_encode($return));
+			return;
+		}
+
+		$wxtools = new WeixinTools();
+		$msg = $wxtools->makeKfMsg($openid, "text", "亲，您有一笔订单尚未付款。您可以点击之前的付款消息进入订单，然后选择“微信支付”或者“货到付款”。");
+		$res = $wxtools->sendKfMsg($msg, $this->access_token);
+		if ($res == false) {
+			$this->log->write("alertpay: 发送客服提醒消息出错");
+			$this->response->setOutput(json_encode($return));
+			return;
+		}
+		
+		$return->status = 0;
+		$this->response->setOutput(json_encode($return));
+	}
+	
 	public function sendWxMsg($order) {
 		
 		if ($this->weixin_init() != true) {
+			$this->log->write("sendWxMsg: 微信接口初始化出错");
 			return; //首次验证或初始化失败
 		}
 		
 		$openid = $this->model_qingyou_order->getOrderCustomer($order->order_id);
 		if ($openid == false) {
-			$this->log->write("发送客服消息-查询客户出错");
+			$this->log->write("sendWxMsg: 发送客服消息-查询客户出错");
 			return;
 		}
 
@@ -149,7 +187,7 @@ class ControllerQingyouOrderQuery extends ControllerWeixinWeixin {
 		$msg = $wxtools->makeKfMsg($openid, "news", $messages);
 		$res = $wxtools->sendKfMsg($msg, $this->access_token);
 		if ($res == false) {
-			$this->log->write("发送客服提醒消息出错");
+			$this->log->write("sendWxMsg: 发送客服提醒消息出错");
 		}
 	}
 	

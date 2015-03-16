@@ -9,7 +9,7 @@
 		<fieldset data-role="controlgroup">
 			<?php foreach ($source_major as $source) { $mid='m'.rand(); ?>
 			<label for="<?php echo $mid; ?>" class="ui-alt-icon"><a href="#" onclick="chgpage('<?php echo $source['href'];?>');"><?php echo $source['final_show']; ?></a>
-				<span style="color:red;"><?php echo $source['price_show']; ?></span></label>
+				<span style="color:red;"><?php echo $source['price_show']; ?></span><?php echo '/'.$source['sku']; ?></label>
 			<input data-iconpos="right" type="checkbox"
 				   name="product[<?php echo $source['product_id']; ?>]"
 				   id="<?php echo $mid; ?>" 
@@ -28,7 +28,7 @@
 		<fieldset data-role="controlgroup">
 			<?php foreach ($source_minor as $source) { $mid='m'.rand(); ?>
 			<label for="<?php echo $mid; ?>" class="ui-alt-icon"><a href="#" onclick="chgpage('<?php echo $source['href'];?>');"><?php echo $source['final_show']; ?></a>
-				<span style="color:red;"><?php echo $source['price_show']; ?></span></label>
+				<span style="color:red;"><?php echo $source['price_show']; ?></span><?php echo '/'.$source['sku']; ?></label>
 			<input data-iconpos="right" type="checkbox"
 				   name="product[<?php echo $source['product_id']; ?>]"
 				   id="<?php echo $mid; ?>" 
