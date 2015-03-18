@@ -167,7 +167,7 @@ class WeixinTools {
 		$msg->data = $odata;
 		
 		$jstr = urldecode(json_encode($msg));
-		return sprintf($jstr, $this->loginToUrl($url));
+		return sprintf($jstr, $this->loginToUrl($url, $openid));
 	}
 	
 	public function sendModelMsg($msg, $access_token) {
