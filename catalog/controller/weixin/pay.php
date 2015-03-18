@@ -50,11 +50,26 @@ class ControllerWeixinPay extends ControllerWeixinWeixin {
 			return; //首次验证或初始化失败
 		}
 		
+		$body = (string)$order_info['comment'];
+		if (strlen($body) > 127) {
+			$bs = explode(' ', $body);
+			$body = "";
+			foreach($bs as $p) {
+				$body .= "$p ";
+				if (strlen($body) > 80)
+					break;
+			}
+		}
+		
+		if ($body == "") {
+			$body = "菜鸽子多件商品";
+		}
+		
 		$wxPayHelper = new PayHelper();
 		$wxPayHelper->add_param("appid", (string)$this->appid);
 		$wxPayHelper->add_param("mch_id", (string)$this->partnerid);
 		$wxPayHelper->add_param("nonce_str", (string)time());
-		$wxPayHelper->add_param("body", (string)$order_info['comment']);
+		$wxPayHelper->add_param("body", $body);
 		$wxPayHelper->add_param("out_trade_no", (string)$order_info['order_id']);
 		$wxPayHelper->add_param("total_fee", (int)($pay_total*100));
 		$wxPayHelper->add_param("notify_url", $this->url->link2('weixin/pay_notify'));
