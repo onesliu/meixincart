@@ -5,11 +5,13 @@ class ControllerWeixinPay extends ControllerWeixinWeixin {
 	public function index() {
 		
 		if (!isset($this->session->data['order_info'])) {
+			$this->log->write("SESSION中没有要支付的订单");
 			$this->redirect($this->url->link('mobile_store/home'));
 		}
 		$order_info = $this->session->data['order_info'];
 		
 		if ($order_info['order_status_id'] != 2) { //不是 待付款 状态不进行支付流程
+			$this->log->write("订单状态不是可支付状态：".$order_info["order_id"]);
 			$this->session->data['error_msg'] = '订单暂不能支付，可能订单未准备好';
 			$this->session->data['url_continue'] = $this->url->link('mobile_store/order');
 			$this->session->data['text_continue'] = '马上查看订单';
@@ -34,6 +36,7 @@ class ControllerWeixinPay extends ControllerWeixinWeixin {
 			$ret = $this->model_checkout_coupon->commitCoupon($this->customer->getId(), $coupon['coupon_id'],
 				$order_info['order_id'], $order_info['total']);
 
+			$this->log->write("订单金额<=0：".$order_info["order_id"]);
 			$this->session->data['error_msg'] = '优惠劵支付完成';
 			$this->session->data['url_continue'] = $this->url->link('mobile_store/order');
 			$this->session->data['text_continue'] = '马上查看订单';
@@ -42,6 +45,7 @@ class ControllerWeixinPay extends ControllerWeixinWeixin {
 		}
 		
 		if ($this->weixin_init() != true) {
+			$this->log->write("微信初始化失败：".$order_info["order_id"]);
 			$this->error();
 			return; //首次验证或初始化失败
 		}
@@ -63,7 +67,7 @@ class ControllerWeixinPay extends ControllerWeixinWeixin {
 		$url = "https://api.mch.weixin.qq.com/pay/unifiedorder";
 		$response = $wxtools->postToWx($url, $request);
 		if ($response == false) {
-			$this->log->write("weixin prepay response error.");
+			$this->log->write("微信prepay出错：".$order_info["order_id"]);
 			$this->error();
 			return;
 		}
@@ -73,13 +77,13 @@ class ControllerWeixinPay extends ControllerWeixinWeixin {
 		if (isset($res->return_code) == false || isset($res->return_msg) == false ||
 			isset($res->result_code) == false || (string)$res->return_code != 'SUCCESS' ||
 			(string)$res->result_code != 'SUCCESS') {
-			$this->log->write("prepay response error: \n". $response);
+			$this->log->write("微信prepay返回失败: ".$order_info["order_id"]."\n".$response);
 			$this->error();
 			return;
 		}
 		
 		if ($resHelper->sign_verify($this->partnerkey) != true) {
-			$this->log->write("prepay response sign verify error: \n". $response);
+			$this->log->write("微信prepay签名验证出错: ". $order_info["order_id"]."\n".$response);
 			$this->error();
 			return;
 		}
@@ -118,13 +122,14 @@ class ControllerWeixinPay extends ControllerWeixinWeixin {
 		if (!isset($this->session->data['order_info'])) {
 			$this->redirect($this->url->link('mobile_store/home'));
 		}
+		$order_info = $this->session->data['order_info'];
 		
 		if ($this->weixin_init() != true) {
+			$this->log->write("微信初始化出错：".$order_info["order_id"]);
 			$this->error();
 			return; //首次验证或初始化失败
 		}
 		
-		$order_info = $this->session->data['order_info'];
 		$this->session->data['error_msg'] = '下单成功，请等待门店称重后发送微信支付消息。';
 		$this->session->data['url_continue'] = $this->url->link('mobile_store/order/info', 'order_id='.$order_info['order_id']);
 		$this->session->data['text_continue'] = '马上查看订单';
