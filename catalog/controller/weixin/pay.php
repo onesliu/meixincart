@@ -67,7 +67,7 @@ class ControllerWeixinPay extends ControllerWeixinWeixin {
 		$url = "https://api.mch.weixin.qq.com/pay/unifiedorder";
 		$response = $wxtools->postToWx($url, $request);
 		if ($response == false) {
-			$this->log->write("微信prepay出错：".$order_info["order_id"]);
+			$this->log->write("微信prepay出错：".$order_info["order_id"]."\n".print_r($request,true));
 			$this->error();
 			return;
 		}
@@ -77,13 +77,13 @@ class ControllerWeixinPay extends ControllerWeixinWeixin {
 		if (isset($res->return_code) == false || isset($res->return_msg) == false ||
 			isset($res->result_code) == false || (string)$res->return_code != 'SUCCESS' ||
 			(string)$res->result_code != 'SUCCESS') {
-			$this->log->write("微信prepay返回失败: ".$order_info["order_id"]."\n".$response);
+			$this->log->write("微信prepay返回失败: ".$order_info["order_id"]."\n".$response."\n".print_r($request,true));
 			$this->error();
 			return;
 		}
 		
 		if ($resHelper->sign_verify($this->partnerkey) != true) {
-			$this->log->write("微信prepay签名验证出错: ". $order_info["order_id"]."\n".$response);
+			$this->log->write("微信prepay签名验证出错: ". $order_info["order_id"]."\n".$response."\n".print_r($request,true));
 			$this->error();
 			return;
 		}
