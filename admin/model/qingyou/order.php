@@ -137,9 +137,9 @@ class ModelQingyouOrder extends Model {
 				$o->$key = $val;
 				if ($key == "image") {
 					if ($val != "") {
-						$image = $this->model_tool_image->resize($val, $this->config->get('config_image_thumb_height'), $this->config->get('config_image_thumb_height'));
+						$image = $this->model_tool_image->resize($val, $this->config->get('config_image_product_width'), $this->config->get('config_image_product_height'));
 					} else {
-						$image = $this->model_tool_image->resize('no_image.jpg', $this->config->get('config_image_thumb_height'), $this->config->get('config_image_thumb_height'));
+						$image = $this->model_tool_image->resize('no_image.jpg', $this->config->get('config_image_product_width'), $this->config->get('config_image_product_height'));
 					}
 					$o->$key = $image;
 				}
