@@ -241,6 +241,7 @@ class ControllerMobileStoreCheckoutOrder extends Controller {
 			foreach($product_data as $p) {
 				if ($p['product_id'] == $bucha['product_id']) {
 					$hasbucha = true;
+					break;
 				}
 			}
 			
