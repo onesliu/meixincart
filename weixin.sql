@@ -274,6 +274,7 @@ alter table oc_order add iscash int default 0;
 alter table oc_order add comment2 text default null;
 alter table oc_order add costpay double default 0.0; /*订单零星采购成本*/
 alter table oc_order add cashpay double default 0.0; /*到付实收金额*/
+alter table oc_order add ismodify int default 0;
 
 alter table oc_order_product add `weight` double default 0.0;
 alter table oc_order_product add `realweight` double default 0.0;
