@@ -237,20 +237,29 @@ class ControllerMobileStoreCheckoutOrder extends Controller {
 		$this->load->model('mobile_store/product');
 		$bucha = $this->model_mobile_store_product->getBuchaProduct();
 		if ($bucha != false) {
-			$product_data[] = array(
-				'product_id' => $bucha['product_id'],
-				'name'       => $bucha['name'],
-				'model'      => $bucha['model'],
-				'option'     => array(),
-				'download'   => array(),
-				'quantity'   => 1,
-				'subtract'   => 0,
-				'price'      => $bucha['price'],
-				'weight'	 => $bucha['weight'],
-				'total'      => 0.0,
-				'tax'        => $this->tax->getTax($bucha['price'], $bucha['tax_class_id']),
-				'reward'     => 0
-			);
+			$hasbucha = false;
+			foreach($product_data as $p) {
+				if ($p['product_id'] == $bucha['product_id']) {
+					$hasbucha = true;
+				}
+			}
+			
+			if ($hasbucha == false) {
+				$product_data[] = array(
+					'product_id' => $bucha['product_id'],
+					'name'       => $bucha['name'],
+					'model'      => $bucha['model'],
+					'option'     => array(),
+					'download'   => array(),
+					'quantity'   => 1,
+					'subtract'   => 0,
+					'price'      => $bucha['price'],
+					'weight'	 => $bucha['weight'],
+					'total'      => 0.0,
+					'tax'        => $this->tax->getTax($bucha['price'], $bucha['tax_class_id']),
+					'reward'     => 0
+				);
+			}
 		}
 		
 		$data['order_type'] = $order_type;
