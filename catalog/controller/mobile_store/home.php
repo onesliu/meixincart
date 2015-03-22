@@ -6,14 +6,6 @@ class ControllerMobileStoreHome extends Controller {
 
 		$this->data['heading_title'] = $this->config->get('config_title');
 		
-		if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {
-			$dir_img = $this->config->get('config_ssl') . 'image/';
-		} else {
-			$dir_img = $this->config->get('config_url') . 'image/';
-		}
-		$this->data['logo'] = $dir_img . 'logo.png';
-		$this->data['dir_img'] = $dir_img;
-		
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/mobile_store/home.tpl')) {
 			$this->template = $this->config->get('config_template') . '/template/mobile_store/home.tpl';
 		} else {
@@ -27,6 +19,39 @@ class ControllerMobileStoreHome extends Controller {
 		);
 
 		$this->response->setOutput($this->render());
+	}
+	
+	private function set_dm1() {
+		if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {
+			$dir_img = $this->config->get('config_ssl') . 'image/';
+		} else {
+			$dir_img = $this->config->get('config_url') . 'image/';
+		}
+		$this->data['logo'] = $dir_img . 'logo.png';
+		$this->data['dir_img'] = $dir_img;
+	}
+	
+	private function set_category() {
+		
+		$this->load->model('catalog/category');
+		$this->load->model('tool/image');
+		
+		$results = $this->model_catalog_category->getCategories(0);
+		foreach ($results as $result) {
+			$this->data['category'][] = array(
+				'name'  => $result['name'],
+				'model' => $result['model'],
+				'href'  => $this->url->link('mobile_store/category', 'fspath=' . $result['category_id']),
+				'thumb' => $this->model_tool_image->resize($result['image'], $this->config->get('config_image_category_width'), $this->config->get('config_image_category_height'))
+			);
+		}
+		
+		$category = array();
+		$category[]['href'] = $this->url->link('mobile_store/category', '', 'SSL');
+		$category[]['name'] = '菜篮子';
+		$category[]['model'] = '更多...';
+		$category[]['thumb'] = '';
+		
 	}
 }
 ?>
