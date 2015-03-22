@@ -17,22 +17,25 @@
 		<?php } ?>
 		
 		<div class="colum-list">
+			<?php foreach($category as $c) { ?>
 		  	<ul data-role="listview" id="plist" data-inset="true" data-split-icon="cart" data-theme="c" data-divider-theme="c" data-count-theme="c">
 			  	<li>
-			  		<a href="<?php echo $category['href']; ?>">
-				  		<img src="<?php echo $category['thumb']; ?>" />
-				  		<h2><?php echo $category['name']; ?></h2>
-				  		<p><?php echo $category['model']; ?></p>
+			  		<a href="<?php echo $c['href']; ?>">
+				  		<img src="<?php echo $c['thumb']; ?>" />
+				  		<h2><?php echo $c['name']; ?></h2>
+				  		<p> </p>
 					</a>
 			  	</li>
 		  	</ul>
+		  	<?php } ?>
 	  	</div>
 	</div>
 	<?php echo $navi; ?>
 	<script type="text/javascript"><!--
 
 		$(document).on("pageinit", "#homepage", function(){
-			setSwipeImg('#homeswipe', "swipe");
+			if (typeof homeswipe != "undefined")
+				setSwipeImg('#homeswipe', "swipe");
 		});
 	//--></script>
 </div>

@@ -6,6 +6,8 @@ class ControllerMobileStoreHome extends Controller {
 
 		$this->data['heading_title'] = $this->config->get('config_title');
 		
+		$this->set_category();
+		
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/mobile_store/home.tpl')) {
 			$this->template = $this->config->get('config_template') . '/template/mobile_store/home.tpl';
 		} else {
@@ -40,18 +42,16 @@ class ControllerMobileStoreHome extends Controller {
 		foreach ($results as $result) {
 			$this->data['category'][] = array(
 				'name'  => $result['name'],
-				'model' => $result['model'],
 				'href'  => $this->url->link('mobile_store/category', 'fspath=' . $result['category_id']),
 				'thumb' => $this->model_tool_image->resize($result['image'], $this->config->get('config_image_category_width'), $this->config->get('config_image_category_height'))
 			);
 		}
 		
-		$category = array();
-		$category[]['href'] = $this->url->link('mobile_store/category', '', 'SSL');
-		$category[]['name'] = '菜篮子';
-		$category[]['model'] = '更多...';
-		$category[]['thumb'] = '';
-		
+		/*
+		$this->data['category'][]['name'] = '更多...';
+		$this->data['category'][]['href'] = $this->url->link('mobile_store/category', '', 'SSL');
+		$this->data['category'][]['thumb'] = '#';
+		*/
 	}
 }
 ?>
