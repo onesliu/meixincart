@@ -10,6 +10,12 @@
 	margin:0 auto;
 }
 
+.category-box a {
+	text-decoration:none;
+}
+.category-box a:hover {
+}
+
 .category-box .boxes {
 	float: left;
 	width: 32%;
@@ -38,12 +44,6 @@
 
 .category-box .purple-box {
 	background: #DD66DD;
-}
-
-.category-box .boxes a {
-	text-decoration:none;
-}
-.category-box .boxes a:hover {
 }
 
 .category-box .boxes h2 {
@@ -126,7 +126,7 @@
 			  		<div class="icon ui-icon-apple12"></div>
 			  	</div>
 			</a>
-	  		<a href="<?php if (isset($category['更多'])) echo $category['更多']['href']; else echo '#';  ?>">
+	  		<a href="#category_panel">
 			  	<div class="boxes big-box orange-box">
 			  		<h2><?php echo '更 多'; ?></h2>
 			  		<div class="icon ui-icon-more"></div>
