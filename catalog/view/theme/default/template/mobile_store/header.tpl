@@ -18,7 +18,7 @@
 <link type="text/css" rel="stylesheet" href="catalog/view/javascript/jquery_mobile/qingyou-theme.min.css?version=1.3" />
 <link type="text/css" rel="stylesheet" href="catalog/view/javascript/jquery_mobile/jquery.mobile.icons.min.css" />
 <link type="text/css" rel="stylesheet" href="catalog/view/javascript/jquery_mobile/jquery.mobile.custom.structure.min.css">
-<link type="text/css" rel="stylesheet" href="catalog/view/javascript/jquery_mobile/qingyou-custom.css?version=1.0">
+<link type="text/css" rel="stylesheet" href="catalog/view/javascript/jquery_mobile/qingyou-custom.css?version=1.1">
 <link type="text/css" rel="stylesheet" href="catalog/view/javascript/jquery_mobile/gridlist.css?version=1.1">
 <link type="text/css" rel="stylesheet" href="catalog/view/javascript/animate/animate_img.css?version=1.0">
 

@@ -40,7 +40,7 @@ class ControllerMobileStoreHome extends Controller {
 		
 		$results = $this->model_catalog_category->getCategories(0);
 		foreach ($results as $result) {
-			$this->data['category'][] = array(
+			$this->data['category'][$result['name']] = array(
 				'name'  => $result['name'],
 				'href'  => $this->url->link('mobile_store/category', 'fspath=' . $result['category_id']),
 				'thumb' => $this->model_tool_image->resize($result['image'], $this->config->get('config_image_thumb_width'), $this->config->get('config_image_thumb_height'))

@@ -1,6 +1,85 @@
 <?php echo $header; ?>
 <body>
-<div data-role="page" data-theme="a" id="homepage" class="my-page">
+<style type="text/css">
+@media ( min-width: 20em ) {
+.category-box {
+	width: 100%;
+	padding: 0;
+	text-align: center;
+	vertical-align:middle;
+	margin:0 auto;
+}
+
+.category-box .boxes {
+	float: left;
+	width: 32%;
+	margin: .125em;
+	padding: 0;
+	border:1px solid none;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+}
+
+.category-box .big-box {
+	height: 8em;
+}
+
+.category-box .small-box {
+	height: 4em;
+}
+
+.category-box .green-box {
+	background: #00DD00;
+}
+
+.category-box .orange-box {
+	background: #ffa300;
+}
+
+.category-box .purple-box {
+	background: #DD66DD;
+}
+
+.category-box .boxes a {
+	text-decoration:none;
+}
+.category-box .boxes a:hover {
+}
+
+.category-box .boxes h2 {
+	width: 100%;
+	margin:0 auto;
+    color: #fff;
+	font-weight:normal;
+	text-shadow : 0 0 0;
+}
+
+.category-box .big-box h2 {
+	font-size: 1em;
+	height: 1em;
+	margin: .8em 0;
+}
+
+.category-box .small-box h2 {
+	font-size: .8em;
+	height: 1em;
+	margin: .5em 0;
+}
+
+.category-box .big-box .icon {
+	width: 50%;
+	height: 4em;
+	margin:0 auto;
+}
+
+.category-box .small-box .icon {
+	width: 40%;
+	height: 1.8em;
+	margin:0 auto;
+}
+}
+</style>
+<div data-role="page" data-theme="a" id="homepage">
 	<?php echo $titlebar; ?>
 	<div data-role="content">
 		<?php if (isset($actionimg)) { ?>
@@ -16,18 +95,43 @@
 		</div>
 		<?php } ?>
 		
-		<div class="colum-list">
-			<?php foreach($category as $c) { ?>
-		  	<ul data-role="listview" id="plist" data-inset="true" data-split-icon="cart" data-theme="c" data-divider-theme="c" data-count-theme="c">
-			  	<li>
-			  		<a href="<?php echo $c['href']; ?>">
-				  		<img src="<?php echo $c['thumb']; ?>" />
-				  		<h2><?php echo $c['name']; ?></h2>
-				  		<p> </p>
-					</a>
-			  	</li>
-		  	</ul>
-		  	<?php } ?>
+		<div class="category-box">
+	  		<a href="<?php if (isset($category['蔬菜'])) echo $category['蔬菜']['href']; else echo '#'; ?>">
+			  	<div class="boxes big-box green-box">
+			  		<h2><?php echo '蔬 菜'; ?></h2>
+			  		<div class="icon ui-icon-chilis"></div>
+			  	</div>
+			</a>
+	  		<a href="<?php if (isset($category['省心菜'])) echo $category['省心菜']['href']; else echo '#';  ?>">
+			  	<div class="boxes big-box green-box">
+			  		<h2><?php echo '省心菜'; ?></h2>
+			  		<div class="icon ui-icon-soup3"></div>
+			  	</div>
+			</a>
+	  		<a href="<?php if (isset($category['副食品'])) echo $category['副食品']['href']; else echo '#';  ?>">
+			  	<div class="boxes big-box orange-box">
+			  		<h2><?php echo '副食品'; ?></h2>
+			  		<div class="icon ui-icon-salty1"></div>
+			  	</div>
+			</a>
+	  		<a href="<?php if (isset($category['肉类'])) echo $category['肉类']['href']; else echo '#';  ?>">
+			  	<div class="boxes big-box purple-box">
+			  		<h2><?php echo '肉 类'; ?></h2>
+			  		<div class="icon ui-icon-chicken7"></div>
+			  	</div>
+			</a>
+	  		<a href="<?php if (isset($category['水果'])) echo $category['水果']['href']; else echo '#';  ?>">
+			  	<div class="boxes big-box purple-box">
+			  		<h2><?php echo '水 果'; ?></h2>
+			  		<div class="icon ui-icon-apple12"></div>
+			  	</div>
+			</a>
+	  		<a href="<?php if (isset($category['更多'])) echo $category['更多']['href']; else echo '#';  ?>">
+			  	<div class="boxes big-box orange-box">
+			  		<h2><?php echo '更 多'; ?></h2>
+			  		<div class="icon ui-icon-more"></div>
+			  	</div>
+			</a>
 	  	</div>
 	</div>
 	<?php echo $navi; ?>
