@@ -47,11 +47,17 @@ class ControllerMobileStoreHome extends Controller {
 			);
 		}
 		
-		/*
-		$this->data['category'][]['name'] = '更多...';
-		$this->data['category'][]['href'] = $this->url->link('mobile_store/category', '', 'SSL');
-		$this->data['category'][]['thumb'] = '#';
-		*/
+		if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {
+			$dir_img = $this->config->get('config_ssl') . 'image/';
+		} else {
+			$dir_img = $this->config->get('config_url') . 'image/';
+		}
+		
+		$images = array();
+		$images[] = $dir_img.'data/vegetables/donggua.jpg';
+		$images[] = $dir_img.'data/vegetables/huanggua.jpg';
+		$images[] = $dir_img.'data/vegetables/nangua.jpg';
+		$this->data['actionimg'] = $images;
 	}
 }
 ?>

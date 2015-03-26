@@ -2,96 +2,107 @@
 <body>
 <style type="text/css">
 @media ( min-width: 20em ) {
-.category-box {
+	.category-box {
+		width: 100%;
+		padding: 0;
+		text-align: center;
+		vertical-align:middle;
+		margin:0 auto;
+	}
+	
+	.category-box a {
+		text-decoration:none;
+	}
+	.category-box a:hover {
+	}
+	
+	.category-box .boxes {
+		float: left;
+		width: 32%;
+		margin: .125em;
+		padding: 0;
+		border:1px solid none;
+	    -webkit-border-radius: 4px;
+	    border-radius: 4px;
+	}
+	
+	.category-box .big-box {
+		height: 8em;
+	}
+	
+	.category-box .small-box {
+		height: 4em;
+	}
+	
+	.category-box .green-box {
+		background: #00DD00;
+	}
+	
+	.category-box .orange-box {
+		background: #ffa300;
+	}
+	
+	.category-box .purple-box {
+		background: #DD66DD;
+	}
+	
+	.category-box .boxes h2 {
+		width: 100%;
+		margin:0 auto;
+	    color: #fff;
+		font-weight:normal;
+		text-shadow : 0 0 0;
+	}
+	
+	.category-box .big-box h2 {
+		font-size: 1em;
+		height: 1em;
+		margin: .8em 0;
+	}
+	
+	.category-box .small-box h2 {
+		font-size: .8em;
+		height: 1em;
+		margin: .5em 0;
+	}
+	
+	.category-box .big-box .icon {
+		width: 50%;
+		height: 4em;
+		margin:0 auto;
+	}
+	
+	.category-box .small-box .icon {
+		width: 40%;
+		height: 1.8em;
+		margin:0 auto;
+	}
+}
+
+.swiper-container {
 	width: 100%;
+	height: 120px;
+	margin-bottom: .25em;
 	padding: 0;
-	text-align: center;
-	vertical-align:middle;
-	margin:0 auto;
 }
-
-.category-box a {
-	text-decoration:none;
-}
-.category-box a:hover {
-}
-
-.category-box .boxes {
-	float: left;
-	width: 32%;
-	margin: .125em;
-	padding: 0;
-	border:1px solid none;
-    -webkit-border-radius: 4px;
-    border-radius: 4px;
-}
-
-.category-box .big-box {
-	height: 8em;
-}
-
-.category-box .small-box {
-	height: 4em;
-}
-
-.category-box .green-box {
-	background: #00DD00;
-}
-
-.category-box .orange-box {
-	background: #ffa300;
-}
-
-.category-box .purple-box {
-	background: #DD66DD;
-}
-
-.category-box .boxes h2 {
+.swiper-slide img {
 	width: 100%;
-	margin:0 auto;
-    color: #fff;
-	font-weight:normal;
-	text-shadow : 0 0 0;
-}
-
-.category-box .big-box h2 {
-	font-size: 1em;
-	height: 1em;
-	margin: .8em 0;
-}
-
-.category-box .small-box h2 {
-	font-size: .8em;
-	height: 1em;
-	margin: .5em 0;
-}
-
-.category-box .big-box .icon {
-	width: 50%;
-	height: 4em;
-	margin:0 auto;
-}
-
-.category-box .small-box .icon {
-	width: 40%;
-	height: 1.8em;
-	margin:0 auto;
-}
+	height: 100%;
 }
 </style>
 <div data-role="page" data-theme="a" id="homepage">
 	<?php echo $titlebar; ?>
 	<div data-role="content">
 		<?php if (isset($actionimg)) { ?>
-		<div id="homeswipe" class="img-box">
-			<?php if (isset($actionimg['image1'])) {?>
-			<img class="img-list slide out" src="<?php echo $actionimg['image1']; ?>" />
-			<?php } if (isset($actionimg['image2'])) {?>
-			<img class="img-list slide out" src="<?php echo $actionimg['image2']; ?>" />
-			<?php } if (isset($actionimg['image3'])) {?>
-			<img class="img-list slide out" src="<?php echo $actionimg['image3']; ?>" />
-			<?php } ?>
-			<div class="img-index"></div>
+		<div id="homeswipe" class="swiper-container">
+			<div class="swiper-wrapper">
+				<?php foreach($actionimg as $img) {?>
+				<div class="swiper-slide">
+					<img src="<?php echo $img; ?>" />
+				</div>
+				<?php } ?>
+			</div>
+			<div class="swiper-pagination swiper-pagination-white"></div>
 		</div>
 		<?php } ?>
 		
@@ -136,11 +147,17 @@
 	</div>
 	<?php echo $navi; ?>
 	<script type="text/javascript"><!--
-
-		$(document).on("pageinit", "#homepage", function(){
-			if (typeof homeswipe != "undefined")
-				setSwipeImg('#homeswipe', "swipe");
-		});
+	
+	$(document).on("pageinit", "#homepage", function(){
+		if (typeof homeswipe != "undefined") {
+			var mySwiper = new Swiper('.swiper-container',{
+			    pagination: '.swiper-pagination',
+			    paginationClickable: true,
+			    autoplay: 5000,
+			    loop: true
+			  });
+		}
+	});
 	//--></script>
 </div>
 </body>
