@@ -19,7 +19,7 @@
 <link type="text/css" rel="stylesheet" href="catalog/view/javascript/jquery_mobile/jquery.mobile.icons.min.css" />
 <link type="text/css" rel="stylesheet" href="catalog/view/javascript/jquery_mobile/jquery.mobile.custom.structure.min.css">
 <link type="text/css" rel="stylesheet" href="catalog/view/javascript/jquery_mobile/qingyou-custom.css?version=1.1">
-<link type="text/css" rel="stylesheet" href="catalog/view/javascript/jquery_mobile/gridlist.css?version=1.1">
+<link type="text/css" rel="stylesheet" href="catalog/view/javascript/jquery_mobile/gridlist.css?version=1.2">
 <link type="text/css" rel="stylesheet" href="catalog/view/javascript/swiper/swiper.min.css" >
 
 <script type="text/javascript" src="catalog/view/javascript/oop.js"></script>
