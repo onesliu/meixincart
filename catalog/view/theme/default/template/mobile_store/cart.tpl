@@ -10,10 +10,10 @@
 	  			<img src="<?php echo $product['thumb']; ?>" onclick="show_product('<?php echo $product['href']; ?>');"/>
 	  			<h2 style="margin-top:0px"><?php echo $product['name'].' '; ?>
 	  				<span id="number<?php echo $product['key']; ?>"><?php echo $product['quantity']; ?></span><?php echo $product['sellunit']; ?>
-	  				（<?php if ($product['product_type'] > 0) echo "估计"; ?><span id="weight<?php echo $product['key']; ?>"><?php echo $product['weight']; ?></span><?php echo $product['weight_class'].' '; ?>）
+	  				（<?php if ($product['product_type'] == 1) echo "估计"; ?><span id="weight<?php echo $product['key']; ?>"><?php echo $product['weight']; ?></span><?php echo $product['weight_class'].' '; ?>）
 	  			</h2>
 	  			<p style="display:inline;">
-	  				<?php if ($product['product_type'] > 0) echo "估计";?><span style="color:red;">￥<span id="total<?php echo $product['key'];?>" ><?php echo $product['total']; ?></span></span>
+	  				<?php if ($product['product_type'] == 1) echo "估计";?><span style="color:red;">￥<span id="total<?php echo $product['key'];?>" ><?php echo $product['total']; ?></span></span>
 	  				<span id="price<?php echo $product['key'];?>" style="display:none;"><?php echo $product['sellprice'];?></span>
 	  				<span id="perweight<?php echo $product['key'];?>" style="display:none;"><?php echo $product['perweight']; ?></span>
 	  				<span id="min<?php echo $product['key'];?>" style="display:none;"><?php echo $product['minimum']; ?></span>
@@ -151,7 +151,11 @@
 
 	function checkout(){
 		if (typeof check_form != "undefined") {
-			if (check_form()) {$('#weixin_payment').submit();}
+			if (check_form()) {
+				$("#checkoutbtn").button( "disable" );
+				$("#checkoutbtn").button( "refresh" );
+				$('#weixin_payment').submit();
+			}
 			//$.mobile.changePage(checkouturl);
 		}
 	};

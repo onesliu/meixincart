@@ -16,7 +16,7 @@
     .my-page .colum-list .ui-listview li {
         float: left;
         width: 45%; /* 33.3333% incl. 2 x 1.2% margin */
-        height: 12.5em; /* 232p */
+        height: 13em; /* 13em */
         margin: .5625em 1.5%;
 		padding: 1%;
 	}
@@ -98,11 +98,11 @@
         background: inherit;
     }
     .my-page .colum-list .ui-listview .ui-li-has-thumb h2 {
-        bottom: 20%;
+        bottom: 10%;
     }
     .my-page .colum-list .ui-listview .ui-li-has-thumb p {
-        min-height: 20%;
-		max-height: 20%;
+        min-height: 10%;
+		max-height: 10%;
     }
     /* ui-li-aside has class .ui-li-desc as well so we have to override some things. */
     .my-page .colum-list .ui-listview li .ui-btn .ui-li-aside {
@@ -156,7 +156,7 @@
     but we stick to percentage values for demo purposes. */
     .my-page .colum-list .ui-listview li {
         width: 21%;
-        height: 230px;
+        height: 15em;
         margin: .625em 1%;
     }
 }
