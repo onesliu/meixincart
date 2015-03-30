@@ -14,7 +14,8 @@ class ControllerWeixinPayNotify extends ControllerWeixinWeixin {
 			$resHelper = new PayHelper();
 			$res = $resHelper->parse_response($xmlstr);
 			if (isset($res->return_code) == false || isset($res->return_msg) == false ||
-				(string)$res->return_code != 'SUCCESS') {
+				isset($res->result_code) == false || (string)$res->return_code != 'SUCCESS' ||
+				(string)$res->result_code != 'SUCCESS') {
 				$this->log->write("weixin notify paied fail: \n". $xmlstr);
 				$this->success(); //返回通知正常接收
 				return;
@@ -23,11 +24,6 @@ class ControllerWeixinPayNotify extends ControllerWeixinWeixin {
 			if ($resHelper->sign_verify($this->partnerkey) != true) {
 				$this->log->write("weixin notify sign verify error: \n". $xmlstr);
 				$this->error(); //返回通知校验错误
-				return;
-			}
-			
-			if (isset($res->result_code) == false || (string)$res->result_code != 'SUCCESS') {
-				$this->success(); //返回通知正常接收
 				return;
 			}
 			
@@ -70,13 +66,19 @@ class ControllerWeixinPayNotify extends ControllerWeixinWeixin {
 			return;
 		}
 		
+		$this->model_checkout_order->orderChangeStatus($order_info);
+		
 		$order_info['weixin_pay_result'] = $result;
-		if ($order_info['order_type'] == 0) //固定价格订单 状态转换至 待称重
-			$order_info['order_status_id'] = 1;
-		else if ($order_info['order_type'] == 1) //变价格订单 状态转换至 待配送
-			$order_info['order_status_id'] = 3;
 		$this->model_checkout_order->fastupdate($orderid, $order_info);
+		
+		//发送支付成功消息
+		$url = $this->url->link2('mobile_store/order/info', 'order_id='.$orderid);
+		$time = $res->time_end;
+		$amount = $this->currency->format($res->total_fee/100);
+		$bank = $res->bank_type;
+		$this->sendPayNotify($url, $orderid, $time, $amount, $bank);
 	}
+	
 }
 
 ?>

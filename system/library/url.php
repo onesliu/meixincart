@@ -46,7 +46,7 @@ class Url {
 			$url = $this->ssl;	
 		}
 		
-		$url .= 'index.php?route=' . $route;
+		$url .= $this->index.'?route=' . $route;
 		
 		if ($args) {
 			$url .= '&' . ltrim($args, '&'); 
