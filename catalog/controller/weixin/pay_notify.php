@@ -14,9 +14,8 @@ class ControllerWeixinPayNotify extends ControllerWeixinWeixin {
 		
 			$resHelper = new PayHelper();
 			$res = $resHelper->parse_response($xmlstr);
-			if (isset($res->return_code) == false || isset($res->return_msg) == false ||
-				isset($res->result_code) == false || (string)$res->return_code != 'SUCCESS' ||
-				(string)$res->result_code != 'SUCCESS') {
+			if (isset($res->return_code) == false || isset($res->result_code) == false ||
+				(string)$res->return_code != 'SUCCESS' || (string)$res->result_code != 'SUCCESS') {
 				$this->log->write("weixin notify paied fail: \n". $xmlstr);
 				$this->success(); //返回通知正常接收
 				return;
