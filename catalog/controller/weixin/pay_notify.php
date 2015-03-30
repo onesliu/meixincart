@@ -28,6 +28,7 @@ class ControllerWeixinPayNotify extends ControllerWeixinWeixin {
 			}
 			
 			$this->paied_success($res->out_trade_no, $xmlstr); //更新数据库订单支付成功
+			$this->log->write("weixin pay notify success: ".$res->out_trade_no);
 			$this->success(); //返回通知正常接收
 		}
 	}
