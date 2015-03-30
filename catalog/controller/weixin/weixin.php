@@ -198,12 +198,14 @@ class ControllerWeixinWeixin extends Controller {
 	}
 	
 	//发送支付成功消息
-	public function sendPayNotify($url, $order_id, $time, $amount, $bank) {
-		if (isset($this->session->data['openid']))
-			$openid = $this->session->data['openid'];
-		else {
-			$this->log->write("不能发送付款成功消息，因为无openid");
-			return;
+	public function sendPayNotify($url, $order_id, $time, $amount, $bank, $openid=null) {
+		if ($openid == null) {
+			if (isset($this->session->data['openid']))
+				$openid = $this->session->data['openid'];
+			else {
+				$this->log->write("不能发送付款成功消息，因为无openid");
+				return;
+			}
 		}
 		
 		$data = array();

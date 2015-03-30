@@ -27,7 +27,7 @@ class ControllerWeixinPayNotify extends ControllerWeixinWeixin {
 				return;
 			}
 			
-			$this->paied_success($res->out_trade_no, $xmlstr); //更新数据库订单支付成功
+			$this->paied_success($res, $xmlstr); //更新数据库订单支付成功
 			$this->log->write("weixin pay notify success: ".$res->out_trade_no);
 			$this->success(); //返回通知正常接收
 		}
@@ -47,15 +47,12 @@ class ControllerWeixinPayNotify extends ControllerWeixinWeixin {
 		$this->response->setOutput($xml->make_param_xml());
 	}
 	
-	private function paied_success($orderid, $result) {
+	private function paied_success($res, $result) {
 		$this->load->model('checkout/order');
+		$this->load->model('account/customer');
 		
-		if (isset($this->session->data['order_info'])) {
-			$order_info = $this->session->data['order_info'];
-		}
-		else {
-			$order_info = $this->model_checkout_order->fastgetOrder($orderid);
-		}
+		$orderid = $res->out_trade_no;
+		$order_info = $this->model_checkout_order->fastgetOrder($orderid);
 		
 		if ($order_info == false) {
 			$this->log->write('weixin notified, but order can not find in db, order_id='.$orderid);
@@ -73,11 +70,17 @@ class ControllerWeixinPayNotify extends ControllerWeixinWeixin {
 		$this->model_checkout_order->fastupdate($orderid, $order_info);
 		
 		//发送支付成功消息
+		$customer = $this->model_account_customer->getCustomer($order_info['customer_id']);
+		if ($customer == null) {
+			$this->log->write('找不到订单客户信息，无法发送支付成功消息');
+			return;
+		}
+		
 		$url = $this->url->link2('mobile_store/order/info', 'order_id='.$orderid);
 		$time = $res->time_end;
 		$amount = $this->currency->format($res->total_fee/100);
 		$bank = $res->bank_type;
-		$this->sendPayNotify($url, $orderid, $time, $amount, $bank);
+		$this->sendPayNotify($url, $orderid, $time, $amount, $bank, $customer['email']);
 	}
 	
 }
