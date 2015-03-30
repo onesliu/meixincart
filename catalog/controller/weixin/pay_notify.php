@@ -5,6 +5,7 @@ class ControllerWeixinPayNotify extends ControllerWeixinWeixin {
 	public function index() {
 		
 		if ($this->weixin_init() != true) {
+			$this->log->write("weixin notify: 微信接口初始化失败");
 			return; //首次验证或初始化失败
 		}
 		

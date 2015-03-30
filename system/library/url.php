@@ -72,5 +72,9 @@ class Url {
 				
 		return $url;
 	}
+	
+	public function get_index() {
+		return $this->index;
+	}
 }
 ?>
