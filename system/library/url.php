@@ -74,7 +74,7 @@ class Url {
 	}
 	
 	public function get_index() {
-		return $this->index;
+		return $this->url.$this->index;
 	}
 }
 ?>
