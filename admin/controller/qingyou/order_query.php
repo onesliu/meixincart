@@ -212,7 +212,7 @@ class ControllerQingyouOrderQuery extends ControllerWeixinWeixin {
 			isset($res->result_code) == false || (string)$res->return_code != 'SUCCESS' ||
 			(string)$res->result_code != 'SUCCESS') {
 			$this->log->write("payquery: 订单未支付成功: \n". $response);
-			$return->status = -2; //未支付成功
+			$return->status = 1; //未支付成功
 			$this->response->setOutput(json_encode($return));
 			return;
 		}
@@ -224,7 +224,7 @@ class ControllerQingyouOrderQuery extends ControllerWeixinWeixin {
 		}
 		
 		$this->model_qingyou_order->updateOrderPay($order_id, $response);
-		$return->status = 1; //支付成功
+		$return->status = 0; //支付成功
 		$this->response->setOutput(json_encode($return));
 	}
 	

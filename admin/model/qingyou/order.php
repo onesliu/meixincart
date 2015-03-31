@@ -116,6 +116,12 @@ class ModelQingyouOrder extends Model {
 	}
 	
 	public function updateOrderPay($order_id, $payxml) {
+		$query = $this->db->query("select order_status_id from " .DB_PREFIX. "order where order_id=".$order_id);
+		if ($query->num_rows != 0) {
+			if ($query->row['order_status_id'] != 2)
+				return;
+		}
+		
 		$sql = "update " .DB_PREFIX. "order set order_status_id=3, weixin_pay_result='".
 				$this->db->escape($payxml)."' where order_id=".$order_id;
 		$this->db->query($sql);
