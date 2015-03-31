@@ -80,6 +80,9 @@ class ModelQingyouOrder extends Model {
 			if ($query->row['order_status_id'] == $order->order_status)
 				return false;
 		}
+		else {
+			return false;
+		}
 		
 		$costpay = "";
 		if (isset($order->costpay)) {
@@ -120,6 +123,9 @@ class ModelQingyouOrder extends Model {
 		if ($query->num_rows != 0) {
 			if ($query->row['order_status_id'] != 2)
 				return;
+		}
+		else {
+			return;
 		}
 		
 		$sql = "update " .DB_PREFIX. "order set order_status_id=3, weixin_pay_result='".

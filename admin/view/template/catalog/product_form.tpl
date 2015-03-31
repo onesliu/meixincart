@@ -220,7 +220,8 @@
               <td><?php echo $text_type; ?></td>
               <td><select name="product_type">
                   <option value="0" <?php if ($product_type==0) echo 'selected="selected"'?>>固定重量商品</option>
-                  <option value="1" <?php if ($product_type!=0) echo 'selected="selected"'?>>需先称重商品</option>
+                  <option value="1" <?php if ($product_type==1) echo 'selected="selected"'?>>需先称重商品</option>
+                  <option value="2" <?php if ($product_type==2) echo 'selected="selected"'?>>特产精品（单品）</option>
                 </select></td>
             </tr>
           </table>
