@@ -169,6 +169,88 @@ class ControllerQingyouOrderQuery extends ControllerWeixinWeixin {
 		$this->response->setOutput(json_encode($return));
 	}
 	
+	public function payquery() {
+		$return = new stdClass();
+		$return->status = -1; //查询失败，一般错误
+		
+		if (!isset($this->request->get['order_id'])) {
+			$this->log->write("payquery: 没有order_id");
+			$this->response->setOutput(json_encode($return));
+			return;
+		}
+		$order_id = $this->request->get['order_id'];
+		
+		if ($this->weixin_init() != true) {
+			$this->log->write("payquery: 微信接口初始化出错");
+			$this->response->setOutput(json_encode($return));
+			return; //首次验证或初始化失败
+		}
+		
+		$this->load->model('qingyou/order');
+		
+    	//发起支付查询
+		$wxPayHelper = new PayHelper();
+		$wxPayHelper->add_param("appid", (string)$this->appid);
+		$wxPayHelper->add_param("mch_id", (string)$this->partnerid);
+		$wxPayHelper->add_param("nonce_str", (string)time());
+		$wxPayHelper->add_param("out_trade_no", (string)$order_id);
+		
+		$wxtools = new WeixinTools();
+		$request = $wxPayHelper->make_request($this->partnerkey);
+		$url = "https://api.mch.weixin.qq.com/pay/orderquery";
+		$response = $wxtools->postToWx($url, $request);
+		
+		if ($response == false) {
+			$this->log->write("payquery: 支付查询响应出错");
+			$this->response->setOutput(json_encode($return));
+			return;
+		}
+		
+		$resHelper = new PayHelper();
+		$res = $resHelper->parse_response($response);
+		if (isset($res->return_code) == false || isset($res->return_msg) == false ||
+			isset($res->result_code) == false || (string)$res->return_code != 'SUCCESS' ||
+			(string)$res->result_code != 'SUCCESS') {
+			$this->log->write("payquery: 订单未支付成功: \n". $response);
+			$return->status = -2; //未支付成功
+			$this->response->setOutput(json_encode($return));
+			return;
+		}
+		
+		if ($resHelper->sign_verify($this->partnerkey) != true) {
+			$this->log->write("payquery: 订单查询校验出错: \n". $response);
+			$this->response->setOutput(json_encode($return));
+			return;
+		}
+		
+		$this->model_qingyou_order->updateOrderPay($order_id, $response);
+		$return->status = 1; //支付成功
+		$this->response->setOutput(json_encode($return));
+	}
+	
+	private function paied_success($res, $result) {
+		$this->load->model('checkout/order');
+		$this->load->model('account/customer');
+		
+		$orderid = $res->out_trade_no;
+		$order_info = $this->model_checkout_order->fastgetOrder($orderid);
+		
+		if ($order_info == false) {
+			$this->log->write('weixin notified, but order can not find in db, order_id='.$orderid);
+			return;
+		}
+		
+		if ($order_info['order_status_id'] != 2) {
+			$this->log->write('weixin notified, but order is not paying status, order_id='.$orderid.' order_status='.$order_info['order_status_id']);
+			return;
+		}
+		
+		$this->model_checkout_order->orderChangeStatus($order_info);
+		
+		$order_info['weixin_pay_result'] = $result;
+		$this->model_checkout_order->fastupdate($orderid, $order_info);
+	}
+	
 	public function sendWxMsg($order) {
 		
 		if ($this->weixin_init() != true) {
@@ -195,7 +277,7 @@ class ControllerQingyouOrderQuery extends ControllerWeixinWeixin {
 		$status = $this->model_qingyou_order->getStatusMsg();
 		$content = $status[$order->order_status];
 		
-		if ($order->order_type == 0)
+		if ($order->order_type == 0 || $order->order_type == 2)
 			$msg = sprintf($content->wxmsg, $order->order_id, $this->currency->format($order->total), $order->order_createtime, $order->productSubject);
 		else
 			$msg = sprintf($content->wxmsg, $order->order_id, $this->currency->format($order->realtotal), $order->order_createtime, $order->productSubject);

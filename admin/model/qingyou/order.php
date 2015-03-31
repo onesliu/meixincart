@@ -115,6 +115,12 @@ class ModelQingyouOrder extends Model {
 		return true;
 	}
 	
+	public function updateOrderPay($order_id, $payxml) {
+		$sql = "update " .DB_PREFIX. "order set order_status_id=3, weixin_pay_result='".
+				$this->db->escape($payxml)."' where order_id=".$order_id;
+		$this->db->query($sql);
+	}
+	
 	public function getProducts($orderid) {
 		
 		$this->load->model('tool/image');
