@@ -258,7 +258,12 @@ class ControllerMobileStoreCart extends Controller {
 					'remove'   => $this->url->link('mobile_store/cart', 'remove=' . $product['key'], 'wxpay')
 				);
 				
-				$this->data['order_type'] += $product['product_type'];
+				if ($product['product_type'] == 1)
+					$this->data['order_type'] = 1; //要称重散货
+				
+				if ($product['product_type'] == 2 && count($products) == 1) {
+					$this->data['order_type'] = 2; //特产精品
+				}
       		}
       		
       		$this->session->data['order_type'] = $this->data['order_type'];

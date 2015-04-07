@@ -21,31 +21,18 @@ class ControllerMobileStoreCheckoutOrder extends Controller {
 			}				
 		}
 
+		$total_data = $this->cart_total();
 		// cart product values
-		$order_info = $this->confirm();
+		$order_info = $this->confirm($products, $total_data);
+		
 		if ($order_info == false) {
-			$e = "下单失败";
-			$this->document->setTitle($e);
-      		$this->data['heading_title'] = $e;
-      		$this->data['text_error'] = $e;
-
-			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/mobile_store/not_found.tpl')) {
-				$this->template = $this->config->get('config_template') . '/template/mobile_store/not_found.tpl';
-			} else {
-				$this->template = 'default/template/mobile_store/not_found.tpl';
-			}
-			
-			$this->children = array(
-				'mobile_store/navi',
-				'mobile_store/titlebar',
-				'mobile_store/header'
-			);
-
-			$this->response->setOutput($this->render());
+			$this->order_error();
 			return;
 		}
+
+		$this->cart->clear();
 		
-		if ($order_info['order_type']==0) {
+		if ($order_info['order_type']==0 || $order_info['order_type']==2) {
 			//'微信支付'
 			$weixin_payment = $this->url->link('weixin/pay', '', 'wxpay');
 		}
@@ -57,11 +44,72 @@ class ControllerMobileStoreCheckoutOrder extends Controller {
 		$this->redirect($weixin_payment);
   	}
   	
-  	private function confirm() {
+  	public function special() {
+  		if (!$this->customer->isLogged()) {
+  			$this->log->write('checkout special product error: not logged.');
+  			$this->redirect($this->url->link('mobile_store/home'));
+  		}
+  		
+  		if (!isset($this->request->get['product_id'])) {
+  			$this->log->write('checkout special product error: no product_id.');
+  			$this->redirect($this->url->link('mobile_store/home'));
+  		}
+  		$product_id = $this->request->get['product_id'];
+  		
+  		$this->load->model('catalog/product');
+  		$product = $this->model_catalog_product->getProduct($product_id);
+  		if ($product == false) {
+			$this->order_error();
+			return;
+  		}
+  		if (isset($this->request->get['quantity'])) {
+  			$product['quantity'] = $this->request->get['quantity'];
+  		}
+  		else {
+  			$product['quantity'] = 1;
+  		}
+  		
+  		$product['total'] = $product['price'] * $product['quantity'];
+  		$product['weight'] = $product['weight'] * $product['quantity'];
+  		
+  		$products = array();
+  		$products[$product_id] = $product;
+  		
+  		$total_data = $this->special_total($product);
+  		$order_info = $this->confirm($products, $total_data, false);
+  		
+		//'下单待预定'
+		$weixin_payment = $this->url->link('weixin/pay/prepay');
+		
+		$this->redirect($weixin_payment);
+  	}
+  	
+  	private function order_error() {
+  		$e = "下单失败";
+		$this->document->setTitle($e);
+      	$this->data['heading_title'] = $e;
+      	$this->data['text_error'] = $e;
+
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/mobile_store/not_found.tpl')) {
+			$this->template = $this->config->get('config_template') . '/template/mobile_store/not_found.tpl';
+		} else {
+			$this->template = 'default/template/mobile_store/not_found.tpl';
+		}
+		
+		$this->children = array(
+			'mobile_store/navi',
+			'mobile_store/titlebar',
+			'mobile_store/header'
+		);
+
+		$this->response->setOutput($this->render());
+  	}
+  	
+  	private function cart_total() {
   		$total_data = array();
-		$total = 0;
-		$taxes = $this->cart->getTaxes();
-		 
+  		$total = 0;
+  		$taxes = $this->cart->getTaxes();
+		
 		$this->load->model('setting/extension');
 		
 		$sort_order = array(); 
@@ -90,6 +138,33 @@ class ControllerMobileStoreCheckoutOrder extends Controller {
 
 		array_multisort($sort_order, SORT_ASC, $total_data);
 		
+		return $total_data;
+  	}
+  	
+  	private function special_total($product) {
+  		$total_data = array();
+  		$this->language->load('total/total');
+  		$this->language->load('total/sub_total');
+  		
+		$total_data[] = array( 
+			'code'       => 'sub_total',
+			'title'      => $this->language->get('text_sub_total'),
+			'text'       => $this->currency->format($product['total']),
+			'value'      => $product['total'],
+			'sort_order' => $this->config->get('sub_total_sort_order')
+		);
+  		$total_data[] = array(
+			'code'       => 'total',
+			'title'      => $this->language->get('text_total'),
+			'text'       => $this->currency->format(max(0, $product['total'])),
+			'value'      => max(0, $product['total']),
+			'sort_order' => $this->config->get('total_sort_order')
+		);
+
+		return $total_data;
+  	}
+  	
+  	private function confirm($products, $total_data, $bucha = true) {
 		$data = array();
 		
 		$data['invoice_prefix'] = $this->config->get('config_invoice_prefix');
@@ -187,32 +262,42 @@ class ControllerMobileStoreCheckoutOrder extends Controller {
 		}				
 		
 		$product_data = array();
-		$order_type = 0; //0:固定客单价订单, 1:变客单价订单
+		$order_type = 0; //0:固定客单价订单, 1:变客单价订单, 2:特产单品订单
 		$comment = "";
 	
-		foreach ($this->cart->getProducts() as $product) {
+		foreach ($products as $product) {
 			$option_data = array();
 
-			foreach ($product['option'] as $option) {
-				if ($option['type'] != 'file') {
-					$value = $option['option_value'];	
-				} else {
-					$value = $this->encryption->decrypt($option['option_value']);
-				}	
-				
-				$option_data[] = array(
-					'product_option_id'       => $option['product_option_id'],
-					'product_option_value_id' => $option['product_option_value_id'],
-					'option_id'               => $option['option_id'],
-					'option_value_id'         => $option['option_value_id'],								   
-					'name'                    => $option['name'],
-					'value'                   => $value,
-					'type'                    => $option['type']
-				);					
+			if (isset($product['option'])) {
+				foreach ($product['option'] as $option) {
+					if ($option['type'] != 'file') {
+						$value = $option['option_value'];	
+					} else {
+						$value = $this->encryption->decrypt($option['option_value']);
+					}	
+					
+					$option_data[] = array(
+						'product_option_id'       => $option['product_option_id'],
+						'product_option_value_id' => $option['product_option_value_id'],
+						'option_id'               => $option['option_id'],
+						'option_value_id'         => $option['option_value_id'],								   
+						'name'                    => $option['name'],
+						'value'                   => $value,
+						'type'                    => $option['type']
+					);					
+				}
 			}
 			
-			if ($product['product_type'] != 0) {
+			$download = array();
+			if (isset($product['download']))
+				$download = $product['download'];
+			
+			if ($product['product_type'] == 1) {
 				$order_type = 1;
+			}
+			
+			if ($product['product_type'] == 2 && count($products) == 1) {
+				$order_type = 2;
 			}
  
 			$product_data[] = array(
@@ -220,7 +305,7 @@ class ControllerMobileStoreCheckoutOrder extends Controller {
 				'name'       => $product['name'],
 				'model'      => $product['model'],
 				'option'     => $option_data,
-				'download'   => $product['download'],
+				'download'   => $download,
 				'quantity'   => $product['quantity'],
 				'subtract'   => $product['subtract'],
 				'price'      => $product['price'],
@@ -234,38 +319,40 @@ class ControllerMobileStoreCheckoutOrder extends Controller {
 		}
   	
 		//补差商品加入
-		$this->load->model('mobile_store/product');
-		$bucha = $this->model_mobile_store_product->getBuchaProduct();
-		if ($bucha != false) {
-			$hasbucha = false;
-			foreach($product_data as $p) {
-				if ($p['product_id'] == $bucha['product_id']) {
-					$hasbucha = true;
-					break;
+		if ($bucha == true) {
+			$this->load->model('mobile_store/product');
+			$bucha = $this->model_mobile_store_product->getBuchaProduct();
+			if ($bucha != false) {
+				$hasbucha = false;
+				foreach($product_data as $p) {
+					if ($p['product_id'] == $bucha['product_id']) {
+						$hasbucha = true;
+						break;
+					}
 				}
-			}
-			
-			if ($hasbucha == false) {
-				$product_data[] = array(
-					'product_id' => $bucha['product_id'],
-					'name'       => $bucha['name'],
-					'model'      => $bucha['model'],
-					'option'     => array(),
-					'download'   => array(),
-					'quantity'   => 1,
-					'subtract'   => 0,
-					'price'      => $bucha['price'],
-					'weight'	 => $bucha['weight'],
-					'total'      => 0.0,
-					'tax'        => $this->tax->getTax($bucha['price'], $bucha['tax_class_id']),
-					'reward'     => 0
-				);
+				
+				if ($hasbucha == false) {
+					$product_data[] = array(
+						'product_id' => $bucha['product_id'],
+						'name'       => $bucha['name'],
+						'model'      => $bucha['model'],
+						'option'     => array(),
+						'download'   => array(),
+						'quantity'   => 1,
+						'subtract'   => 0,
+						'price'      => $bucha['price'],
+						'weight'	 => $bucha['weight'],
+						'total'      => 0.0,
+						'tax'        => $this->tax->getTax($bucha['price'], $bucha['tax_class_id']),
+						'reward'     => 0
+					);
+				}
 			}
 		}
 		
 		$data['order_type'] = $order_type;
 		$data['comment'] = trim($comment);
-		if ($order_type == 0) //固定价订单状态转换至：待付款
+		if ($order_type == 0 || $order_type == 2) //固定价订单状态转换至：待付款
 			$data['order_status_id'] = 2;
 		else //变价订单状态转换至：待称重
 			$data['order_status_id'] = 1;
@@ -294,6 +381,12 @@ class ControllerMobileStoreCheckoutOrder extends Controller {
       		if ($tt['code'] == 'total') {
       			$this->data['totals'][] = $tt;
       		}
+      	}
+      	
+      	$total = 0;
+      	foreach($total_data as $tt) {
+      		if ($tt['code'] == 'total')
+      			$total = $tt['value'];
       	}
       	
       	$data['coupon_total'] = 0.0;
@@ -369,8 +462,6 @@ class ControllerMobileStoreCheckoutOrder extends Controller {
 		$this->session->data['order_info'] = $data;
 		
 		$this->save_addr($data);
-		
-		$this->cart->clear();
 		
 		return $data;
   	}

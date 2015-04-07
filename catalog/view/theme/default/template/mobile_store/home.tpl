@@ -35,15 +35,15 @@
 	}
 	
 	.category-box .green-box {
-		background: #00DD00;
+		background: #00dd99;
 	}
 	
 	.category-box .orange-box {
-		background: #ffa300;
+		background: #FFCC33;
 	}
 	
 	.category-box .purple-box {
-		background: #DD66DD;
+		background: #EEAAEE;
 	}
 	
 	.category-box .boxes h2 {
@@ -55,7 +55,7 @@
 	}
 	
 	.category-box .big-box h2 {
-		font-size: 1em;
+		font-size: 1.2em;
 		height: 1em;
 		margin: .8em 0;
 	}
@@ -77,17 +77,6 @@
 		height: 1.8em;
 		margin:0 auto;
 	}
-}
-
-.swiper-container {
-	width: 100%;
-	height: 120px;
-	margin-bottom: .25em;
-	padding: 0;
-}
-.swiper-slide img {
-	width: 100%;
-	height: 100%;
 }
 </style>
 <div data-role="page" data-theme="a" id="homepage">
@@ -147,15 +136,17 @@
 	</div>
 	<?php echo $navi; ?>
 	<script type="text/javascript"><!--
-	
 	$(document).on("pageinit", "#homepage", function(){
 		if (typeof homeswipe != "undefined") {
-			var mySwiper = new Swiper('.swiper-container',{
-			    pagination: '.swiper-pagination',
-			    paginationClickable: true,
-			    autoplay: 5000,
-			    loop: true
-			  });
+			setTimeout(function(){
+				var mySwiper = new Swiper('.swiper-container',{
+				    pagination: '.swiper-pagination',
+				    paginationClickable: true,
+				    autoplay: 2000,
+				    loop: true
+				  });
+				mySwiper.update();
+			}, 500);
 		}
 	});
 	//--></script>

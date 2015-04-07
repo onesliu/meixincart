@@ -9,7 +9,7 @@
 </style>
 	<?php echo $titlebar; ?>
 	<div data-role="content">
-		<div class="ui-body ui-body-b ui-corner-all" style="margin-bottom:.4em;">
+		<div class="ui-body" style="margin-bottom:.4em;">
 			<p><?php echo $text_order_id; ?><?php echo $order_id; ?>
 				<?php if (isset($cancel_order)) { ?>
 				<span style="color:blue" onclick="onCancelOrder();"> [<?php echo $text_cancel_btn; ?>]</span>
@@ -17,7 +17,7 @@
 			</p>
 			<p><?php echo $text_date_added; ?><?php echo $date_added; ?></p>
 		</div>
-		<div class="ui-body ui-body-b ui-corner-all" style="margin-bottom:.4em;">
+		<div class="ui-body line-box">
 		  <table data-role="table" data-mode="columntoggle" class="ui-responsive table-stripe">
 		    <thead>
 		      <tr>
@@ -31,7 +31,7 @@
 		      <?php foreach ($products as $product) { ?>
 		      <tr>
 		        <td><?php echo $product['name']; ?></td>
-		        <td><?php echo $product['quantity']; ?></td>
+		        <td><?php echo $product['quantity'].$product['sellunit']; ?></td>
 		        <td><?php echo $product['weight'].'g'; ?></td>
 		        <td><?php echo $product['total']; ?></td>
 		      </tr>
@@ -61,17 +61,16 @@
 		  </table>
 		</div>
 		<?php if (isset($weixin_payment)) {?>
-		<div id="coupon" class="ui-body ui-body-b ui-corner-all" style="margin-bottom:.4em;">
+		<div id="coupon" class="ui-body line-box">
 		<?php echo $coupon; ?>
 		</div>
 		<?php } ?>
-		<div class="ui-body ui-body-b ui-corner-all" style="margin-bottom:.4em;">
+		<div class="ui-body line-box">
 		  <table data-role="table" data-mode="columntoggle" class="ui-responsive table-stripe">
 		    <thead>
 		      <tr>
 		        <td data-priority="1"><?php echo $text_history; ?></td>
 		        <td data-priority="2"><?php echo $column_status; ?></td>
-		        <td data-priority="3"><?php echo $column_comment; ?></td>
 		      </tr>
 		    </thead>
 		    <tbody>
@@ -79,13 +78,12 @@
 		      <tr>
 		        <td><?php echo $history['date_added']; ?></td>
 		        <td><?php echo $history['status']; ?></td>
-		        <td><?php echo $history['comment']; ?></td>
 		      </tr>
 		      <?php } ?>
 		    </tbody>
 		  </table>
 		</div>
-		<div class="ui-body ui-body-b ui-corner-all" style="margin-bottom:.4em;">
+		<div class="ui-body line-box">
 			<table data-role="table" data-mode="columntoggle" class="ui-responsive table-stroke">
 			    <thead>
 			      <tr>
@@ -94,8 +92,10 @@
 			    </thead>
 			    <tbody>
 			    	<tr><td><?php echo $shipping_address; ?></td></tr>
+			    	<?php if ($order_type < 2) { ?>
 			    	<tr><td><?php echo $shipping_district; ?><br/><?php echo $shipping_district_addr; ?></td></tr>
 			    	<tr><td>希望收货时间：<?php echo $shipping_time; ?></td></tr>
+			    	<?php } ?>
 			    </tbody>
 		  	</table>
 		</div>

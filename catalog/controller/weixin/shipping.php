@@ -2,6 +2,9 @@
 include_once(DIR_APPLICATION."controller/weixin/weixin.php");
 
 class ControllerWeixinShipping extends ControllerWeixinWeixin { 
+	
+	private $tfile = '/template/weixin/shipping.tpl';
+	
 	public function index() {
 		
 		if ($this->weixin_init() != true) {
@@ -90,15 +93,64 @@ class ControllerWeixinShipping extends ControllerWeixinWeixin {
 		//$this->log->write(print_r($addrParam,true));
 		
 		// view template
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/weixin/shipping.tpl')) {
-			$this->template = $this->config->get('config_template') . '/template/weixin/shipping.tpl';
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . $this->tfile)) {
+			$this->template = $this->config->get('config_template') . $this->tfile;
 		} else {
-			$this->template = 'default/template/weixin/shipping.tpl';
+			$this->template = 'default' . $this->tfile;
 		}
 		
 		$this->render();
 	}
 	
+	public function special() {
+		if (!isset($this->request->get['product_id'])) {
+			$this->log->write('没有产品ID');
+			$this->response->setOutput('没有产品ID');
+			return;
+		}
+		
+		$product_id = $this->request->get['product_id'];
+		$this->tfile = '/template/weixin/shipping_special.tpl';
+		
+		$this->load->model('catalog/product');
+		$product_info = $this->model_catalog_product->getProduct($product_id);
+		if (!$product_info) {
+			$this->log->write('不能查询到产品信息');
+			return;
+		}
+		
+		$this->load->model('tool/image');
+		
+		$this->data['name'] = $product_info['name'];
+		$this->data['price'] = $this->currency->format($product_info['price']); //产品价格
+		$this->data['unit'] = $product_info['sku']; //库存单位
+		if ($product_info['image']) {
+			$this->data['image'] = $this->model_tool_image->resize($product_info['image'], $this->config->get('config_image_popup_width'), $this->config->get('config_image_popup_height'));
+		} else {
+			$this->data['image'] = $this->model_tool_image->resize('no_image.jpg', $this->config->get('config_image_popup_width'), $this->config->get('config_image_popup_height'));;
+		}
+		
+		$this->data['images'] = array();
+			
+		$results = $this->model_catalog_product->getProductImages($this->request->get['product_id']);
+		
+		foreach ($results as $result) {
+			$this->data['images'][] = array(
+				'popup' => $this->model_tool_image->resize($result['image'], $this->config->get('config_image_popup_width'), $this->config->get('config_image_popup_height')),
+				'thumb' => $this->model_tool_image->resize($result['image'], $this->config->get('mobile_store_image_width'), $this->config->get('mobile_store_image_height'))
+			);
+		}
+			
+		$this->data['checkout_url'] = $this->url->link2('mobile_store/checkout_order/special', 'product_id='.$product_id);
+		$this->request->get['back'] = true;
+		
+		$this->children = array(
+			'mobile_store/titlebar',
+			'mobile_store/header'
+		);
+		$this->index();
+		$this->response->setOutput($this->output);
+	}
 }
 
 ?>

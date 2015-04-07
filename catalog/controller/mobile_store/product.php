@@ -5,18 +5,6 @@ class ControllerMobileStoreProduct extends Controller {
 	public function index() { 
 		$this->language->load('product/product');
 		
-		$this->document->addScript('catalog/view/javascript/jquery/photoswipe/klass.min.js');
-		$this->document->addScript('catalog/view/javascript/jquery/photoswipe/photoswipe.jquery-3.0.4.min.js');
-		$this->document->addScript('catalog/view/javascript/jquery/jquery.slideto.js');
-	
-		$this->data['breadcrumbs'] = array();
-
-		$this->data['breadcrumbs'][] = array(
-			'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home'),			
-			'separator' => false
-		);
-		
 		$this->load->model('catalog/category');	
 		
 		if (isset($this->request->get['path'])) {
@@ -375,10 +363,16 @@ class ControllerMobileStoreProduct extends Controller {
 			
 			$this->model_catalog_product->updateViewed($this->request->get['product_id']);
 			
-			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/mobile_store/product.tpl')) {
-				$this->template = $this->config->get('config_template') . '/template/mobile_store/product.tpl';
+			$tfile = 'product.tpl';
+			if ($product_info['product_type'] == 2) {
+				$tfile = 'product_special.tpl';
+				$this->data['special_url'] = $this->url->link('weixin/shipping/special', 'product_id='.$product_info['product_id']);
+			}
+			
+			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/mobile_store/'.$tfile)) {
+				$this->template = $this->config->get('config_template') . '/template/mobile_store/'.$tfile;
 			} else {
-				$this->template = 'default/template/mobile_store/product.tpl';
+				$this->template = 'default/template/mobile_store/'.$tfile;
 			}
 			
 			$this->children = array(

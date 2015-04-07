@@ -79,7 +79,7 @@ class ControllerMobileStoreCheckoutOnestep extends Controller {
 			$this->template = 'default/template/mobile_store/checkout_onestep.tpl';
 		}
 
-		if ($this->data['order_type']==0) {
+		if ($this->data['order_type']==0 || $this->data['order_type']==2) {
 			$this->data['text_pay_btn'] = '微信支付';
 			$param = 'showwxpaytitle=1&code=' . $this->session->data['oauth_code'] . "&state=" . $this->session->data['oauth_state'];
 			$this->data['weixin_payment'] = $this->url->link('weixin/pay', $param);
@@ -246,7 +246,7 @@ class ControllerMobileStoreCheckoutOnestep extends Controller {
 				);					
 			}
 			
-			if ($product['product_type'] != 0) {
+			if ($product['product_type'] == 1) {
 				$order_type = 1;
 			}
  
@@ -268,6 +268,7 @@ class ControllerMobileStoreCheckoutOnestep extends Controller {
 		}
 		
 		//补差商品加入
+		/*
 		$this->load->model('mobile_store/product');
 		$bucha = $this->model_mobile_store_product->getBuchaProduct();
 		if ($bucha != false) {
@@ -295,6 +296,7 @@ class ControllerMobileStoreCheckoutOnestep extends Controller {
 				);
 			}
 		}
+		*/
 		
 		$this->data['order_type'] = $order_type;
 		$data['order_type'] = $order_type;

@@ -149,7 +149,7 @@ class ControllerMobileStoreCategory extends Controller {
 					$rating = false;
 				}
 				
-				if ($result['product_type'] == 0) {
+				if ($result['product_type'] == 0 || $result['product_type'] == 2) {
 					$scalable = '付款后称重';
 				}
 				else {

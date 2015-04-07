@@ -75,6 +75,7 @@ class ControllerMobileStoreOrder extends Controller {
 		$pagination->page = $page;
 		$pagination->limit = $limit;
 		$pagination->num_pages = ceil($pagination->total / $pagination->limit);
+		$this->log->write('total:'.$pagination->total." limit:".$pagination->limit);
 		$pagination->text = $this->language->get('text_pagination');
 		$pagination->url = $this->url->link2('mobile_store/order', "page=".($page+1), 'SSL');
 		//$pagination->render();
@@ -270,6 +271,7 @@ class ControllerMobileStoreOrder extends Controller {
           			'option'   => $option_data,
           			'quantity' => $product['quantity'],
         			'weight' => $product['weight'],
+        			'sellunit' => $product['upc'], //销售单位
           			'price'    => $this->currency->format($product['price'] + ($this->config->get('config_tax') ? $product['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']),
 					'total'    => $this->currency->format($product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value']),
 					'return'   => $this->url->link('account/return/insert', 'order_id=' . $order_info['order_id'] . '&product_id=' . $product['product_id'], 'SSL')
@@ -329,6 +331,8 @@ class ControllerMobileStoreOrder extends Controller {
 	      		$this->data['cancel_order'] = $this->url->link('mobile_store/order/cancel', '', 'wxpay');
 	      		$this->session->data['order_info'] = $order_info;
        		}
+       		
+       		$this->data['order_type'] = $order_info['order_type'];
 
       		$this->data['continue'] = $this->url->link('mobile_store/order', '', 'SSL');
 		

@@ -25,7 +25,7 @@
 	  			<span id="quantity"><?php echo $minimum; ?></span>
 	  			<button class="ui-btn ui-btn-icon-notext ui-icon-plus ui-btn-inline ui-corner-all" style="margin:.4em 1em .4em .4em;border:0px;"
 	  			onclick="scount(1);"></button>
-	  			<a href="#" onclick="addCart();" class="ui-btn ui-btn-a ui-corner-all ui-icon-shop ui-btn-icon-right ui-btn-inline">加入购物车</a>
+	  			<button onclick="addCart();" class="ui-btn ui-btn-a ui-corner-all ui-icon-shop ui-btn-icon-right ui-btn-inline">加入购物车</button>
   			</div>
 		</div>
 		
@@ -44,15 +44,14 @@
 			<p><?php echo $description; ?></p>
 		</div>
 		
-		<div data-role="popup" id="positionWindow" data-transition="slideup" data-position-to="window" class="ui-content" data-theme="a">
-			<p id="buy_alert"></p>
+		<div data-role="popup" id="positionWindow2" data-transition="slideup" data-position-to="window" class="ui-content" data-theme="a">
+			<p id="buy_alert2"></p>
 		</div>
 		
 	</div>
 	<?php echo $navi; ?>
 	<script type="text/javascript"><!--
 	$(document).on("pageinit", "#product_page", function(){
-		//setSwipeImg('#productswipe', "swipe");
 	});
 
 	function scount(num) {
@@ -78,12 +77,12 @@
 			dataType: 'json',
 			success: function(json) {
 				if (json.success) {
-					$('#buy_alert').html(json.success);
+					$('#buy_alert2').html(json.success);
 					
-					$('#positionWindow').popup( 'reposition', 'positionTo: window' );
-					$('#positionWindow').popup('open', { positionTo: "window" });
+					$('#positionWindow2').popup( 'reposition', 'positionTo: window' );
+					$('#positionWindow2').popup('open', { positionTo: "window" });
 					setTimeout(function() {
-						$("#positionWindow").popup('close');
+						$("#positionWindow2").popup('close');
 					}, 1000);
 				}
 			}

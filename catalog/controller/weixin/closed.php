@@ -3,7 +3,7 @@
 class ControllerWeixinClosed extends Controller {
 	public function index() {
     	
-		$this->data['error_msg'] = '菜鸽子商城维护中，暂时停止服务，预计开放时间12小时以后，对此带来的不便敬请谅解。';
+		$this->data['error_msg'] = '菜鸽子商城维护中，暂时停止服务，预计开放时间今晚22:00，对此带来的不便敬请谅解。';
 		
 		if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {
 			$dir_img = $this->config->get('config_ssl') . 'image/';

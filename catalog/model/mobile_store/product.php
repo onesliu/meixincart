@@ -38,9 +38,15 @@ class ModelMobileStoreProduct extends Model {
 		"' AND p.status = '1' AND p.date_available <= NOW() AND p2s.store_id = '" . (int)$this->config->get('config_store_id') . "'");
 		
 		if ($query->num_rows) {
+			if ($query->row['product_type']==0)
+				$type = '固定重量商品';
+			else if ($query->row['product_type']==1)
+				$type = '先称重后付款商品';
+			else
+				$type = '特产精品';
 			$query->row['price'] = ($query->row['discount'] ? $query->row['discount'] : $query->row['price']);
 			$query->row['rating'] = (int)$query->row['rating'];
-			$query->row['type']	= (($query->row['product_type']==0)?'固定重量商品':'先称重后付款商品');
+			$query->row['type']	= $type;
 			$query->row['subscribe'] = ($query->row['model'].'，每'.((int)$query->row['weight']) . $query->row['weight_class'].'单价');
 			
 			return $query->row;

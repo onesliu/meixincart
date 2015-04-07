@@ -12,31 +12,50 @@
 			<li data-role="list-divider">订单列表</li>
 			<?php require('order_more.tpl'); ?>
 		</ul>
+		
+		<div id="omore" style="text-align: center; display: none;">正在加载......</div>
 	<?php } ?>
-		<?php if ($pagination->page < $pagination->num_pages) { ?>
-		<a id="bmore" href="#" class="ui-btn ui-btn-a ui-corner-all">更多...</a>
-		<?php } ?>
-
-		<script type="text/javascript"><!--
-		var url_more="<?php echo $pagination->url; ?>";
-		var um_page=<?php echo $pagination->page; ?>;
-		var um_pages=<?php echo $pagination->num_pages; ?>;
-		$(document).on("pageinit","#orderpage",function(){
-			$("#bmore").on("click", function(){
-				um_page++;
-				url = "<?php echo $pagination->url; ?>" + "&page=" + um_page;
-				$.get(url, function(data,status) {
-					$("#olist").append(data);
-					$("#olist").listview('refresh');
-					$("#olist").find("li:last").slideDown(300);
-					if (um_page >= um_pages) {
-						$("#bmore").hide();
-					}
-				});
-			});
-		});
-		//--></script> 
 	</div>
+
+	<script type="text/javascript"><!--
+	var url_more="<?php echo $pagination->url; ?>";
+	var um_page=<?php echo $pagination->page; ?>;
+	var um_pages=<?php echo $pagination->num_pages; ?>;
+	$(document).on("pageinit","#orderpage",function(){
+		<?php if ($pagination->page < $pagination->num_pages) { ?>
+			auto_scroll(domore);
+		<?php } ?>
+	});
+
+	var starting = false;
+	function domore(){
+		if (starting) return;
+		
+		//$.mobile.loading('show');
+		$('omore').show();
+		starting = true;
+
+		um_page++;
+		url = "<?php echo $pagination->url; ?>" + "&page=" + um_page;
+		$.get(url, function(data,status) {
+			$("#olist").append(data);
+			$("#olist").listview('refresh');
+			$("#olist").find("li:last").slideDown(300);
+			
+			if (um_page >= um_pages) {
+				auto_scroll(null);
+			}
+			else {
+				auto_scroll(domore);
+			}
+			
+			starting = false;
+			//$.mobile.loading('hide');
+			$('omore').hide();
+		});
+	};
+
+	//--></script> 
 	<?php echo $navi; ?>
 </div>
 </body>

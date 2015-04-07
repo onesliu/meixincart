@@ -214,30 +214,32 @@
 		});
 	}
 
-	var CartCoupon = function() {
-		this.superclass.call(this);
-		this.getTotal = function() {
-			return $('#totalprice').text() - 0;
+	if (typeof Coupon != "undefined") {
+		var CartCoupon = function() {
+			this.superclass.call(this);
+			this.getTotal = function() {
+				return $('#totalprice').text() - 0;
+			}
+			this.setCoupon = function(discount, remain) {
+				discount = discount - 0;
+				remain = remain - 0;
+				$('#discount').html('￥' + discount.toFixed(2));
+				$('#realtotal').html('￥' + remain.toFixed(2));
+	
+				changebtn(discount+remain);
+			}
+			this.resetCoupon = function() {
+				$('#discount').html('￥0.00');
+				$("#realtotal").html($("#totals").text());
+				changebtn($("#totalprice").text());
+	
+				var baseCoupon = new Coupon();
+				baseCoupon.resetCoupon.call(this);
+			}
 		}
-		this.setCoupon = function(discount, remain) {
-			discount = discount - 0;
-			remain = remain - 0;
-			$('#discount').html('￥' + discount.toFixed(2));
-			$('#realtotal').html('￥' + remain.toFixed(2));
-
-			changebtn(discount+remain);
-		}
-		this.resetCoupon = function() {
-			$('#discount').html('￥0.00');
-			$("#realtotal").html($("#totals").text());
-			changebtn($("#totalprice").text());
-
-			var baseCoupon = new Coupon();
-			baseCoupon.resetCoupon.call(this);
-		}
+		CartCoupon = E.extend(CartCoupon, Coupon);
+		coupon = new CartCoupon();
 	}
-	CartCoupon = E.extend(CartCoupon, Coupon);
-	coupon = new CartCoupon();
 	
 	//--></script>
 </div>

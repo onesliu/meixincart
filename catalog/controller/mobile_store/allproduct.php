@@ -113,8 +113,8 @@ class ControllerMobileStoreAllproduct extends Controller {
 					$rating = false;
 				}
 				
-				if ($result['product_type'] == 0) {
-					$scalable = '付款后称重';
+				if ($result['product_type'] == 0 || $result['product_type'] == 2) {
+					$scalable = '付款后称重'; //0: 固定价格产品, 2: 单项特品
 				}
 				else {
 					$scalable = '称重后付款';

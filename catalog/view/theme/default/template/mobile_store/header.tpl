@@ -26,7 +26,8 @@
 <script type="text/javascript" src="catalog/view/javascript/jquery/jquery-1.11.1.min.js"></script>
 <script type="text/javascript" src="catalog/view/javascript/mobile_store.js"></script>
 <script type="text/javascript" src="catalog/view/javascript/jquery_mobile/jquery.mobile.custom.min.js"></script>
-<script type="text/javascript" src="catalog/view/javascript/swiper/swiper.min.js"></script>
+<script type="text/javascript" src="catalog/view/javascript/swiper/swiper.jquery.min.js"></script>
+<script type="text/javascript" src="catalog/view/javascript/jquery_screw/jquery.screw.js"></script>
 
 <script type="text/javascript">
 var showhelp = <?php echo $showhelp; ?>;

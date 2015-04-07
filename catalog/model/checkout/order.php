@@ -794,9 +794,10 @@ class ModelCheckoutOrder extends Model {
 	public function orderChangeStatus(&$order_info) {
 		if (!isset($order_info)) return;
 		
-		$state = array(0, 1);
+		$state = array(0, 1, 2);
 		$state[0] = array(2=>3, 3=>4);//定价产品订单 状态转换：待付款 待配送 完成
 		$state[1] = array(1=>2, 2=>3, 3=>4);//散货订单 状态转换：待称重 待付款 待配送 完成
+		$state[2] = array(2=>3, 3=>4);//特产单品订单 状态转换：待付款 待配送 完成
 		
 		$next = $state[$order_info['order_type']][$order_info['order_status_id']];
 		$order_info['order_status_id'] = $next;

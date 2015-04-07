@@ -37,6 +37,7 @@ class ModelToolImage extends Model {
 			}
 
 			list($width_orig, $height_orig) = getimagesize(DIR_IMAGE . $old_image);
+			$height = $width * $height_orig / $width_orig;
 
 			if ($width_orig != $width || $height_orig != $height) {
 				$image = new Image(DIR_IMAGE . $old_image);
@@ -52,6 +53,14 @@ class ModelToolImage extends Model {
 		} else {
 			return $this->config->get('config_url') . 'image/' . $new_image;
 		}	
+	}
+	
+	public function getsize($filename) {
+		if (!file_exists(DIR_IMAGE . $filename) || !is_file(DIR_IMAGE . $filename)) {
+			return;
+		}
+		
+		return getimagesize(DIR_IMAGE . $filename);
 	}
 	
 	public function img_url($dir) {

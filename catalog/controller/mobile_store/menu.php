@@ -93,7 +93,7 @@ class ControllerMobileStoreMenu extends Controller {
 				$menu['sources'] = $this->model_qingyou_food->getFoodSourcesByMenu($menu['id']);
 				foreach($menu['sources'] as &$p) {
 					$est = '';
-					if ($p['product_type'] > 0) $est = '约';
+					if ($p['product_type'] == 1) $est = '约';
 					$p['weight_show'] = $est. ((int)$p['weight']) . $p['weight_class'].'/'.$p['upc'];
 					$p['price_show'] = $est. $this->currency->format($p['mpn']);
 				}

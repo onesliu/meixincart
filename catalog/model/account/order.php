@@ -151,7 +151,7 @@ class ModelAccountOrder extends Model {
 	}
 	
 	public function getOrderProducts($order_id) {
-		$sql = "SELECT op.*,p.image FROM " . DB_PREFIX . "order_product op left join oc_product p on op.product_id=p.product_id WHERE order_id = '" . $order_id . "'";
+		$sql = "SELECT op.*,p.image,p.upc FROM " . DB_PREFIX . "order_product op left join oc_product p on op.product_id=p.product_id WHERE order_id = '" . $order_id . "'";
 		$query = $this->db->query($sql);
 	
 		return $query->rows;
@@ -192,10 +192,16 @@ class ModelAccountOrder extends Model {
 		return $q->rows;
 	}
 
-	public function getTotalOrders($customerid = false) {
+	public function getTotalOrders($customerid = false, $status = null) {
 		if ($customerid == false)
 			$customerid = $this->customer->getId();
-      	$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "order` WHERE customer_id = '" . (int)$customerid . "' AND order_status_id > '0'");
+			
+		$condition = "AND order_status_id <> 6"; //不查询已取消订单
+		if ($status != null) {
+			$condition = "AND order_status_id <> '$status'";
+		}
+
+      	$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "order` WHERE customer_id = '" . (int)$customerid . "' AND order_status_id > '0' $condition");
 		
 		return $query->row['total'];
 	}

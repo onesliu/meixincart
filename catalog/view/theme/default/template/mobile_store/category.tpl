@@ -9,13 +9,11 @@
 			<?php require('category_more.tpl'); ?>
 	  	</ul>
 	  	</div>
-		<?php if ($pagination->page < $pagination->num_pages) { ?>
-		<div style="float:left;clear:both;width:100%;"><a id="bmore" style="margin:.5625em;" href="#" data-role="button">更多...</a></div>
-		<?php } ?>
 	</div>
 	
-	<div data-role="popup" id="positionWindow" data-transition="slideup" data-position-to="window" class="ui-content" data-theme="a">
-		<p id="buy_alert"></p>
+	<div id="bmore" style="text-align: center; display: none;">正在加载......</div>
+	<div data-role="popup" id="positionWindow1" data-transition="slideup" data-position-to="window" class="ui-content" data-theme="a">
+		<p id="buy_alert1"></p>
 	</div>
 	
 	<?php echo $navi; ?>
@@ -31,12 +29,12 @@
 			dataType: 'json',
 			success: function(json) {
 				if (json.success) {
-					$('#buy_alert').html(json.success);
+					$('#buy_alert1').html(json.success);
 					
-					$('#positionWindow').popup( 'reposition', 'positionTo: window' );
-					$('#positionWindow').popup('open', { positionTo: "window" });
+					$('#positionWindow1').popup( 'reposition', 'positionTo: window' );
+					$('#positionWindow1').popup('open', { positionTo: "window" });
 					setTimeout(function() {
-						$("#positionWindow").popup('close');
+						$("#positionWindow1").popup('close');
 					}, 1000);
 				}
 			}
@@ -47,30 +45,44 @@
 	var um_page=<?php echo $pagination->page; ?>;
 	var um_pages=<?php echo $pagination->num_pages; ?>;
 	$(document).on("pageinit","#categorypage",function(){
-		$("#bmore").on("click", function(){
-			um_page++;
-			url = "<?php echo $pagination->url; ?>" + "&page=" + um_page;
-			$.get(url, function(data,status) {
-				$("#plist").append(data);
-				$("#plist").listview('refresh');
-				$("#plist").find("li:last").slideDown(300);
-				if (um_page >= um_pages) {
-					$("#bmore").hide();
-				}
-			});
-		});
-
-		//if (showhelp > 0) {
-		//	$("#help2").show();
-		//}
+		<?php if ($pagination->page < $pagination->num_pages) { ?>
+			auto_scroll(domore);
+		<?php } ?>
 	});
+
+	var starting = false;
+	function domore(){
+		if (starting) return;
+		
+		//$.mobile.loading('show');
+		$('#bmore').show();
+		starting = true;
+		
+		um_page++;
+		url = "<?php echo $pagination->url; ?>" + "&page=" + um_page;
+		$.get(url, function(data,status) {
+			$("#plist").append(data);
+			$("#plist").listview('refresh');
+			$("#plist").find("li:last").slideDown(300);
+			
+			if (um_page >= um_pages) {
+				auto_scroll(null);
+			}
+			else {
+				auto_scroll(domore);
+			}
+			
+			starting = false;
+			//$.mobile.loading('hide');
+			$('#bmore').hide();
+		});
+	}
 
 	function searchproduct() {
         var url = "<?php echo $searchurl; ?>";
         var filter = $('#product_search').val();
         url += '&filter=' + filter;
         $( ":mobile-pagecontainer" ).pagecontainer( "change", url, {transition:"fade",dataUrl:"search"});
-        //$.mobile.changePage(url, {allowSamePageTransition:true});
 	}
 	//--></script> 
 </div>
