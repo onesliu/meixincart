@@ -29,10 +29,10 @@ function auto_scroll(dofunc){
 
 function auto_scroll2(dofunc) {
 	if (dofunc == null) {
-		$(document).off("scrollstart");
+		$(document).off("scrollstop");
 	}
 	else {
-	    $(document).on("scrollstart", (function(){
+	    $(document).on("scrollstop", (function(){
 	    	viewH = $(window).height(); //可见高度  
 	    	contentH = $(document).height(); //内容高度  
 	    	scrollTop = $(document).scrollTop(); //滚动高度  
