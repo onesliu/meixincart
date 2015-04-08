@@ -3,22 +3,12 @@
 <div data-role="page" id="product_page" data-theme="a" data-title="<?php echo $heading_title; ?>">
 	<?php echo $titlebar; ?>
 	<div data-role="content">
-		<div class="ui-body ui-body-b ui-corner-all" style="margin-bottom:.4em;">
-			<div id="productswipe">
-				<img width="100%" src="<?php echo $popup; ?>" />
-			</div>
+		<div class="swiper-container">
+			<img width="100%" src="<?php echo $popup; ?>" />
 			
-			<h3 style="display:inline-block;margin-bottom:.4em;"><?php echo $heading_title; ?></h3>
-			<h4 style="display:inline-block;margin-bottom:.4em;"><span style="color:red;"><?php echo $price; ?></span>/<?php echo $unit; ?>
-			<!-- 
-			<?php if ($product_type == 0) { ?>
-  			（每<?php echo $sellunit; ?>:<span style="color:red;">￥<?php echo $sellprice; ?></span>）
-  			<?php } else { ?>
-  			（每<?php echo $sellunit; ?>约:<span style="color:red;">￥<?php echo $sellprice; ?></span>）
-  			<?php } ?>
-  			 -->
-			</h4>
-			<div>
+			<div class="ui-body">
+				<h3 style="display:inline-block;margin-bottom:.4em;"><?php echo $heading_title; ?></h3>
+				<h4 style="display:inline-block;margin-bottom:.4em;"><span style="color:red;"><?php echo $price; ?></span>/<?php echo $unit; ?></h4>
 				<h4 style="display:block;margin:1em 0 .3em 0;">购买数量： （<?php echo $model; ?>）</h4>
 	    		<button class="ui-btn ui-btn-icon-notext ui-icon-minus ui-btn-inline ui-corner-all" style="margin:.4em .4em .4em 0;border:0px;"
 	    		onclick="scount(-1);"></button>
@@ -30,7 +20,7 @@
 		</div>
 		
 		<?php if ($attribute_groups) { ?>
-		<div class="ui-body ui-body-b ui-corner-all" style="margin-bottom:.4em;">
+		<div class="ui-body line-box">
 			<?php foreach ($attribute_groups as $attribute_group) { ?>
 			<?php foreach ($attribute_group['attribute'] as $attribute) { ?>
 				<h4><?php echo $attribute_group['name']; ?>：<?php echo $attribute['name']; ?></h4>
@@ -39,7 +29,7 @@
 		</div>
 		<?php } ?>
 		
-		<div class="ui-body ui-body-b ui-corner-all" style="margin-bottom:.4em;">
+		<div class="ui-body line-box">
 			<h4><?php echo $tab_description; ?></h4>
 			<p><?php echo $description; ?></p>
 		</div>

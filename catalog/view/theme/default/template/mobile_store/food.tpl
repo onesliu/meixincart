@@ -3,26 +3,14 @@
 <div data-role="page" data-theme="a" id="foodpage">
 	<?php echo $titlebar; ?>
 	<div data-role="content">
-		<div class="ui-body ui-body-b ui-corner-all">
-			<div id="foodswipe">
-				<img width="100%" src="<?php echo $food['image1']; ?>" />
-			</div>
-			<!-- 
-			<div id="foodswipe" class="img-box">
-				<?php if (isset($food['image1'])) {?>
-				<img class="img-list slide out" src="<?php echo $food['image1']; ?>" />
-				<?php } if (isset($food['image2'])) {?>
-				<img class="img-list slide out" src="<?php echo $food['image2']; ?>" />
-				<?php } if (isset($food['image3'])) {?>
-				<img class="img-list slide out" src="<?php echo $food['image3']; ?>" />
-				<?php } ?>
-				<div class="img-index"></div>
-			</div>
-			 -->
+		<div class="swiper-container">
+			<img width="100%" src="<?php echo $food['image1']; ?>" />
 			
-			<h3 style="display:inline-block;margin-bottom:.4em;"><?php echo $food['name']; ?></h3>
-			<h5 style="color:gray;display:inline-block;margin-bottom:.4em;">[ <?php foreach($food['attrs'] as $attr) { foreach($attr as $a) {echo $a['name'].' ';}} ?>]</h5>
-			<p><?php echo $food['desp']; ?></p>
+			<div class="ui-body">
+				<h3 style="display:inline-block;margin-bottom:.4em;"><?php echo $food['name']; ?></h3>
+				<h5 style="color:gray;display:inline-block;margin-bottom:.4em;">[ <?php foreach($food['attrs'] as $attr) { foreach($attr as $a) {echo $a['name'].' ';}} ?>]</h5>
+				<p><?php echo $food['desp']; ?></p>
+			</div>
 		</div>
 		
 		<?php require('material_list.tpl'); ?>
