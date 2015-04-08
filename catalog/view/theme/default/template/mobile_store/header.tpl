@@ -27,9 +27,13 @@
 <script type="text/javascript" src="catalog/view/javascript/mobile_store.js?version=1.2"></script>
 <script type="text/javascript" src="catalog/view/javascript/jquery_mobile/jquery.mobile.custom.min.js"></script>
 <script type="text/javascript" src="catalog/view/javascript/swiper/swiper.jquery.min.js"></script>
+<script type="text/javascript" src="catalog/view/javascript/fastclick.js"></script>
 
 <script type="text/javascript">
 var showhelp = <?php echo $showhelp; ?>;
+$(document).on('pagecreate', function(event){
+	FastClick.attach(document.body);
+});
 </script>
 
 </head>
