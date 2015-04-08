@@ -46,13 +46,13 @@
 	var um_pages=<?php echo $pagination->num_pages; ?>;
 	$(document).on("pageinit","#categorypage",function(){
 		<?php if ($pagination->page < $pagination->num_pages) { ?>
-			auto_scroll(domore);
+			auto_scroll2(domore);
 		<?php } ?>
 	});
 
 	var starting = false;
 	function domore(){
-		if (starting) return;
+		if (starting == true) return;
 		
 		//$.mobile.loading('show');
 		$('#bmore').show();
@@ -66,10 +66,10 @@
 			$("#plist").find("li:last").slideDown(300);
 			
 			if (um_page >= um_pages) {
-				auto_scroll(null);
+				auto_scroll2(null);
 			}
 			else {
-				auto_scroll(domore);
+				auto_scroll2(domore);
 			}
 			
 			starting = false;
