@@ -53,11 +53,13 @@ class ControllerMobileStoreHome extends Controller {
 			$dir_img = $this->config->get('config_url') . 'image/';
 		}
 		
-		$images = array();
-		$images[] = $dir_img.'data/vegetables/donggua.jpg';
-		$images[] = $dir_img.'data/vegetables/huanggua.jpg';
-		$images[] = $dir_img.'data/vegetables/nangua.jpg';
-		$this->data['actionimg'] = $images;
+		/*
+		 * config_home_actions json format: [{image: xxx, url: xxx}, {...}]
+		 * */
+		$actions = array();
+		$home_actions = $this->config->get('config_home_actions');
+		$actions = json_decode($home_actions);
+		$this->data['actions'] = $actions;
 	}
 }
 ?>

@@ -7,7 +7,7 @@ class ModelQingyouOrder extends Model {
 		shipping_address_1 as shipping_addr, shipping_time, o.iscash, o.costpay, o.cashpay, o.ismodify 
 		from oc_order o join oc_order_status os on o.order_status_id = os.order_status_id %s order by order_id;";
 	
-	public function getOrders($last_orderid, $districtid, $history) {
+	public function getOrders($last_orderid, $districtid, $history, $order_type = null) {
 		
 		$condition = "";
 		if ($history == null || $history == 0) {
@@ -23,6 +23,10 @@ class ModelQingyouOrder extends Model {
 		
 		if ($districtid > 0) {
 			$condition .= " and shipping_district_id = $districtid";
+		}
+		
+		if ($order_type != null) {
+			$condition .= " and order_type <> $order_type";
 		}
 		
 		$data = array();

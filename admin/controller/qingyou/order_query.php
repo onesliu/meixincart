@@ -15,7 +15,7 @@ class ControllerQingyouOrderQuery extends ControllerWeixinWeixin {
 		if (isset($this->request->get['history']))
 			$history = $this->request->get['history'];
 			
-		$this->data['orders'] = $this->model_qingyou_order->getOrders(null, $districtid, $history);
+		$this->data['orders'] = $this->model_qingyou_order->getOrders(null, $districtid, $history, 2);
 		
 		$this->template = 'qingyou/order_query.tpl';
 		

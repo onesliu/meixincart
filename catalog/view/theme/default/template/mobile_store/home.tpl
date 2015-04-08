@@ -82,12 +82,12 @@
 <div data-role="page" data-theme="a" id="homepage">
 	<?php echo $titlebar; ?>
 	<div data-role="content">
-		<?php if (isset($actionimg)) { ?>
+		<?php if (isset($actions) && count($actions) > 0) { ?>
 		<div id="homeswipe" class="swiper-container">
 			<div class="swiper-wrapper">
-				<?php foreach($actionimg as $img) {?>
+				<?php foreach($actions as $act) {?>
 				<div class="swiper-slide">
-					<img src="<?php echo $img; ?>" />
+					<img src="<?php echo $act->image; ?>" />
 				</div>
 				<?php } ?>
 			</div>
