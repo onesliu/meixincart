@@ -47,18 +47,19 @@ class ControllerMobileStoreHome extends Controller {
 			);
 		}
 		
-		if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {
-			$dir_img = $this->config->get('config_ssl') . 'image/';
-		} else {
-			$dir_img = $this->config->get('config_url') . 'image/';
-		}
-		
 		/*
 		 * config_home_actions json format: [{image: xxx, url: xxx}, {...}]
 		 * */
 		$actions = array();
 		$home_actions = $this->config->get('config_home_actions');
-		$actions = json_decode($home_actions);
+		if ($home_actions != '') {
+			$actions = json_decode($home_actions);
+			if (count($actions > 0)) {
+				foreach($actions as &$act) {
+					$act->image = $this->model_tool_image->resize($act->image, $this->config->get('config_image_popup_width'), $this->config->get('config_image_popup_height'));
+				}
+			}
+		}
 		$this->data['actions'] = $actions;
 	}
 }

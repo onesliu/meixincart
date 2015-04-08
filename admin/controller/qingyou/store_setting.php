@@ -4,12 +4,26 @@ class ControllerQingyouStoreSetting extends Controller {
  
 	public function index() {
 		$this->language->load('qingyou/store_setting'); 
+		$this->load->model('tool/image');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		
 		$this->load->model('setting/setting');
 		
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
+			
+			$actions = array();
+			if (isset($this->request->post['action'])) {
+				foreach($this->request->post['action'] as $act) {
+					$action = new stdClass();
+					$action->image = $act['image'];
+					$action->url = $act['url'];
+					$actions[] = $action;
+				}
+				unset($this->request->post['action']);
+			}
+			$this->request->post['config_home_actions'] = json_encode($actions);
+			//$this->log->write(print_r($this->request->post, true));
 			
 			$this->model_setting_setting->editSetting('wxstore', $this->request->post);
 			
@@ -30,6 +44,22 @@ class ControllerQingyouStoreSetting extends Controller {
 		$this->data['minum_order'] = (isset($data['minum_order']))?$data['minum_order']:'';
 		$this->data['help_interval'] = (isset($data['help_interval']))?$data['help_interval']:'';
 		$this->data['shipping_interval'] = (isset($data['shipping_interval']))?$data['shipping_interval']:'';
+		$this->data['config_home_actions'] = (isset($data['config_home_actions']))?$data['config_home_actions']:'';
+		
+		$actions = array();
+		$home_actions = $this->config->get('config_home_actions');
+		if ($home_actions != '') {
+			$actions = json_decode($home_actions);
+			if (count($actions > 0)) {
+				foreach($actions as &$act) {
+					$act->thumb = $this->model_tool_image->resize($act->image, 100, 100);
+				}
+			}
+		}
+		$this->data['actions'] = $actions;
+		//$this->log->write(print_r($actions, true));
+		
+		$this->data['no_image'] = $this->model_tool_image->resize('no_image.jpg', 100, 100);
 		
  		if (isset($this->error['warning'])) {
 			$this->data['error_warning'] = $this->error['warning'];
