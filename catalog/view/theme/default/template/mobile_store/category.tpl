@@ -45,6 +45,7 @@
 	var um_page=<?php echo $pagination->page; ?>;
 	var um_pages=<?php echo $pagination->num_pages; ?>;
 	$(document).on("pageinit","#categorypage",function(){
+		$(document).off('swiperight swipeleft');
 		<?php if ($pagination->page < $pagination->num_pages) { ?>
 			auto_scroll2(domore);
 		<?php } ?>
