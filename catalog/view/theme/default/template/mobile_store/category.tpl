@@ -68,9 +68,6 @@
 			if (um_page >= um_pages) {
 				auto_scroll2(null);
 			}
-			else {
-				auto_scroll2(domore);
-			}
 			
 			starting = false;
 			//$.mobile.loading('hide');

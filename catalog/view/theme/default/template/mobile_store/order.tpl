@@ -23,15 +23,14 @@
 	var um_pages=<?php echo $pagination->num_pages; ?>;
 	$(document).on("pageinit","#orderpage",function(){
 		<?php if ($pagination->page < $pagination->num_pages) { ?>
-			auto_scroll(domore);
+			auto_scroll2(domore);
 		<?php } ?>
 	});
 
 	var starting = false;
 	function domore(){
-		if (starting) return;
+		if (starting == true) return;
 		
-		//$.mobile.loading('show');
 		$('omore').show();
 		starting = true;
 
@@ -43,14 +42,10 @@
 			$("#olist").find("li:last").slideDown(300);
 			
 			if (um_page >= um_pages) {
-				auto_scroll(null);
-			}
-			else {
-				auto_scroll(domore);
+				auto_scroll2(null);
 			}
 			
 			starting = false;
-			//$.mobile.loading('hide');
 			$('omore').hide();
 		});
 	};

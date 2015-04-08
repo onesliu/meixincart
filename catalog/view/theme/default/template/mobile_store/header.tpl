@@ -24,7 +24,7 @@
 
 <script type="text/javascript" src="catalog/view/javascript/oop.js?version=1.1"></script>
 <script type="text/javascript" src="catalog/view/javascript/jquery/jquery-1.11.1.min.js"></script>
-<script type="text/javascript" src="catalog/view/javascript/mobile_store.js?version=1.1"></script>
+<script type="text/javascript" src="catalog/view/javascript/mobile_store.js?version=1.2"></script>
 <script type="text/javascript" src="catalog/view/javascript/jquery_mobile/jquery.mobile.custom.min.js"></script>
 <script type="text/javascript" src="catalog/view/javascript/swiper/swiper.jquery.min.js"></script>
 
