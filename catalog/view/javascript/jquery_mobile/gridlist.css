@@ -40,7 +40,7 @@
 	.my-page .colum-list .ui-listview .ui-li-has-thumb > img:first-child,
 	.my-page .colum-list .ui-listview .ui-li-has-thumb > .ui-btn > img:first-child,
     .my-page .colum-list .ui-listview li.ui-li-has-thumb .ui-li-thumb {
-        height: 80%; /* To keep aspect ratio. */
+        height: auto; /* To keep aspect ratio. */
         max-width: 100%;
         max-height: none;
     }
