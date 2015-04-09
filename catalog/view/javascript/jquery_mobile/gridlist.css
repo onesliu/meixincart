@@ -62,7 +62,7 @@
 	}
 	.my-page .colum-list .ui-listview > li.ui-li-has-alt > .ui-btn + .ui-btn,
 	.my-page .colum-list .ui-listview .ui-btn-icon-right:after {
-		width: 3.5em;
+		width: 2.5em;
 		height: 2.5em;
 		min-height: 2.5em;
 		top: inherit;
