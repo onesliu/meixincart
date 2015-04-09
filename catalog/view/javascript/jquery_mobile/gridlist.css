@@ -16,7 +16,7 @@
     .my-page .colum-list .ui-listview li {
         float: left;
         width: 45%; /* 33.3333% incl. 2 x 1.2% margin */
-        height: 13em; /* 13em */
+        height: 11em; /* 13em */
         margin: .5625em 1.5%;
 		padding: 1%;
 	}
@@ -40,7 +40,7 @@
 	.my-page .colum-list .ui-listview .ui-li-has-thumb > img:first-child,
 	.my-page .colum-list .ui-listview .ui-li-has-thumb > .ui-btn > img:first-child,
     .my-page .colum-list .ui-listview li.ui-li-has-thumb .ui-li-thumb {
-        height: auto; /* To keep aspect ratio. */
+        height: 80%; /* To keep aspect ratio. */
         max-width: 100%;
         max-height: none;
     }
@@ -62,8 +62,9 @@
 	}
 	.my-page .colum-list .ui-listview > li.ui-li-has-alt > .ui-btn + .ui-btn,
 	.my-page .colum-list .ui-listview .ui-btn-icon-right:after {
-		width: 2.5em;
+		width: 3.5em;
 		height: 2.5em;
+		min-height: 2.5em;
 		top: inherit;
 		right: 0;
 		bottom: 0;
