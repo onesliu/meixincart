@@ -13,7 +13,7 @@ $menu_def = '{
 		{
 			"type":"view",
 			"name":"我的订单",
-			"url":"AUTO_LOGIN:mobile_store/order"
+			"url":"AUTO_LOGIN:mobile_store/order&id=5"
 		},
 		{
 			"name":"菜鸽子",
@@ -37,7 +37,10 @@ $data['keyword4'] = "bank";
 $data['remark'] = "如有任何疑问请拨打客服电话18180423915";;
 
 $wx = new WeixinTools();
-//$str = $wx->prepareMenu($menu_def, '123456');
+$str = $wx->prepareMenu($menu_def, '123456');
+echo $str, "\n";
+return;
+
 $str = $wx->makeModelMsg('123', '456', "http://abc.com?r=123", $data);
 echo $str, "\n";
 
