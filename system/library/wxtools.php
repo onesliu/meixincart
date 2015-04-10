@@ -75,7 +75,7 @@ class WeixinTools {
 	}
 	
 	public function prepareMenu($menu_def, $appid) {
-		$ret = preg_match_all("/AUTO_LOGIN:([a-zA-Z0-9\.\/\\_-]*)/", $menu_def, $matches);
+		$ret = preg_match_all("/AUTO_LOGIN:([a-zA-Z0-9\.\/\\_-&=]*)/", $menu_def, $matches);
 		if ($ret > 0) {
 	        foreach($matches[1] as $remote_file) {
 	        	if (strlen($remote_file) == 0) return "";
