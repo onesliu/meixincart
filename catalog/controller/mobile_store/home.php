@@ -57,6 +57,7 @@ class ControllerMobileStoreHome extends Controller {
 			if (count($actions > 0)) {
 				foreach($actions as &$act) {
 					$act->image = $this->model_tool_image->resize($act->image, $this->config->get('config_image_popup_width'), $this->config->get('config_image_popup_height'));
+					$act->href =  $this->url->link($act->url);
 				}
 			}
 		}

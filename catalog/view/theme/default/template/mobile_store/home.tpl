@@ -87,7 +87,7 @@
 			<div class="swiper-wrapper">
 				<?php foreach($actions as $act) {?>
 				<div class="swiper-slide">
-					<img src="<?php echo $act->image; ?>" />
+					<a href="<?php echo $act->href; ?>"><img src="<?php echo $act->image; ?>" /></a>
 				</div>
 				<?php } ?>
 			</div>
