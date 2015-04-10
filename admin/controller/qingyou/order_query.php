@@ -15,7 +15,7 @@ class ControllerQingyouOrderQuery extends ControllerWeixinWeixin {
 		if (isset($this->request->get['history']))
 			$history = $this->request->get['history'];
 			
-		$this->data['orders'] = $this->model_qingyou_order->getOrders(null, $districtid, $history, 2);
+		$this->data['orders'] = $this->model_qingyou_order->getOrders(null, $districtid, $history);
 		
 		$this->template = 'qingyou/order_query.tpl';
 		
@@ -37,6 +37,25 @@ class ControllerQingyouOrderQuery extends ControllerWeixinWeixin {
 		$districtid = $user['district_id'];
 			
 		$this->data['orders'] = $this->model_qingyou_order->searchOrders($date, $districtid);
+		
+		$this->template = 'qingyou/order_query.tpl';
+		
+		$this->response->setOutput($this->render());
+		
+	}
+	
+	public function special() {
+		
+		if (isset($this->request->get['product_id'])) {
+			$product_id = $this->request->get['product_id'];
+		}
+		if (isset($this->request->get['date'])) {
+			$date = $this->request->get['date'];
+		}
+		
+		$this->load->model('qingyou/order');
+		
+		$this->data['orders'] = $this->model_qingyou_order->searchSpecialOrders($product_id, $date);
 		
 		$this->template = 'qingyou/order_query.tpl';
 		

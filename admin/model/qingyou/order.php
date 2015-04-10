@@ -70,6 +70,31 @@ class ModelQingyouOrder extends Model {
 		
 	}
 	
+	function searchSpecialOrders($product_id = 0, $date = null) {
+		$condition = "where o.order_type = 2";
+		
+		if ($date != null) {
+			$condition .= " and o.date_added >= '$date 00:00:00'";
+		}
+		
+		$data = array();
+		$sql = sprintf($this->psql, $condition);
+		$query = $this->db->query($sql);
+		foreach ($query->rows as $result) {
+			$o = new stdClass();
+			foreach($result as $key => $val) {
+				$o->$key = $val;
+			}
+			$o->products = $this->getProducts($o->order_id);
+			if ($product_id == 0)
+				$data[] = $o;
+			else if ($product_id > 0 && $o->products[0]->product_id == $product_id)
+				$data[] = $o;
+		}
+
+		return $data;
+	}
+	
 	public function getOrderCustomer($orderid) {
 		$q = $this->db->query("select email from oc_customer where customer_id=(select customer_id from oc_order where order_id=$orderid)");
 		if ($q->num_rows != 0) {
