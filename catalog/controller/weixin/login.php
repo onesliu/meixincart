@@ -4,8 +4,15 @@ class ControllerWeixinLogin extends Controller {
 	
 	public function index() {
 		// Login override for admin users
-		if (isset($this->request->get['jump']))
+		if (isset($this->request->get['jump'])) {
 			$redirect = $this->request->get['jump'];
+			
+			foreach($this->request->get as $key => $val) {
+				if ($key != 'route' && $key != 'jump' && $key != 'code' && $key != 'state') {
+					$redirect .= "&$key=$val";
+				}
+			}
+		}
 		else
 			$redirect = 'mobile_store/allproduct';
 			
