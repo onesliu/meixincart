@@ -68,7 +68,41 @@ class ControllerWeixinShipping extends ControllerWeixinWeixin {
 			$this->data['shipping_time']["$tomorow $i:00:00"] = "明天 $i:00 前";
 		}
 		
-		$this->data['user_telephone'] = $this->customer->getTelephone(); 
+		$this->data['user_telephone'] = $this->customer->getTelephone();
+		$this->data['checkout'] = $this->url->link('mobile_store/checkout_order', '', 'wxpay');
+		$this->request->get['back'] = true;
+		if (isset($this->session->data['order_type'])) {
+			$order_type = $this->session->data['order_type'];
+		}
+		else {
+			$order_type = 1;
+		}
+		
+		if ($order_type == 1) {
+			$this->data['checkout_btn'] = "下 单 称 重";
+		}
+		else {
+			$this->data['checkout_btn'] = "微 信 支 付";
+		}
+		
+		$this->wx_address();
+		
+		$this->children = array(
+			'mobile_store/titlebar',
+			'mobile_store/header'
+		);
+		
+		// view template
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . $this->tfile)) {
+			$this->template = $this->config->get('config_template') . $this->tfile;
+		} else {
+			$this->template = 'default' . $this->tfile;
+		}
+		
+		$this->response->setOutput($this->render());
+	}
+	
+	private function wx_address() {
 		
 		$addrHelper = new PayHelper();
 		$addrHelper->add_param("appid", $this->appid);
@@ -89,22 +123,12 @@ class ControllerWeixinShipping extends ControllerWeixinWeixin {
 		$addrParam['appId'] = $this->appid;
 		
 		$this->data['addrParam'] = $addrParam;
-		
-		//$this->log->write(print_r($addrParam,true));
-		
-		// view template
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . $this->tfile)) {
-			$this->template = $this->config->get('config_template') . $this->tfile;
-		} else {
-			$this->template = 'default' . $this->tfile;
-		}
-		
-		$this->render();
 	}
 	
 	public function special() {
+		
 		if (!isset($this->request->get['product_id'])) {
-			$this->log->write('没有产品ID');
+			$this->log->write('shipping special: 没有产品ID');
 			$this->response->setOutput('没有产品ID');
 			return;
 		}
@@ -115,7 +139,7 @@ class ControllerWeixinShipping extends ControllerWeixinWeixin {
 		$this->load->model('catalog/product');
 		$product_info = $this->model_catalog_product->getProduct($product_id);
 		if (!$product_info) {
-			$this->log->write('不能查询到产品信息');
+			$this->log->write('shipping special: 不能查询到产品信息');
 			return;
 		}
 		
@@ -144,11 +168,8 @@ class ControllerWeixinShipping extends ControllerWeixinWeixin {
 		$this->data['checkout_url'] = $this->url->link2('mobile_store/checkout_order/special', 'product_id='.$product_id);
 		$this->request->get['back'] = true;
 		
-		$this->children = array(
-			'mobile_store/titlebar',
-			'mobile_store/header'
-		);
 		$this->index();
+		
 		$this->response->setOutput($this->output);
 	}
 }

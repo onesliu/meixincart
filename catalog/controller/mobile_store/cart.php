@@ -54,46 +54,6 @@ class ControllerMobileStoreCart extends Controller {
 			$this->redirect($this->url->link('mobile_store/cart', '', 'wxpay'));
 		}
 			
-		/*
-		// Coupon
-		if (isset($this->request->post['coupon']) && $this->validateCoupon()) { 
-			$this->session->data['coupon'] = $this->request->post['coupon'];
-				
-			$this->session->data['success'] = $this->language->get('text_coupon');
-			
-			$this->redirect($this->url->link('mobile_store/cart', '', 'wxpay'));
-		}
-		
-		// Voucher
-		if (isset($this->request->post['voucher']) && $this->validateVoucher()) { 
-			$this->session->data['voucher'] = $this->request->post['voucher'];
-				
-			$this->session->data['success'] = $this->language->get('text_voucher');
-				
-			$this->redirect($this->url->link('mobile_store/cart', '', 'wxpay'));
-		}
-
-		// Reward
-		if (isset($this->request->post['reward']) && $this->validateReward()) { 
-			$this->session->data['reward'] = $this->request->post['reward'];
-				
-			$this->session->data['success'] = $this->language->get('text_reward');
-				
-			$this->redirect($this->url->link('mobile_store/cart', '', 'wxpay'));
-		}
-		
-		// Shipping
-		if (isset($this->request->post['shipping_method']) && $this->validateShipping()) {
-			$shipping = explode('.', $this->request->post['shipping_method']);
-			
-			$this->session->data['shipping_method'] = $this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]];
-			
-			$this->session->data['success'] = $this->language->get('text_shipping');
-			
-			$this->redirect($this->url->link('mobile_store/cart', '', 'wxpay'));
-		}
-		*/
-		
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->request->get['back'] = true;
 		$this->data['url_continue'] = $this->url->link('mobile_store/allproduct', '', 'SSL');
@@ -397,7 +357,7 @@ class ControllerMobileStoreCart extends Controller {
 						
 			$this->data['continue'] = $this->url->link('mobile_store/home');
 			
-			$this->data['checkout'] = $this->url->link('mobile_store/checkout_order', '', 'wxpay');
+			$this->data['checkout'] = $this->url->link('weixin/shipping', '', '');
 			
 			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/mobile_store/cart.tpl')) {
 				$this->template = $this->config->get('config_template') . '/template/mobile_store/cart.tpl';
@@ -409,8 +369,6 @@ class ControllerMobileStoreCart extends Controller {
 				'mobile_store/titlebar',
 				'mobile_store/navi',
 				'mobile_store/header',
-				'mobile_store/coupon',
-				'weixin/shipping'
 			);
 						
 			$this->response->setOutput($this->render());					

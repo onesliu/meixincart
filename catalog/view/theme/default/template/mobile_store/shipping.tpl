@@ -17,7 +17,7 @@
           </select></td>
       </tr>
       <tr><td><span class="required">*</span> <?php echo $entry_zone; ?></td></tr>
-      <tr>  
+      <tr>
 		<td><select name="zone_id">
           </select></td>
       </tr>

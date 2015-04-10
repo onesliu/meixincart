@@ -1,7 +1,8 @@
 <?php
 class ControllerMobileStoreCheckoutOrder extends Controller { 
 	public function index() {
-		if (!$this->customer->isLogged() && (!$this->cart->hasProducts() && !empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
+		if (!$this->customer->isLogged() && (!$this->cart->hasProducts())) {
+			$this->log->write('checkout cart product error: not logged.');
 	  		$this->redirect($this->url->link('mobile_store/cart'));
     	}	
 
