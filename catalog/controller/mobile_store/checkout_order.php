@@ -436,8 +436,16 @@ class ControllerMobileStoreCheckoutOrder extends Controller {
 		}
 					
 		//$this->log->write(print_r($this->request->post, true));
-		$data['shipping_district_id'] = $this->request->post['district-select'];
-		$data['shipping_time'] = $this->request->post['time-select'];
+		if (isset($this->request->post['district-select']))
+			$data['shipping_district_id'] = $this->request->post['district-select'];
+		else
+			$data['shipping_district_id'] = 0;
+			
+		if (isset($this->request->post['time-select']))
+			$data['shipping_time'] = $this->request->post['time-select'];
+		else
+			$data['shipping_time'] = 0;
+			
 		$data['shipping_firstname'] = $this->request->post['user_name'];
 		$data['shipping_telephone'] = $this->request->post['user_telephone'];
 		$data['shipping_address_1'] = $this->request->post['user_addr'];
