@@ -50,17 +50,17 @@ class ModelQingyouOrder extends Model {
 		
 		$condition = "where";
 		if (isset($data['begin']))
-			$condition .= " o.date_added >=" .$data['begin'];
+			$condition .= " o.date_added>='" .$data['begin'] ."'";
 			
 		if (isset($data['end']))
-			$condition .= " o.date_added <=" .$data['end'];
+			$condition .= " o.date_added<='" .$data['end'] ."'";
 			
 		if (isset($data['districtid']))
-			$condition .= " and shipping_district_id = " .$data['districtid'];
+			$condition .= " and shipping_district_id=" .$data['districtid'];
 			
 		$product_id = 0;
 		if (isset($data['productid'])) {
-			$condition .= " and o.order_type = 2";
+			$condition .= " and o.order_type=2";
 			$product_id = $data['productid'];
 		}
 		
