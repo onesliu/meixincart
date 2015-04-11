@@ -48,12 +48,13 @@ class ModelQingyouOrder extends Model {
 	
 	public function searchOrders($data) {
 		
-		$condition = "where";
 		if (isset($data['begin']))
-			$condition .= " o.date_added>='" .$data['begin'] ."'";
+			$condition .= "where o.date_added>='" .$data['begin'] ."'";
+		else
+			return false;
 			
 		if (isset($data['end']))
-			$condition .= " o.date_added<='" .$data['end'] ."'";
+			$condition .= " and o.date_added<='" .$data['end'] ."'";
 			
 		if (isset($data['districtid']))
 			$condition .= " and shipping_district_id=" .$data['districtid'];
@@ -62,6 +63,10 @@ class ModelQingyouOrder extends Model {
 		if (isset($data['productid'])) {
 			$condition .= " and o.order_type=2";
 			$product_id = $data['productid'];
+		}
+		
+		if (isset($data['statusid'])) {
+			$condition .= " and o.order_status_id=" .$data['statusid'];
 		}
 		
 		$sql = sprintf($this->psql, $condition);
