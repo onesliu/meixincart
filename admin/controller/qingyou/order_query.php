@@ -110,6 +110,13 @@ class ControllerQingyouOrderQuery extends ControllerWeixinWeixin {
 		$this->response->setOutput($this->render());
 	}
 	
+	public function specials() {
+		$this->load->model('qingyou/order');
+		$this->template = 'qingyou/order_query.tpl';
+		$this->data['orders'] = $this->model_qingyou_order->getSpecials();
+		$this->response->setOutput($this->render());
+	}
+	
 	public function balance() {
 		$this->load->model('qingyou/order');
 		

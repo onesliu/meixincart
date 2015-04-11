@@ -244,6 +244,21 @@ class ModelQingyouOrder extends Model {
 		return $data;
 	}
 	
+	public function getSpecials() {
+		$query = $this->db->query("select pd.name, p.status, p.price from oc_product p join oc_product_description pd on p.product_id=pd.product_id where product_type=2");
+		
+		$data = array();
+		foreach ($query->rows as $result) {
+			$o = new stdClass();
+			foreach($result as $key => $val) {
+				$o->$key = $val;
+			}
+			$data[] = $o;
+		}
+		
+		return $data;
+	}
+	
 	public function getBalance($districtid) {
 		$condition = "";
 		if ($districtid > 0)
