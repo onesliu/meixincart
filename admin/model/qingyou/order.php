@@ -49,7 +49,7 @@ class ModelQingyouOrder extends Model {
 	public function searchOrders($data) {
 		
 		if (isset($data['begin']))
-			$condition .= "where o.date_added>='" .$data['begin'] ."'";
+			$condition = "where o.date_added>='" .$data['begin'] ."'";
 		else
 			return false;
 			
