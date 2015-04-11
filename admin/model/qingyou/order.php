@@ -245,7 +245,7 @@ class ModelQingyouOrder extends Model {
 	}
 	
 	public function getSpecials() {
-		$query = $this->db->query("select pd.name, p.status, p.price from oc_product p join oc_product_description pd on p.product_id=pd.product_id where product_type=2");
+		$query = $this->db->query("select p.product_id, pd.name, p.status, p.price from oc_product p join oc_product_description pd on p.product_id=pd.product_id where product_type=2");
 		
 		$data = array();
 		foreach ($query->rows as $result) {
