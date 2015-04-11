@@ -28,34 +28,21 @@ class ControllerQingyouOrderQuery extends ControllerWeixinWeixin {
 			$this->errorReturn(-1, 'date参数缺失');
 			return;
 		}
-		
 		$date = $this->request->get['date'];
+		$qc['begin'] = "$date 00:00:00";
 		
-		$this->load->model('qingyou/order');
-		
-		$user = $this->user->getUserInfo();
-		$districtid = $user['district_id'];
-			
-		$this->data['orders'] = $this->model_qingyou_order->searchOrders($date, $districtid);
-		
-		$this->template = 'qingyou/order_query.tpl';
-		
-		$this->response->setOutput($this->render());
-		
-	}
-	
-	public function special() {
-		
-		if (isset($this->request->get['product_id'])) {
-			$product_id = $this->request->get['product_id'];
+		if (isset($this->request->get['special_id'])) {
+			$qc['productid'] = $this->request->get['special_id'];
 		}
-		if (isset($this->request->get['date'])) {
-			$date = $this->request->get['date'];
+		else {
+			$qc['end'] = "$date 23:59:59";
+			$user = $this->user->getUserInfo();
+			$qc['districtid'] = $user['district_id'];
 		}
 		
 		$this->load->model('qingyou/order');
-		
-		$this->data['orders'] = $this->model_qingyou_order->searchSpecialOrders($product_id, $date);
+
+		$this->data['orders'] = $this->model_qingyou_order->searchOrders($qc);
 		
 		$this->template = 'qingyou/order_query.tpl';
 		
