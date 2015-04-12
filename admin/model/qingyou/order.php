@@ -66,7 +66,7 @@ class ModelQingyouOrder extends Model {
 		}
 		
 		if (isset($data['statusid'])) {
-			if ($data['statusid'] > 0 && $data['statusid'] < 6)
+			if ($data['statusid'] > 0 && $data['statusid'] <= 6)
 				$condition .= " and o.order_status_id=" .$data['statusid'];
 			else if ($data['statusid'] == 7)
 				$condition .= " and o.order_status_id<4";
