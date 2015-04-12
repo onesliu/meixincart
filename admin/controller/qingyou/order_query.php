@@ -47,7 +47,7 @@ class ControllerQingyouOrderQuery extends ControllerWeixinWeixin {
 		$this->load->model('qingyou/order');
 
 		$this->data['orders'] = $this->model_qingyou_order->searchOrders($qc);
-		if ($this->data['orders'] == false) {
+		if ($this->data['orders'] === false) {
 			$this->errorReturn(-1, '没有起始时间，查询失败');
 			return;
 		}

@@ -66,7 +66,12 @@ class ModelQingyouOrder extends Model {
 		}
 		
 		if (isset($data['statusid'])) {
-			$condition .= " and o.order_status_id=" .$data['statusid'];
+			if ($data['statusid'] > 0 && $data['statusid'] < 6)
+				$condition .= " and o.order_status_id=" .$data['statusid'];
+			else if ($data['statusid'] == 7)
+				$condition .= " and o.order_status_id<4";
+			else if ($data['statusid'] == 8)
+				$condition .= " and o.order_status_id>=4";
 		}
 		
 		$sql = sprintf($this->psql, $condition);
