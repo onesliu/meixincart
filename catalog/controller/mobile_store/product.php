@@ -368,7 +368,7 @@ class ControllerMobileStoreProduct extends Controller {
 				$tfile = 'product_special.tpl';
 				if ($product_info['quantity'] <= 0) {
 					$this->data['special_url'] = '#';
-					$this->data['special_btn'] = "商 品 下 架";
+					$this->data['special_btn'] = "商 品 已 下 架";
 				}
 				else {
 					$this->data['special_url'] = $this->url->link('weixin/shipping/special', 'product_id='.$product_info['product_id']);
