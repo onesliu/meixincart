@@ -43,7 +43,7 @@
 		
 	</div>
 	<div data-role="footer" data-position="fixed" data-theme="d" data-tap-toggle="false">
-		<span><center><a class="ui-btn ui-corner-all ui-shadow ui-btn-d ui-btn-inline" href="<?php echo $special_url; ?>">犒 劳 自 己</a>
+		<span><center><a class="ui-btn ui-corner-all ui-shadow ui-btn-d ui-btn-inline" href="<?php echo $special_url; ?>"><?php echo $special_btn; ?></a>
 	</div>
 
 	<script type="text/javascript"><!--

@@ -366,7 +366,14 @@ class ControllerMobileStoreProduct extends Controller {
 			$tfile = 'product.tpl';
 			if ($product_info['product_type'] == 2) {
 				$tfile = 'product_special.tpl';
-				$this->data['special_url'] = $this->url->link('weixin/shipping/special', 'product_id='.$product_info['product_id']);
+				if ($product_info['quantity'] <= 0) {
+					$this->data['special_url'] = '#';
+					$this->data['special_btn'] = "商 品 下 架";
+				}
+				else {
+					$this->data['special_url'] = $this->url->link('weixin/shipping/special', 'product_id='.$product_info['product_id']);
+					$this->data['special_btn'] = "犒 劳 自 己";
+				}
 			}
 			
 			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/mobile_store/'.$tfile)) {
