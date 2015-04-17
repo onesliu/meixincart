@@ -48,7 +48,7 @@
 	    </form>
 	    <div class="ui-body line-box" style="text-align:center;">
 	    	<?php if (isset($gap_time) && $gap_time == true) { ?>
-	    	<input type="button" disabled="" class="ui-btn ui-corner-all ui-shadow ui-btn-d ui-btn-inline" value="半小时后可下明日订单" />
+	    	<input type="button" disabled="" class="ui-btn ui-corner-all ui-shadow ui-btn-d ui-btn-inline" value="一小时后可下明日订单" />
 	    	<?php } else {?>
 			<input type="button" id="checkoutbtn" onclick="checkout();" class="ui-btn ui-corner-all ui-shadow ui-btn-d ui-btn-inline" value="<?php echo $checkout_btn;?>" />
 			<?php } ?>

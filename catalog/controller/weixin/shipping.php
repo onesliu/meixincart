@@ -63,7 +63,7 @@ class ControllerWeixinShipping extends ControllerWeixinWeixin {
 		if ($now < $cuttime2)
 			$this->data['shipping_time']["$today $last_shipping_time:00"] = "今天下午6点前";
 			
-		if ($now - $cuttime2 >= 0 && $now - $cuttime2 < 1800) { //下午截止下单后半小时内不能下单
+		if ($now - $cuttime2 >= 0 && $now - $cuttime2 < 3600) { //下午截止下单后半小时内不能下单
 			$this->data['gap_time'] = true;
 		}
 
