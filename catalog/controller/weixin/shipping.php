@@ -148,8 +148,8 @@ class ControllerWeixinShipping extends ControllerWeixinWeixin {
 		$this->load->model('tool/image');
 		
 		$this->data['name'] = $product_info['name'];
-		$this->data['price'] = $this->currency->format($product_info['price']); //产品价格
-		$this->data['unit'] = $product_info['sku']; //库存单位
+		$this->data['price'] = $this->currency->format($product_info['sellprice']); //销售单位价格
+		$this->data['unit'] = $product_info['sellunit']; //销售单位
 		if ($product_info['image']) {
 			$this->data['image'] = $this->model_tool_image->resize($product_info['image'], $this->config->get('config_image_popup_width'), $this->config->get('config_image_popup_height'));
 		} else {

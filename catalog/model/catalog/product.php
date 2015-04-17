@@ -92,6 +92,9 @@ class ModelCatalogProduct extends Model {
 				'product_type'     => $query->row['product_type'],
 				'weight_class'  => $query->row['weight_class'],
 				'type'			   => $type,
+				'unit' 			=> $query->row['sku'], //库存单位
+				'sellunit' 		=> $query->row['upc'], //销售单位
+				'sellprice' 	=> $query->row['mpn'], //销售单位价格
 				'subscribe'		   => ($query->row['model'].'，每'.((int)$query->row['weight']) . $query->row['weight_class'].'单价')
 			);
 		} else {

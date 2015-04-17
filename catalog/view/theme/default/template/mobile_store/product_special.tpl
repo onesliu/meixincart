@@ -17,7 +17,7 @@
 
 			<div class="ui-body">
 				<h3 style="margin-top:.4em;margin-bottom:.4em;"><?php echo $heading_title; ?></h3>
-				<h4 style="margin-top:.4em;"><span style="color:red;"><?php echo $price; ?></span><span class="light-font">/<?php echo $unit; ?></span></h4>
+				<h4 style="margin-top:.4em;"><span style="color:red;"><?php echo $sellprice; ?></span><span class="light-font">/<?php echo $sellunit; ?></span></h4>
 			</div>
 		</div>
 		

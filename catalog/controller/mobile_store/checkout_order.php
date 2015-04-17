@@ -70,7 +70,7 @@ class ControllerMobileStoreCheckoutOrder extends Controller {
   			$product['quantity'] = 1;
   		}
   		
-  		$product['total'] = $product['price'] * $product['quantity'];
+  		$product['total'] = $product['sellprice'] * $product['quantity'];
   		$product['weight'] = $product['weight'] * $product['quantity'];
   		
   		$products = array();
