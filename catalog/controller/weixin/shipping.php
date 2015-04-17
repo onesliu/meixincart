@@ -58,17 +58,17 @@ class ControllerWeixinShipping extends ControllerWeixinWeixin {
 		$cuttime2 = strtotime("$today $last_shipping_time:00");
 		
 		if ($now < $cuttime1)
-			$this->data['shipping_time']["$today $first_shipping_time:00"] = "今天中午12点前";
+			$this->data['shipping_time']["$today 11:30:00"] = "今天中午12点前";
 
 		if ($now < $cuttime2)
-			$this->data['shipping_time']["$today $last_shipping_time:00"] = "今天下午6点前";
+			$this->data['shipping_time']["$today 17:30:00"] = "今天下午6点前";
 			
 		if ($now - $cuttime2 >= 0 && $now - $cuttime2 < 3600) { //下午截止下单后半小时内不能下单
 			$this->data['gap_time'] = true;
 		}
 
-		$this->data['shipping_time']["$tomorow $first_shipping_time:00"] = "明天中午12点前";
-		$this->data['shipping_time']["$tomorow $last_shipping_time:00"] = "明天下午6点前";
+		$this->data['shipping_time']["$tomorow 11:30:00"] = "明天中午12点前";
+		$this->data['shipping_time']["$tomorow 17:30:00"] = "明天下午6点前";
 		
 		$this->data['user_telephone'] = $this->customer->getTelephone();
 		$this->data['checkout'] = $this->url->link('mobile_store/checkout_order', '', 'wxpay');
