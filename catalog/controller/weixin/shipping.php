@@ -39,34 +39,36 @@ class ControllerWeixinShipping extends ControllerWeixinWeixin {
 		}
 		
 		// shipping time
-		$shipping_interval = $this->config->get('shipping_interval');
-		if ($shipping_interval == null)
-			$shipping_interval = 6;
-		
 		$first_shipping_time = $this->config->get('first_shipping_time');
 		if ($first_shipping_time == null)
-			$first_shipping_time = 12;
+			$first_shipping_time = '10:30';
 		$this->data['first_shipping_time'] = $first_shipping_time;
 			
 		$last_shipping_time = $this->config->get('last_shipping_time');
 		if ($last_shipping_time == null)
-			$last_shipping_time = 18;
+			$last_shipping_time = '16:30';
 		$this->data['last_shipping_time'] = $last_shipping_time;
 		
-		$date_now = getdate();
+		$now = time();
 		
-		$today = date("Y-m-d", time());
-		$tomorow = date("Y-m-d", time()+24*60*60);
+		$today = date("Y-m-d", $now);
+		$tomorow = date("Y-m-d", $now+24*60*60);
 		
-		for($i = $first_shipping_time;$i <= $last_shipping_time; $i+= $shipping_interval) {
-			if ($date_now['hours'] < $i-1) {
-				$this->data['shipping_time']["$today $i:00:00"] = "今天 $i:00 前";
-			}
+		$cuttime1 = strtotime("$today $first_shipping_time:00");
+		$cuttime2 = strtotime("$today $last_shipping_time:00");
+		
+		if ($now < $cuttime1)
+			$this->data['shipping_time']["$today $first_shipping_time:00"] = "今天中午12点前";
+
+		if ($now < $cuttime2)
+			$this->data['shipping_time']["$today $last_shipping_time:00"] = "今天下午6点前";
+			
+		if ($now - $cuttime2 >= 0 && $now - $cuttime2 < 1800) { //下午截止下单后半小时内不能下单
+			$this->data['gap_time'] = true;
 		}
-		
-		for($i = $first_shipping_time; $i <= $last_shipping_time; $i+= $shipping_interval) {
-			$this->data['shipping_time']["$tomorow $i:00:00"] = "明天 $i:00 前";
-		}
+
+		$this->data['shipping_time']["$tomorow $first_shipping_time:00"] = "明天中午12点前";
+		$this->data['shipping_time']["$tomorow $last_shipping_time:00"] = "明天下午6点前";
 		
 		$this->data['user_telephone'] = $this->customer->getTelephone();
 		$this->data['checkout'] = $this->url->link('mobile_store/checkout_order', '', 'wxpay');

@@ -42,13 +42,16 @@
 		      		<option value="<?php echo $sk; ?>"><?php echo $st; ?></option>
 		      		<?php } ?>
 		      	</select>
-		      	<span><?php echo $first_shipping_time.':00收货，'.($first_shipping_time-1).':00截止下单。'; ?><br/>
-		      		<?php echo $last_shipping_time.':00收货，'.($last_shipping_time-1).':00截止下单。'; ?>
+		      	<span><?php echo "上午".$first_shipping_time."截止下单，下午".$last_shipping_time."截止下单。"; ?><br/>
 		      	</span>
 		    </div>
 	    </form>
 	    <div class="ui-body line-box" style="text-align:center;">
+	    	<?php if (isset($gap_time) && $gap_time == true) { ?>
+	    	<input type="button" disabled="" class="ui-btn ui-corner-all ui-shadow ui-btn-d ui-btn-inline" value="半小时后可下明日订单" />
+	    	<?php } else {?>
 			<input type="button" id="checkoutbtn" onclick="checkout();" class="ui-btn ui-corner-all ui-shadow ui-btn-d ui-btn-inline" value="<?php echo $checkout_btn;?>" />
+			<?php } ?>
 		</div>
 	</div>
 	<script type="text/javascript"><!--
