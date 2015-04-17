@@ -165,7 +165,7 @@ class ControllerMobileStoreCategory extends Controller {
 					'price'       => $price,
 					'unit'		  => $result['sku'], //库存单位
 					'sellunit'	  => $result['upc'], //销售单位
-					'sellprice'	  => $result['mpn'], //销售单位价格
+					'sellprice'	  => $this->currency->format($result['mpn']), //销售单位价格
 					'product_type' => $result['product_type'],
 					'special'     => $special,
 					'tax'         => $tax,

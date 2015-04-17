@@ -182,7 +182,7 @@ class ControllerMobileStoreProduct extends Controller {
 			$this->data['subscribe'] = $product_info['subscribe'];
 			$this->data['unit'] = $product_info['sku']; //库存单位
 			$this->data['sellunit'] = $product_info['upc']; //销售单位
-			$this->data['sellprice'] = $product_info['mpn']; //销售单位价格
+			$this->data['sellprice'] = $this->currency->format($product_info['mpn']); //销售单位价格
 			
 			if ($product_info['quantity'] <= 0) {
 				$this->data['stock'] = $product_info['stock_status'];
