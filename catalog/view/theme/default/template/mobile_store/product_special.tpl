@@ -15,24 +15,22 @@
 				<div class="swiper-pagination swiper-pagination-white"></div>
 			</div>
 
-			<div class="ui-body">
+			<div>
 				<h3 style="margin-top:.4em;margin-bottom:.4em;"><?php echo $heading_title; ?></h3>
 				<h4 style="margin-top:.4em;"><span style="color:red;"><?php echo $sellprice; ?></span><span class="light-font">/<?php echo $sellunit; ?></span></h4>
 			</div>
 		</div>
 		
-		<div class="ui-body line-box">
-			<div>
+		<div class="line-box">
 			<?php if ($attribute_groups) { ?>
 				<?php foreach ($attribute_groups as $attribute_group) { ?>
 				<?php foreach ($attribute_group['attribute'] as $attribute) { ?>
 					<div class="attr-block"><?php echo $attribute['name']; ?>：<?php echo $attribute['text']; ?></div>
 				<?php }} ?>
 			<?php } ?>
-			</div>
 		</div>
 		
-		<div class="ui-body line-box">
+		<div class="line-box">
 			<h4>商品详情</h4>
 			<p><?php echo $description; ?></p>
 		</div>

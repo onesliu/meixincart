@@ -37,6 +37,7 @@
 .line-box {
 	border-top:solid 1px #eeeeee;
 	margin-bottom:.4em;
+	overflow:hidden;
 }
 .light-font {
 	color: #bbbbbb;
