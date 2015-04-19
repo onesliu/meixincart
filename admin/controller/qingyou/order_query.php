@@ -231,7 +231,7 @@ class ControllerQingyouOrderQuery extends ControllerWeixinWeixin {
 		$res = $resHelper->parse_response($response);
 		if (isset($res->return_code) == false || isset($res->return_msg) == false ||
 			isset($res->result_code) == false || (string)$res->return_code != 'SUCCESS' ||
-			(string)$res->result_code != 'SUCCESS') {
+			(string)$res->result_code != 'SUCCESS' || isset($res->bank_type) == false) {
 			$this->log->write("payquery: 订单未支付成功: \n". $response);
 			$return->status = 1; //未支付成功
 			$this->response->setOutput(json_encode($return));
