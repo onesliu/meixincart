@@ -6,7 +6,7 @@
 		<div class="swiper-container">
 			<img width="100%" src="<?php echo $popup; ?>" />
 			
-			<div class="ui-body">
+			<div>
 				<h3 style="display:inline-block;margin-bottom:.4em;"><?php echo $heading_title; ?></h3>
 				<h4 style="display:inline-block;margin-bottom:.4em;"><span style="color:red;"><?php echo $price; ?></span>/<?php echo $unit; ?></h4>
 				<h4 style="display:block;margin:1em 0 .3em 0;">购买数量： （<?php echo $model; ?>）</h4>
@@ -20,7 +20,7 @@
 		</div>
 		
 		<?php if ($attribute_groups) { ?>
-		<div class="ui-body line-box">
+		<div class="line-box">
 			<?php foreach ($attribute_groups as $attribute_group) { ?>
 			<?php foreach ($attribute_group['attribute'] as $attribute) { ?>
 				<h4><?php echo $attribute_group['name']; ?>：<?php echo $attribute['name']; ?></h4>
@@ -29,7 +29,7 @@
 		</div>
 		<?php } ?>
 		
-		<div class="ui-body line-box">
+		<div class="line-box">
 			<h4><?php echo $tab_description; ?></h4>
 			<p><?php echo $description; ?></p>
 		</div>

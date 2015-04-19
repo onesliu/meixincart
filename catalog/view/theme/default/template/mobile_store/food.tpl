@@ -6,7 +6,7 @@
 		<div class="swiper-container">
 			<img width="100%" src="<?php echo $food['image1']; ?>" />
 			
-			<div class="ui-body">
+			<div>
 				<h3 style="display:inline-block;margin-bottom:.4em;"><?php echo $food['name']; ?></h3>
 				<h5 style="color:gray;display:inline-block;margin-bottom:.4em;">[ <?php foreach($food['attrs'] as $attr) { foreach($attr as $a) {echo $a['name'].' ';}} ?>]</h5>
 				<p><?php echo $food['desp']; ?></p>
