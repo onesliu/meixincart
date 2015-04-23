@@ -48,6 +48,9 @@ class ModelCatalogProduct extends Model {
 			else
 				$type = '特产精品';
 				
+			$pcount = $this->db->query("select sum(quantity) as pcount from oc_order_product op join oc_order o on op.order_id=o.order_id
+				where op.product_id=$product_id and o.order_status_id < 5");
+				
 			return array(
 				'product_id'       => $query->row['product_id'],
 				'name'             => $query->row['name'],
@@ -95,6 +98,8 @@ class ModelCatalogProduct extends Model {
 				'unit' 			=> $query->row['sku'], //库存单位
 				'sellunit' 		=> $query->row['upc'], //销售单位
 				'sellprice' 	=> $query->row['mpn'], //销售单位价格
+				'unitcount' 	=> $query->row['jan'], //销售单位数量
+				'sellcount'		=> $pcount->row['pcount'], //销售数量
 				'subscribe'		   => ($query->row['model'].'，每'.((int)$query->row['weight']) . $query->row['weight_class'].'单价')
 			);
 		} else {
