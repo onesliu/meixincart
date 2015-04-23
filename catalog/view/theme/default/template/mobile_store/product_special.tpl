@@ -20,7 +20,7 @@
 				<h4 style="margin-top:.4em;">
 					<span style="color:red;"><?php echo $sellprice; ?></span>
 					<span class="light-font">/<?php echo $sellunit; ?></span>
-					<span class="light-font" style="margin-left: 1em;">已售<?php echo $sellcount.$sellunit; ?></span>
+					<span class="light-font" style="margin-left: 1em;">已售<?php echo ($sellcount*$unitcount).$unit; ?></span>
 				</h4>
 			</div>
 		</div>
