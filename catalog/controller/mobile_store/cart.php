@@ -5,6 +5,11 @@ class ControllerMobileStoreCart extends Controller {
 	public function index() {
 		$this->language->load('checkout/cart');
 
+		if ($this->config->get('store_closed') > 0) {
+			$this->redirect($this->url->link('weixin/closed'));
+			return;
+		}
+		
 		if (!isset($this->session->data['vouchers'])) {
 			$this->session->data['vouchers'] = array();
 		}
@@ -34,7 +39,7 @@ class ControllerMobileStoreCart extends Controller {
 			unset($this->session->data['payment_methods']); 
 			unset($this->session->data['reward']);
 			
-			$this->redirect($this->url->link('mobile_store/cart', '', 'wxpay'));  			
+			$this->redirect($this->url->link('mobile_store/cart', '', 'wxpay'));
 		}
        	
 		// Remove

@@ -45,6 +45,10 @@
                 <span class="error"><?php echo $error_shipping_interval; ?></span>
                 <?php } ?></td>
             </tr>
+            <tr>
+              <td><span class="required">*</span> <?php echo $label_store_closed; ?></td>
+              <td><input type="text" name="store_closed" value="<?php echo $store_closed; ?>" size="10" />
+            </tr>
           </table>
         </div>
         <div id="tab-actions">

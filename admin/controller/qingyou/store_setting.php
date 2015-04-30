@@ -40,12 +40,14 @@ class ControllerQingyouStoreSetting extends Controller {
 		$this->data['label_minum_order'] = $this->language->get('minum_order');
 		$this->data['label_help_interval'] = $this->language->get('help_interval');
 		$this->data['label_shipping_interval'] = $this->language->get('shipping_interval');
+		$this->data['label_store_closed'] = '商城关闭';
 		
 		$this->data['minum_order'] = (isset($data['minum_order']))?$data['minum_order']:'';
 		$this->data['help_interval'] = (isset($data['help_interval']))?$data['help_interval']:'';
 		$this->data['shipping_interval'] = (isset($data['shipping_interval']))?$data['shipping_interval']:'';
+		$this->data['store_closed'] = (isset($data['store_closed']))?$data['store_closed']:'';
 		$this->data['config_home_actions'] = (isset($data['config_home_actions']))?$data['config_home_actions']:'';
-		
+		$this->log->write(print_r($this->data, true));
 		$actions = array();
 		$home_actions = $this->config->get('config_home_actions');
 		if ($home_actions != '') {
