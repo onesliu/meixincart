@@ -47,7 +47,7 @@ class ControllerQingyouStoreSetting extends Controller {
 		$this->data['shipping_interval'] = (isset($data['shipping_interval']))?$data['shipping_interval']:'';
 		$this->data['store_closed'] = (isset($data['store_closed']))?$data['store_closed']:'';
 		$this->data['config_home_actions'] = (isset($data['config_home_actions']))?$data['config_home_actions']:'';
-		$this->log->write(print_r($this->data, true));
+
 		$actions = array();
 		$home_actions = $this->config->get('config_home_actions');
 		if ($home_actions != '') {
