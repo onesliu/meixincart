@@ -86,6 +86,8 @@
 		$("#op<?php echo $v; ?>").prop( "checked", true ).checkboxradio( "refresh" );
 		$("#op<?php echo $v; ?>").click();
 		<?php } ?>
+		var price = <?php echo $sellprice; ?>;
+		$('#price').text(price.toFixed(2));
 	});
 
 	function changecount(num) {
