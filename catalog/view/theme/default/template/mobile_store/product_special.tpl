@@ -89,6 +89,8 @@
 			mySwiper.update();
 		}, 500);
 
+		var price = <?php echo $sellprice; ?>;
+		$('#price').text(price.toFixed(2));
 		$("input[type='radio']").attr("checked",false).checkboxradio("refresh");
 		$("#checkoutbtn").button( "enable" );
 		$("#checkoutbtn").button( "refresh" );
