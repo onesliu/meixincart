@@ -1274,6 +1274,8 @@ class ControllerCatalogProduct extends Controller {
 		$this->load->model('design/layout');
 		
 		$this->data['layouts'] = $this->model_design_layout->getLayouts();
+		
+		//$this->log->write(print_r($product_options,true));
 										
 		$this->template = 'catalog/product_form.tpl';
 		$this->children = array(

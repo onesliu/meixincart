@@ -148,7 +148,8 @@ class ControllerWeixinShipping extends ControllerWeixinWeixin {
 		$this->load->model('tool/image');
 		
 		$this->data['name'] = $product_info['name'];
-		$this->data['price'] = $this->currency->format($product_info['sellprice']); //销售单位价格
+		$this->data['price'] = $product_info['sellprice']; //销售单位价格
+		$this->data['showprice'] = $this->currency->format($product_info['sellprice']); //销售单位价格
 		$this->data['unit'] = $product_info['sellunit']; //销售单位
 		if ($product_info['image']) {
 			$this->data['image'] = $this->model_tool_image->resize($product_info['image'], $this->config->get('config_image_popup_width'), $this->config->get('config_image_popup_height'));
@@ -166,6 +167,53 @@ class ControllerWeixinShipping extends ControllerWeixinWeixin {
 				'thumb' => $this->model_tool_image->resize($result['image'], $this->config->get('mobile_store_image_width'), $this->config->get('mobile_store_image_height'))
 			);
 		}
+		
+  		if (isset($this->request->post['options'])) {
+			$option = $this->request->post['options'];
+		} else {
+			$option = array();	
+		}
+		$this->data['option_selected'] = $option;
+
+		$this->data['options'] = array();
+		
+		foreach ($this->model_catalog_product->getProductOptions($this->request->get['product_id']) as $option) { 
+			if ($option['type'] == 'select' || $option['type'] == 'radio' || $option['type'] == 'checkbox' || $option['type'] == 'image') { 
+				$option_value_data = array();
+				
+				foreach ($option['option_value'] as $option_value) {
+					if (!$option_value['subtract'] || ($option_value['quantity'] > 0)) {
+						$option_value_data[] = array(
+							'product_option_value_id' => $option_value['product_option_value_id'],
+							'option_value_id'         => $option_value['option_value_id'],
+							'name'                    => $option_value['name'],
+							'image'                   => $this->model_tool_image->resize($option_value['image'], 50, 50),
+							'price'                   => (float)$option_value['price'] ? $option_value['price'] : 0,
+							'price_prefix'            => $option_value['price_prefix']
+						);
+					}
+				}
+				
+				$this->data['options'][] = array(
+					'product_option_id' => $option['product_option_id'],
+					'option_id'         => $option['option_id'],
+					'name'              => $option['name'],
+					'type'              => $option['type'],
+					'option_value'      => $option_value_data,
+					'required'          => $option['required']
+				);					
+			} elseif ($option['type'] == 'text' || $option['type'] == 'textarea' || $option['type'] == 'file' || $option['type'] == 'date' || $option['type'] == 'datetime' || $option['type'] == 'time') {
+				$this->data['options'][] = array(
+					'product_option_id' => $option['product_option_id'],
+					'option_id'         => $option['option_id'],
+					'name'              => $option['name'],
+					'type'              => $option['type'],
+					'option_value'      => $option['option_value'],
+					'required'          => $option['required']
+				);						
+			}
+		}
+	
 			
 		$this->data['checkout_url'] = $this->url->link2('mobile_store/checkout_order/special', 'product_id='.$product_id);
 		$this->request->get['back'] = true;

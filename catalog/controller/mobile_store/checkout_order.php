@@ -6,7 +6,13 @@ class ControllerMobileStoreCheckoutOrder extends Controller {
 	  		$this->redirect($this->url->link('mobile_store/cart'));
     	}	
 
-		$products = $this->cart->getProducts();
+   		if (isset($this->request->post['options'])) {
+			$option = $this->request->post['options'];
+		} else {
+			$option = array();	
+		}
+		
+    	$products = $this->cart->getProducts();
 
 		foreach ($products as $product) {
 			$product_total = 0;
@@ -20,8 +26,13 @@ class ControllerMobileStoreCheckoutOrder extends Controller {
 			if ($product['minimum'] > $product_total) {
 				$this->redirect($this->url->link('mobile_store/cart'));
 			}				
-		}
 
+			if (!isset($product['option'])) {
+				$product_options = $this->model_catalog_product->getProductOptions($product['product_id']);
+				$product['option'] = $this->make_option($option, $product_options);
+			}
+		}
+		
 		$total_data = $this->cart_total();
 		// cart product values
 		$order_info = $this->confirm($products, $total_data);
@@ -70,7 +81,21 @@ class ControllerMobileStoreCheckoutOrder extends Controller {
   			$product['quantity'] = 1;
   		}
   		
-  		$product['total'] = $product['sellprice'] * $product['quantity'];
+  		if (isset($this->request->post['options'])) {
+			$option = $this->request->post['options'];
+		} else {
+			$option = array();	
+		}
+  		
+		$product_options = $this->model_catalog_product->getProductOptions($product_id);
+		$product['option'] = $this->make_option($option, $product_options);
+  
+		$option_price = 0.0;
+		foreach($product['option'] as $product_option_value) {
+			$option_price += (double)($product_option_value['price_prefix'].$product_option_value['price']);
+		}
+		
+  		$product['total'] = ($product['sellprice'] + $option_price) * $product['quantity'];
   		$product['weight'] = $product['weight'] * $product['quantity'];
   		
   		$products = array();
@@ -83,6 +108,38 @@ class ControllerMobileStoreCheckoutOrder extends Controller {
 		$weixin_payment = $this->url->link('weixin/pay/prepay');
 		
 		$this->redirect($weixin_payment);
+  	}
+  	
+  	private function make_option($option, $product_options) {
+  		
+  		$option_data = array();
+  		foreach ($product_options as $product_option) {
+			if (empty($option[$product_option['product_option_id']])) continue;
+			
+			foreach($product_option['option_value'] as $product_option_value) {
+				if ($option[$product_option['product_option_id']] == $product_option_value['product_option_value_id']) {
+					$option_data[] = array(
+							'product_option_id'       => $product_option['product_option_id'],
+							'product_option_value_id' => $product_option_value['product_option_value_id'],
+							'option_id'               => $product_option['option_id'],
+							'option_value_id'         => $product_option_value['option_value_id'],
+							'name'                    => $product_option['name'],
+							'option_value'            => $product_option_value['name'],
+							'type'                    => $product_option['type'],
+							'quantity'                => $product_option_value['quantity'],
+							'subtract'                => $product_option_value['subtract'],
+							'price'                   => $product_option_value['price'],
+							'price_prefix'            => $product_option_value['price_prefix'],
+							'points'                  => $product_option_value['points'],
+							'points_prefix'           => $product_option_value['points_prefix'],									
+							'weight'                  => $product_option_value['weight'],
+							'weight_prefix'           => $product_option_value['weight_prefix']
+						);
+				}
+			}
+		}
+		
+		return $option_data;
   	}
   	
   	private function order_error() {
@@ -265,7 +322,7 @@ class ControllerMobileStoreCheckoutOrder extends Controller {
 		$product_data = array();
 		$order_type = 0; //0:固定客单价订单, 1:变客单价订单, 2:特产单品订单
 		$comment = "";
-	
+		
 		foreach ($products as $product) {
 			$option_data = array();
 

@@ -449,6 +449,8 @@ class ModelCatalogProduct extends Model {
 						'subtract'                => $product_option_value['subtract'],
 						'price'                   => $product_option_value['price'],
 						'price_prefix'            => $product_option_value['price_prefix'],
+						'points'                  => $product_option_value['points'],
+						'points_prefix'           => $product_option_value['points_prefix'],
 						'weight'                  => $product_option_value['weight'],
 						'weight_prefix'           => $product_option_value['weight_prefix']
 					);

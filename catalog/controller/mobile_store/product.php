@@ -182,7 +182,7 @@ class ControllerMobileStoreProduct extends Controller {
 			$this->data['subscribe'] = $product_info['subscribe'];
 			$this->data['unit'] = $product_info['sku']; //库存单位
 			$this->data['sellunit'] = $product_info['upc']; //销售单位
-			$this->data['sellprice'] = $this->currency->format($product_info['mpn']); //销售单位价格
+			$this->data['sellprice'] = $product_info['mpn']; //销售单位价格
 			$this->data['unitcount'] = $product_info['unitcount'];
 			$this->data['sellcount'] = $product_info['sellcount'];
 			
@@ -246,7 +246,8 @@ class ControllerMobileStoreProduct extends Controller {
 			foreach ($discounts as $discount) {
 				$this->data['discounts'][] = array(
 					'quantity' => $discount['quantity'],
-					'price'    => $this->currency->format($this->tax->calculate($discount['price'], $product_info['tax_class_id'], $this->config->get('config_tax')))
+					'price' => $discount['price'],
+					'showprice'    => $this->currency->format($this->tax->calculate($discount['price'], $product_info['tax_class_id'], $this->config->get('config_tax')))
 				);
 			}
 			
@@ -263,7 +264,7 @@ class ControllerMobileStoreProduct extends Controller {
 								'option_value_id'         => $option_value['option_value_id'],
 								'name'                    => $option_value['name'],
 								'image'                   => $this->model_tool_image->resize($option_value['image'], 50, 50),
-								'price'                   => (float)$option_value['price'] ? $this->currency->format($this->tax->calculate($option_value['price'], $product_info['tax_class_id'], $this->config->get('config_tax'))) : false,
+								'price'                   => (float)$option_value['price'] ? $option_value['price'] : 0,
 								'price_prefix'            => $option_value['price_prefix']
 							);
 						}
