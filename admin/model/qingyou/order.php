@@ -191,6 +191,20 @@ class ModelQingyouOrder extends Model {
 					$o->$key = $image;
 				}
 			}
+			
+			$option_value = "";
+			$opt = $this->db->query("select * from oc_order_option oo join oc_product_option_value ov 
+				on ov.product_option_value_id=oo.product_option_value_id where order_id=".$result['order_id']);
+			foreach ($opt->rows as $option) {
+				$option_value .= $option['value'] ." ";
+				$oprice = (int)($option['price_prefix'].$option['price']);
+				$o->perprice += $oprice;
+				$o->price += $oprice;
+				$o->total += $oprice;
+				$o->realtotal += $oprice;
+			}
+			
+			$o->option = $option_value;
 			$data[] = $o;
 		}
 		
