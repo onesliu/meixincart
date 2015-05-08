@@ -82,12 +82,13 @@
     </div>
 	<script type="text/javascript"><!--
 	$(document).on("pageinit", "#shipping_special_page", function(){
+		var price = <?php echo $price; ?>;
+		$('#price').text(price.toFixed(2));
+
 		<?php foreach($option_selected as $k => $v) { ?>
 		$("#op<?php echo $v; ?>").prop( "checked", true ).checkboxradio( "refresh" );
 		$("#op<?php echo $v; ?>").click();
 		<?php } ?>
-		var price = <?php echo $price; ?>;
-		$('#price').text(price.toFixed(2));
 	});
 
 	function changecount(num) {
