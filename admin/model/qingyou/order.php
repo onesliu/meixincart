@@ -197,14 +197,12 @@ class ModelQingyouOrder extends Model {
 				on ov.product_option_value_id=oo.product_option_value_id where order_id=".$result['order_id']);
 			foreach ($opt->rows as $option) {
 				$option_value .= $option['value'] ." ";
-				$oprice = (int)($option['price_prefix'].$option['price']);
-				$o->perprice += $oprice;
-				$o->price += $oprice;
-				$o->total += $oprice;
-				$o->realtotal += $oprice;
+				$oprice = (double)($option['price_prefix'].$option['price']);
+				$o->perprice = (string)($o->perprice + $oprice);
+				$o->price = (string)($o->price + $oprice);
 			}
 			
-			$o->option = $option_value;
+			$o->option = trim($option_value);
 			$data[] = $o;
 		}
 		
