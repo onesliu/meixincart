@@ -28,6 +28,7 @@
 		<form id="preorder" name="preorder" method="post" action="<?php echo $special_url; ?>">
 		<?php if ($options) { $osubject = ""; ?>
 			<div class="line-box">
+				<div style="margin-top:.3em;">请选择如下选项，价格会随之变化：</div>
 				<?php for($i = 0; $i < count($options); $i++) {
 					$option = $options[$i];
 					$osubject .= $option['name'].",";
