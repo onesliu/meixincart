@@ -43,6 +43,8 @@ class ModelCatalogOption extends Model {
 				}
 				
 				$option_value_id = $this->db->getLastId();
+				if ($option_value_id == 0)
+					$option_value_id = $option_value['option_value_id'];
 				
 				foreach ($option_value['option_value_description'] as $language_id => $option_value_description) {
 					$this->db->query("INSERT INTO " . DB_PREFIX . "option_value_description SET option_value_id = '" . (int)$option_value_id . "', language_id = '" . (int)$language_id . "', option_id = '" . (int)$option_id . "', name = '" . $this->db->escape($option_value_description['name']) . "'");
