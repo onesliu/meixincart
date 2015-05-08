@@ -86,7 +86,7 @@
 		$("#op<?php echo $v; ?>").prop( "checked", true ).checkboxradio( "refresh" );
 		$("#op<?php echo $v; ?>").click();
 		<?php } ?>
-		var price = <?php echo $sellprice; ?>;
+		var price = <?php echo $price; ?>;
 		$('#price').text(price.toFixed(2));
 	});
 
