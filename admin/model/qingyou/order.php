@@ -171,7 +171,7 @@ class ModelQingyouOrder extends Model {
 		
 		$data = array();
 		
-		$query = $this->db->query("select op.product_id, op.name as product_name, p.ean, p.jan, p.image,
+		$query = $this->db->query("select op.order_id, op.product_id, op.name as product_name, p.ean, p.jan, p.image,
 		p.mpn as perprice, p.upc as perunit, p.weight as perweight, p.sku as unit, wd.title as weightunit,
 		op.quantity, round(op.price,2) as price, round(op.total,2) as total, realweight, 
 		round(realtotal,2) as realtotal, p.product_type from " .DB_PREFIX. "order_product op 
