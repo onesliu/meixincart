@@ -203,6 +203,7 @@ class ModelQingyouOrder extends Model {
 			}
 			
 			$o->option = trim($option_value);
+			$o->product_name .= "(".$o->option.")";
 			$data[] = $o;
 		}
 		
